@@ -23,11 +23,12 @@ public:
 	void onLeftMouseUp(const Point& delta_mouse_pos) override;
 	void onRightMouseDown(const Point& delta_mouse_pos) override;
 	void onRightMouseUp(const Point& delta_mouse_pos) override;
-private:
+public:
+	float m_upward = 0.0f;
 	float m_forward = 0.0f;
 	float m_rightward = 0.0f;
 	bool mouseDown = false;
-	const float NAVIGATE_SPEED = 2.5f;
+	const float NAVIGATE_SPEED = 1.0f;
 	Matrix4x4 m_view_cam;
 	AppWindow* appWindow;
 };

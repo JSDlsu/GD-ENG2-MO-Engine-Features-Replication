@@ -41,12 +41,6 @@ private:
 	BlenderPtr m_blender;
 	CameraPtr m_camera;
 private:
-	float m_rot_x = 0.0f;
-	float m_rot_y = 0.0f;
-
-	float m_scale_cube = 1.0f;
-	float m_forward = 0.0f;
-	float m_rightward = 0.0f;
 private:
 	friend class Cube;
 	friend class Plane;

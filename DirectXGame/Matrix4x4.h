@@ -163,13 +163,19 @@ public:
 		return Vector3D(m_mat[0][0], m_mat[0][1], m_mat[0][2]);
 	}
 
+	// get the y axis
+	Vector3D getYDirection()
+	{
+		return Vector3D(m_mat[1][0], m_mat[1][1], m_mat[1][2]);
+	}
+
 	// get the z axis
 	Vector3D getZDirection()
 	{
 		return Vector3D(m_mat[2][0], m_mat[2][1], m_mat[2][2]);
 	}
 
-	// get the z axis
+	// get the transform
 	Vector3D getTranslation()
 	{
 		return Vector3D(m_mat[3][0], m_mat[3][1], m_mat[3][2]);
@@ -178,7 +184,6 @@ public:
 	// sets the 3D matrix points into 2D plane(screen space) with depth perception
 	void setPerspectiveFovLH(float fov, float aspect, float znear, float zfar)
 	{
-		setIdentity();
 		float yscale = 1.0f / tan(fov / 2.0f);
 		float xscale = yscale / aspect;
 		m_mat[0][0] = xscale;

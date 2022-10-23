@@ -7,8 +7,9 @@
 Camera::Camera(std::string name, ObjectTypes type, AppWindow* app_window) : AGameObject(name, type)
 {
 	this->appWindow = app_window;
-	m_view_cam.setTranslation(Vector3D{ 0.0f, 0.0f, 0.0f });
-	//this->worldCameraMatrix.setTranslation(this->getLocalPosition());
+	m_matrix.setScale(Vector3D{ 0.1f, 0.1f, 0.1f });
+	this->UpdateViewMatrix();
+	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -10.0f });
 	this->UpdateViewMatrix();
 	// subscribe this class to the InputSystem
 	InputSystem::get()->addListener(this);
@@ -32,23 +33,22 @@ void Camera::UpdateViewMatrix()
 {
 	Matrix4x4 world_cam; world_cam.setIdentity();
 	Matrix4x4 temp; temp.setIdentity();
-
+	// rotation first
 	Vector3D localRot = this->GetLocalRotation();
-
 	temp.setRotationX(localRot.m_x);
-	world_cam = world_cam.MultiplyTo(temp);
-
+	world_cam *= temp;
 	temp.setRotationY(localRot.m_y);
-	world_cam = world_cam.MultiplyTo(temp);
-
-	//world_cam.setTranslation(this->GetLocalPosition());
-	//world_cam = world_cam.MultiplyTo(temp);
-
-	// moving or setting the camera position in the z or x axis
+	world_cam *= temp;
+	// scale next
+	temp.setScale(GetLocalScale());
+	world_cam *= temp;
+	// position next
+	// moving or setting the camera position in the x,y,z axis
 	Vector3D new_pos = m_matrix.getTranslation() + world_cam.getZDirection() * (m_forward * 1.0f);
+	new_pos = new_pos + world_cam.getYDirection() * (m_upward * 1.0f);
 	new_pos = new_pos + world_cam.getXDirection() * (m_rightward * 1.0f);
 	temp.setTranslation(new_pos);
-	world_cam = world_cam.MultiplyTo(temp);
+	world_cam *= temp;
 	m_matrix = world_cam;
 
 	// convert camera matrix to view matrix
@@ -91,10 +91,25 @@ void Camera::onKeyDown(int key)
 		UpdateViewMatrix();
 		m_rightward = 1.0f * EngineTime::getDeltaTime() * NAVIGATE_SPEED;
 	}
+	else if (key == 'Q')
+	{
+		y += EngineTime::getDeltaTime() * NAVIGATE_SPEED;
+		SetPosition(x, y, z);
+		UpdateViewMatrix();
+		m_upward = 1.0f * EngineTime::getDeltaTime() * NAVIGATE_SPEED;
+	}
+	else if (key == 'E')
+	{
+		y -= EngineTime::getDeltaTime() * NAVIGATE_SPEED;
+		SetPosition(x, y, z);
+		UpdateViewMatrix();
+		m_upward = -1.0f * EngineTime::getDeltaTime() * NAVIGATE_SPEED;
+	}
 }
 
 void Camera::onKeyUp(int key)
 {
+	m_upward = 0.0f;
 	m_forward = 0.0f;
 	m_rightward = 0.0f;
 }
@@ -110,7 +125,7 @@ void Camera::onMouseMove(const Point& mouse_pos)
 		float y = GetLocalRotation().m_y;
 		float z = GetLocalRotation().m_z;
 
-		float speed = 0.5f;
+		float speed = 0.1f;
 		x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * speed;
 		y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * speed;
 		

@@ -143,25 +143,32 @@ Cube::~Cube()
 
 void Cube::Update(float deltaTime, AppWindow* app_window)
 {
+	// Texture update
+	constant_texture cc_texture;
+	cc_texture.alpha = alpha;
+	cc_texture.object_type = ObjectType;
+	m_cb_texture->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc_texture);
+
 	// transform update
 	constant_transform cc;
 
-	Matrix4x4 allMatrix; allMatrix.setIdentity();
-	Matrix4x4 translationMatrix; translationMatrix.setIdentity();  translationMatrix.setTranslation(GetLocalPosition());
-	Matrix4x4 scaleMatrix; scaleMatrix.setScale(GetLocalScale());
-	Vector3D rotation = GetLocalRotation();
-	Matrix4x4 zMatrix; zMatrix.setRotationZ(rotation.m_z);
-	Matrix4x4 xMatrix; xMatrix.setRotationX(rotation.m_x);
-	Matrix4x4 yMatrix; yMatrix.setRotationY(rotation.m_y);
+	// objects matrix
+	Matrix4x4 temp;
+	cc.m_world.setIdentity();
+	temp.setRotationX(m_rotation.m_x);
+	cc.m_world *= temp;
+	temp.setRotationY(m_rotation.m_y);
+	cc.m_world *= temp;
+	temp.setRotationZ(m_rotation.m_z);
+	cc.m_world *= temp;
+	temp.setScale(m_scale);
+	cc.m_world *= temp;
+	temp.setTranslation(m_position);
+	cc.m_world *= temp;
 
-	//Scale --> Rotate --> Transform as recommended order.
-	Matrix4x4 rotMatrix; rotMatrix.setIdentity();
-	rotMatrix = rotMatrix.MultiplyTo(zMatrix.MultiplyTo(yMatrix.MultiplyTo(xMatrix)));
-	allMatrix = allMatrix.MultiplyTo(scaleMatrix.MultiplyTo(rotMatrix));
-	allMatrix = allMatrix.MultiplyTo(translationMatrix);
-	cc.m_world = allMatrix;
-
-	Matrix4x4 cameraMatrix = dynamic_cast<Camera*>(&*app_window->m_camera)->GetCamViewMatrix();
+	// creating the camera matrix
+	Matrix4x4 cameraMatrix;
+	cameraMatrix = dynamic_cast<Camera*>(&*app_window->m_camera)->GetCamViewMatrix();
 	cc.m_view = cameraMatrix;
 
 	// width and height of the screen
@@ -182,15 +189,10 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	// setting the perspective projection
 	float aspectRatio = (float)width / (float)height;
 	cc.m_proj.setPerspectiveFovLH(aspectRatio, aspectRatio, 0.1f, 100.0f);
+	//cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
 #endif
 
 	m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);
-
-	// Texture update
-	constant_texture cc_texture;
-	cc_texture.alpha = alpha;
-	cc_texture.object_type = ObjectType;
-	m_cb_texture->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc_texture);
 }
 
 void Cube::Draw(const VertexShaderPtr& m_vs, const PixelShaderPtr& m_ps, const BlenderPtr& m_blender)
