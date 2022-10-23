@@ -10,8 +10,8 @@
 #include <vector>
 
 #include "Camera.h"
+#include "CameraHandler.h"
 #include "PassRender.h"
-#include "Mesh.h"
 #include "Plane.h"
 
 
@@ -27,16 +27,15 @@ void AppWindow::onCreate()
 {
 	Window::onCreate();
 
+	// create cameras
+	CameraHandler::Initialize();
+
 	// hides the cursor
 	InputSystem::get()->showCursor(false);
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = GraphicsEngine::get()->getRenderSystem()->createSwapChain(
 		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
-
-	// create camera object
-	CameraPtr cameraPtr(new Camera("Camera", ObjectTypes::CAMERA, this));
-	m_camera = cameraPtr;
 
 	// instantiate a cube and texture
 	Cube* cube = new Cube("cube1", ObjectTypes::CUBE);
@@ -64,41 +63,22 @@ void AppWindow::onCreate()
 	plane->SetTexture(L"Assets\\Textures\\wood.jpg");
 	AGameObjectPtr temp_ptr5(plane);
 
-#define SWITCH 2
-#if SWITCH == 0 // First demo; no alpha blending yet
-	wood_obj->SetTransform();
-	coat_obj->SetTransform(Vector3D{ 0,0,-2.0f });
-	dynamic_cast<Cube*>(wood_obj)->SetAlpha(1.0f);
-	dynamic_cast<Cube*>(coat_obj)->SetAlpha(1.0f);
-	// add the objects to our manager
-	GameObjectManager::get()->objectList.push_back(temp_ptr);
-	GameObjectManager::get()->objectList.push_back(temp_ptr2);
-#elif SWITCH == 1 // Demonstrate with no PassRender
-	wood_obj->SetTransform();
-	coat_obj->SetTransform(Vector3D{ 0,0,-2.0f });
-	dynamic_cast<Cube*>(wood_obj)->SetAlpha(1.0f);
-	dynamic_cast<Cube*>(coat_obj)->SetAlpha(0.5f);
-	// add the objects to our manager
-	GameObjectManager::get()->objectList.push_back(temp_ptr2);
-	GameObjectManager::get()->objectList.push_back(temp_ptr);
-#elif SWITCH == 2 // Demonstrate with PassRender
 	cube->SetScale(Vector3D{ 0.5f, 0.5f, 0.5f });
 	cube->SetPosition(Vector3D{ 1, 0, 0 });
 	cube1->SetPosition(Vector3D{ 0, 0, -1 });
 	cube3->SetPosition(Vector3D{ 0, 0, 1 });
 	plane->SetPosition(0, -1.0f, 0);
-	dynamic_cast<Cube*>(cube)->SetAlpha(1.0f);
-	dynamic_cast<Cube*>(cube1)->SetAlpha(0.5f);
-	dynamic_cast<Cube*>(cube2)->SetAlpha(1.0f);
-	dynamic_cast<Cube*>(cube3)->SetAlpha(0.2f);
-	dynamic_cast<Plane*>(plane)->SetAlpha(1.0f);
+	cube->SetAlpha(1.0f);
+	cube1->SetAlpha(0.5f);
+	cube2->SetAlpha(1.0f);
+	cube3->SetAlpha(0.2f);
+	plane->SetAlpha(1.0f);
 	// add the objects to our manager
-	GameObjectManager::get()->objectList.push_back(temp_ptr2);
 	GameObjectManager::get()->objectList.push_back(temp_ptr);
+	GameObjectManager::get()->objectList.push_back(temp_ptr2);
 	GameObjectManager::get()->objectList.push_back(temp_ptr3);
 	GameObjectManager::get()->objectList.push_back(temp_ptr4);
 	GameObjectManager::get()->objectList.push_back(temp_ptr5);
-#endif
 
 	// gets the byte code and size of the vertex shader
 	void* shader_byte_code = nullptr;
@@ -147,29 +127,13 @@ void AppWindow::onUpdate()
 
 	update();
 
-#define PASS 1
-#if PASS == 0 // Demonstrate with no PassRender
-	// Call each object in the scene
-	std::vector<AGameObjectPtr>::iterator i;
-	for (i = GameObjectManager::get()->objectList.begin(); i != GameObjectManager::get()->objectList.end(); ++i)
-	{
-		(*i)->Draw(m_vs, m_ps, m_blender);
-	}
-#elif PASS == 1 // Demonstrate with PassRender
+	// PassRender; Draw objects in order
+	// Opaque objects are draw first
 	PassRender<OpaqueFilterPolicy, FrontToBackPolicy> opaquePass;
-	opaquePass.Render(m_vs, m_ps, m_blender, m_camera->GetMatrix());
-
+	opaquePass.Render(m_vs, m_ps, m_blender, CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	// Transparent objects are draw last
 	PassRender<TransparencyFilterPolicy, BackToFrontPolicy> transparencyPass;
-	transparencyPass.Render(m_vs, m_ps, m_blender, m_camera->GetMatrix());
-	
-	std::vector<AGameObjectPtr>::iterator i;
-	/*
-	for (i = GameObjectManager::get()->getObjectList().begin(); i != GameObjectManager::get()->getObjectList().end(); ++i)
-	{
-		std::cout << (*i)->GetName() << "'s Distance: " << (*i)->GetDistance(m_camera->GetMatrix()) << std::endl;
-	}
-	*/
-#endif
+	transparencyPass.Render(m_vs, m_ps, m_blender, CameraHandler::GetInstance()->GetSceneCameraMatrix());
 
 	m_swap_chain->present(true);
 }

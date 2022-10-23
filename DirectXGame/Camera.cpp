@@ -4,12 +4,11 @@
 #include "EngineTime.h"
 #include "InputSystem.h"
 
-Camera::Camera(std::string name, ObjectTypes type, AppWindow* app_window) : AGameObject(name, type)
+Camera::Camera(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
-	this->appWindow = app_window;
 	m_matrix.setScale(Vector3D{ 0.1f, 0.1f, 0.1f });
 	this->UpdateViewMatrix();
-	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -10.0f });
+	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -2.0f });
 	this->UpdateViewMatrix();
 	// subscribe this class to the InputSystem
 	InputSystem::get()->addListener(this);
@@ -117,19 +116,15 @@ void Camera::onKeyUp(int key)
 void Camera::onMouseMove(const Point& mouse_pos)
 {
 	if (this->mouseDown) {
-		// width and height of the screen
-		int width = (appWindow->getClientWindowRect().right - appWindow->getClientWindowRect().left);
-		int height = (appWindow->getClientWindowRect().bottom - appWindow->getClientWindowRect().top);
-		
 		float x = GetLocalRotation().m_x;
 		float y = GetLocalRotation().m_y;
 		float z = GetLocalRotation().m_z;
 
 		float speed = 0.1f;
-		x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * speed;
-		y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * speed;
+		x += (mouse_pos.m_y - (Window::HEIGHT / 2.0f)) * EngineTime::getDeltaTime() * speed;
+		y += (mouse_pos.m_x - (Window::WIDTH / 2.0f)) * EngineTime::getDeltaTime() * speed;
 		
-		InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
+		InputSystem::get()->setCursorPosition(Point((int)(Window::WIDTH / 2.0f), (int)(Window::HEIGHT / 2.0f)));
 
 		
 		SetRotation(x, y, z);

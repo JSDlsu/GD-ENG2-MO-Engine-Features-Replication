@@ -19,7 +19,9 @@ public:
 	virtual void onDestroy();
 	virtual void onFocus();
 	virtual void onKillFocus();
-
+public:
+	static int HEIGHT;
+	static int WIDTH;
 private:
 	bool broadcast();
 protected:

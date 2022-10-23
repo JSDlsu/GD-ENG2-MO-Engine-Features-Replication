@@ -39,7 +39,6 @@ private:
 	VertexShaderPtr m_vs;
 	PixelShaderPtr m_ps;
 	BlenderPtr m_blender;
-	CameraPtr m_camera;
 private:
 private:
 	friend class Cube;

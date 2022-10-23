@@ -8,7 +8,7 @@ class Point;
 class Camera : public AGameObject, public InputListener
 {
 public:
-	Camera(std::string name, ObjectTypes type, AppWindow* app_window);
+	Camera(std::string name, ObjectTypes type);
 	~Camera();
 public:
 	void Update(float deltaTime, AppWindow* app_window) override;
@@ -28,8 +28,7 @@ public:
 	float m_forward = 0.0f;
 	float m_rightward = 0.0f;
 	bool mouseDown = false;
-	const float NAVIGATE_SPEED = 1.0f;
+	const float NAVIGATE_SPEED = 2.5f;
 	Matrix4x4 m_view_cam;
-	AppWindow* appWindow;
 };
 

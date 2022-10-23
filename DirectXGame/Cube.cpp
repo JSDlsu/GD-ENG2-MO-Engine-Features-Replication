@@ -12,6 +12,7 @@
 #include "Mesh.h"
 #include "PrimitiveCreation.h"
 #include "Camera.h"
+#include "CameraHandler.h"
 
 Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
@@ -167,29 +168,23 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	cc.m_world *= temp;
 
 	// creating the camera matrix
-	Matrix4x4 cameraMatrix;
-	cameraMatrix = dynamic_cast<Camera*>(&*app_window->m_camera)->GetCamViewMatrix();
+	Matrix4x4 cameraMatrix = CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
 	cc.m_view = cameraMatrix;
-
-	// width and height of the screen
-	int width = (app_window->getClientWindowRect().right - app_window->getClientWindowRect().left) / 300.0f;
-	int height = (app_window->getClientWindowRect().bottom - app_window->getClientWindowRect().left) / 300.0f;
 
 #define VIEW 1
 #if VIEW == 0
 	// setting for the orthographic projection
 	cc.m_proj.setOrthoLH
 	(
-		width,
-		height,
+		Window::WIDTH / 300.0f,
+		Window::HEIGHT / 300.0f,
 		-40.0f,
 		40.0f
 	);
 #elif VIEW == 1
 	// setting the perspective projection
-	float aspectRatio = (float)width / (float)height;
+	float aspectRatio = (float)(Window::WIDTH / 300.0f) / (float)(Window::HEIGHT / 300.0f);
 	cc.m_proj.setPerspectiveFovLH(aspectRatio, aspectRatio, 0.1f, 100.0f);
-	//cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
 #endif
 
 	m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);

@@ -171,6 +171,9 @@
     <ClCompile Include="Plane.cpp">
       <Filter>GameEngine\Primitives\Plane</Filter>
     </ClCompile>
+    <ClCompile Include="CameraHandler.cpp">
+      <Filter>GameEngine\Components\Rendering\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppWindow.h">
@@ -283,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="Plane.h">
       <Filter>GameEngine\Primitives\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraHandler.h">
+      <Filter>GameEngine\Components\Rendering\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

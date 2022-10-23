@@ -24,10 +24,10 @@ int main()
 			while (app.isRun());
 		}
 		catch (...) {
+			PrimitiveCreation::release();
+			GameObjectManager::release();
 			InputSystem::release();
 			GraphicsEngine::release();
-			GameObjectManager::release();
-			PrimitiveCreation::release();
 			return -1;
 		}
 	}
@@ -36,10 +36,10 @@ int main()
 	 * The order of release should be based on the order of creation.
 	 * Will follow the First in, Last out principle.
 	 */
+	PrimitiveCreation::release();
+	GameObjectManager::release();
 	InputSystem::release();
 	GraphicsEngine::release();
-	GameObjectManager::release();
-	PrimitiveCreation::release();
 
 	return 0;
 }

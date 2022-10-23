@@ -3,6 +3,8 @@
 #include <exception>
 
 //Window* window = nullptr;
+int Window::HEIGHT = 768;
+int Window::WIDTH = 1024;
 
 // Calls the events of our window (creation and destroy events)
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -92,7 +94,7 @@ Window::Window()
 		 */
 		 //Creation of the window; HWND - "Handle to a Window"
 	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Application",
-		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
+		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WIDTH, HEIGHT,
 		NULL, NULL, NULL, NULL);
 
 	// if the creation fail return false
