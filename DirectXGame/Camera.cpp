@@ -6,8 +6,6 @@
 
 Camera::Camera(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
-	m_matrix.setScale(Vector3D{ 0.1f, 0.1f, 0.1f });
-	this->UpdateViewMatrix();
 	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -2.0f });
 	this->UpdateViewMatrix();
 	// subscribe this class to the InputSystem
@@ -37,9 +35,6 @@ void Camera::UpdateViewMatrix()
 	temp.setRotationX(localRot.m_x);
 	world_cam *= temp;
 	temp.setRotationY(localRot.m_y);
-	world_cam *= temp;
-	// scale next
-	temp.setScale(GetLocalScale());
 	world_cam *= temp;
 	// position next
 	// moving or setting the camera position in the x,y,z axis
