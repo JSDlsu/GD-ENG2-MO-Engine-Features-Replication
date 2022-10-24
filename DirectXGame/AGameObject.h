@@ -16,6 +16,9 @@ enum ObjectTypes
 	CAMERA
 };
 
+/*
+ * Abstract class for primitive type objects(cube,plane,sphere,etc..)
+ */
 class AGameObject
 {
 public:

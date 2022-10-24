@@ -6,6 +6,17 @@
 #include "Prerequisites.h"
 #include "Matrix4x4.h"
 
+
+/*
+ * performs the draw principle to have a perfect blending of
+ * objects in the scene. Two different pass(Opaque or Transparent).
+ * Opaque pass:
+ * Sorting - nearest -> farthest distance
+ * Rendering -> only opaque objects
+ * Transparent pass:
+ * Sorting - farthest -> nearest distance
+ * Rendering -> only transparent objects
+ */
 template<typename FilteringPolicy, typename SortingPolicy>
 class PassRender
 {

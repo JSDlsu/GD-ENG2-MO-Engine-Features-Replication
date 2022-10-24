@@ -10,6 +10,10 @@
 
 class Matrix4x4;
 
+/*
+ * contains the different function implementations for the different
+ * policies in ‘SortingPolicy’ and ‘RenderPolicy’.
+ */
 struct TransparencyFilterPolicy
 {
 private:

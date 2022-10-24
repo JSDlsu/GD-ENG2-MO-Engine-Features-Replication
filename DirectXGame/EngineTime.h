@@ -6,6 +6,10 @@
 
 class Window;
 
+/*
+ * a singleton class that gives the deltaTime from the current
+ * time instance.
+ */
 class EngineTime
 {
 public:

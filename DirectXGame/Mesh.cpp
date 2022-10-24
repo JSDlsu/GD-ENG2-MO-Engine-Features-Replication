@@ -6,10 +6,8 @@
 #include <locale>
 #include <codecvt>
 
-#include "ContantBufferTypes.h"
 #include "GraphicsEngine.h"
 #include "VertexMesh.h"
-#include "AppWindow.h"
 
 Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 {

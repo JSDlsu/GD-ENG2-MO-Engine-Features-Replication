@@ -3,7 +3,11 @@
 #include "Prerequisites.h"
 
 class AppWindow;
-
+/*
+ * stores the created object in the scene;
+ * use to access the draw function for each
+ * objects in the scene.
+ */
 class GameObjectManager
 {
 public:

@@ -2,6 +2,8 @@
 #include "Matrix4x4.h"
 
 // constant buffer; this is updated per frame
+
+// constant buffer for object's transform attributes
 __declspec(align(16))
 struct constant_transform
 {
@@ -11,6 +13,7 @@ struct constant_transform
 	unsigned int m_time;
 };
 
+// constant buffer for object's texture attributes
 __declspec(align(16))
 struct constant_texture
 {

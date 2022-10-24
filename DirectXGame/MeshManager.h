@@ -1,6 +1,11 @@
 #pragma once
 #include "ResourceManager.h"
 
+/*
+ * handles the creation of reference for mesh resources.
+ * Calls the instantiate a ‘Mesh’ object and returns it
+ * through its function. 
+ */
 class MeshManager : public ResourceManager
 {
 public:

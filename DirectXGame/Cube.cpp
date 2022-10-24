@@ -17,7 +17,7 @@
 Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
 	// Set the object type
-	ObjectType = ObjectTypes::CUBE;
+	ObjectType = type;
 
 	// Position Coords
 	Vector3D position_list[] =
