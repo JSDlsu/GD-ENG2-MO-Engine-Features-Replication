@@ -171,6 +171,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="PixelShader.cpp" />
+    <ClCompile Include="PixelShaderManager.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PrimitiveCreation.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
+    <ClCompile Include="VertexShaderManager.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +206,7 @@
     <ClInclude Include="MeshManager.h" />
     <ClInclude Include="PassRender.h" />
     <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="PixelShaderManager.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Prerequisites.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexMesh.h" />
     <ClInclude Include="VertexShader.h" />
+    <ClInclude Include="VertexShaderManager.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

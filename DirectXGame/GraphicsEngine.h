@@ -1,9 +1,9 @@
 #pragma once
-#include <d3d11.h>
-#include "Prerequisites.h"
 #include "RenderSystem.h"
 #include "TextureManager.h"
 #include "MeshManager.h"
+#include "VertexShaderManager.h"
+#include "PixelShaderManager.h"
 
 // Singleton class
 // initializes the RenderSystem
@@ -18,8 +18,8 @@ public:
 	RenderSystem* getRenderSystem();
 	TextureManager* getTextureManager();
 	MeshManager* getMeshManager();
-	void getVertexMeshLayoutShaderByteCodeAndSize(void** byte_code, size_t* size);
-	void getPixelShaderByteCodeAndSize(void** byte_code, size_t* size);
+	VertexShaderManager* getVertexShaderManager();
+	PixelShaderManager* getPixelShaderManager();
 public:
 	static GraphicsEngine* get();
 	static void create();
@@ -28,11 +28,9 @@ private:
 	RenderSystem* m_render_system = nullptr;
 	TextureManager* m_tex_manager = nullptr;
 	MeshManager* m_mesh_manager = nullptr;
+	VertexShaderManager* m_vertexShader_manager = nullptr;
+	PixelShaderManager* m_pixelShader_manager = nullptr;
 	static GraphicsEngine* m_engine;
-
-	unsigned char m_primitive_byte_code[2048];
-	size_t m_primitive_size = 0;
-	unsigned char m_mesh_layout_byte_code[1024];
-	size_t m_mesh_layout_size = 0;
+	
 };
 

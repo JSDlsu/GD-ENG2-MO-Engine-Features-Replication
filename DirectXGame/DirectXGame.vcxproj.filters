@@ -88,6 +88,9 @@
     <Filter Include="GameEngine\Primitives\Plane">
       <UniqueIdentifier>{98b7950e-0513-4942-b3b1-d93ee45f7a93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ShaderManager">
+      <UniqueIdentifier>{3c17da98-1a38-4f5b-a6eb-8235d3841631}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -174,6 +177,8 @@
     <ClCompile Include="CameraHandler.cpp">
       <Filter>GameEngine\Components\Rendering\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="PixelShaderManager.cpp" />
+    <ClCompile Include="VertexShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppWindow.h">
@@ -290,6 +295,8 @@
     <ClInclude Include="CameraHandler.h">
       <Filter>GameEngine\Components\Rendering\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="PixelShaderManager.h" />
+    <ClInclude Include="VertexShaderManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx" />

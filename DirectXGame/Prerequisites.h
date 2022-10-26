@@ -22,6 +22,8 @@ class GameObjectManager;
 class Cube;
 class PrimitiveCreation;
 class Camera;
+class VertexShaderManager;
+class PixelShaderManager;
 
 typedef std::shared_ptr<SwapChain> SwapChainPtr;
 typedef std::shared_ptr<DeviceContext> DeviceContextPtr;

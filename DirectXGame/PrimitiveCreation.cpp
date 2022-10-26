@@ -117,7 +117,7 @@ void PrimitiveCreation::GetCubeWithTexture(VertexBufferPtr& m_vb, IndexBufferPtr
 	// gets the byte code and size of the vertex_tex shader
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
-	GraphicsEngine::get()->getPixelShaderByteCodeAndSize(&shader_byte_code, &size_shader);
+	GraphicsEngine::get()->getVertexShaderManager()->Get_VS_Default(&shader_byte_code, &size_shader);
 
 	// create VB
 	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(

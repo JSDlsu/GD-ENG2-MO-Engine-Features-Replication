@@ -83,7 +83,7 @@ void AppWindow::onCreate()
 	// gets the byte code and size of the vertex_tex shader
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
-	GraphicsEngine::get()->getPixelShaderByteCodeAndSize(&shader_byte_code, &size_shader);
+	GraphicsEngine::get()->getVertexShaderManager()->Get_VS_Default(&shader_byte_code, &size_shader);
 	// after a successful compiling, create the vertex_tex buffer then
 	m_vs = GraphicsEngine::get()->getRenderSystem()->createVertexShader(shader_byte_code, size_shader);
 

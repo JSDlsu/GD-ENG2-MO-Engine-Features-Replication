@@ -83,7 +83,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	// gets the byte code and size of the vertex_tex shader
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
-	GraphicsEngine::get()->getVertexMeshLayoutShaderByteCodeAndSize(&shader_byte_code, &size_shader);
+	GraphicsEngine::get()->getVertexShaderManager()->Get_VS_Mesh(&shader_byte_code, &size_shader);
 
 	// create the index buffer
 	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer(&list_indices[0],

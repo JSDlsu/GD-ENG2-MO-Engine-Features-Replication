@@ -57,6 +57,7 @@ private:
 	friend class PixelShader;
 	friend class Texture;
 	friend class Blender;
+	friend class VertexShaderManager;
 
 };
 
