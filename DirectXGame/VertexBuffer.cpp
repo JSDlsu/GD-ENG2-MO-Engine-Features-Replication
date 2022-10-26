@@ -12,7 +12,7 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
 	// checks if our buffer is accessible by CPU and GPU; default means it could be written by both CPU and GPU
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
 	buff_desc.ByteWidth = size_vertex * size_list;
-	// we want our buffer to be bind as a vertex buffer
+	// we want our buffer to be bind as a vertex_tex buffer
 	buff_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	buff_desc.CPUAccessFlags = 0;
 	buff_desc.MiscFlags = 0;
@@ -29,9 +29,9 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
 		throw std::exception("VertexBuffer not created successfully");
 	}
 
-	// defines the attribute of our vertex buffer type
-	// contains all the information about the attributes that will compose our vertex type
-	// the layout for our vertex list[] in AppWindow
+	// defines the attribute of our vertex_tex buffer type
+	// contains all the information about the attributes that will compose our vertex_tex type
+	// the layout for our vertex_tex list[] in AppWindow
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE

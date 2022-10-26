@@ -1,9 +1,10 @@
 #pragma once
+#include "AppWindow.h"
 #include "Prerequisites.h"
 #include "Vector2D.h"
 #include "Vector3D.h"
 
-struct vertex
+struct vertex_tex
 {
 	Vector3D position;
 	Vector2D texcoord;
@@ -11,21 +12,22 @@ struct vertex
 
 class PrimitiveCreation
 {
-public:
+private:
 	PrimitiveCreation();
 	~PrimitiveCreation();
-
-private:
-	void* cube_vertex_list();
-	void* cube_index_list();
+	PrimitiveCreation(PrimitiveCreation const&) {}; // copy constructor is private
+	PrimitiveCreation& operator=(PrimitiveCreation const&) {}; // assignment operator is private
 
 public:
-	static PrimitiveCreation* get();
+	void GetCubeWithTexture(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
+
+public:
 	static void create();
 	static void release();
+	static PrimitiveCreation* Instance();
 
 private:
-	static PrimitiveCreation* m_instance;
+	static PrimitiveCreation* sharedInstance;
 	friend class Cube;
 };
 

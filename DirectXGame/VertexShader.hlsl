@@ -1,15 +1,15 @@
-// this function will be executed on each vertex of the triangles to render
-/* SV_POSITION - indicates to the graphics pipeline that the output of our vertex shader
-will contain the final transformed vertex position in the screen space coordinate.*/
+// this function will be executed on each vertex_tex of the triangles to render
+/* SV_POSITION - indicates to the graphics pipeline that the output of our vertex_tex shader
+will contain the final transformed vertex_tex position in the screen space coordinate.*/
 
-// what is the structure of our vertex input
+// what is the structure of our vertex_tex input
 struct VS_INPUT
 {
 	float4 position: POSITION0;
 	float2 texcoord: TEXCOORD0;
 };
 
-// what is the structure of our vertex output
+// what is the structure of our vertex_tex output
 struct VS_OUTPUT
 {
 	float4 position: SV_POSITION;

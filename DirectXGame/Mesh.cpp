@@ -60,7 +60,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 				// indices of each shape
 				tinyobj::index_t index = shapes[s].mesh.indices[index_offset + v];
 
-				// vertex coordinates
+				// vertex_tex coordinates
 				tinyobj::real_t vx = attribs.vertices[index.vertex_index * 3 + 0];
 				tinyobj::real_t vy = attribs.vertices[index.vertex_index * 3 + 1];
 				tinyobj::real_t vz = attribs.vertices[index.vertex_index * 3 + 2];
@@ -69,7 +69,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 				tinyobj::real_t tx = attribs.texcoords[index.texcoord_index * 2 + 0];
 				tinyobj::real_t ty = attribs.texcoords[index.texcoord_index * 2 + 1];
 
-				// passing the attributes to our vertex mesh; then push it to the vector
+				// passing the attributes to our vertex_tex mesh; then push it to the vector
 				VertexMesh vertex(Vector3D(vx, vy, vz), Vector2D(tx, ty));
 				list_vertices.push_back(vertex);
 				// passing the attributes to our index mesh; then push it to the vector
@@ -80,7 +80,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 		}
 	}
 
-	// gets the byte code and size of the vertex shader
+	// gets the byte code and size of the vertex_tex shader
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 	GraphicsEngine::get()->getVertexMeshLayoutShaderByteCodeAndSize(&shader_byte_code, &size_shader);
@@ -89,7 +89,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer(&list_indices[0],
 		(UINT)list_indices.size());
 
-	// create a vertex buffer
+	// create a vertex_tex buffer
 	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(&list_vertices[0],
 		sizeof(VertexMesh), (UINT)list_vertices.size(),
 		shader_byte_code, (UINT)size_shader);

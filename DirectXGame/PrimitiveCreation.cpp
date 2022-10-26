@@ -1,8 +1,10 @@
 #include "PrimitiveCreation.h"
 
+#include <iostream>
+
 #include "AppWindow.h"
 
-PrimitiveCreation* PrimitiveCreation::m_instance = nullptr;
+PrimitiveCreation* PrimitiveCreation::sharedInstance = nullptr;
 
 PrimitiveCreation::PrimitiveCreation()
 {
@@ -11,9 +13,10 @@ PrimitiveCreation::PrimitiveCreation()
 
 PrimitiveCreation::~PrimitiveCreation()
 {
+
 }
 
-void* PrimitiveCreation::cube_vertex_list()
+void PrimitiveCreation::GetCubeWithTexture(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 {
 	// Position Coords
 	Vector3D position_list[] =
@@ -39,8 +42,8 @@ void* PrimitiveCreation::cube_vertex_list()
 		{ Vector2D(1.0f,1.0f) }
 	};
 
-	// list of all the vertex in the 3D Cube
-	vertex vertex_list[] =
+	// list of all the vertex_tex in the 3D Cube
+	vertex_tex vertex_list[] =
 	{
 		//X - Y - Z
 		//FRONT FACE
@@ -79,13 +82,8 @@ void* PrimitiveCreation::cube_vertex_list()
 
 	};
 
-	return &vertex_list;
-}
-
-void* PrimitiveCreation::cube_index_list()
-{
-	// list of all the triangle index with their vertex compositions
-	// this index list should reflect the vertex list
+	// list of all the triangle index with their vertex_tex compositions
+	// this index list should reflect the vertex_tex list
 	unsigned int index_list[] =
 	{
 		//FRONT SIDE
@@ -108,24 +106,44 @@ void* PrimitiveCreation::cube_index_list()
 		22,23,20
 	};
 
-	return &index_list;
-}
+	UINT size_list = ARRAYSIZE(vertex_list);
 
-PrimitiveCreation* PrimitiveCreation::get()
-{
-	return m_instance;
+	UINT size_index_list = ARRAYSIZE(index_list);
+
+	// create IB
+	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer
+	(index_list, size_index_list);
+
+	// gets the byte code and size of the vertex_tex shader
+	void* shader_byte_code = nullptr;
+	size_t size_shader = 0;
+	GraphicsEngine::get()->getPixelShaderByteCodeAndSize(&shader_byte_code, &size_shader);
+
+	// create VB
+	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(
+		vertex_list,
+		sizeof(vertex_tex), size_list,
+		shader_byte_code, size_shader);
 }
 
 void PrimitiveCreation::create()
 {
-	if (PrimitiveCreation::m_instance)
+	if (PrimitiveCreation::sharedInstance)
 		throw std::exception("PrimitiveCreation already created");
-	PrimitiveCreation::m_instance = new PrimitiveCreation();
+	else
+	{
+		PrimitiveCreation::sharedInstance = new PrimitiveCreation();
+	}
 }
 
 void PrimitiveCreation::release()
 {
-	if (!PrimitiveCreation::m_instance)
+	if (!PrimitiveCreation::sharedInstance)
 		return;
-	delete PrimitiveCreation::m_instance;
+	delete PrimitiveCreation::sharedInstance;
+}
+
+PrimitiveCreation* PrimitiveCreation::Instance()
+{
+	return sharedInstance;
 }

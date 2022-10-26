@@ -35,7 +35,7 @@ GraphicsEngine::GraphicsEngine()
 		throw std::exception("MeshManager not created successfully");
 	}
 
-	// gets the byte code and size of the vertex shader
+	// gets the byte code and size of the vertex_tex shader
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 	// access the VertexShader.hlsl and compile

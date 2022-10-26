@@ -3,11 +3,11 @@
 #include "Prerequisites.h"
 
 /*
- *A vertex shader is a program written in HLSL, executed on the GPU, which
- *inputs a vertex and outputs a vertex. Every drawn vertex goes through the
- *vertex shader. This enables the programmer to do specialized work on a per
- *vertex basis to achieve various rendering effects. The values output from
- *the vertex shader are passed on to the next stage in the pipeline.
+ *A vertex_tex shader is a program written in HLSL, executed on the GPU, which
+ *inputs a vertex_tex and outputs a vertex_tex. Every drawn vertex_tex goes through the
+ *vertex_tex shader. This enables the programmer to do specialized work on a per
+ *vertex_tex basis to achieve various rendering effects. The values output from
+ *the vertex_tex shader are passed on to the next stage in the pipeline.
  */
 class VertexShader
 {
