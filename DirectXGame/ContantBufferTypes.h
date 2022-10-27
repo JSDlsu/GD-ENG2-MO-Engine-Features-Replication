@@ -18,5 +18,4 @@ __declspec(align(16))
 struct constant_texture
 {
 	float alpha = 1.0f;
-	unsigned int  object_type = 0;
 };

@@ -33,6 +33,7 @@ enum class VertexShaderType
 enum class PixelShaderType
 {
 	DEFAULT = 0,
+	MESH
 };
 
 class EnumHandler

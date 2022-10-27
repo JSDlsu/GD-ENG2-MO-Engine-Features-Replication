@@ -138,9 +138,13 @@ void Camera::onLeftMouseUp(const Point& delta_mouse_pos)
 void Camera::onRightMouseDown(const Point& delta_mouse_pos)
 {
 	mouseDown = true;
+	// hides the cursor
+	InputSystem::get()->showCursor(false);
 }
 
 void Camera::onRightMouseUp(const Point& delta_mouse_pos)
 {
 	mouseDown = false;
+	// displays the cursor
+	InputSystem::get()->showCursor(true);
 }

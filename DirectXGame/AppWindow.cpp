@@ -31,9 +31,6 @@ void AppWindow::onCreate()
 	// create cameras
 	CameraHandler::Initialize();
 
-	// hides the cursor
-	InputSystem::get()->showCursor(true);
-
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = GraphicsEngine::get()->getRenderSystem()->createSwapChain(
 		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);

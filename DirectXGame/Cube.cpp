@@ -16,21 +16,21 @@ Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 	// Set the object type
 	ObjectType = type;
 
+	// assigns the vertex and index buffer of cube
 	PrimitiveCreation::Instance()->GetCubeWithTexture(m_vb, m_ib);
 
 	// create CB
 	constant_transform cc;
 	cc.m_time = 0;
 	m_cb = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc, sizeof(constant_transform));
-	// Texture update
+	// create CB_texture
 	constant_texture cc_texture;
-	cc_texture.object_type = (int)ObjectType;
 	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc_texture, sizeof(constant_texture));
 
 	// Default vertex shader
-	ShaderEngine::get()->getVertexShaderManager()->ChangeVertexShader(m_vs);
+	SetVertexShader(VertexShaderType::DEFAULT);
 	// Default pixel shader
-	ShaderEngine::get()->getPixelShaderManager()->ChangePixelShader(m_ps);
+	SetPixelShader(PixelShaderType::DEFAULT);
 }
 
 Cube::~Cube()
@@ -43,7 +43,6 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	// Texture update
 	constant_texture cc_texture;
 	cc_texture.alpha = alpha;
-	cc_texture.object_type = (int)ObjectType;
 	m_cb_texture->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc_texture);
 
 	// transform update
@@ -114,14 +113,13 @@ void Cube::Draw(const BlenderPtr& m_blender)
 
 void Cube::SetMesh(const wchar_t* tex_path)
 {
+	// sets the new Index and Vertex buffer based from the mesh
 	m_mesh = GraphicsEngine::get()->getMeshManager()->createMeshFromFile(tex_path);
 	m_ib = m_mesh.get()->getIndexBuffer();
 	m_vb = m_mesh.get()->getVertexBuffer();
-	// Texture update
-	constant_texture cc_texture;
-	ObjectType = ObjectTypes::MESH;
-	cc_texture.object_type = (int)ObjectType;
-	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc_texture, sizeof(constant_texture));
+
+	// change the pixel shader for mesh types
+	SetPixelShader(PixelShaderType::MESH);
 }
 
 void Cube::SetTexture(const wchar_t* tex_path)
@@ -132,8 +130,16 @@ void Cube::SetTexture(const wchar_t* tex_path)
 
 void Cube::SetVertexShader(VertexShaderType vs_type)
 {
-	// Default vertex shader
+	// assign a new vertexShader to this object
 	ShaderEngine::get()->getVertexShaderManager()->ChangeVertexShader(m_vs, vs_type);
+	this->vs_type = vs_type;
+}
+
+void Cube::SetPixelShader(PixelShaderType ps_type)
+{
+	// assign a new pixelShader to this object
+	ShaderEngine::get()->getPixelShaderManager()->ChangePixelShader(m_ps, ps_type);
+	this->ps_type = ps_type;
 }
 
 void Cube::SetAlpha(float alpha)

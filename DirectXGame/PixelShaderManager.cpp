@@ -5,6 +5,7 @@
 PixelShaderManager::PixelShaderManager()
 {
 	CompilePixelShader(L"PixelShader.hlsl", "psmain", PixelShaderType::DEFAULT);
+	CompilePixelShader(L"PS_Mesh.hlsl", "psmain", PixelShaderType::MESH);
 }
 
 PixelShaderManager::~PixelShaderManager()
@@ -22,6 +23,7 @@ void PixelShaderManager::ChangePixelShader(PixelShaderPtr& m_vs, PixelShaderType
 
 ShaderByteData PixelShaderManager::GetPixelShaderData(PixelShaderType ps_type)
 {
+	// search the pixelShaderData in the map collection
 	for (auto it = PixelShaderMap.begin(); it != PixelShaderMap.end(); ++it)
 		if (it->first == ps_type)
 			return it->second;

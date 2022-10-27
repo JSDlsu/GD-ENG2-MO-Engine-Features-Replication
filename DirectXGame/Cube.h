@@ -16,7 +16,10 @@ public:
 public:
 	void SetMesh(const wchar_t* tex_path);
 	void SetTexture(const wchar_t* tex_path);
+public:
 	void SetVertexShader(VertexShaderType vs_type);
+	void SetPixelShader(PixelShaderType ps_type);
+public:
 	void SetAlpha(float alpha);
 	float GetAlpha();
 protected:
@@ -29,6 +32,8 @@ protected:
 protected:
 	VertexShaderPtr m_vs;
 	PixelShaderPtr m_ps;
+	VertexShaderType vs_type;
+	PixelShaderType ps_type;
 protected:
 	float ticks = 0.0f;
 	float deltaPos = 0.0f;

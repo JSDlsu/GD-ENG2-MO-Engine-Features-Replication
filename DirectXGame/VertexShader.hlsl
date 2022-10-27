@@ -16,7 +16,6 @@ struct VS_OUTPUT
 	float2 texcoord: TEXCOORD0;
 };
 
-
 cbuffer constant_transform: register(b0)
 {
 	row_major float4x4 m_world;
@@ -24,7 +23,6 @@ cbuffer constant_transform: register(b0)
 	row_major float4x4 m_proj;
 	unsigned int m_time;
 };
-
 
 // what should we do with our input, and place it as a value for our output
 VS_OUTPUT vsmain(VS_INPUT input)
