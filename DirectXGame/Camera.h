@@ -1,7 +1,6 @@
 #pragma once
 #include "AGameObject.h"
 #include "InputListener.h"
-#include "Prerequisites.h"
 
 class Point;
 

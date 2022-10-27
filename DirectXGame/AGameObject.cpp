@@ -14,7 +14,7 @@ AGameObject::~AGameObject()
 {
 }
 
-void AGameObject::Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender)
+void AGameObject::Draw(const BlenderPtr& m_blender)
 {
 
 }

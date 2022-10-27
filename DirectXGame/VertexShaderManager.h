@@ -1,12 +1,8 @@
 #pragma once
+#include <map>
+#include "EnumHandler.h"
 #include "Prerequisites.h"
-
-struct VertexByteData
-{
-	void* m_byte_code[2048];
-	size_t m_size;
-	VertexShaderPtr m_vs;
-};
+#include "StructHandler.h"
 
 class VertexShaderManager
 {
@@ -15,14 +11,13 @@ public:
 	~VertexShaderManager();
 
 public:
-	VertexByteData Get_VS_Default();
-	VertexByteData Get_VS_Mesh();
+	void ChangeVertexShader(VertexShaderPtr& m_vs, VertexShaderType vs_type = VertexShaderType::DEFAULT);
+	ShaderByteData GetVertexShaderData(VertexShaderType vs_type);
 
 private:
-	void CompileVertexShaders(const wchar_t* file_name, const char* entry_point_name, VertexByteData& m_data);
+	void CompileVertexShader(const wchar_t* file_name, const char* entry_point_name, VertexShaderType vs_type);
 
 private:
-	VertexByteData base;
-	VertexByteData mesh;
+	std::map<VertexShaderType, ShaderByteData> VertexShaderMap;
 };
 

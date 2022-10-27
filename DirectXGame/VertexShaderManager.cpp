@@ -1,33 +1,41 @@
 #include "VertexShaderManager.h"
-
 #include <iostream>
-
 #include "GraphicsEngine.h"
+#include "ShaderEngine.h"
 
 VertexShaderManager::VertexShaderManager()
 {
-	CompileVertexShaders(L"VertexShader.hlsl", "vsmain", base);
-	CompileVertexShaders(L"VertexMeshLayoutShader.hlsl", "vsmain", mesh);
-	std::cout << "Compile shader" << std::endl;
+	CompileVertexShader(L"VertexShader.hlsl", "vsmain", VertexShaderType::DEFAULT);
+	CompileVertexShader(L"VertexMeshLayoutShader.hlsl", "vsmain", VertexShaderType::MESH);
 }
 
 VertexShaderManager::~VertexShaderManager()
 {
 }
 
-VertexByteData VertexShaderManager::Get_VS_Default()
+void VertexShaderManager::ChangeVertexShader(VertexShaderPtr& m_vs, VertexShaderType vs_type)
 {
-	return base;
+	ShaderByteData l_vs = GetVertexShaderData(vs_type);
+
+	// after a successful compiling, create the vertex_tex buffer then
+	m_vs = GraphicsEngine::get()->getRenderSystem()->createVertexShader(l_vs.m_byte_code, l_vs.m_size);
+	GraphicsEngine::get()->getRenderSystem()->releaseCompiledShader();
 }
 
-VertexByteData VertexShaderManager::Get_VS_Mesh()
+ShaderByteData VertexShaderManager::GetVertexShaderData(VertexShaderType vs_type)
 {
-	return mesh;
+	for (auto it = VertexShaderMap.begin(); it != VertexShaderMap.end(); ++it)
+		if (it->first == vs_type)
+			return it->second;
+
+	ShaderByteData no_result;
+	return no_result;
 }
 
-void VertexShaderManager::CompileVertexShaders(const wchar_t* file_name, const char* entry_point_name,
-	VertexByteData& m_data)
+void VertexShaderManager::CompileVertexShader(const wchar_t* file_name, const char* entry_point_name,
+                                              VertexShaderType vs_type)
 {
+	ShaderByteData m_data;
 	// gets the byte code and size of the vertex_tex shader
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
@@ -41,6 +49,6 @@ void VertexShaderManager::CompileVertexShaders(const wchar_t* file_name, const c
 	// release compiled shader
 	GraphicsEngine::get()->getRenderSystem()->releaseCompiledShader();
 
-	m_data.m_vs = GraphicsEngine::get()->getRenderSystem()->createVertexShader(shader_byte_code, size_shader);
-	
+	// add the byteData obj to the map
+	VertexShaderMap.insert(std::pair<VertexShaderType, ShaderByteData>(vs_type, m_data));
 }

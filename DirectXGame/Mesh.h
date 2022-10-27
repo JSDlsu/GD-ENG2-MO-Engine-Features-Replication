@@ -7,7 +7,7 @@ class AppWindow;
 
 /*
  *contains the resource and shaderResourceView attributes.
- *The mesh class requires the ‘tinyobj’ header file in
+ *The _mesh class requires the ‘tinyobj’ header file in
  *order for it to parse data of the models.
  */
 class Mesh : public Resource

@@ -1,6 +1,7 @@
 #include "PrimitiveCreation.h"
 #include <iostream>
 #include "AppWindow.h"
+#include "GraphicsEngine.h"
 #include "ShaderEngine.h"
 
 PrimitiveCreation* PrimitiveCreation::sharedInstance = nullptr;
@@ -113,7 +114,7 @@ void PrimitiveCreation::GetCubeWithTexture(VertexBufferPtr& m_vb, IndexBufferPtr
 	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer
 	(index_list, size_index_list);
 	
-	VertexByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->Get_VS_Default();
+	ShaderByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->GetVertexShaderData(VertexShaderType::DEFAULT);
 
 	// create VB
 	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(

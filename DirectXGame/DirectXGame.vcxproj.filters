@@ -180,9 +180,15 @@
     <ClCompile Include="CameraHandler.cpp">
       <Filter>GameEngine\Components\Rendering\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="PixelShaderManager.cpp" />
-    <ClCompile Include="VertexShaderManager.cpp" />
-    <ClCompile Include="ShaderEngine.cpp" />
+    <ClCompile Include="PixelShaderManager.cpp">
+      <Filter>GameEngine\ShaderEngine\ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShaderManager.cpp">
+      <Filter>GameEngine\ShaderEngine\ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderEngine.cpp">
+      <Filter>GameEngine\ShaderEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppWindow.h">
@@ -299,12 +305,21 @@
     <ClInclude Include="CameraHandler.h">
       <Filter>GameEngine\Components\Rendering\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="PixelShaderManager.h" />
-    <ClInclude Include="VertexShaderManager.h" />
     <ClInclude Include="EnumHandler.h">
       <Filter>GameEngine\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderEngine.h" />
+    <ClInclude Include="PixelShaderManager.h">
+      <Filter>GameEngine\ShaderEngine\ShaderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShaderManager.h">
+      <Filter>GameEngine\ShaderEngine\ShaderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderEngine.h">
+      <Filter>GameEngine\ShaderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="StructHandler.h">
+      <Filter>GameEngine\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx" />

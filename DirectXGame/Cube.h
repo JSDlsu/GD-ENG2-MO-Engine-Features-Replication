@@ -12,7 +12,7 @@ public:
 	~Cube();
 public:
 	void Update(float deltaTime, AppWindow* app_window) override;
-	void Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender) override;
+	void Draw(const BlenderPtr& m_blender) override;
 public:
 	void SetMesh(const wchar_t* tex_path);
 	void SetTexture(const wchar_t* tex_path);
@@ -28,6 +28,7 @@ protected:
 	ConstantBufferPtr m_cb_texture;
 protected:
 	VertexShaderPtr m_vs;
+	PixelShaderPtr m_ps;
 protected:
 	float ticks = 0.0f;
 	float deltaPos = 0.0f;

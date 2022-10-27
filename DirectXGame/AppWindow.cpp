@@ -8,11 +8,12 @@
 #include "GameObjectManager.h"
 #include "PrimitiveCreation.h"
 #include <vector>
-
 #include "Camera.h"
 #include "CameraHandler.h"
+#include "GraphicsEngine.h"
 #include "PassRender.h"
 #include "Plane.h"
+#include "SwapChain.h"
 
 
 AppWindow::AppWindow()
@@ -31,7 +32,7 @@ void AppWindow::onCreate()
 	CameraHandler::Initialize();
 
 	// hides the cursor
-	InputSystem::get()->showCursor(false);
+	InputSystem::get()->showCursor(true);
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = GraphicsEngine::get()->getRenderSystem()->createSwapChain(
@@ -79,16 +80,7 @@ void AppWindow::onCreate()
 	GameObjectManager::get()->objectList.push_back(temp_ptr3);
 	GameObjectManager::get()->objectList.push_back(temp_ptr4);
 	GameObjectManager::get()->objectList.push_back(temp_ptr5);
-
-	// gets the byte code and size of the vertex_tex shader
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-
-	// access the PixelShader.hlsl and compile
-	GraphicsEngine::get()->getRenderSystem()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
-	m_ps = GraphicsEngine::get()->getRenderSystem()->createPixelShader(shader_byte_code, size_shader);
-	GraphicsEngine::get()->getRenderSystem()->releaseCompiledShader();
-
+	
 	// create blenderPtr
 	m_blender = GraphicsEngine::get()->getRenderSystem()->createBlender();
 
@@ -127,10 +119,10 @@ void AppWindow::onUpdate()
 	// PassRender; Draw objects in order
 	// Opaque objects are draw first
 	PassRender<OpaqueFilterPolicy, FrontToBackPolicy> opaquePass;
-	opaquePass.Render(m_ps, m_blender, CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	opaquePass.Render(m_blender, CameraHandler::GetInstance()->GetSceneCameraMatrix());
 	// Transparent objects are draw last
 	PassRender<TransparencyFilterPolicy, BackToFrontPolicy> transparencyPass;
-	transparencyPass.Render(m_ps, m_blender, CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	transparencyPass.Render(m_blender, CameraHandler::GetInstance()->GetSceneCameraMatrix());
 
 	m_swap_chain->present(true);
 }

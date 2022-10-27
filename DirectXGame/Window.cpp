@@ -4,7 +4,7 @@
 
 //Window* window = nullptr;
 int Window::HEIGHT = 768;
-int Window::WIDTH = 1024;
+int Window::WIDTH = 1366;
 
 // Calls the events of our window (creation and destroy events)
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)

@@ -19,9 +19,9 @@ void Plane::Update(float deltaTime, AppWindow* app_window)
 	Cube::Update(deltaTime, app_window);
 }
 
-void Plane::Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender)
+void Plane::Draw(const BlenderPtr& m_blender)
 {
-	Cube::Draw(m_ps, m_blender);
+	Cube::Draw(m_blender);
 }
 
 

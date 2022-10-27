@@ -1,6 +1,7 @@
 #include "AppWindow.h"
 #include "InputSystem.h"
 #include "GameObjectManager.h"
+#include "GraphicsEngine.h"
 #include "PrimitiveCreation.h"
 #include "ShaderEngine.h"
 

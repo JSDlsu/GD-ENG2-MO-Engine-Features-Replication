@@ -27,7 +27,7 @@ public:
 	}
 
 public:
-	// representation of the mesh structure attribute
+	// representation of the _mesh structure attribute
 	Vector3D m_position;
 	Vector2D m_texcoord;
 };

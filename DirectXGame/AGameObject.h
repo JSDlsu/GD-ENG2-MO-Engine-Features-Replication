@@ -21,7 +21,7 @@ public:
 	ObjectTypes ObjectType;
 public:
 	virtual void Update(float deltaTime, AppWindow* app_window) = 0;
-	virtual void Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender);
+	virtual void Draw(const BlenderPtr& m_blender);
 public:
 	void SetTransform(Vector3D position, Vector3D scale, Vector3D rotation);
 

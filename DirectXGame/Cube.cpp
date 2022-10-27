@@ -1,17 +1,12 @@
 #include "Cube.h"
-
-#include <iostream>
-
 #include "AppWindow.h"
 #include "ConstantBuffer.h"
 #include "ContantBufferTypes.h"
 #include "DeviceContext.h"
-#include "EngineTime.h"
 #include "GraphicsEngine.h"
 #include "IndexBuffer.h"
 #include "Mesh.h"
 #include "PrimitiveCreation.h"
-#include "Camera.h"
 #include "CameraHandler.h"
 #include "ShaderEngine.h"
 #include "VertexShaderManager.h"
@@ -32,9 +27,10 @@ Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 	cc_texture.object_type = (int)ObjectType;
 	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc_texture, sizeof(constant_texture));
 
-	VertexByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->Get_VS_Default();
-	// after a successful compiling, create the vertex_tex buffer then
-	m_vs = GraphicsEngine::get()->getRenderSystem()->createVertexShader(l_vs.m_byte_code, l_vs.m_size);
+	// Default vertex shader
+	ShaderEngine::get()->getVertexShaderManager()->ChangeVertexShader(m_vs);
+	// Default pixel shader
+	ShaderEngine::get()->getPixelShaderManager()->ChangePixelShader(m_ps);
 }
 
 Cube::~Cube()
@@ -83,14 +79,14 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	);
 #elif VIEW == 1
 	// setting the perspective projection
-	float aspectRatio = (float)(Window::WIDTH / 300.0f) / (float)(Window::HEIGHT / 300.0f);
+	float aspectRatio = (float)(Window::WIDTH) / (float)(Window::HEIGHT);
 	cc.m_proj.setPerspectiveFovLH(aspectRatio, aspectRatio, 0.1f, 100.0f);
 #endif
 
 	m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);
 }
 
-void Cube::Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender)
+void Cube::Draw(const BlenderPtr& m_blender)
 {
 	// for the transform
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
@@ -136,8 +132,8 @@ void Cube::SetTexture(const wchar_t* tex_path)
 
 void Cube::SetVertexShader(VertexShaderType vs_type)
 {
-	std::cout << "Set VertexShader\n";
-	m_vs = ShaderEngine::get()->getVertexShaderManager()->Get_VS_Default().m_vs;
+	// Default vertex shader
+	ShaderEngine::get()->getVertexShaderManager()->ChangeVertexShader(m_vs, vs_type);
 }
 
 void Cube::SetAlpha(float alpha)

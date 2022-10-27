@@ -71,10 +71,10 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 				tinyobj::real_t tx = attribs.texcoords[index.texcoord_index * 2 + 0];
 				tinyobj::real_t ty = attribs.texcoords[index.texcoord_index * 2 + 1];
 
-				// passing the attributes to our vertex_tex mesh; then push it to the vector
+				// passing the attributes to our vertex_tex _mesh; then push it to the vector
 				VertexMesh vertex(Vector3D(vx, vy, vz), Vector2D(tx, ty));
 				list_vertices.push_back(vertex);
-				// passing the attributes to our index mesh; then push it to the vector
+				// passing the attributes to our index _mesh; then push it to the vector
 				list_indices.push_back(index_offset + v);
 			}
 
@@ -82,7 +82,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 		}
 	}
 	
-	VertexByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->Get_VS_Mesh();
+	ShaderByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->GetVertexShaderData(VertexShaderType::MESH);
 
 	// create the index buffer
 	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer(&list_indices[0],
