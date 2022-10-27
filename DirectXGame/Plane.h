@@ -15,6 +15,6 @@ public:
 	~Plane();
 public:
 	void Update(float deltaTime, AppWindow* app_window) override;
-	void Draw(const VertexShaderPtr& m_vs, const PixelShaderPtr& m_ps, const BlenderPtr& m_blender) override;
+	void Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender) override;
 };
 

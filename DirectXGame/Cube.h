@@ -1,5 +1,6 @@
 #pragma once
 #include "AGameObject.h"
+#include "EnumHandler.h"
 #include "Prerequisites.h"
 
 class AppWindow;
@@ -11,10 +12,11 @@ public:
 	~Cube();
 public:
 	void Update(float deltaTime, AppWindow* app_window) override;
-	void Draw(const VertexShaderPtr& m_vs, const PixelShaderPtr& m_ps, const BlenderPtr& m_blender) override;
+	void Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender) override;
 public:
 	void SetMesh(const wchar_t* tex_path);
 	void SetTexture(const wchar_t* tex_path);
+	void SetVertexShader(VertexShaderType vs_type);
 	void SetAlpha(float alpha);
 	float GetAlpha();
 protected:
@@ -24,6 +26,8 @@ protected:
 	IndexBufferPtr m_ib;
 	ConstantBufferPtr m_cb;
 	ConstantBufferPtr m_cb_texture;
+protected:
+	VertexShaderPtr m_vs;
 protected:
 	float ticks = 0.0f;
 	float deltaPos = 0.0f;

@@ -1,24 +1,28 @@
 #pragma once
 #include "Prerequisites.h"
 
-struct vertexByteData
+struct VertexByteData
 {
 	void* m_byte_code[2048];
 	size_t m_size;
+	VertexShaderPtr m_vs;
 };
 
 class VertexShaderManager
 {
 public:
-	VertexShaderManager(RenderSystem* m_render_system);
+	VertexShaderManager();
 	~VertexShaderManager();
 
 public:
-	void Get_VS_Default(void** byte_code, size_t* size);
-	void Get_VS_Mesh(void** byte_code, size_t* size);
+	VertexByteData Get_VS_Default();
+	VertexByteData Get_VS_Mesh();
 
 private:
-	vertexByteData base;
-	vertexByteData mesh;
+	void CompileVertexShaders(const wchar_t* file_name, const char* entry_point_name, VertexByteData& m_data);
+
+private:
+	VertexByteData base;
+	VertexByteData mesh;
 };
 

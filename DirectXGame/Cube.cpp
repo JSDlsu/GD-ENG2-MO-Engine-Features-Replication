@@ -13,6 +13,8 @@
 #include "PrimitiveCreation.h"
 #include "Camera.h"
 #include "CameraHandler.h"
+#include "ShaderEngine.h"
+#include "VertexShaderManager.h"
 
 Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
@@ -27,9 +29,12 @@ Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 	m_cb = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc, sizeof(constant_transform));
 	// Texture update
 	constant_texture cc_texture;
-	cc_texture.object_type = ObjectType;
+	cc_texture.object_type = (int)ObjectType;
 	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc_texture, sizeof(constant_texture));
-	
+
+	VertexByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->Get_VS_Default();
+	// after a successful compiling, create the vertex_tex buffer then
+	m_vs = GraphicsEngine::get()->getRenderSystem()->createVertexShader(l_vs.m_byte_code, l_vs.m_size);
 }
 
 Cube::~Cube()
@@ -42,7 +47,7 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	// Texture update
 	constant_texture cc_texture;
 	cc_texture.alpha = alpha;
-	cc_texture.object_type = ObjectType;
+	cc_texture.object_type = (int)ObjectType;
 	m_cb_texture->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc_texture);
 
 	// transform update
@@ -85,7 +90,7 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);
 }
 
-void Cube::Draw(const VertexShaderPtr& m_vs, const PixelShaderPtr& m_ps, const BlenderPtr& m_blender)
+void Cube::Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender)
 {
 	// for the transform
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
@@ -119,7 +124,7 @@ void Cube::SetMesh(const wchar_t* tex_path)
 	// Texture update
 	constant_texture cc_texture;
 	ObjectType = ObjectTypes::MESH;
-	cc_texture.object_type = ObjectType;
+	cc_texture.object_type = (int)ObjectType;
 	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc_texture, sizeof(constant_texture));
 }
 
@@ -127,6 +132,12 @@ void Cube::SetTexture(const wchar_t* tex_path)
 {
 	// assign the texture file to the Texture pointer by passing the its path in the file
 	m_tex = GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+}
+
+void Cube::SetVertexShader(VertexShaderType vs_type)
+{
+	std::cout << "Set VertexShader\n";
+	m_vs = ShaderEngine::get()->getVertexShaderManager()->Get_VS_Default().m_vs;
 }
 
 void Cube::SetAlpha(float alpha)

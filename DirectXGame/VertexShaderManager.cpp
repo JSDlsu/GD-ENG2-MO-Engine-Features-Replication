@@ -1,40 +1,46 @@
 #include "VertexShaderManager.h"
 
+#include <iostream>
+
 #include "GraphicsEngine.h"
 
-VertexShaderManager::VertexShaderManager(RenderSystem* m_render_system)
+VertexShaderManager::VertexShaderManager()
 {
-	// gets the byte code and size of the vertex_tex shader
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-	// access the VertexShader.hlsl and compile
-	m_render_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-	// copy the bytecode into our public field(primitive and shader byte codes)
-	::memcpy(base.m_byte_code, shader_byte_code, size_shader);
-	// set the primitive size
-	base.m_size = size_shader;
-	m_render_system->releaseCompiledShader();
-	// access the VertexMeshLayoutShader.hlsl and compile
-	m_render_system->compileVertexShader(L"VertexMeshLayoutShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-	// copy the bytecode into our public field(layout and shader byte codes)
-	::memcpy(mesh.m_byte_code, shader_byte_code, size_shader);
-	// set the layout size
-	mesh.m_size = size_shader;
-	m_render_system->releaseCompiledShader();
+	CompileVertexShaders(L"VertexShader.hlsl", "vsmain", base);
+	CompileVertexShaders(L"VertexMeshLayoutShader.hlsl", "vsmain", mesh);
+	std::cout << "Compile shader" << std::endl;
 }
 
 VertexShaderManager::~VertexShaderManager()
 {
 }
 
-void VertexShaderManager::Get_VS_Default(void** byte_code, size_t* size)
+VertexByteData VertexShaderManager::Get_VS_Default()
 {
-	*byte_code = base.m_byte_code;
-	*size = base.m_size;
+	return base;
 }
 
-void VertexShaderManager::Get_VS_Mesh(void** byte_code, size_t* size)
+VertexByteData VertexShaderManager::Get_VS_Mesh()
 {
-	*byte_code = mesh.m_byte_code;
-	*size = mesh.m_size;
+	return mesh;
+}
+
+void VertexShaderManager::CompileVertexShaders(const wchar_t* file_name, const char* entry_point_name,
+	VertexByteData& m_data)
+{
+	// gets the byte code and size of the vertex_tex shader
+	void* shader_byte_code = nullptr;
+	size_t size_shader = 0;
+
+	// access the VertexMeshLayoutShader.hlsl and compile
+	GraphicsEngine::get()->getRenderSystem()->compileVertexShader(file_name, entry_point_name, &shader_byte_code, &size_shader);
+	// copy the bytecode into our public field(layout and shader byte codes)
+	::memcpy(m_data.m_byte_code, shader_byte_code, size_shader);
+	// set the layout size
+	m_data.m_size = size_shader;
+	// release compiled shader
+	GraphicsEngine::get()->getRenderSystem()->releaseCompiledShader();
+
+	m_data.m_vs = GraphicsEngine::get()->getRenderSystem()->createVertexShader(shader_byte_code, size_shader);
+	
 }

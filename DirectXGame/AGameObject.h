@@ -1,20 +1,13 @@
 #pragma once
 #include <string>
 
+#include "EnumHandler.h"
 #include "Matrix4x4.h"
 #include "Prerequisites.h"
 #include "Vector3D.h"
 
 class Matrix4x4;
 class AppWindow;
-
-enum ObjectTypes
-{
-	CUBE = 0,
-	MESH,
-	PLANE,
-	CAMERA
-};
 
 /*
  * Abstract class for primitive type objects(cube,plane,sphere,etc..)
@@ -28,7 +21,7 @@ public:
 	ObjectTypes ObjectType;
 public:
 	virtual void Update(float deltaTime, AppWindow* app_window) = 0;
-	virtual void Draw(const VertexShaderPtr& m_vs, const PixelShaderPtr& m_ps, const BlenderPtr& m_blender);
+	virtual void Draw(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender);
 public:
 	void SetTransform(Vector3D position, Vector3D scale, Vector3D rotation);
 

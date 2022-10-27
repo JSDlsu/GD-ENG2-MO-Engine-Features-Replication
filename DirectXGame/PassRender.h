@@ -6,7 +6,6 @@
 #include "Prerequisites.h"
 #include "Matrix4x4.h"
 
-
 /*
  * performs the draw principle to have a perfect blending of
  * objects in the scene. Two different pass(Opaque or Transparent).
@@ -21,7 +20,7 @@ template<typename FilteringPolicy, typename SortingPolicy>
 class PassRender
 {
 public:
-	void Render(const VertexShaderPtr& m_vs, const PixelShaderPtr& m_ps, const BlenderPtr& m_blender, const Matrix4x4& camera)
+	void Render(const PixelShaderPtr& m_ps, const BlenderPtr& m_blender, const Matrix4x4& camera)
 	{
 		m_sortingPolicy.SetCamera(camera);
 		m_filterPolicy.SetCamera(camera);
@@ -32,7 +31,7 @@ public:
 		for (auto object : sortedObjects)
 		{
 			if (m_filterPolicy.ShouldRender(object))
-				object->Draw(m_vs, m_ps, m_blender);
+				object->Draw(m_ps, m_blender);
 		}
 	}
 private:

@@ -88,7 +88,10 @@
     <Filter Include="GameEngine\Primitives\Plane">
       <UniqueIdentifier>{98b7950e-0513-4942-b3b1-d93ee45f7a93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\GraphicsEngine\ShaderManager">
+    <Filter Include="GameEngine\ShaderEngine">
+      <UniqueIdentifier>{cdb3d525-e7e5-4705-b4c2-696aa2941089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\ShaderEngine\ShaderManager">
       <UniqueIdentifier>{3c17da98-1a38-4f5b-a6eb-8235d3841631}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -179,6 +182,7 @@
     </ClCompile>
     <ClCompile Include="PixelShaderManager.cpp" />
     <ClCompile Include="VertexShaderManager.cpp" />
+    <ClCompile Include="ShaderEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppWindow.h">
@@ -297,6 +301,10 @@
     </ClInclude>
     <ClInclude Include="PixelShaderManager.h" />
     <ClInclude Include="VertexShaderManager.h" />
+    <ClInclude Include="EnumHandler.h">
+      <Filter>GameEngine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx" />

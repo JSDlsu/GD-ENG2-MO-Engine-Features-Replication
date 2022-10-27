@@ -34,31 +34,11 @@ GraphicsEngine::GraphicsEngine()
 	{
 		throw std::exception("MeshManager not created successfully");
 	}
-	try
-	{
-		// instantiate our VertexShaderManager
-		m_vertexShader_manager = new VertexShaderManager(m_render_system);
-	}
-	catch (...)
-	{
-		throw std::exception("VertexShaderManager not created successfully");
-	}
-	try
-	{
-		// instantiate our PixelShaderManager
-		m_pixelShader_manager = new PixelShaderManager();
-	}
-	catch (...)
-	{
-		throw std::exception("PixelShaderManager not created successfully");
-	}
 }
 
 GraphicsEngine::~GraphicsEngine()
 {
 	GraphicsEngine::m_engine = nullptr;
-	delete m_pixelShader_manager;
-	delete m_vertexShader_manager;
 	delete m_mesh_manager;
 	delete m_tex_manager;
 	delete m_render_system;
@@ -77,16 +57,6 @@ TextureManager* GraphicsEngine::getTextureManager()
 MeshManager* GraphicsEngine::getMeshManager()
 {
 	return m_mesh_manager;
-}
-
-VertexShaderManager* GraphicsEngine::getVertexShaderManager()
-{
-	return m_vertexShader_manager;
-}
-
-PixelShaderManager* GraphicsEngine::getPixelShaderManager()
-{
-	return m_pixelShader_manager;
 }
 
 GraphicsEngine* GraphicsEngine::get()

@@ -36,7 +36,6 @@ public:
 
 private:
 	SwapChainPtr m_swap_chain;
-	VertexShaderPtr m_vs;
 	PixelShaderPtr m_ps;
 	BlenderPtr m_blender;
 private:
