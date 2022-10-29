@@ -10,7 +10,11 @@ private:
 	PrimitiveCreation& operator=(PrimitiveCreation const&) {}; // assignment operator is private
 
 public:
-	void GetCubeWithTexture(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
+	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
+	void GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
+	void GetCube_Pos_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
+	void GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
+	void GetCube_PosColor_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
 
 public:
 	static void create();

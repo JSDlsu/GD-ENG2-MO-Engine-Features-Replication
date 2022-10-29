@@ -4,8 +4,12 @@
 
 PixelShaderManager::PixelShaderManager()
 {
-	CompilePixelShader(L"PixelShader.hlsl", "psmain", PixelShaderType::DEFAULT);
-	CompilePixelShader(L"PS_Mesh.hlsl", "psmain", PixelShaderType::MESH);
+	CompilePixelShader(L"PixelTex.hlsl", "psmain", PixelShaderType::TEXTURE);
+	CompilePixelShader(L"PixelMesh.hlsl", "psmain", PixelShaderType::MESH);
+	CompilePixelShader(L"PixelColor.hlsl", "psmain", PixelShaderType::COLOR);
+	CompilePixelShader(L"PixelPosLerp.hlsl", "psmain", PixelShaderType::POS_LERP);
+	CompilePixelShader(L"PixelColorLerp.hlsl", "psmain", PixelShaderType::COLOR_LERP);
+	CompilePixelShader(L"PixelPosColorLerp.hlsl", "psmain", PixelShaderType::POS_COLOR_LERP);
 }
 
 PixelShaderManager::~PixelShaderManager()

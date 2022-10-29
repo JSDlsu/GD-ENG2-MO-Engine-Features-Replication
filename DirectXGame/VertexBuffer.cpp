@@ -29,6 +29,8 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
 		throw std::exception("VertexBuffer not created successfully");
 	}
 
+#define IL_TYPE 0
+#if IL_TYPE == 0
 	// defines the attribute of our vertex_tex buffer type
 	// contains all the information about the attributes that will compose our vertex_tex type
 	// the layout for our vertex_tex list[] in AppWindow
@@ -43,9 +45,65 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
 
 	if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
 	{
-		throw std::exception("InputLayout not created successfully");
+		throw std::exception("VertexBuffer not created successfully");
 	}
+#elif IL_TYPE == 1
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
+		{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
+	};
 
+	UINT size_layout = ARRAYSIZE(layout);
+
+	if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
+	{
+		throw std::exception("VertexBuffer not created successfully");
+	}
+#elif IL_TYPE == 2
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
+		{"POSITION", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
+		{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 24,D3D11_INPUT_PER_VERTEX_DATA ,0 },
+	};
+
+	UINT size_layout = ARRAYSIZE(layout);
+
+	if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
+	{
+		throw std::exception("VertexBuffer not created successfully");
+	}
+#elif IL_TYPE == 3
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
+		{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
+		{ "COLOR", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 24,D3D11_INPUT_PER_VERTEX_DATA ,0 }
+	};
+
+	UINT size_layout = ARRAYSIZE(layout);
+
+	if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
+	{
+		throw std::exception("VertexBuffer not created successfully");
+	}
+#elif IL_TYPE == 4
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
+		{"POSITION", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
+		{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 24,D3D11_INPUT_PER_VERTEX_DATA ,0 },
+		{ "COLOR", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 36,D3D11_INPUT_PER_VERTEX_DATA ,0 }
+	};
+
+	UINT size_layout = ARRAYSIZE(layout);
+
+	if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
+	{
+		throw std::exception("VertexBuffer not created successfully");
+	}
+#endif
 }
 
 UINT VertexBuffer::getSizeVertexList()

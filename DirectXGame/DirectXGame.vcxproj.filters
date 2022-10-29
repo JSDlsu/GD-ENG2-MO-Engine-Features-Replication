@@ -329,20 +329,47 @@
     <ClInclude Include="StructHandler.h">
       <Filter>GameEngine\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>GameEngine\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx" />
-    <FxCompile Include="PS_Mesh.hlsl">
-      <Filter>App</Filter>
+    <FxCompile Include="PixelTex.hlsl">
+      <Filter>App\Shaders\PixelShaders</Filter>
     </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>App</Filter>
+    <FxCompile Include="PixelMesh.hlsl">
+      <Filter>App\Shaders\PixelShaders</Filter>
     </FxCompile>
-    <FxCompile Include="VertexMeshLayoutShader.hlsl">
-      <Filter>App</Filter>
+    <FxCompile Include="VertexMesh.hlsl">
+      <Filter>App\Shaders\VertexShaders</Filter>
     </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>App</Filter>
+    <FxCompile Include="VertexTex.hlsl">
+      <Filter>App\Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexColor.hlsl">
+      <Filter>App\Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexPosLerp.hlsl">
+      <Filter>App\Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexColorLerp.hlsl">
+      <Filter>App\Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexPosColorLerp.hlsl">
+      <Filter>App\Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelColor.hlsl">
+      <Filter>App\Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelPosLerp.hlsl">
+      <Filter>App\Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelColorLerp.hlsl">
+      <Filter>App\Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelPosColorLerp.hlsl">
+      <Filter>App\Shaders\PixelShaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

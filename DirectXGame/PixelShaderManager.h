@@ -9,7 +9,7 @@ public:
 	PixelShaderManager();
 	~PixelShaderManager();
 public:
-	void ChangePixelShader(PixelShaderPtr& m_vs, PixelShaderType ps_type = PixelShaderType::DEFAULT);
+	void ChangePixelShader(PixelShaderPtr& m_vs, PixelShaderType ps_type = PixelShaderType::TEXTURE);
 	ShaderByteData GetPixelShaderData(PixelShaderType ps_type);
 
 private:

@@ -5,8 +5,12 @@
 
 VertexShaderManager::VertexShaderManager()
 {
-	CompileVertexShader(L"VertexShader.hlsl", "vsmain", VertexShaderType::DEFAULT);
-	CompileVertexShader(L"VertexMeshLayoutShader.hlsl", "vsmain", VertexShaderType::MESH);
+	CompileVertexShader(L"VertexTex.hlsl", "vsmain", VertexShaderType::TEXTURE);
+	CompileVertexShader(L"VertexMesh.hlsl", "vsmain", VertexShaderType::MESH);
+	CompileVertexShader(L"VertexColor.hlsl", "vsmain", VertexShaderType::COLOR);
+	CompileVertexShader(L"VertexPosLerp.hlsl", "vsmain", VertexShaderType::POS_LERP);
+	CompileVertexShader(L"VertexColorLerp.hlsl", "vsmain", VertexShaderType::COLOR_LERP);
+	CompileVertexShader(L"VertexPosColorLerp.hlsl", "vsmain", VertexShaderType::POS_COLOR_LERP);
 }
 
 VertexShaderManager::~VertexShaderManager()
@@ -19,7 +23,6 @@ void VertexShaderManager::ChangeVertexShader(VertexShaderPtr& m_vs, VertexShader
 
 	// after a successful compiling, create the vertex_tex buffer then
 	m_vs = GraphicsEngine::get()->getRenderSystem()->createVertexShader(l_vs.m_byte_code, l_vs.m_size);
-	GraphicsEngine::get()->getRenderSystem()->releaseCompiledShader();
 }
 
 ShaderByteData VertexShaderManager::GetVertexShaderData(VertexShaderType vs_type)

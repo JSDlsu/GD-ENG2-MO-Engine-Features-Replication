@@ -11,7 +11,7 @@ public:
 	~VertexShaderManager();
 
 public:
-	void ChangeVertexShader(VertexShaderPtr& m_vs, VertexShaderType vs_type = VertexShaderType::DEFAULT);
+	void ChangeVertexShader(VertexShaderPtr& m_vs, VertexShaderType vs_type = VertexShaderType::TEXTURE);
 	ShaderByteData GetVertexShaderData(VertexShaderType vs_type);
 
 private:
