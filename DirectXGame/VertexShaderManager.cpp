@@ -8,9 +8,7 @@ VertexShaderManager::VertexShaderManager()
 	CompileVertexShader(L"VertexTex.hlsl", "vsmain", VertexShaderType::TEXTURE);
 	CompileVertexShader(L"VertexMesh.hlsl", "vsmain", VertexShaderType::MESH);
 	CompileVertexShader(L"VertexColor.hlsl", "vsmain", VertexShaderType::COLOR);
-	CompileVertexShader(L"VertexPosLerp.hlsl", "vsmain", VertexShaderType::POS_LERP);
 	CompileVertexShader(L"VertexColorLerp.hlsl", "vsmain", VertexShaderType::COLOR_LERP);
-	CompileVertexShader(L"VertexPosColorLerp.hlsl", "vsmain", VertexShaderType::POS_COLOR_LERP);
 }
 
 VertexShaderManager::~VertexShaderManager()

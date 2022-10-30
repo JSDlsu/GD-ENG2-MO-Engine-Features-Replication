@@ -350,25 +350,13 @@
     <FxCompile Include="VertexColor.hlsl">
       <Filter>App\Shaders\VertexShaders</Filter>
     </FxCompile>
-    <FxCompile Include="VertexPosLerp.hlsl">
-      <Filter>App\Shaders\VertexShaders</Filter>
-    </FxCompile>
     <FxCompile Include="VertexColorLerp.hlsl">
-      <Filter>App\Shaders\VertexShaders</Filter>
-    </FxCompile>
-    <FxCompile Include="VertexPosColorLerp.hlsl">
       <Filter>App\Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="PixelColor.hlsl">
       <Filter>App\Shaders\PixelShaders</Filter>
     </FxCompile>
-    <FxCompile Include="PixelPosLerp.hlsl">
-      <Filter>App\Shaders\PixelShaders</Filter>
-    </FxCompile>
     <FxCompile Include="PixelColorLerp.hlsl">
-      <Filter>App\Shaders\PixelShaders</Filter>
-    </FxCompile>
-    <FxCompile Include="PixelPosColorLerp.hlsl">
       <Filter>App\Shaders\PixelShaders</Filter>
     </FxCompile>
   </ItemGroup>

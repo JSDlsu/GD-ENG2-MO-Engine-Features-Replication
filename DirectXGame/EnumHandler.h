@@ -15,9 +15,7 @@ enum class VertexShaderType
 	TEXTURE = 0,
 	MESH,
 	COLOR,
-	POS_LERP,
-	COLOR_LERP,
-	POS_COLOR_LERP
+	COLOR_LERP
 };
 
 enum class PixelShaderType
@@ -25,9 +23,7 @@ enum class PixelShaderType
 	TEXTURE = 0,
 	MESH,
 	COLOR,
-	POS_LERP,
-	COLOR_LERP,
-	POS_COLOR_LERP
+	COLOR_LERP
 };
 
 class EnumHandler

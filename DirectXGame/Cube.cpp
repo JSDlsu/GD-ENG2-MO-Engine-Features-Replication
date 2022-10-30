@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "PrimitiveCreation.h"
 #include "CameraHandler.h"
+#include "EngineTime.h"
 #include "ShaderEngine.h"
 #include "VertexShaderManager.h"
 
@@ -16,44 +17,13 @@ Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 	// Set the object type
 	ObjectType = type;
 
-#define TYPE 0
-#if TYPE == 0
+	// Default -- Texture shader
 	// assigns the vertex and index buffer of cube
-	PrimitiveCreation::Instance()->GetCube_Tex(m_vb, m_ib);
+	SetVertex_Index_Buffer(VertexShaderType::TEXTURE);
 	// Default vertex shader
 	SetVertexShader(VertexShaderType::TEXTURE);
 	// Default pixel shader
 	SetPixelShader(PixelShaderType::TEXTURE);
-#elif TYPE == 1
-	// assigns the vertex and index buffer of cube
-	PrimitiveCreation::Instance()->GetCube_Color(m_vb, m_ib);
-	// Default vertex shader
-	SetVertexShader(VertexShaderType::COLOR);
-	// Default pixel shader
-	SetPixelShader(PixelShaderType::COLOR);
-#elif TYPE == 2
-	// assigns the vertex and index buffer of cube
-	PrimitiveCreation::Instance()->GetCube_Pos_Lerp(m_vb, m_ib);
-	// Default vertex shader
-	SetVertexShader(VertexShaderType::POS_LERP);
-	// Default pixel shader
-	SetPixelShader(PixelShaderType::POS_LERP);
-#elif TYPE == 3
-	// assigns the vertex and index buffer of cube
-	PrimitiveCreation::Instance()->GetCube_Color_Lerp(m_vb, m_ib);
-	// Default vertex shader
-	SetVertexShader(VertexShaderType::COLOR_LERP);
-	// Default pixel shader
-	SetPixelShader(PixelShaderType::COLOR_LERP);
-#elif TYPE == 4
-	// assigns the vertex and index buffer of cube
-	PrimitiveCreation::Instance()->GetCube_PosColor_Lerp(m_vb, m_ib);
-	// Default vertex shader
-	SetVertexShader(VertexShaderType::POS_COLOR_LERP);
-	// Default pixel shader
-	SetPixelShader(PixelShaderType::POS_COLOR_LERP);
-#endif
-	
 
 	// create CB
 	constant_transform cc;
@@ -61,6 +31,7 @@ Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 	m_cb = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc, sizeof(constant_transform));
 	// create CB_texture
 	constant_texture cc_texture;
+	cc_texture.alpha = 1.0f;
 	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc_texture, sizeof(constant_texture));
 	
 }
@@ -79,6 +50,7 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 
 	// transform update
 	constant_transform cc;
+	cc.m_time = ::GetTickCount();
 
 	// objects matrix
 	Matrix4x4 temp;
@@ -130,7 +102,8 @@ void Cube::Draw(const BlenderPtr& m_blender)
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setVertexShader(m_vs);
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setPixelShader(m_ps);
 
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setTexture(m_ps, m_tex);
+	if(m_tex != nullptr)
+		GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setTexture(m_ps, m_tex);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
@@ -158,6 +131,11 @@ void Cube::SetTexture(const wchar_t* tex_path)
 {
 	// assign the texture file to the Texture pointer by passing the its path in the file
 	m_tex = GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+}
+
+void Cube::SetVertex_Index_Buffer(VertexShaderType vs_type)
+{
+	PrimitiveCreation::Instance()->ChangeVB_IB_Buffer(vs_type, m_vb, m_ib);
 }
 
 void Cube::SetVertexShader(VertexShaderType vs_type)

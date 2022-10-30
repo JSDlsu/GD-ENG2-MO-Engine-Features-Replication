@@ -7,9 +7,7 @@ PixelShaderManager::PixelShaderManager()
 	CompilePixelShader(L"PixelTex.hlsl", "psmain", PixelShaderType::TEXTURE);
 	CompilePixelShader(L"PixelMesh.hlsl", "psmain", PixelShaderType::MESH);
 	CompilePixelShader(L"PixelColor.hlsl", "psmain", PixelShaderType::COLOR);
-	CompilePixelShader(L"PixelPosLerp.hlsl", "psmain", PixelShaderType::POS_LERP);
 	CompilePixelShader(L"PixelColorLerp.hlsl", "psmain", PixelShaderType::COLOR_LERP);
-	CompilePixelShader(L"PixelPosColorLerp.hlsl", "psmain", PixelShaderType::POS_COLOR_LERP);
 }
 
 PixelShaderManager::~PixelShaderManager()
@@ -22,7 +20,6 @@ void PixelShaderManager::ChangePixelShader(PixelShaderPtr& m_vs, PixelShaderType
 
 	// after a successful compiling, create the vertex_tex buffer then
 	m_vs = GraphicsEngine::get()->getRenderSystem()->createPixelShader(l_vs.m_byte_code, l_vs.m_size);
-	GraphicsEngine::get()->getRenderSystem()->releaseCompiledShader();
 }
 
 ShaderByteData PixelShaderManager::GetPixelShaderData(PixelShaderType ps_type)

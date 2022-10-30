@@ -37,47 +37,50 @@ void AppWindow::onCreate()
 
 	// instantiate a cube and texture
 	Cube* cube = new Cube("cube1", ObjectTypes::CUBE);
-	cube->SetTexture(L"Assets\\Textures\\wood.jpg");
+	//cube->SetTexture(L"Assets\\Textures\\wood.jpg");
+	cube->SetVertex_Index_Buffer(VertexShaderType::COLOR_LERP);
+	cube->SetVertexShader(VertexShaderType::COLOR_LERP);
+	cube->SetPixelShader(PixelShaderType::COLOR_LERP);
+	cube->SetScale(Vector3D{ 0.5f, 0.5f, 0.5f });
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetAlpha(1.0f);
 	AGameObjectPtr temp_ptr(cube);
+	GameObjectManager::get()->objectList.push_back(temp_ptr);
 
+	/*
 	// instantiate a cube and texture
 	Cube* cube1 = new Cube("cube2", ObjectTypes::CUBE);
 	cube1->SetTexture(L"Assets\\Textures\\coat.png");
+	cube1->SetPosition(Vector3D{ 0, 0, -1 });
+	cube1->SetAlpha(0.5f);
 	AGameObjectPtr temp_ptr2(cube1);
+	GameObjectManager::get()->objectList.push_back(temp_ptr2);
 
 	// instantiate a mesh from cube and texture
 	Cube* cube2 = new Cube("cube3", ObjectTypes::CUBE);
 	cube2->SetMesh(L"Assets\\Meshes\\teapot.obj");
 	cube2->SetTexture(L"Assets\\Textures\\brick.png");
+	cube2->SetAlpha(1.0f);
 	AGameObjectPtr temp_ptr3(cube2);
+	GameObjectManager::get()->objectList.push_back(temp_ptr3);
 
 	// instantiate a cube and texture
 	Cube* cube3 = new Cube("cube4", ObjectTypes::CUBE);
 	cube3->SetTexture(L"Assets\\Textures\\coat.png");
+	cube3->SetPosition(Vector3D{ 0, 0, 1 });
+	cube3->SetAlpha(0.2f);
 	AGameObjectPtr temp_ptr4(cube3);
+	GameObjectManager::get()->objectList.push_back(temp_ptr4);
 
 	// instantiate a cube and texture
 	Plane* plane = new Plane("plane1", ObjectTypes::PLANE);
 	plane->SetTexture(L"Assets\\Textures\\wood.jpg");
-	AGameObjectPtr temp_ptr5(plane);
-
-	cube->SetScale(Vector3D{ 0.5f, 0.5f, 0.5f });
-	cube->SetPosition(Vector3D{ 1, 0, 0 });
-	cube1->SetPosition(Vector3D{ 0, 0, -1 });
-	cube3->SetPosition(Vector3D{ 0, 0, 1 });
 	plane->SetPosition(0, -1.0f, 0);
-	cube->SetAlpha(1.0f);
-	cube1->SetAlpha(0.5f);
-	cube2->SetAlpha(1.0f);
-	cube3->SetAlpha(0.2f);
 	plane->SetAlpha(1.0f);
-	// add the objects to our manager
-	GameObjectManager::get()->objectList.push_back(temp_ptr);
-	GameObjectManager::get()->objectList.push_back(temp_ptr2);
-	GameObjectManager::get()->objectList.push_back(temp_ptr3);
-	GameObjectManager::get()->objectList.push_back(temp_ptr4);
+	AGameObjectPtr temp_ptr5(plane);
 	GameObjectManager::get()->objectList.push_back(temp_ptr5);
-	
+	*/
+
 	// create blenderPtr
 	m_blender = GraphicsEngine::get()->getRenderSystem()->createBlender();
 

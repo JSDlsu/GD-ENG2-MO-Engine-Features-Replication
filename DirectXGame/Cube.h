@@ -17,6 +17,7 @@ public:
 	void SetMesh(const wchar_t* tex_path);
 	void SetTexture(const wchar_t* tex_path);
 public:
+	void SetVertex_Index_Buffer(VertexShaderType vs_type);
 	void SetVertexShader(VertexShaderType vs_type);
 	void SetPixelShader(PixelShaderType ps_type);
 public:
