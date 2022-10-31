@@ -2,6 +2,7 @@
 #include "AGameObject.h"
 #include "EnumHandler.h"
 #include "Prerequisites.h"
+#include "StructHandler.h"
 
 class AppWindow;
 
@@ -17,7 +18,7 @@ public:
 	void SetMesh(const wchar_t* tex_path);
 	void SetTexture(const wchar_t* tex_path);
 public:
-	void SetVertex_Index_Buffer(VertexShaderType vs_type);
+	void SetVertex_Index_Buffer(VertexShaderType vs_type, PC_Cube_ColorData color_data = PC_Cube_ColorData());
 	void SetVertexShader(VertexShaderType vs_type);
 	void SetPixelShader(PixelShaderType ps_type);
 public:

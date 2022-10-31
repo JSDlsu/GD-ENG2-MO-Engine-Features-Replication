@@ -210,6 +210,9 @@
     <ClCompile Include="InputLayoutManager.cpp">
       <Filter>GameEngine\RenderBufferEngine\RenderBufferManager</Filter>
     </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>GameEngine\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppWindow.h">
@@ -341,14 +344,14 @@
     <ClInclude Include="StructHandler.h">
       <Filter>GameEngine\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Color.h">
-      <Filter>GameEngine\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="RenderBufferEngine.h">
       <Filter>GameEngine\RenderBufferEngine</Filter>
     </ClInclude>
     <ClInclude Include="InputLayoutManager.h">
       <Filter>GameEngine\RenderBufferEngine\RenderBufferManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>GameEngine\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

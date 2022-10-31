@@ -125,9 +125,9 @@ void Cube::SetTexture(const wchar_t* tex_path)
 	m_tex = GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
 }
 
-void Cube::SetVertex_Index_Buffer(VertexShaderType vs_type)
+void Cube::SetVertex_Index_Buffer(VertexShaderType vs_type, PC_Cube_ColorData color_data)
 {
-	PrimitiveCreation::Instance()->ChangeVB_IB_Buffer(vs_type, m_vb, m_ib);
+	PrimitiveCreation::Instance()->ChangeVB_IB_Buffer(vs_type, m_vb, m_ib, color_data);
 }
 
 void Cube::SetVertexShader(VertexShaderType vs_type)

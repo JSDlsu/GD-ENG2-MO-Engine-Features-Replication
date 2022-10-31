@@ -9,35 +9,9 @@ PrimitiveCreation* PrimitiveCreation::sharedInstance = nullptr;
 
 PrimitiveCreation::PrimitiveCreation()
 {
-
-}
-
-PrimitiveCreation::~PrimitiveCreation()
-{
-
-}
-
-void PrimitiveCreation::ChangeVB_IB_Buffer(VertexShaderType vs_type, VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
-{
-	switch (vs_type)
+	Vector3D cube_position[] =
 	{
-	case VertexShaderType::TEXTURE:
-		GetCube_Tex(m_vb, m_ib);
-		break;
-	case VertexShaderType::COLOR:
-		GetCube_Color(m_vb, m_ib);
-		break;
-	case VertexShaderType::COLOR_LERP:
-		GetCube_Color_Lerp(m_vb, m_ib);
-		break;
-	}
-}
-
-void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
-{
-	// Position Coords
-	Vector3D position_list[] =
-	{
+		//FRONT FACE
 		{ Vector3D(-0.5f,-0.5f,-0.5f)},
 		{ Vector3D(-0.5f,0.5f,-0.5f) },
 		{ Vector3D(0.5f,0.5f,-0.5f) },
@@ -48,6 +22,33 @@ void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 		{ Vector3D(-0.5f,0.5f,0.5f)},
 		{ Vector3D(-0.5f,-0.5f,0.5f) }
 	};
+	UINT cube_size = sizeof(cube_position);
+	::memcpy(cube_positionList, cube_position, cube_size);
+}
+
+PrimitiveCreation::~PrimitiveCreation()
+{
+
+}
+
+void PrimitiveCreation::ChangeVB_IB_Buffer(VertexShaderType vs_type, VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, PC_Cube_ColorData color_data)
+{
+	switch (vs_type)
+	{
+	case VertexShaderType::TEXTURE:
+		GetCube_Tex(m_vb, m_ib);
+		break;
+	case VertexShaderType::COLOR:
+		GetCube_Color(m_vb, m_ib, color_data);
+		break;
+	case VertexShaderType::COLOR_LERP:
+		GetCube_Color_Lerp(m_vb, m_ib, color_data);
+		break;
+	}
+}
+
+void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
+{
 
 	// UV Coords
 	Vector2D texcoord_list[] =
@@ -63,37 +64,37 @@ void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{ position_list[0],texcoord_list[1] },
-		{ position_list[1],texcoord_list[0] },
-		{ position_list[2],texcoord_list[2] },
-		{ position_list[3],texcoord_list[3] },
+		{ cube_positionList[0],texcoord_list[1] },
+		{ cube_positionList[1],texcoord_list[0] },
+		{ cube_positionList[2],texcoord_list[2] },
+		{ cube_positionList[3],texcoord_list[3] },
 
 
-		{ position_list[4],texcoord_list[1] },
-		{ position_list[5],texcoord_list[0] },
-		{ position_list[6],texcoord_list[2] },
-		{ position_list[7],texcoord_list[3] },
+		{ cube_positionList[4],texcoord_list[1] },
+		{ cube_positionList[5],texcoord_list[0] },
+		{ cube_positionList[6],texcoord_list[2] },
+		{ cube_positionList[7],texcoord_list[3] },
 
 
-		{ position_list[1],texcoord_list[1] },
-		{ position_list[6],texcoord_list[0] },
-		{ position_list[5],texcoord_list[2] },
-		{ position_list[2],texcoord_list[3] },
+		{ cube_positionList[1],texcoord_list[1] },
+		{ cube_positionList[6],texcoord_list[0] },
+		{ cube_positionList[5],texcoord_list[2] },
+		{ cube_positionList[2],texcoord_list[3] },
 
-		{ position_list[7],texcoord_list[1] },
-		{ position_list[0],texcoord_list[0] },
-		{ position_list[3],texcoord_list[2] },
-		{ position_list[4],texcoord_list[3] },
+		{ cube_positionList[7],texcoord_list[1] },
+		{ cube_positionList[0],texcoord_list[0] },
+		{ cube_positionList[3],texcoord_list[2] },
+		{ cube_positionList[4],texcoord_list[3] },
 
-		{ position_list[3],texcoord_list[1] },
-		{ position_list[2],texcoord_list[0] },
-		{ position_list[5],texcoord_list[2] },
-		{ position_list[4],texcoord_list[3] },
+		{ cube_positionList[3],texcoord_list[1] },
+		{ cube_positionList[2],texcoord_list[0] },
+		{ cube_positionList[5],texcoord_list[2] },
+		{ cube_positionList[4],texcoord_list[3] },
 
-		{ position_list[7],texcoord_list[1] },
-		{ position_list[6],texcoord_list[0] },
-		{ position_list[1],texcoord_list[2] },
-		{ position_list[0],texcoord_list[3] }
+		{ cube_positionList[7],texcoord_list[1] },
+		{ cube_positionList[6],texcoord_list[0] },
+		{ cube_positionList[1],texcoord_list[2] },
+		{ cube_positionList[0],texcoord_list[3] }
 
 
 	};
@@ -137,72 +138,42 @@ void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 		InputLayoutType::TEXTURE);
 }
 
-void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
+void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, PC_Cube_ColorData color_data)
 {
-	// Position Coords
-	Vector3D position_list[] =
-	{
-		//FRONT FACE
-		{ Vector3D(-0.5f,-0.5f,-0.5f)},
-		{ Vector3D(-0.5f,0.5f,-0.5f) },
-		{ Vector3D(0.5f,0.5f,-0.5f) },
-		{ Vector3D(0.5f,-0.5f,-0.5f)},
-		//BACK FACE
-		{ Vector3D(0.5f,-0.5f,0.5f) },
-		{ Vector3D(0.5f,0.5f,0.5f) },
-		{ Vector3D(-0.5f,0.5f,0.5f)},
-		{ Vector3D(-0.5f,-0.5f,0.5f) }
-	};
-
-	// Color Coords
-	Vector3D color_list[] =
-	{
-		//FRONT FACE
-		Color::Red,
-		Color::Red,
-		Color::Red,
-		Color::Red,
-		//BACK FACE
-		Color::Red,
-		Color::Red,
-		Color::Red,
-		Color::Red
-	};
-
 	// list of all the vertex_tex in the 3D Cube
 	vertex_color vertex_list[] =
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{ position_list[0],color_list[1] },
-		{ position_list[1],color_list[0] },
-		{ position_list[2],color_list[2] },
-		{ position_list[3],color_list[3] },
+		{ cube_positionList[0],color_data.color_list_1[1] },
+		{ cube_positionList[1],color_data.color_list_1[0] },
+		{ cube_positionList[2],color_data.color_list_1[2] },
+		{ cube_positionList[3],color_data.color_list_1[3] },
 
-		{ position_list[4],color_list[1] },
-		{ position_list[5],color_list[0] },
-		{ position_list[6],color_list[2] },
-		{ position_list[7],color_list[3] },
+		{ cube_positionList[4],color_data.color_list_1[1] },
+		{ cube_positionList[5],color_data.color_list_1[0] },
+		{ cube_positionList[6],color_data.color_list_1[2] },
+		{ cube_positionList[7],color_data.color_list_1[3] },
 
-		{ position_list[1],color_list[1] },
-		{ position_list[6],color_list[0] },
-		{ position_list[5],color_list[2] },
-		{ position_list[2],color_list[3] },
+		{ cube_positionList[1],color_data.color_list_1[1] },
+		{ cube_positionList[6],color_data.color_list_1[0] },
+		{ cube_positionList[5],color_data.color_list_1[2] },
+		{ cube_positionList[2],color_data.color_list_1[3] },
 
-		{ position_list[7],color_list[1] },
-		{ position_list[0],color_list[0] },
-		{ position_list[3],color_list[2] },
-		{ position_list[4],color_list[3] },
+		{ cube_positionList[7],color_data.color_list_1[1] },
+		{ cube_positionList[0],color_data.color_list_1[0] },
+		{ cube_positionList[3],color_data.color_list_1[2] },
+		{ cube_positionList[4],color_data.color_list_1[3] },
 
-		{ position_list[3],color_list[1] },
-		{ position_list[2],color_list[0] },
-		{ position_list[5],color_list[2] },
-		{ position_list[4],color_list[3] },
+		{ cube_positionList[3],color_data.color_list_1[1] },
+		{ cube_positionList[2],color_data.color_list_1[0] },
+		{ cube_positionList[5],color_data.color_list_1[2] },
+		{ cube_positionList[4],color_data.color_list_1[3] },
 
-		{ position_list[7],color_list[1] },
-		{ position_list[6],color_list[0] },
-		{ position_list[1],color_list[2] },
-		{ position_list[0],color_list[3] }
+		{ cube_positionList[7],color_data.color_list_1[1] },
+		{ cube_positionList[6],color_data.color_list_1[0] },
+		{ cube_positionList[1],color_data.color_list_1[2] },
+		{ cube_positionList[0],color_data.color_list_1[3] }
 
 
 	};
@@ -247,87 +218,42 @@ void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_i
 		InputLayoutType::COLOR);
 }
 
-void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
+void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, PC_Cube_ColorData color_data)
 {
-	// Position Coords
-	Vector3D position_list[] =
-	{
-		//FRONT FACE
-		{ Vector3D(-0.5f,-0.5f,-0.5f)},
-		{ Vector3D(-0.5f,0.5f,-0.5f) },
-		{ Vector3D(0.5f,0.5f,-0.5f) },
-		{ Vector3D(0.5f,-0.5f,-0.5f)},
-		//BACK FACE
-		{ Vector3D(0.5f,-0.5f,0.5f) },
-		{ Vector3D(0.5f,0.5f,0.5f) },
-		{ Vector3D(-0.5f,0.5f,0.5f)},
-		{ Vector3D(-0.5f,-0.5f,0.5f) }
-	};
-
-	// Color Coords
-	Vector3D color_list[] =
-	{
-		//FRONT FACE
-		Color::Black,
-		Color::Red,
-		Color::White,
-		Color::Yellow,
-		//BACK FACE
-		Color::Black,
-		Color::Red,
-		Color::White,
-		Color::Yellow,
-	};
-
-	// Color Coords
-	Vector3D color_list2[] =
-	{
-		//FRONT FACE
-		Color::Gray,
-		Color::Blue,
-		Color::Green,
-		Color::Purple,
-		//BACK FACE
-		Color::Gray,
-		Color::Blue,
-		Color::Green,
-		Color::Purple,
-	};
-
 	// list of all the vertex_tex in the 3D Cube
 	vertex_color_lerp vertex_list[] =
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{ position_list[0],color_list[1], color_list2[1] },
-		{ position_list[1],color_list[0], color_list2[0] },
-		{ position_list[2],color_list[2], color_list2[2] },
-		{ position_list[3],color_list[3], color_list2[3] },
+		{ cube_positionList[0],color_data.color_list_1[1], color_data.color_list_2[1] },
+		{ cube_positionList[1],color_data.color_list_1[0], color_data.color_list_2[0] },
+		{ cube_positionList[2],color_data.color_list_1[2], color_data.color_list_2[2] },
+		{ cube_positionList[3],color_data.color_list_1[3], color_data.color_list_2[3] },
 
-		{ position_list[4],color_list[1], color_list2[1] },
-		{ position_list[5],color_list[0], color_list2[0] },
-		{ position_list[6],color_list[2], color_list2[2] },
-		{ position_list[7],color_list[3], color_list2[3] },
+		{ cube_positionList[4],color_data.color_list_1[1], color_data.color_list_2[1] },
+		{ cube_positionList[5],color_data.color_list_1[0], color_data.color_list_2[0] },
+		{ cube_positionList[6],color_data.color_list_1[2], color_data.color_list_2[2] },
+		{ cube_positionList[7],color_data.color_list_1[3], color_data.color_list_2[3] },
 
-		{ position_list[1],color_list[1], color_list2[1] },
-		{ position_list[6],color_list[0], color_list2[0] },
-		{ position_list[5],color_list[2], color_list2[2] },
-		{ position_list[2],color_list[3], color_list2[3] },
+		{ cube_positionList[1],color_data.color_list_1[1], color_data.color_list_2[1] },
+		{ cube_positionList[6],color_data.color_list_1[0], color_data.color_list_2[0] },
+		{ cube_positionList[5],color_data.color_list_1[2], color_data.color_list_2[2] },
+		{ cube_positionList[2],color_data.color_list_1[3], color_data.color_list_2[3] },
 
-		{ position_list[7],color_list[1], color_list2[1] },
-		{ position_list[0],color_list[0], color_list2[0] },
-		{ position_list[3],color_list[2], color_list2[2] },
-		{ position_list[4],color_list[3], color_list2[3] },
+		{ cube_positionList[7],color_data.color_list_1[1], color_data.color_list_2[1] },
+		{ cube_positionList[0],color_data.color_list_1[0], color_data.color_list_2[0] },
+		{ cube_positionList[3],color_data.color_list_1[2], color_data.color_list_2[2] },
+		{ cube_positionList[4],color_data.color_list_1[3], color_data.color_list_2[3] },
 
-		{ position_list[3],color_list[1], color_list2[1] },
-		{ position_list[2],color_list[0], color_list2[0] },
-		{ position_list[5],color_list[2], color_list2[2] },
-		{ position_list[4],color_list[3], color_list2[3] },
+		{ cube_positionList[3],color_data.color_list_1[1], color_data.color_list_2[1] },
+		{ cube_positionList[2],color_data.color_list_1[0], color_data.color_list_2[0] },
+		{ cube_positionList[5],color_data.color_list_1[2], color_data.color_list_2[2] },
+		{ cube_positionList[4],color_data.color_list_1[3], color_data.color_list_2[3] },
 
-		{ position_list[7],color_list[1], color_list2[1] },
-		{ position_list[6],color_list[0], color_list2[0] },
-		{ position_list[1],color_list[2], color_list2[2] },
-		{ position_list[0],color_list[3], color_list2[3] }
+		{ cube_positionList[7],color_data.color_list_1[1], color_data.color_list_2[1] },
+		{ cube_positionList[6],color_data.color_list_1[0], color_data.color_list_2[0] },
+		{ cube_positionList[1],color_data.color_list_1[2], color_data.color_list_2[2] },
+		{ cube_positionList[0],color_data.color_list_1[3], color_data.color_list_2[3] }
 	};
 
 	// list of all the triangle index with their vertex_tex compositions

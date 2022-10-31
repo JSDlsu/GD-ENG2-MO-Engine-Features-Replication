@@ -34,7 +34,39 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = GraphicsEngine::get()->getRenderSystem()->createSwapChain(
 		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+	
+	// Color Coords
+	Vector3D color_list1[] =
+	{
+		//FRONT FACE
+		Color::Black,
+		Color::Red,
+		Color::White,
+		Color::Yellow,
+		//BACK FACE
+		Color::Black,
+		Color::Red,
+		Color::White,
+		Color::Yellow,
+	};
 
+	// Color Coords
+	Vector3D color_list2[] =
+	{
+		//FRONT FACE
+		Color::Gray,
+		Color::Blue,
+		Color::Green,
+		Color::Purple,
+		//BACK FACE
+		Color::Gray,
+		Color::Blue,
+		Color::Green,
+		Color::Purple,
+	};
+	PC_Cube_ColorData colorData1;
+	memcpy(colorData1.color_list_1, color_list1, sizeof(color_list1));
+	memcpy(colorData1.color_list_2, color_list2, sizeof(color_list2));
 
 	Cube* cube1 = new Cube("cube1", ObjectTypes::CUBE);
 	cube1->SetVertex_Index_Buffer(VertexShaderType::COLOR);
@@ -57,7 +89,7 @@ void AppWindow::onCreate()
 	GameObjectManager::get()->objectList.push_back(temp_ptr2);
 	
 	Cube* cube3 = new Cube("cube3", ObjectTypes::CUBE);
-	cube3->SetVertex_Index_Buffer(VertexShaderType::COLOR_LERP);
+	cube3->SetVertex_Index_Buffer(VertexShaderType::COLOR_LERP, colorData1);
 	cube3->SetVertexShader(VertexShaderType::COLOR_LERP);
 	cube3->SetPixelShader(PixelShaderType::COLOR_LERP);
 	cube3->SetPosition(Vector3D{ 0, 0, 1 });
@@ -66,7 +98,7 @@ void AppWindow::onCreate()
 	GameObjectManager::get()->objectList.push_back(temp_ptr3);
 
 	Cube* cube4 = new Cube("cube4", ObjectTypes::CUBE);
-	cube4->SetVertex_Index_Buffer(VertexShaderType::COLOR_LERP);
+	cube4->SetVertex_Index_Buffer(VertexShaderType::COLOR_LERP, colorData1);
 	cube4->SetVertexShader(VertexShaderType::COLOR_LERP);
 	cube4->SetPixelShader(PixelShaderType::COLOR_LERP);
 	cube4->SetPosition(Vector3D{ 0, 0, -1 });
