@@ -4,6 +4,7 @@
 #include "GraphicsEngine.h"
 #include "PrimitiveCreation.h"
 #include "ShaderEngine.h"
+#include "RenderBufferEngine.h"
 
 int main()
 {
@@ -13,6 +14,8 @@ int main()
 		GraphicsEngine::create();
 		// initialize our ShaderEngine
 		ShaderEngine::create();
+		// initialize our ShaderEngine
+		RenderBufferEngine::create();
 		// initialize our InputSystem
 		InputSystem::create();
 		// initialize our GameObjectManager
@@ -31,6 +34,7 @@ int main()
 			PrimitiveCreation::release();
 			GameObjectManager::release();
 			InputSystem::release();
+			RenderBufferEngine::release();
 			ShaderEngine::release();
 			GraphicsEngine::release();
 			return -1;
@@ -44,6 +48,7 @@ int main()
 	PrimitiveCreation::release();
 	GameObjectManager::release();
 	InputSystem::release();
+	RenderBufferEngine::release();
 	ShaderEngine::release();
 	GraphicsEngine::release();
 

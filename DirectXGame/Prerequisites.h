@@ -24,6 +24,7 @@ class PrimitiveCreation;
 class Camera;
 class VertexShaderManager;
 class PixelShaderManager;
+class InputLayoutManager;
 
 typedef std::shared_ptr<SwapChain> SwapChainPtr;
 typedef std::shared_ptr<DeviceContext> DeviceContextPtr;

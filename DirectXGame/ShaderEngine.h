@@ -14,6 +14,8 @@ private:
 public:
 	VertexShaderManager* getVertexShaderManager();
 	PixelShaderManager* getPixelShaderManager();
+private:
+
 public:
 	static ShaderEngine* get();
 	static void create();
@@ -22,6 +24,7 @@ private:
 	VertexShaderManager* m_vertexShader_manager = nullptr;
 	PixelShaderManager* m_pixelShader_manager = nullptr;
 	static ShaderEngine* m_engine;
-
+private:
+	friend class VertexBuffer;
 };
 

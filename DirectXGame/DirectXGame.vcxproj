@@ -166,6 +166,7 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="InputLayoutManager.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="PixelShaderManager.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PrimitiveCreation.cpp" />
+    <ClCompile Include="RenderBufferEngine.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -202,6 +204,7 @@
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="InputLayoutManager.h" />
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Matrix4x4.h" />
@@ -214,6 +217,7 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="Prerequisites.h" />
     <ClInclude Include="PrimitiveCreation.h" />
+    <ClInclude Include="RenderBufferEngine.h" />
     <ClInclude Include="RenderPolicies.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />

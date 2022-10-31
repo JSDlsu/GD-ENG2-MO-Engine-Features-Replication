@@ -26,6 +26,13 @@ enum class PixelShaderType
 	COLOR_LERP
 };
 
+enum class InputLayoutType
+{
+	TEXTURE = 0,
+	COLOR,
+	COLOR_LERP
+};
+
 class EnumHandler
 {
 	
