@@ -10,14 +10,11 @@ public:
 	~InputLayoutManager();
 
 public:
-	void ChangeVertexShader(ID3D11InputLayout** m_layout, InputLayoutType il_type);
+	void ChangeInputLayout(ID3D11InputLayout** m_layout, InputLayoutType il_type);
 
 private:
-	void Create_Texture_IL(InputLayoutType il_type, VertexShaderType vs_type);
-	void Create_COLOR_IL(InputLayoutType il_type, VertexShaderType vs_type);
-	void Create_COLORLERP_IL(InputLayoutType il_type, VertexShaderType vs_type);
-
-private:
-	std::map<InputLayoutType, ID3D11InputLayout*> VertexShaderMap;
+	void Create_Texture_IL(ID3D11InputLayout** m_layout, InputLayoutType il_type, VertexShaderType vs_type);
+	void Create_COLOR_IL(ID3D11InputLayout** m_layout, InputLayoutType il_type, VertexShaderType vs_type);
+	void Create_COLORLERP_IL(ID3D11InputLayout** m_layout, InputLayoutType il_type, VertexShaderType vs_type);
 };
 

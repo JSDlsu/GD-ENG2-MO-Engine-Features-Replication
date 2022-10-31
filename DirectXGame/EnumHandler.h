@@ -29,6 +29,7 @@ enum class PixelShaderType
 enum class InputLayoutType
 {
 	TEXTURE = 0,
+	MESH,
 	COLOR,
 	COLOR_LERP
 };

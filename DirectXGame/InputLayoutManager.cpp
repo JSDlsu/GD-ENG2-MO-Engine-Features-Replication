@@ -6,27 +6,34 @@
 
 InputLayoutManager::InputLayoutManager()
 {
-	Create_Texture_IL(InputLayoutType::TEXTURE, VertexShaderType::TEXTURE);
-	Create_COLOR_IL(InputLayoutType::COLOR, VertexShaderType::COLOR);
-	Create_COLORLERP_IL(InputLayoutType::COLOR_LERP, VertexShaderType::COLOR_LERP);
 }
 
 InputLayoutManager::~InputLayoutManager()
 {
-	for (auto it = VertexShaderMap.begin(); it != VertexShaderMap.end(); ++it)
+
+}
+
+void InputLayoutManager::ChangeInputLayout(ID3D11InputLayout** m_layout, InputLayoutType il_type)
+{
+	switch(il_type)
 	{
-		it->second->Release();
+	case InputLayoutType::MESH:
+	case InputLayoutType::TEXTURE:
+	{
+		Create_Texture_IL(m_layout, InputLayoutType::TEXTURE, VertexShaderType::TEXTURE);
+	}break;
+	case InputLayoutType::COLOR:
+	{
+		Create_COLOR_IL(m_layout, InputLayoutType::COLOR, VertexShaderType::COLOR);
+	}break;
+	case InputLayoutType::COLOR_LERP:
+	{
+		Create_COLORLERP_IL(m_layout, InputLayoutType::COLOR_LERP, VertexShaderType::COLOR_LERP);
+	}break;
 	}
 }
 
-void InputLayoutManager::ChangeVertexShader(ID3D11InputLayout** m_layout, InputLayoutType il_type)
-{
-	for (auto it = VertexShaderMap.begin(); it != VertexShaderMap.end(); ++it)
-		if (it->first == il_type)
-			*m_layout = it->second;
-}
-
-void InputLayoutManager::Create_Texture_IL(InputLayoutType il_type, VertexShaderType vs_type)
+void InputLayoutManager::Create_Texture_IL(ID3D11InputLayout** m_layout, InputLayoutType il_type, VertexShaderType vs_type)
 {
 	// defines the attribute of our vertex_tex buffer type
 	// contains all the information about the attributes that will compose our vertex_tex type
@@ -41,19 +48,14 @@ void InputLayoutManager::Create_Texture_IL(InputLayoutType il_type, VertexShader
 	UINT size_layout = ARRAYSIZE(layout);
 
 	ShaderByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->GetVertexShaderData(vs_type);
-
-	ID3D11InputLayout* m_layout = nullptr;
-
-	if (FAILED(GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateInputLayout(layout, size_layout, l_vs.m_byte_code, l_vs.m_size, &m_layout)))
+	
+	if (FAILED(GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateInputLayout(layout, size_layout, l_vs.m_byte_code, l_vs.m_size, m_layout)))
 	{
 		throw std::exception("VertexBuffer not created successfully");
 	}
-
-	// add the byteData obj to the map
-	VertexShaderMap.insert(std::pair<InputLayoutType, ID3D11InputLayout*>(il_type, m_layout));
 }
 
-void InputLayoutManager::Create_COLOR_IL(InputLayoutType il_type, VertexShaderType vs_type)
+void InputLayoutManager::Create_COLOR_IL(ID3D11InputLayout** m_layout, InputLayoutType il_type, VertexShaderType vs_type)
 {
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
@@ -65,18 +67,13 @@ void InputLayoutManager::Create_COLOR_IL(InputLayoutType il_type, VertexShaderTy
 
 	ShaderByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->GetVertexShaderData(vs_type);
 
-	ID3D11InputLayout* m_layout = nullptr;
-
-	if (FAILED(GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateInputLayout(layout, size_layout, l_vs.m_byte_code, l_vs.m_size, &m_layout)))
+	if (FAILED(GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateInputLayout(layout, size_layout, l_vs.m_byte_code, l_vs.m_size, m_layout)))
 	{
 		throw std::exception("VertexBuffer not created successfully");
 	}
-
-	// add the byteData obj to the map
-	VertexShaderMap.insert(std::pair<InputLayoutType, ID3D11InputLayout*>(il_type, m_layout));
 }
 
-void InputLayoutManager::Create_COLORLERP_IL(InputLayoutType il_type, VertexShaderType vs_type)
+void InputLayoutManager::Create_COLORLERP_IL(ID3D11InputLayout** m_layout, InputLayoutType il_type, VertexShaderType vs_type)
 {
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
@@ -90,13 +87,9 @@ void InputLayoutManager::Create_COLORLERP_IL(InputLayoutType il_type, VertexShad
 
 	ShaderByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->GetVertexShaderData(vs_type);
 
-	ID3D11InputLayout* m_layout = nullptr;
-
-	if (FAILED(GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateInputLayout(layout, size_layout, l_vs.m_byte_code, l_vs.m_size, &m_layout)))
+	if (FAILED(GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateInputLayout(layout, size_layout, l_vs.m_byte_code, l_vs.m_size, m_layout)))
 	{
 		throw std::exception("VertexBuffer not created successfully");
 	}
-
-	// add the byteData obj to the map
-	VertexShaderMap.insert(std::pair<InputLayoutType, ID3D11InputLayout*>(il_type, m_layout));
+	
 }

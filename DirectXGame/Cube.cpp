@@ -16,15 +16,7 @@ Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
 	// Set the object type
 	ObjectType = type;
-
-	// Default -- Texture shader
-	// assigns the vertex and index buffer of cube
-	SetVertex_Index_Buffer(VertexShaderType::TEXTURE);
-	// Default vertex shader
-	SetVertexShader(VertexShaderType::TEXTURE);
-	// Default pixel shader
-	SetPixelShader(PixelShaderType::TEXTURE);
-
+	
 	// create CB
 	constant_transform cc;
 	cc.m_time = 0;

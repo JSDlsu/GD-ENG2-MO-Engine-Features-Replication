@@ -129,14 +129,12 @@ void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 	// create IB
 	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer
 	(index_list, size_index_list);
-	
-	ShaderByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->GetVertexShaderData(VertexShaderType::TEXTURE);
 
 	// create VB
 	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(
 		vertex_list,
 		sizeof(vertex_tex), size_list,
-		l_vs.m_byte_code, l_vs.m_size);
+		InputLayoutType::TEXTURE);
 }
 
 void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
@@ -161,14 +159,14 @@ void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_i
 	{
 		//FRONT FACE
 		Color::Red,
-		Color::Green,
-		Color::Black,
-		Color::Blue,
+		Color::Red,
+		Color::Red,
+		Color::Red,
 		//BACK FACE
-		Color::Gray,
-		Color::Purple,
-		Color::White,
-		Color::Yellow
+		Color::Red,
+		Color::Red,
+		Color::Red,
+		Color::Red
 	};
 
 	// list of all the vertex_tex in the 3D Cube
@@ -240,14 +238,13 @@ void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_i
 	// create IB
 	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer
 	(index_list, size_index_list);
-
-	ShaderByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->GetVertexShaderData(VertexShaderType::COLOR);
+	
 
 	// create VB
 	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(
 		vertex_list,
 		sizeof(vertex_color), size_list,
-		l_vs.m_byte_code, l_vs.m_size);
+		InputLayoutType::COLOR);
 }
 
 void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
@@ -365,13 +362,11 @@ void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr
 	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer
 	(index_list, size_index_list);
 
-	ShaderByteData l_vs = ShaderEngine::get()->getVertexShaderManager()->GetVertexShaderData(VertexShaderType::COLOR_LERP);
-
 	// create VB
 	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(
 		vertex_list,
 		sizeof(vertex_color_lerp), size_list,
-		l_vs.m_byte_code, l_vs.m_size);
+		InputLayoutType::COLOR_LERP);
 }
 
 

@@ -2,10 +2,11 @@
 #include "RenderSystem.h"
 #include <exception>
 
+#include "RenderBufferEngine.h"
 
-VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, 
-	void* shader_byte_code, size_t size_byte_shader, 
-	RenderSystem* system) : m_system(system), m_layout(0), m_buffer(0)
+
+VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type,
+                           RenderSystem* system) : m_system(system), m_layout(0), m_buffer(0)
 {
 	// describe a buffer resource
 	D3D11_BUFFER_DESC buff_desc = {};
@@ -29,53 +30,7 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
 		throw std::exception("VertexBuffer not created successfully");
 	}
 
-#define IL_TYPE 2
-#if IL_TYPE == 0
-	// defines the attribute of our vertex_tex buffer type
-	// contains all the information about the attributes that will compose our vertex_tex type
-	// the layout for our vertex_tex list[] in AppWindow
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
-		{"TEXCOORD", 0,  DXGI_FORMAT_R32G32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 }
-	};
-
-	UINT size_layout = ARRAYSIZE(layout);
-
-	if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
-	{
-		throw std::exception("VertexBuffer not created successfully");
-	}
-#elif IL_TYPE == 1
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
-		{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
-	};
-
-	UINT size_layout = ARRAYSIZE(layout);
-
-	if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
-	{
-		throw std::exception("VertexBuffer not created successfully");
-	}
-#elif IL_TYPE == 2
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
-		{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
-		{ "COLOR", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 24,D3D11_INPUT_PER_VERTEX_DATA ,0 }
-	};
-
-	UINT size_layout = ARRAYSIZE(layout);
-
-	if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
-	{
-		throw std::exception("VertexBuffer not created successfully");
-	}
-#endif
+	RenderBufferEngine::get()->getInputLayoutManager()->ChangeInputLayout(&m_layout, il_type);
 }
 
 UINT VertexBuffer::getSizeVertexList()
