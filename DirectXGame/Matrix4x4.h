@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <memory>
 #include "Vector3D.h"
 #include "Vector4D.h"
@@ -201,6 +202,47 @@ public:
 		m_mat[1][1] = 2.0f / height;
 		m_mat[2][2] = 1.0f / (far_plane - near_plane);
 		m_mat[3][2] = -(near_plane / (far_plane - near_plane));
+	}
+
+
+	//FOR OBJECT PICKING, CODE SUBJECT TO REVIEW
+	static Vector3D Vector3Transform(const Vector3D& inVector, Matrix4x4 inMatrix)
+	{
+		Matrix4x4 temp;
+		temp.setIdentity();
+		temp.m_mat[3][0] = inVector.m_x;
+		temp.m_mat[3][1] = inVector.m_y;
+		temp.m_mat[3][2] = inVector.m_z;
+		temp.m_mat[3][3] = 1.0f;
+
+		temp = temp.MultiplyTo(inMatrix);
+		return Vector3D(temp.m_mat[3][0], temp.m_mat[3][1], temp.m_mat[3][2]);
+	}
+
+	//FOR OBJECT PICKING, CODE SUBJECT TO REVIEW
+	static Vector3D Vector3TransformNormal(const Vector3D& inVector, Matrix4x4 inMatrix)
+	{
+		Matrix4x4 temp;
+		temp.setIdentity();
+		temp.m_mat[3][0] = inVector.m_x;
+		temp.m_mat[3][1] = inVector.m_y;
+		temp.m_mat[3][2] = inVector.m_z;
+		temp.m_mat[3][3] = 0.0f;
+
+		temp = temp.MultiplyTo(inMatrix);
+		return Vector3D(temp.m_mat[3][0], temp.m_mat[3][1], temp.m_mat[3][2]);
+	}
+
+	void DisplayMatrix()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			for(int j = 0; j < 4; j++)
+			{
+				std::cout << this->m_mat[i][j] << ", ";
+			}
+			std::cout<<"\n";
+		}
 	}
 
 	~Matrix4x4()

@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 class Vector3D
 {
@@ -51,6 +52,17 @@ public:
 	Vector3D operator +(Vector3D vec)
 	{
 		return Vector3D(m_x + vec.m_x, m_y + vec.m_y, m_z + vec.m_z);
+	}
+
+	float getMagnitude(Vector3D vec)
+	{
+		return sqrtf(powf(vec.m_x, 2) + powf(vec.m_y, 2) + powf(vec.m_z, 2));
+	}
+
+	static Vector3D getUnitVector(Vector3D vec)
+	{
+		float magnitude = vec.getMagnitude(vec);
+		return Vector3D((vec.m_x * (1 / magnitude)), (vec.m_y * (1 / magnitude)), (vec.m_z * (1 / magnitude)));
 	}
 
 	~Vector3D()

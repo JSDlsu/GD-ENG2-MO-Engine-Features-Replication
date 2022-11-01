@@ -14,6 +14,7 @@
 #include "PassRender.h"
 #include "Plane.h"
 #include "SwapChain.h"
+#include <DirectXMath.h>
 
 
 AppWindow::AppWindow()
@@ -34,6 +35,8 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = GraphicsEngine::get()->getRenderSystem()->createSwapChain(
 		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+
+	InputSystem::get()->addListener(this);
 	
 	// Color Coords
 	Vector3D color_list1[] =
@@ -167,3 +170,58 @@ void AppWindow::onKillFocus()
 
 }
 
+void AppWindow::onKeyDown(int key)
+{
+}
+
+void AppWindow::onKeyUp(int key)
+{
+}
+
+void AppWindow::onMouseMove(const Point& mouse_pos)
+{
+}
+
+void AppWindow::onLeftMouseDown(const Point& delta_mouse_pos)
+{
+	Pick(delta_mouse_pos);
+}
+
+void AppWindow::onLeftMouseUp(const Point& delta_mouse_pos)
+{
+}
+
+void AppWindow::onRightMouseDown(const Point& delta_mouse_pos)
+{
+}
+
+void AppWindow::onRightMouseUp(const Point& delta_mouse_pos)
+{
+}
+
+void AppWindow::Pick(const Point& delta_mouse_pos)
+{
+	Matrix4x4 viewMatrixInverse;
+	PickingRay ray;
+	
+
+	float width = this->getClientWindowRect().right - this->getClientWindowRect().left;
+	float height = this->getClientWindowRect().bottom - this->getClientWindowRect().top;
+	float aspectRatio = (float)(Window::WIDTH) / (float)(Window::HEIGHT);
+
+	float vx = (2.0f * delta_mouse_pos.m_x / width - 1.0f) / (1 / (aspectRatio * tan(aspectRatio/2)));
+	float vy = (-2.0f * delta_mouse_pos.m_y / height + 1.0f) / (1 / (tan(aspectRatio / 2)));
+
+	ray.origin = Vector3D(0.0f, 0.0f, 0.0f);
+	ray.direction = Vector3D(vx, vy, 1.0f);
+
+	viewMatrixInverse = CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
+	viewMatrixInverse.inverse();
+
+	ray.origin = Matrix4x4::Vector3Transform(ray.origin, viewMatrixInverse);
+	ray.direction = Matrix4x4::Vector3TransformNormal(ray.direction, viewMatrixInverse);
+	ray.direction = Vector3D::getUnitVector(ray.direction);
+
+	std::cout << ray.direction.m_x << ", " << ray.direction.m_y << ", " << ray.direction.m_z << std::endl;
+	
+}
