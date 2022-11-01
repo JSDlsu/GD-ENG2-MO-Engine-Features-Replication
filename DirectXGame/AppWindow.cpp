@@ -2,6 +2,7 @@
 #include <Windows.h>
 
 #include "Cube.h"
+#include "Line.h"
 #include "Matrix4x4.h"
 #include "InputSystem.h"
 #include "EngineTime.h"
@@ -109,6 +110,15 @@ void AppWindow::onCreate()
 	AGameObjectPtr temp_ptr4(cube4);
 	GameObjectManager::get()->objectList.push_back(temp_ptr4);
 
+	Line* line1 = new Line("line1", ObjectTypes::LINE);
+	line1->SetVertex_Index_Buffer(VertexShaderType::COLOR);
+	line1->SetVertexShader(VertexShaderType::COLOR);
+	line1->SetPixelShader(PixelShaderType::COLOR);
+	line1->SetPosition(Vector3D{ 2, 5, 0 });
+	line1->SetAlpha(0.5f);
+	AGameObjectPtr temp_ptr5(line1);
+	GameObjectManager::get()->objectList.push_back(temp_ptr5);
+
 	// create blenderPtr
 	m_blender = GraphicsEngine::get()->getRenderSystem()->createBlender();
 
@@ -209,10 +219,10 @@ void AppWindow::Pick(const Point& delta_mouse_pos)
 	float height = this->getClientWindowRect().bottom - this->getClientWindowRect().top;
 	float aspectRatio = (float)(Window::WIDTH) / (float)(Window::HEIGHT);
 
-	float vx = (2.0f * delta_mouse_pos.m_x / width - 1.0f) / (1 / (aspectRatio * tan(aspectRatio/2)));
-	float vy = (-2.0f * delta_mouse_pos.m_y / height + 1.0f) / (1 / (tan(aspectRatio / 2)));
+	float vx = (2.0f * delta_mouse_pos.m_x / width - 1.0f) / CameraHandler::GetInstance()->GetSceneCameraProjectionMatrix().m_mat[0][0];
+	float vy = (-2.0f * delta_mouse_pos.m_y / height + 1.0f) / CameraHandler::GetInstance()->GetSceneCameraProjectionMatrix().m_mat[1][1];
 
-	ray.origin = Vector3D(0.0f, 0.0f, 0.0f);
+	ray.origin = CameraHandler::GetInstance()->GetSceneCameraMatrix().getTranslation();
 	ray.direction = Vector3D(vx, vy, 1.0f);
 
 	viewMatrixInverse = CameraHandler::GetInstance()->GetSceneCameraViewMatrix();

@@ -54,7 +54,7 @@ public:
 		return Vector3D(m_x + vec.m_x, m_y + vec.m_y, m_z + vec.m_z);
 	}
 
-	float getMagnitude(Vector3D vec)
+	static float getMagnitude(Vector3D vec)
 	{
 		return sqrtf(powf(vec.m_x, 2) + powf(vec.m_y, 2) + powf(vec.m_z, 2));
 	}

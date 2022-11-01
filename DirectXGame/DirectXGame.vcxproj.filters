@@ -109,6 +109,9 @@
     <Filter Include="GameEngine\RenderBufferEngine\RenderBufferManager">
       <UniqueIdentifier>{d2aef8fe-0bce-4dc2-a19f-bf138b720628}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Primitives\Line">
+      <UniqueIdentifier>{b36d4d9a-adfa-46d6-a04c-2b1fb1f196e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>GameEngine\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>GameEngine\Primitives\Line</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>GameEngine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>GameEngine\Primitives\Line</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

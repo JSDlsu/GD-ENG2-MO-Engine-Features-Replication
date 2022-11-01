@@ -21,6 +21,6 @@ public:
 public:
 	Matrix4x4 GetSceneCameraViewMatrix();
 	Matrix4x4 GetSceneCameraMatrix();
-	
+	Matrix4x4 GetSceneCameraProjectionMatrix();
 };
 

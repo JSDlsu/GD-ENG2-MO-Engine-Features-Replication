@@ -5,7 +5,8 @@ enum class ObjectTypes
 	CUBE = 0,
 	MESH,
 	PLANE,
-	CAMERA
+	CAMERA,
+	LINE,
 };
 
 enum class VertexShaderType

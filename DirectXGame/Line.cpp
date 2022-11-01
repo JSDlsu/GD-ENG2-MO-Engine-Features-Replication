@@ -1,4 +1,4 @@
-#include "Cube.h"
+#include "Line.h"
 #include "AppWindow.h"
 #include "ConstantBuffer.h"
 #include "ContantBufferTypes.h"
@@ -12,11 +12,11 @@
 #include "ShaderEngine.h"
 #include "VertexShaderManager.h"
 
-Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
+Line::Line(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
 	// Set the object type
 	ObjectType = type;
-	
+
 	// create CB
 	constant_transform cc;
 	cc.m_time = 0;
@@ -24,21 +24,19 @@ Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 	// create CB_texture
 	constant_texture cc_texture;
 	cc_texture.alpha = 1.0f;
-	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc_texture, sizeof(constant_texture));
-	
+
 }
 
-Cube::~Cube()
+Line::~Line()
 {
 
 }
 
-void Cube::Update(float deltaTime, AppWindow* app_window)
+void Line::Update(float deltaTime, AppWindow* app_window)
 {
 	// Texture update
 	constant_texture cc_texture;
 	cc_texture.alpha = alpha;
-	m_cb_texture->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc_texture);
 
 	// transform update
 	constant_transform cc;
@@ -81,75 +79,56 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);
 }
 
-void Cube::Draw(const BlenderPtr& m_blender)
+void Line::Draw(const BlenderPtr& m_blender)
 {
 	// for the transform
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
 
-	// for the texture
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb_texture);
 
 	//SET TEXTURE SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setVertexShader(m_vs);
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setPixelShader(m_ps);
 
-	if(m_tex != nullptr)
-		GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setTexture(m_ps, m_tex);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
-	//SET THE INDICES OF THE TRIANGLE TO DRAW
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setIndexBuffer(m_ib);
+
+
 	// FINALLY DRAW THE TRIANGLE
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->drawIndexedTriangleList(
-		m_ib->getSizeIndexList(), 0, 0);
+	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->drawLineList(2, 0);
 	//SET THE BLENDING
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setBlender(m_blender);
 }
 
-void Cube::SetMesh(const wchar_t* tex_path)
-{
-	// sets the new Index and Vertex buffer based from the mesh
-	m_mesh = GraphicsEngine::get()->getMeshManager()->createMeshFromFile(tex_path);
-	m_ib = m_mesh.get()->getIndexBuffer();
-	m_vb = m_mesh.get()->getVertexBuffer();
 
-	// change the pixel shader for mesh types
-	SetPixelShader(PixelShaderType::MESH);
-}
 
-void Cube::SetTexture(const wchar_t* tex_path)
-{
-	// assign the texture file to the Texture pointer by passing the its path in the file
-	m_tex = GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
-}
 
-void Cube::SetVertex_Index_Buffer(VertexShaderType vs_type, PC_Cube_ColorData color_data)
+void Line::SetVertex_Index_Buffer(VertexShaderType vs_type, PC_Cube_ColorData color_data)
 {
 	PrimitiveCreation::Instance()->ChangeVB_IB_Buffer(vs_type, m_vb, m_ib, color_data);
 }
 
-void Cube::SetVertexShader(VertexShaderType vs_type)
+void Line::SetVertexShader(VertexShaderType vs_type)
 {
 	// assign a new vertexShader to this object
 	ShaderEngine::get()->getVertexShaderManager()->ChangeVertexShader(m_vs, vs_type);
 	this->vs_type = vs_type;
 }
 
-void Cube::SetPixelShader(PixelShaderType ps_type)
+void Line::SetPixelShader(PixelShaderType ps_type)
 {
 	// assign a new pixelShader to this object
 	ShaderEngine::get()->getPixelShaderManager()->ChangePixelShader(m_ps, ps_type);
 	this->ps_type = ps_type;
 }
 
-void Cube::SetAlpha(float alpha)
+void Line::SetAlpha(float alpha)
 {
 	this->alpha = alpha;
 }
 
-float Cube::GetAlpha()
+float Line::GetAlpha()
 {
 	return alpha;
 }

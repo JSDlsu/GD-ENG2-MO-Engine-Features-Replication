@@ -32,5 +32,6 @@ private:
 private:
 	static PrimitiveCreation* sharedInstance;
 	friend class Cube;
+	friend class Line;
 };
 
