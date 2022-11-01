@@ -2,7 +2,6 @@
 #include <Windows.h>
 
 #include "Cube.h"
-#include "Line.h"
 #include "Matrix4x4.h"
 #include "InputSystem.h"
 #include "EngineTime.h"
@@ -110,11 +109,11 @@ void AppWindow::onCreate()
 	AGameObjectPtr temp_ptr4(cube4);
 	GameObjectManager::get()->objectList.push_back(temp_ptr4);
 
-	Line* line1 = new Line("line1", ObjectTypes::LINE);
+	line1 = new Line("line1", ObjectTypes::LINE);
 	line1->SetVertex_Index_Buffer(VertexShaderType::COLOR);
 	line1->SetVertexShader(VertexShaderType::COLOR);
 	line1->SetPixelShader(PixelShaderType::COLOR);
-	line1->SetPosition(Vector3D{ 2, 5, 0 });
+	line1->SetPosition(Vector3D( ray.direction.m_x, ray.direction.m_y, ray.direction.m_z ));
 	line1->SetAlpha(0.5f);
 	AGameObjectPtr temp_ptr5(line1);
 	GameObjectManager::get()->objectList.push_back(temp_ptr5);
@@ -195,6 +194,7 @@ void AppWindow::onMouseMove(const Point& mouse_pos)
 void AppWindow::onLeftMouseDown(const Point& delta_mouse_pos)
 {
 	Pick(delta_mouse_pos);
+	line1->SetPosition(Vector3D(ray.direction.m_x, ray.direction.m_y, ray.direction.m_z));
 }
 
 void AppWindow::onLeftMouseUp(const Point& delta_mouse_pos)
@@ -212,7 +212,7 @@ void AppWindow::onRightMouseUp(const Point& delta_mouse_pos)
 void AppWindow::Pick(const Point& delta_mouse_pos)
 {
 	Matrix4x4 viewMatrixInverse;
-	PickingRay ray;
+	
 	
 
 	float width = this->getClientWindowRect().right - this->getClientWindowRect().left;
@@ -230,7 +230,7 @@ void AppWindow::Pick(const Point& delta_mouse_pos)
 
 	ray.origin = Matrix4x4::Vector3Transform(ray.origin, viewMatrixInverse);
 	ray.direction = Matrix4x4::Vector3TransformNormal(ray.direction, viewMatrixInverse);
-	ray.direction = Vector3D::getUnitVector(ray.direction);
+	//ray.direction = Vector3D::getUnitVector(ray.direction);
 
 	std::cout << ray.origin.m_x << ", " << ray.origin.m_y << ", " << ray.origin.m_z << std::endl;
 	std::cout << ray.direction.m_x << ", " << ray.direction.m_y << ", " << ray.direction.m_z << std::endl;

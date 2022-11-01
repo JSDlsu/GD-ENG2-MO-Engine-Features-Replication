@@ -3,6 +3,7 @@
 #include "DeviceContext.h"
 #include "Matrix4x4.h"
 #include "InputSystem.h"
+#include "Line.h"
 
 
 class Cube;
@@ -52,6 +53,8 @@ private:
 	SwapChainPtr m_swap_chain;
 	BlenderPtr m_blender;
 private:
+	PickingRay ray;
+	Line* line1;
 private:
 	friend class Cube;
 	friend class Plane;
