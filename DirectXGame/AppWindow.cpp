@@ -232,6 +232,7 @@ void AppWindow::Pick(const Point& delta_mouse_pos)
 	ray.direction = Matrix4x4::Vector3TransformNormal(ray.direction, viewMatrixInverse);
 	ray.direction = Vector3D::getUnitVector(ray.direction);
 
+	std::cout << ray.origin.m_x << ", " << ray.origin.m_y << ", " << ray.origin.m_z << std::endl;
 	std::cout << ray.direction.m_x << ", " << ray.direction.m_y << ", " << ray.direction.m_z << std::endl;
 	
 }
