@@ -1,12 +1,27 @@
 #include "Line.h"
 #include "AppWindow.h"
+#include "ConstantBuffer.h"
+#include "ContantBufferTypes.h"
+#include "DeviceContext.h"
 #include "GraphicsEngine.h"
+#include "VertexBuffer.h"
 #include "Mesh.h"
+#include "PrimitiveCreation.h"
+#include "CameraHandler.h"
+#include "EngineTime.h"
+#include "ShaderEngine.h"
+#include "VertexShaderManager.h"
 
-Line::Line(std::string name, ObjectTypes type) : Cube(name, type)
+Line::Line(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
-	SetScale(0.1f, 1.0f, 0.1f);
-	SetRotation(0.0f, 90.0f, 0.0f);
+	// Set the object type
+	ObjectType = type;
+
+	// create CB
+	constant_transform cc;
+	cc.m_time = 0;
+	m_cb = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc, sizeof(constant_transform));
+
 }
 
 Line::~Line()
@@ -16,12 +31,91 @@ Line::~Line()
 
 void Line::Update(float deltaTime, AppWindow* app_window)
 {
-	Cube::Update(deltaTime, app_window);
+	// transform update
+	constant_transform cc;
+	cc.m_time = ::GetTickCount();
+
+	// objects matrix
+	Matrix4x4 temp;
+	cc.m_world.setIdentity();
+	temp.setRotationX(m_rotation.m_x);
+	cc.m_world *= temp;
+	temp.setRotationY(m_rotation.m_y);
+	cc.m_world *= temp;
+	temp.setRotationZ(m_rotation.m_z);
+	cc.m_world *= temp;
+	temp.setScale(m_scale);
+	cc.m_world *= temp;
+	temp.setTranslation(m_position);
+	cc.m_world *= temp;
+
+	// creating the camera matrix
+	Matrix4x4 cameraMatrix = CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
+	cc.m_view = cameraMatrix;
+
+#define VIEW 1
+#if VIEW == 0
+	// setting for the orthographic projection
+	cc.m_proj.setOrthoLH
+	(
+		Window::WIDTH / 300.0f,
+		Window::HEIGHT / 300.0f,
+		-40.0f,
+		40.0f
+	);
+#elif VIEW == 1
+	// setting the perspective projection
+	float aspectRatio = (float)(Window::WIDTH) / (float)(Window::HEIGHT);
+	cc.m_proj = CameraHandler::GetInstance()->GetSceneCameraProjectionMatrix();
+#endif
+
+	m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);
 }
 
 void Line::Draw(const BlenderPtr& m_blender)
 {
-	Cube::Draw(m_blender);
+	// for the transform
+	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
+	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+
+
+	//SET TEXTURE SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setVertexShader(m_vs);
+	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setPixelShader(m_ps);
+
+	//SET THE VERTICES OF THE TRIANGLE TO DRAW
+	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
+	// FINALLY DRAW THE LINE
+	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->drawLineList(m_vb->getSizeVertexList(), 0);
+}
+
+void Line::SetVertex_Index_Buffer(PC_Cube_ColorData color_data)
+{
+	PrimitiveCreation::Instance()->LineVB_Buffer(m_vb, color_data);
+}
+
+void Line::SetVertexShader(VertexShaderType vs_type)
+{
+	// assign a new vertexShader to this object
+	ShaderEngine::get()->getVertexShaderManager()->ChangeVertexShader(m_vs, vs_type);
+	this->vs_type = vs_type;
+}
+
+void Line::SetPixelShader(PixelShaderType ps_type)
+{
+	// assign a new pixelShader to this object
+	ShaderEngine::get()->getPixelShaderManager()->ChangePixelShader(m_ps, ps_type);
+	this->ps_type = ps_type;
+}
+
+void Line::SetAlpha(float alpha)
+{
+	this->alpha = alpha;
+}
+
+float Line::GetAlpha()
+{
+	return alpha;
 }
 
 

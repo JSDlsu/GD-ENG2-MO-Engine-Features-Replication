@@ -47,6 +47,11 @@ void PrimitiveCreation::ChangeVB_IB_Buffer(VertexShaderType vs_type, VertexBuffe
 	}
 }
 
+void PrimitiveCreation::LineVB_Buffer(VertexBufferPtr& m_vb, PC_Cube_ColorData color_data)
+{
+	GetLine_Coords(m_vb, color_data);
+}
+
 void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 {
 
@@ -293,6 +298,25 @@ void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr
 		vertex_list,
 		sizeof(vertex_color_lerp), size_list,
 		InputLayoutType::COLOR_LERP);
+}
+
+void PrimitiveCreation::GetLine_Coords(VertexBufferPtr& m_vb, PC_Cube_ColorData color_data)
+{
+	vertex_color vertex_list[] =
+	{
+		//X - Y - Z
+		//FRONT FACE
+		{ cube_positionList[0],color_data.color_list_1[1] },
+		{ cube_positionList[1],color_data.color_list_1[0] },
+	};
+
+	UINT size_list = ARRAYSIZE(vertex_list);
+
+	// create VB
+	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(
+		vertex_list,
+		sizeof(vertex_color), size_list,
+		InputLayoutType::COLOR);
 }
 
 

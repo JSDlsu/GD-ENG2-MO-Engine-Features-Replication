@@ -110,11 +110,12 @@ void AppWindow::onCreate()
 	GameObjectManager::get()->objectList.push_back(temp_ptr4);
 
 	line1 = new Line("line1", ObjectTypes::LINE);
-	line1->SetVertex_Index_Buffer(VertexShaderType::COLOR);
+	line1->SetVertex_Index_Buffer();
 	line1->SetVertexShader(VertexShaderType::COLOR);
 	line1->SetPixelShader(PixelShaderType::COLOR);
-	line1->SetPosition(Vector3D( ray.direction.m_x, ray.direction.m_y, ray.direction.m_z ));
+	line1->SetPosition(Vector3D{ 0, 0, -1 });
 	line1->SetAlpha(0.5f);
+
 	AGameObjectPtr temp_ptr5(line1);
 	GameObjectManager::get()->objectList.push_back(temp_ptr5);
 
@@ -232,7 +233,7 @@ void AppWindow::Pick(const Point& delta_mouse_pos)
 	ray.direction = Matrix4x4::Vector3TransformNormal(ray.direction, viewMatrixInverse);
 	//ray.direction = Vector3D::getUnitVector(ray.direction);
 
-	std::cout << ray.origin.m_x << ", " << ray.origin.m_y << ", " << ray.origin.m_z << std::endl;
-	std::cout << ray.direction.m_x << ", " << ray.direction.m_y << ", " << ray.direction.m_z << std::endl;
+	std::cout << "Origin:" << ray.origin.m_x << ", " << ray.origin.m_y << ", " << ray.origin.m_z << std::endl;
+	std::cout << "Direction:" << ray.direction.m_x << ", " << ray.direction.m_y << ", " << ray.direction.m_z << std::endl;
 	
 }
