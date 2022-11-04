@@ -60,6 +60,7 @@ private:
 	friend class Texture;
 	friend class Blender;
 	friend class InputLayoutManager;
+	friend class AppWindow;
 
 };
 

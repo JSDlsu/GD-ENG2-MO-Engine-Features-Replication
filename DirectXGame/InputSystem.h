@@ -1,6 +1,8 @@
 #pragma once
 #include "InputListener.h"
 #include <unordered_set>
+
+#include "AppWindow.h"
 #include "Point.h"
 
 // manages all the various input devices in mouse, keyboard, etc...
@@ -10,7 +12,7 @@ private:
 	InputSystem();
 	~InputSystem();
 public:
-	void update();
+	void update(HWND& hwnd);
 	void addListener(InputListener* listener);
 	void removeListener(InputListener* listener);
 	void setCursorPosition(const Point& pos);

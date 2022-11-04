@@ -14,6 +14,8 @@
 #include "PassRender.h"
 #include "Plane.h"
 #include "SwapChain.h"
+#include "IMGUI/imgui_impl_dx11.h"
+#include "IMGUI/imgui_impl_win32.h"
 
 
 AppWindow::AppWindow()
@@ -30,6 +32,15 @@ void AppWindow::onCreate()
 
 	// create cameras
 	CameraHandler::Initialize();
+
+	// Setup ImGui
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	ImGui_ImplWin32_Init(m_hwnd);
+	ImGui_ImplDX11_Init(GraphicsEngine::get()->getRenderSystem()->m_d3d_device,
+		GraphicsEngine::get()->getRenderSystem()->m_imm_context);
+	ImGui::StyleColorsDark();
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = GraphicsEngine::get()->getRenderSystem()->createSwapChain(
@@ -130,7 +141,7 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 
 	// run the update for the InputSystem
-	InputSystem::get()->update();
+	InputSystem::get()->update(m_hwnd);
 
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
@@ -148,6 +159,30 @@ void AppWindow::onUpdate()
 	// Transparent objects are draw last
 	PassRender<TransparencyFilterPolicy, BackToFrontPolicy> transparencyPass;
 	transparencyPass.Render(m_blender, CameraHandler::GetInstance()->GetSceneCameraMatrix());
+
+	// Start the Dear ImGui frame
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	// Create ImGui Test Window
+	ImGui::ShowDemoWindow();
+	ImGui::Begin("Credits");
+	ImGui::Text("About:");
+	ImGui::Text("Scene Editor V.2.0");
+	ImGui::Text("Developed By: Emerson Celestial");
+	ImGui::Text("SPECIAL THANKS");
+	ImGui::Text("Sir Patrick");
+	ImGui::Text("ImGui: https://github.com/ocornut/imgui/tree/master");
+	if (ImGui::Button("Click Me!"))
+	{
+		ImGui::Text("Nice.");
+	}
+	//ImGui::DragFloat3("");
+	ImGui::End();
+	// Assemble Together Draw Data
+	ImGui::Render();
+	// Render Draw Data
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 	m_swap_chain->present(true);
 }

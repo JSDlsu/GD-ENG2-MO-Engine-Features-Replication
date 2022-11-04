@@ -25,6 +25,7 @@ class Camera;
 class VertexShaderManager;
 class PixelShaderManager;
 class InputLayoutManager;
+class AppWindow;
 
 typedef std::shared_ptr<SwapChain> SwapChainPtr;
 typedef std::shared_ptr<DeviceContext> DeviceContextPtr;

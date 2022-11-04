@@ -2,13 +2,22 @@
 #include "EngineTime.h"
 #include <exception>
 
+#include "IMGUI/imgui.h"
+
 //Window* window = nullptr;
 int Window::HEIGHT = 768;
 int Window::WIDTH = 1366;
 
+//declare for handling mouse and key events in IMGUI.
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 // Calls the events of our window (creation and destroy events)
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	//Used for processing input events for IMGUI
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
+		return true;
+	}
 	//GetWindowLong(hwnd,)
 	switch (msg)
 	{

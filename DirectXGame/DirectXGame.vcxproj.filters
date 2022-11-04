@@ -109,6 +109,9 @@
     <Filter Include="GameEngine\RenderBufferEngine\RenderBufferManager">
       <UniqueIdentifier>{d2aef8fe-0bce-4dc2-a19f-bf138b720628}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\IMGUI">
+      <UniqueIdentifier>{5685aeaf-7d92-4a83-871d-aba5de82038e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,6 +215,27 @@
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>GameEngine\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui.cpp">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_draw.cpp">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_impl_dx11.cpp">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_impl_win32.cpp">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_tables.cpp">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_widgets.cpp">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_demo.cpp">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +376,30 @@
     </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>GameEngine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imconfig.h">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui.h">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_impl_dx11.h">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_impl_win32.h">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_internal.h">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_rectpack.h">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_textedit.h">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_truetype.h">
+      <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

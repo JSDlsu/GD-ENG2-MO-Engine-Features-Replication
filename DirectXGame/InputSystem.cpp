@@ -15,11 +15,13 @@ InputSystem::~InputSystem()
 	InputSystem::m_system = nullptr;
 }
 
-void InputSystem::update()
+void InputSystem::update(HWND& hwnd)
 {
 	// gets the recent
 	POINT current_mouse_pos = {};
 	::GetCursorPos(&current_mouse_pos);
+	//ScreenToClient(hwnd, &current_mouse_pos);
+	//std::cout << "X: " << current_mouse_pos.x << "Y: " << current_mouse_pos.y << std::endl;
 
 	// assigns the first current_mouse_pos to the old_mouse_pos
 	if (m_first_time)
