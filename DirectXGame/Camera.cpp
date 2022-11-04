@@ -26,7 +26,7 @@ Matrix4x4 Camera::GetCamViewMatrix()
 	return m_view_cam;
 }
 
-Matrix4x4 Camera::GetCameraOrthographicMatrix()
+Matrix4x4 Camera::GetCameraOrthoMatrix()
 {
 	// setting for the orthographic projection
 	Matrix4x4 orthoMatrix;

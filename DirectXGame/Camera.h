@@ -13,7 +13,7 @@ public:
 	void Update(float deltaTime, AppWindow* app_window) override;
 
 	Matrix4x4 GetCamViewMatrix();
-	Matrix4x4 GetCameraOrthographicMatrix();
+	Matrix4x4 GetCameraOrthoMatrix();
 	Matrix4x4 GetCamProjectionMatrix();
 	void UpdateViewMatrix();
 

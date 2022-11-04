@@ -64,15 +64,6 @@
     <Filter Include="GameEngine\Primitives\Cube">
       <UniqueIdentifier>{d459de60-73bb-4541-a8fd-20eea77003f5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\Tools">
-      <UniqueIdentifier>{024feb38-aee3-4629-99d9-9b17223e30f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\Tools\EngineTime">
-      <UniqueIdentifier>{14483c31-cef8-4b4a-ad94-0de3cd48efb8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\Tools\ContantBufferTypes">
-      <UniqueIdentifier>{0239c0bf-7175-42b8-839f-62a4e367e277}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameEngine\GraphicsEngine\ResourceManager\MeshManager">
       <UniqueIdentifier>{6eb964fe-69d2-40b0-bb2c-fa5331426204}</UniqueIdentifier>
     </Filter>
@@ -111,6 +102,15 @@
     </Filter>
     <Filter Include="GameEngine\GraphicsEngine\IMGUI">
       <UniqueIdentifier>{5685aeaf-7d92-4a83-871d-aba5de82038e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\BackEndTools">
+      <UniqueIdentifier>{024feb38-aee3-4629-99d9-9b17223e30f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\BackEndTools\EngineTime">
+      <UniqueIdentifier>{14483c31-cef8-4b4a-ad94-0de3cd48efb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\BackEndTools\ContantBufferTypes">
+      <UniqueIdentifier>{0239c0bf-7175-42b8-839f-62a4e367e277}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -178,7 +178,7 @@
       <Filter>GameEngine\Primitives\Cube</Filter>
     </ClCompile>
     <ClCompile Include="EngineTime.cpp">
-      <Filter>GameEngine\Tools\EngineTime</Filter>
+      <Filter>GameEngine\BackEndTools\EngineTime</Filter>
     </ClCompile>
     <ClCompile Include="PrimitiveCreation.cpp">
       <Filter>GameEngine\Primitives</Filter>
@@ -214,7 +214,7 @@
       <Filter>GameEngine\RenderBufferEngine\RenderBufferManager</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
-      <Filter>GameEngine\Tools</Filter>
+      <Filter>GameEngine\BackEndTools</Filter>
     </ClCompile>
     <ClCompile Include="IMGUI\imgui.cpp">
       <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
@@ -318,13 +318,13 @@
       <Filter>GameEngine\Primitives\Cube</Filter>
     </ClInclude>
     <ClInclude Include="EngineTime.h">
-      <Filter>GameEngine\Tools\EngineTime</Filter>
+      <Filter>GameEngine\BackEndTools\EngineTime</Filter>
     </ClInclude>
     <ClInclude Include="PrimitiveCreation.h">
       <Filter>GameEngine\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="ContantBufferTypes.h">
-      <Filter>GameEngine\Tools\ContantBufferTypes</Filter>
+      <Filter>GameEngine\BackEndTools\ContantBufferTypes</Filter>
     </ClInclude>
     <ClInclude Include="RenderPolicies.h">
       <Filter>GameEngine\GraphicsEngine\RenderSystem\Blender</Filter>
@@ -337,9 +337,6 @@
     </ClInclude>
     <ClInclude Include="MeshManager.h">
       <Filter>GameEngine\GraphicsEngine\ResourceManager\MeshManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Prerequisites.h">
-      <Filter>GameEngine\GraphicsEngine</Filter>
     </ClInclude>
     <ClInclude Include="VertexMesh.h">
       <Filter>GameEngine\Math</Filter>
@@ -354,7 +351,7 @@
       <Filter>GameEngine\Components\Rendering\Camera</Filter>
     </ClInclude>
     <ClInclude Include="EnumHandler.h">
-      <Filter>GameEngine\Tools</Filter>
+      <Filter>GameEngine\BackEndTools</Filter>
     </ClInclude>
     <ClInclude Include="PixelShaderManager.h">
       <Filter>GameEngine\ShaderEngine\ShaderManager</Filter>
@@ -366,7 +363,7 @@
       <Filter>GameEngine\ShaderEngine</Filter>
     </ClInclude>
     <ClInclude Include="StructHandler.h">
-      <Filter>GameEngine\Tools</Filter>
+      <Filter>GameEngine\BackEndTools</Filter>
     </ClInclude>
     <ClInclude Include="RenderBufferEngine.h">
       <Filter>GameEngine\RenderBufferEngine</Filter>
@@ -375,7 +372,7 @@
       <Filter>GameEngine\RenderBufferEngine\RenderBufferManager</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
-      <Filter>GameEngine\Tools</Filter>
+      <Filter>GameEngine\BackEndTools</Filter>
     </ClInclude>
     <ClInclude Include="IMGUI\imconfig.h">
       <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
@@ -400,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="IMGUI\imstb_truetype.h">
       <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Prerequisites.h">
+      <Filter>GameEngine\BackEndTools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
