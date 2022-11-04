@@ -29,6 +29,14 @@ Matrix4x4 CameraHandler::GetSceneCameraViewMatrix()
 {
     return dynamic_cast<Camera*>(&*sceneCamera)->GetCamViewMatrix();
 }
+Matrix4x4 CameraHandler::GetSceneCameraOrthographicMatrix()
+{
+    return dynamic_cast<Camera*>(&*sceneCamera)->GetCameraOrthographicMatrix();
+}
+Matrix4x4 CameraHandler::GetSceneCameraProjectionMatrix()
+{
+    return dynamic_cast<Camera*>(&*sceneCamera)->GetCamProjectionMatrix();
+}
 
 Matrix4x4 CameraHandler::GetSceneCameraMatrix()
 {

@@ -26,6 +26,34 @@ Matrix4x4 Camera::GetCamViewMatrix()
 	return m_view_cam;
 }
 
+Matrix4x4 Camera::GetCameraOrthographicMatrix()
+{
+	// setting for the orthographic projection
+	Matrix4x4 orthoMatrix;
+	orthoMatrix.setOrthoLH
+	(
+		Window::WIDTH / 300.0f,
+		Window::HEIGHT / 300.0f,
+		-40.0f,
+		40.0f
+	);
+
+	return orthoMatrix;
+}
+
+Matrix4x4 Camera::GetCamProjectionMatrix()
+{
+	int width = Window::WIDTH;
+	int height = Window::HEIGHT;
+	float aspectRatio = (float)width / (float)height;
+	float fov = fovInDegrees * (3.1415926f / 180.0f);
+
+	Matrix4x4 projectionMatrix;
+	projectionMatrix.setPerspectiveFovLH(fov, aspectRatio, nearPlane, farPlane);
+
+	return projectionMatrix;
+}
+
 void Camera::UpdateViewMatrix()
 {
 	Matrix4x4 world_cam; world_cam.setIdentity();

@@ -13,6 +13,8 @@ public:
 	void Update(float deltaTime, AppWindow* app_window) override;
 
 	Matrix4x4 GetCamViewMatrix();
+	Matrix4x4 GetCameraOrthographicMatrix();
+	Matrix4x4 GetCamProjectionMatrix();
 	void UpdateViewMatrix();
 
 	void onKeyDown(int key) override;
@@ -29,5 +31,10 @@ public:
 	bool mouseDown = false;
 	const float NAVIGATE_SPEED = 2.5f;
 	Matrix4x4 m_view_cam;
+	//NEW: FOR TRANSFERRING PROJECTION MATRIX TO CAM INSTEAD OF INDIVIDUAL PRIMS
+	Matrix4x4 m_proj_cam;
+	float fovInDegrees = 90.0f;
+	float nearPlane = 0.1f;
+	float farPlane = 100.0f;
 };
 

@@ -20,6 +20,8 @@ public:
 	static CameraHandler* GetInstance();
 public:
 	Matrix4x4 GetSceneCameraViewMatrix();
+	Matrix4x4 GetSceneCameraOrthographicMatrix();
+	Matrix4x4 GetSceneCameraProjectionMatrix();
 	Matrix4x4 GetSceneCameraMatrix();
 	
 };

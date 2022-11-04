@@ -65,17 +65,10 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 #define VIEW 1
 #if VIEW == 0
 	// setting for the orthographic projection
-	cc.m_proj.setOrthoLH
-	(
-		Window::WIDTH / 300.0f,
-		Window::HEIGHT / 300.0f,
-		-40.0f,
-		40.0f
-	);
+	cc.m_proj = CameraHandler::GetInstance()->GetSceneCameraOrthographicMatrix();
 #elif VIEW == 1
 	// setting the perspective projection
-	float aspectRatio = (float)(Window::WIDTH) / (float)(Window::HEIGHT);
-	cc.m_proj.setPerspectiveFovLH(aspectRatio, aspectRatio, 0.1f, 100.0f);
+	cc.m_proj = CameraHandler::GetInstance()->GetSceneCameraProjectionMatrix();
 #endif
 
 	m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);
