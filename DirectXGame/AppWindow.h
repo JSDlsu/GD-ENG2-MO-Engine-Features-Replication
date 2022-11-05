@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "DeviceContext.h"
 #include "Matrix4x4.h"
+#include "UIManager.h"	
 
 class Cube;
 class Plane;

@@ -112,6 +112,15 @@
     <Filter Include="GameEngine\BackEndTools\ContantBufferTypes">
       <UniqueIdentifier>{0239c0bf-7175-42b8-839f-62a4e367e277}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\UI">
+      <UniqueIdentifier>{2b3fd728-ba59-46d7-91c2-807926c087c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\UI\Credits Screen">
+      <UniqueIdentifier>{24e09e55-0099-499c-b114-66903b3f1c6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\UI\Menu Toolbar">
+      <UniqueIdentifier>{94282bcf-3f7f-48da-a0b5-b2ca5cc8e288}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -236,6 +245,18 @@
     </ClCompile>
     <ClCompile Include="IMGUI\imgui_demo.cpp">
       <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AUIScreen.cpp">
+      <Filter>GameEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>GameEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Credits_UI.cpp">
+      <Filter>GameEngine\UI\Credits Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuToolbar.cpp">
+      <Filter>GameEngine\UI\Menu Toolbar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -400,6 +421,18 @@
     </ClInclude>
     <ClInclude Include="Prerequisites.h">
       <Filter>GameEngine\BackEndTools</Filter>
+    </ClInclude>
+    <ClInclude Include="AUIScreen.h">
+      <Filter>GameEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>GameEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Credits_UI.h">
+      <Filter>GameEngine\UI\Credits Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuToolbar.h">
+      <Filter>GameEngine\UI\Menu Toolbar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

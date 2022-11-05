@@ -188,3 +188,13 @@ void RenderSystem::releaseCompiledShader()
 {
 	if (m_blob)m_blob->Release();
 }
+
+ID3D11Device* RenderSystem::getD3DDevice()
+{
+	return m_d3d_device;
+}
+
+ID3D11DeviceContext* RenderSystem::getD3DDeviceContext()
+{
+	return m_imm_context;
+}
