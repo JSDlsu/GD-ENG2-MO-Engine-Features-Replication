@@ -7,9 +7,9 @@
 #include <codecvt>
 
 #include "BNS_GraphicsEngine.h"
-#include "ShaderEngine.h"
+#include "BNS_ShaderEngine.h"
 #include "VertexMesh.h"
-#include "VertexShaderManager.h"
+#include "BNS_VertexShaderManager.h"
 
 BNS_Mesh::BNS_Mesh(const wchar_t* full_path) : BNS_Resource(full_path)
 {

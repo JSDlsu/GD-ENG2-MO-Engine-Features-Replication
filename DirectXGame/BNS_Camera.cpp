@@ -2,20 +2,20 @@
 
 #include "BNS_AppWindow.h"
 #include "BNS_EngineTime.h"
-#include "InputSystem.h"
+#include "BNS_InputSystem.h"
 
-BNS_Camera::BNS_Camera(std::string name, BNS_ObjectTypes type) : AGameObject(name, type)
+BNS_Camera::BNS_Camera(std::string name, BNS_ObjectTypes type) : BNS_AGameObject(name, type)
 {
 	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -2.0f });
 	SetPosition(Vector3D{ 0.0f, 0.0f, -2.0f });
 	this->UpdateViewMatrix();
-	// subscribe this class to the InputSystem
-	InputSystem::get()->addListener(this);
+	// subscribe this class to the BNS_InputSystem
+	BNS_InputSystem::get()->addListener(this);
 }
 
 BNS_Camera::~BNS_Camera()
 {
-	InputSystem::get()->removeListener(this);
+	BNS_InputSystem::get()->removeListener(this);
 }
 
 void BNS_Camera::Update(float deltaTime, BNS_AppWindow* app_window)
@@ -33,8 +33,8 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 	Matrix4x4 orthoMatrix;
 	orthoMatrix.setOrthoLH
 	(
-		Window::WIDTH / 300.0f,
-		Window::HEIGHT / 300.0f,
+		BNS_Window::WIDTH / 300.0f,
+		BNS_Window::HEIGHT / 300.0f,
 		-40.0f,
 		40.0f
 	);
@@ -44,8 +44,8 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 
 Matrix4x4 BNS_Camera::GetCamProjectionMatrix()
 {
-	int width = Window::WIDTH;
-	int height = Window::HEIGHT;
+	int width = BNS_Window::WIDTH;
+	int height = BNS_Window::HEIGHT;
 	float aspectRatio = (float)width / (float)height;
 	float fov = fovInDegrees * (3.1415926f / 180.0f);
 
@@ -145,10 +145,10 @@ void BNS_Camera::onMouseMove(const Point& mouse_pos)
 		float z = GetLocalRotation().m_z;
 
 		float speed = 0.1f;
-		x += (mouse_pos.m_y - (Window::HEIGHT / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
-		y += (mouse_pos.m_x - (Window::WIDTH / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
+		x += (mouse_pos.m_y - (BNS_Window::HEIGHT / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
+		y += (mouse_pos.m_x - (BNS_Window::WIDTH / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
 		
-		InputSystem::get()->setCursorPosition(Point((int)(Window::WIDTH / 2.0f), (int)(Window::HEIGHT / 2.0f)));
+		BNS_InputSystem::get()->setCursorPosition(Point((int)(BNS_Window::WIDTH / 2.0f), (int)(BNS_Window::HEIGHT / 2.0f)));
 
 		
 		SetRotation(x, y, z);
@@ -168,12 +168,12 @@ void BNS_Camera::onRightMouseDown(const Point& delta_mouse_pos)
 {
 	mouseDown = true;
 	// hides the cursor
-	InputSystem::get()->showCursor(false);
+	BNS_InputSystem::get()->showCursor(false);
 }
 
 void BNS_Camera::onRightMouseUp(const Point& delta_mouse_pos)
 {
 	mouseDown = false;
 	// displays the cursor
-	InputSystem::get()->showCursor(true);
+	BNS_InputSystem::get()->showCursor(true);
 }

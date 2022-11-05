@@ -4,7 +4,7 @@
 #include <chrono>
 #include <ctime>
 
-class Window;
+class BNS_Window;
 
 /*
  * a singleton class that gives the deltaTime from the current
@@ -31,5 +31,5 @@ private:
 	static void LogFrameStart();
 	static void LogFrameEnd();
 
-	friend class Window;
+	friend class BNS_Window;
 };

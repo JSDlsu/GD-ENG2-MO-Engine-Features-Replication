@@ -1,10 +1,10 @@
 #pragma once
-#include "RenderSystem.h"
+#include "BNS_RenderSystem.h"
 #include "BNS_TextureManager.h"
 #include "BNS_MeshManager.h"
 
 // Singleton class
-// initializes the RenderSystem
+// initializes the BNS_RenderSystem
 class BNS_GraphicsEngine
 {
 private:
@@ -13,7 +13,7 @@ private:
 	//Release all the resources loaded
 	~BNS_GraphicsEngine();
 public:
-	RenderSystem* getRenderSystem();
+	BNS_RenderSystem* getRenderSystem();
 	BNS_TextureManager* getTextureManager();
 	BNS_MeshManager* getMeshManager();
 public:
@@ -21,7 +21,7 @@ public:
 	static void create();
 	static void release();
 private:
-	RenderSystem* m_render_system = nullptr;
+	BNS_RenderSystem* m_render_system = nullptr;
 	BNS_TextureManager* m_tex_manager = nullptr;
 	BNS_MeshManager* m_mesh_manager = nullptr;
 	static BNS_GraphicsEngine* m_engine;

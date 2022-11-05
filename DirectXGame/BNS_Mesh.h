@@ -1,5 +1,5 @@
 #pragma once
-#include "AGameObject.h"
+#include "BNS_AGameObject.h"
 #include "BNS_Resource.h"
 #include "BNS_Prerequisites.h"
 
@@ -22,5 +22,5 @@ private:
 	VertexBufferPtr m_vb;
 	IndexBufferPtr m_ib;
 private:
-	friend class DeviceContext;
+	friend class BNS_DeviceContext;
 };

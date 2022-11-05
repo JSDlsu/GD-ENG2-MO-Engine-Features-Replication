@@ -1,16 +1,16 @@
 #pragma once
-#include "Window.h"
-#include "DeviceContext.h"
+#include "BNS_Window.h"
+#include "BNS_DeviceContext.h"
 #include "Matrix4x4.h"
-#include "UIManager.h"	
+#include "BNS_UIManager.h"	
 
-class Cube;
-class Plane;
+class BNS_Cube;
+class BNS_Plane;
 class BNS_Camera;
 class BNS_Mesh;
 
 // displays the main scene; handles the awake,update,end
-class BNS_AppWindow : public Window
+class BNS_AppWindow : public BNS_Window
 {
 public:
 	BNS_AppWindow();
@@ -18,7 +18,7 @@ public:
 
 	void update();
 
-	// Inherited via Window
+	// Inherited via BNS_Window
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
@@ -29,9 +29,8 @@ private:
 	SwapChainPtr m_swap_chain;
 	BlenderPtr m_blender;
 private:
-private:
-	friend class Cube;
-	friend class Plane;
+	friend class BNS_Cube;
+	friend class BNS_Plane;
 	friend class BNS_Camera;
 	friend class BNS_Mesh;
 };

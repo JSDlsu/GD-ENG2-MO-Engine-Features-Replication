@@ -1,10 +1,10 @@
 #pragma once
-#include "AGameObject.h"
-#include "InputListener.h"
+#include "BNS_AGameObject.h"
+#include "BNS_InputListener.h"
 
 class Point;
 
-class BNS_Camera : public AGameObject, public InputListener
+class BNS_Camera : public BNS_AGameObject, public BNS_InputListener
 {
 public:
 	BNS_Camera(std::string name, BNS_ObjectTypes type);

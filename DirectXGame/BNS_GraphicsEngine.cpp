@@ -1,5 +1,5 @@
 #include "BNS_GraphicsEngine.h"
-#include "RenderSystem.h"
+#include "BNS_RenderSystem.h"
 #include <exception>
 #include <iostream>
 
@@ -9,8 +9,8 @@ BNS_GraphicsEngine::BNS_GraphicsEngine()
 {
 	try
 	{
-		// instantiate our RenderSystem
-		m_render_system = new RenderSystem();
+		// instantiate our BNS_RenderSystem
+		m_render_system = new BNS_RenderSystem();
 	}
 	catch (...)
 	{
@@ -44,7 +44,7 @@ BNS_GraphicsEngine::~BNS_GraphicsEngine()
 	delete m_render_system;
 }
 
-RenderSystem* BNS_GraphicsEngine::getRenderSystem()
+BNS_RenderSystem* BNS_GraphicsEngine::getRenderSystem()
 {
 	return m_render_system;
 }
