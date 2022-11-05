@@ -42,3 +42,8 @@ Matrix4x4 CameraHandler::GetSceneCameraMatrix()
 {
     return dynamic_cast<Camera*>(&*sceneCamera)->GetMatrix();
 }
+
+Vector3D CameraHandler::GetSceneCameraPos()
+{
+    return dynamic_cast<Camera*>(&*sceneCamera)->GetLocalPosition();
+}

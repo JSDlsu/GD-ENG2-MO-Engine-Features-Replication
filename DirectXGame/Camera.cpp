@@ -7,6 +7,7 @@
 Camera::Camera(std::string name, ObjectTypes type) : AGameObject(name, type)
 {
 	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -2.0f });
+	SetPosition(Vector3D{ 0.0f, 0.0f, -2.0f });
 	this->UpdateViewMatrix();
 	// subscribe this class to the InputSystem
 	InputSystem::get()->addListener(this);

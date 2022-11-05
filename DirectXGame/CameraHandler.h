@@ -23,6 +23,6 @@ public:
 	Matrix4x4 GetSceneCameraOrthoMatrix();
 	Matrix4x4 GetSceneCameraProjMatrix();
 	Matrix4x4 GetSceneCameraMatrix();
-	
+	Vector3D GetSceneCameraPos();
 };
 
