@@ -1,13 +1,13 @@
 
 #pragma once
 #include <d3d11.h>
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 
 /*
  * Because indices need to be accessed by the GPU, they
  * need to be placed in a special resource structure: an
  * index buffer. Creating an index buffer is very similar
- * to creating a vertex_tex buffer, except that the index buffer
+ * to creating a BNS_vertex_tex buffer, except that the index buffer
  * stores indices instead of vertices.*/
 class IndexBuffer
 {

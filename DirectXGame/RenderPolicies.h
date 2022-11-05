@@ -5,8 +5,8 @@
 #include "AGameObject.h"
 #include "Cube.h"
 #include "Plane.h"
-#include "Mesh.h"
-#include "Prerequisites.h"
+#include "BNS_Mesh.h"
+#include "BNS_Prerequisites.h"
 
 class Matrix4x4;
 
@@ -29,13 +29,13 @@ public:
 		AGameObject* raw_obj = object.get();
 		switch (raw_obj->ObjectType)
 		{
-		case ObjectTypes::CUBE:
+		case BNS_ObjectTypes::CUBE:
 		{
 			if (dynamic_cast<Cube*>(raw_obj)->GetAlpha() >= 1.0f)
 				return false;
 		}
 		break;
-		case ObjectTypes::PLANE:
+		case BNS_ObjectTypes::PLANE:
 		{
 			if (dynamic_cast<Plane*>(raw_obj)->GetAlpha() >= 1.0f)
 				return false;
@@ -61,13 +61,13 @@ public:
 		AGameObject* raw_obj = object.get();
 		switch (raw_obj->ObjectType)
 		{
-		case ObjectTypes::CUBE:
+		case BNS_ObjectTypes::CUBE:
 		{
 			if (dynamic_cast<Cube*>(raw_obj)->GetAlpha() < 1.0f)
 				return false;
 		}
 		break;
-		case ObjectTypes::PLANE:
+		case BNS_ObjectTypes::PLANE:
 		{
 			if (dynamic_cast<Plane*>(raw_obj)->GetAlpha() < 1.0f)
 				return false;

@@ -1,5 +1,5 @@
 #include "UIManager.h"
-#include "GraphicsEngine.h"
+#include "BNS_GraphicsEngine.h"
 #include "UICreation.h"
 
 UIManager* UIManager::sharedInstance = nullptr;
@@ -63,7 +63,7 @@ UIManager::UIManager(HWND hwnd)
 	ImGuiIO& io = ImGui::GetIO();
 	(void)io;
 	ImGui_ImplWin32_Init(hwnd);
-	ImGui_ImplDX11_Init(GraphicsEngine::get()->getRenderSystem()->GetDevice(), GraphicsEngine::get()->getRenderSystem()->GetDeviceContext());
+	ImGui_ImplDX11_Init(BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice(), BNS_GraphicsEngine::get()->getRenderSystem()->GetDeviceContext());
 	ImGui::StyleColorsDark();
 
 	try

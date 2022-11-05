@@ -1,5 +1,5 @@
 #pragma once
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 #include "InputLayoutManager.h"
 
 // Singleton class
@@ -7,7 +7,7 @@
 class RenderBufferEngine
 {
 private:
-	//Initialize the GraphicsEngine and DirectX 11 Device
+	//Initialize the BNS_GraphicsEngine and DirectX 11 Device
 	RenderBufferEngine();
 	//Release all the resources loaded
 	~RenderBufferEngine();

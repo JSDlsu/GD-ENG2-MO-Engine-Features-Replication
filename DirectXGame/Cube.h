@@ -1,26 +1,26 @@
 #pragma once
 #include "AGameObject.h"
-#include "EnumHandler.h"
-#include "Prerequisites.h"
-#include "StructHandler.h"
+#include "BNS_EnumHandler.h"
+#include "BNS_Prerequisites.h"
+#include "BNS_StructHandler.h"
 
-class AppWindow;
+class BNS_AppWindow;
 
 class Cube : public AGameObject
 {
 public:
-	Cube(std::string name, ObjectTypes type);
+	Cube(std::string name, BNS_ObjectTypes type);
 	~Cube();
 public:
-	void Update(float deltaTime, AppWindow* app_window) override;
+	void Update(float deltaTime, BNS_AppWindow* app_window) override;
 	void Draw(const BlenderPtr& m_blender) override;
 public:
 	void SetMesh(const wchar_t* tex_path);
 	void SetTexture(const wchar_t* tex_path);
 public:
-	void SetVertex_Index_Buffer(VertexShaderType vs_type, PC_Cube_ColorData color_data = PC_Cube_ColorData());
-	void SetVertexShader(VertexShaderType vs_type);
-	void SetPixelShader(PixelShaderType ps_type);
+	void SetVertex_Index_Buffer(BNS_VertexShaderType vs_type, BNS_PC_Cube_ColorData color_data = BNS_PC_Cube_ColorData());
+	void SetVertexShader(BNS_VertexShaderType vs_type);
+	void SetPixelShader(BNS_PixelShaderType ps_type);
 public:
 	void SetAlpha(float alpha);
 	float GetAlpha();
@@ -34,8 +34,8 @@ protected:
 protected:
 	VertexShaderPtr m_vs;
 	PixelShaderPtr m_ps;
-	VertexShaderType vs_type;
-	PixelShaderType ps_type;
+	BNS_VertexShaderType vs_type;
+	BNS_PixelShaderType ps_type;
 protected:
 	float ticks = 0.0f;
 	float deltaPos = 0.0f;
@@ -43,6 +43,6 @@ protected:
 	float deltaTime = 0.0f;
 	float alpha = 1.0f;
 protected:
-	friend class AppWindow;
+	friend class BNS_AppWindow;
 };
 

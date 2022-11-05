@@ -9,7 +9,7 @@
 #include "Window.h"
 #include "AUIScreen.h"
 #include "Credits_UI.h"
-#include "EnumHandler.h"
+#include "BNS_EnumHandler.h"
 #include "MenuToolbar_UI.h"
 
 
@@ -19,7 +19,7 @@ class UIManager
 {
 public:
 	typedef std::vector<AUIScreen_Ptr> uiScreenList;
-	typedef std::unordered_map<UINames, AUIScreen_Ptr> uiScreenHashTable;
+	typedef std::unordered_map<BNS_UINames, AUIScreen_Ptr> uiScreenHashTable;
 
 public:
 	static UIManager* GetInstance();

@@ -1,14 +1,14 @@
 #pragma once
 #include <d3d11.h>
 
-#include "EnumHandler.h"
-#include "Prerequisites.h"
+#include "BNS_EnumHandler.h"
+#include "BNS_Prerequisites.h"
 
 // creates a list of data(vertexBuffer) on a specific attribute(inputLayout)
 class VertexBuffer
 {
 public:
-	VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type,
+	VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, BNS_InputLayoutType il_type,
 		RenderSystem* system);
 	UINT getSizeVertexList();
 	~VertexBuffer();

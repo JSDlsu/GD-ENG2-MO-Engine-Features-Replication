@@ -1,13 +1,13 @@
 #pragma once
 #include <d3d11.h>
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 
 /*
- *A vertex_tex shader is a program written in HLSL, executed on the GPU, which
- *inputs a vertex_tex and outputs a vertex_tex. Every drawn vertex_tex goes through the
- *vertex_tex shader. This enables the programmer to do specialized work on a per
- *vertex_tex basis to achieve various rendering effects. The values output from
- *the vertex_tex shader are passed on to the next stage in the pipeline.
+ *A BNS_vertex_tex shader is a program written in HLSL, executed on the GPU, which
+ *inputs a BNS_vertex_tex and outputs a BNS_vertex_tex. Every drawn BNS_vertex_tex goes through the
+ *BNS_vertex_tex shader. This enables the programmer to do specialized work on a per
+ *BNS_vertex_tex basis to achieve various rendering effects. The values output from
+ *the BNS_vertex_tex shader are passed on to the next stage in the pipeline.
  */
 class VertexShader
 {

@@ -12,7 +12,7 @@ void MenuToolbar_UI::DrawUI()
 	{
 		if (ImGui::BeginMenu("About"))
 		{
-			ImGui::MenuItem("Credits", NULL, &UIManager::GetInstance()->GetUIHashTable()[UINames::CREDITS_SCREEN]->toShow);
+			ImGui::MenuItem("Credits", NULL, &UIManager::GetInstance()->GetUIHashTable()[BNS_UINames::CREDITS_SCREEN]->toShow);
 			ImGui::EndMenu();
 		}
 

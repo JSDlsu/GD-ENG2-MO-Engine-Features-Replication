@@ -1,6 +1,6 @@
 #pragma once
 #include <d3d11.h>
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 
 // Sets and generates the rendering commands to the selected driver
 class DeviceContext

@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "EngineTime.h"
+#include "BNS_EngineTime.h"
 #include <exception>
 
 #include "IMGUI/imgui.h"
@@ -137,10 +137,10 @@ bool Window::broadcast()
 		SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)this);
 		this->onCreate();
 		m_is_init = true;
-		EngineTime::initialize();
+		BNS_EngineTime::initialize();
 	}
 
-	EngineTime::LogFrameStart();
+	BNS_EngineTime::LogFrameStart();
 	// renders all the frames of the graphic 'C'
 	this->onUpdate();
 
@@ -157,7 +157,7 @@ bool Window::broadcast()
 	// doesn't allow the CPU to throttle due to chunk of processes;
 	// allows a minimal pause of '1' Msec so that the CPU can handle the loop
 	Sleep(1);
-	EngineTime::LogFrameEnd();
+	BNS_EngineTime::LogFrameEnd();
 
 	return true;
 }

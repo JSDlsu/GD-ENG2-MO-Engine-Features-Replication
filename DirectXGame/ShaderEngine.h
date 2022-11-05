@@ -7,7 +7,7 @@
 class ShaderEngine
 {
 private:
-	//Initialize the GraphicsEngine and DirectX 11 Device
+	//Initialize the BNS_GraphicsEngine and DirectX 11 Device
 	ShaderEngine();
 	//Release all the resources loaded
 	~ShaderEngine();

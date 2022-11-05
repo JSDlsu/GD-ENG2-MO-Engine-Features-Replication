@@ -1,8 +1,8 @@
 #include "PrimitiveCreation.h"
 #include <iostream>
-#include "AppWindow.h"
-#include "Color.h"
-#include "GraphicsEngine.h"
+#include "BNS_AppWindow.h"
+#include "BNS_Color.h"
+#include "BNS_GraphicsEngine.h"
 #include "ShaderEngine.h"
 
 PrimitiveCreation* PrimitiveCreation::sharedInstance = nullptr;
@@ -31,17 +31,17 @@ PrimitiveCreation::~PrimitiveCreation()
 
 }
 
-void PrimitiveCreation::ChangeVB_IB_Buffer(VertexShaderType vs_type, VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, PC_Cube_ColorData color_data)
+void PrimitiveCreation::ChangeVB_IB_Buffer(BNS_VertexShaderType vs_type, VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data)
 {
 	switch (vs_type)
 	{
-	case VertexShaderType::TEXTURE:
+	case BNS_VertexShaderType::TEXTURE:
 		GetCube_Tex(m_vb, m_ib);
 		break;
-	case VertexShaderType::COLOR:
+	case BNS_VertexShaderType::COLOR:
 		GetCube_Color(m_vb, m_ib, color_data);
 		break;
-	case VertexShaderType::COLOR_LERP:
+	case BNS_VertexShaderType::COLOR_LERP:
 		GetCube_Color_Lerp(m_vb, m_ib, color_data);
 		break;
 	}
@@ -59,8 +59,8 @@ void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 		{ Vector2D(1.0f,1.0f) }
 	};
 
-	// list of all the vertex_tex in the 3D Cube
-	vertex_tex vertex_list[] =
+	// list of all the BNS_vertex_tex in the 3D Cube
+	BNS_vertex_tex vertex_list[] =
 	{
 		//X - Y - Z
 		//FRONT FACE
@@ -99,8 +99,8 @@ void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 
 	};
 
-	// list of all the triangle index with their vertex_tex compositions
-	// this index list should reflect the vertex_tex list
+	// list of all the triangle index with their BNS_vertex_tex compositions
+	// this index list should reflect the BNS_vertex_tex list
 	unsigned int index_list[] =
 	{
 		//FRONT SIDE
@@ -128,20 +128,20 @@ void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 	UINT size_index_list = ARRAYSIZE(index_list);
 
 	// create IB
-	m_ib = GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
+	m_ib = BNS_GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
 	(index_list, size_index_list);
 
 	// create VB
-	m_vb = GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
+	m_vb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
 		vertex_list,
-		sizeof(vertex_tex), size_list,
-		InputLayoutType::TEXTURE);
+		sizeof(BNS_vertex_tex), size_list,
+		BNS_InputLayoutType::TEXTURE);
 }
 
-void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, PC_Cube_ColorData color_data)
+void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data)
 {
-	// list of all the vertex_tex in the 3D Cube
-	vertex_color vertex_list[] =
+	// list of all the BNS_vertex_tex in the 3D Cube
+	BNS_vertex_color vertex_list[] =
 	{
 		//X - Y - Z
 		//FRONT FACE
@@ -178,8 +178,8 @@ void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_i
 
 	};
 
-	// list of all the triangle index with their vertex_tex compositions
-	// this index list should reflect the vertex_tex list
+	// list of all the triangle index with their BNS_vertex_tex compositions
+	// this index list should reflect the BNS_vertex_tex list
 	unsigned int index_list[] =
 	{
 		//FRONT SIDE
@@ -207,21 +207,21 @@ void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_i
 	UINT size_index_list = ARRAYSIZE(index_list);
 
 	// create IB
-	m_ib = GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
+	m_ib = BNS_GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
 	(index_list, size_index_list);
 	
 
 	// create VB
-	m_vb = GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
+	m_vb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
 		vertex_list,
-		sizeof(vertex_color), size_list,
-		InputLayoutType::COLOR);
+		sizeof(BNS_vertex_color), size_list,
+		BNS_InputLayoutType::COLOR);
 }
 
-void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, PC_Cube_ColorData color_data)
+void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data)
 {
-	// list of all the vertex_tex in the 3D Cube
-	vertex_color_lerp vertex_list[] =
+	// list of all the BNS_vertex_tex in the 3D Cube
+	BNS_vertex_color_lerp vertex_list[] =
 	{
 		//X - Y - Z
 		//FRONT FACE
@@ -256,8 +256,8 @@ void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr
 		{ cube_positionList[0],color_data.color_list_1[3], color_data.color_list_2[3] }
 	};
 
-	// list of all the triangle index with their vertex_tex compositions
-	// this index list should reflect the vertex_tex list
+	// list of all the triangle index with their BNS_vertex_tex compositions
+	// this index list should reflect the BNS_vertex_tex list
 	unsigned int index_list[] =
 	{
 		//FRONT SIDE
@@ -285,14 +285,14 @@ void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr
 	UINT size_index_list = ARRAYSIZE(index_list);
 
 	// create IB
-	m_ib = GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
+	m_ib = BNS_GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
 	(index_list, size_index_list);
 
 	// create VB
-	m_vb = GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
+	m_vb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
 		vertex_list,
-		sizeof(vertex_color_lerp), size_list,
-		InputLayoutType::COLOR_LERP);
+		sizeof(BNS_vertex_color_lerp), size_list,
+		BNS_InputLayoutType::COLOR_LERP);
 }
 
 

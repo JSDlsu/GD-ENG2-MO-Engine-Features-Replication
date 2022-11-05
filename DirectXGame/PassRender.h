@@ -3,7 +3,7 @@
 #include "GameObjectManager.h"
 #include "RenderPolicies.h"
 #include "AGameObject.h"
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 #include "Matrix4x4.h"
 
 /*

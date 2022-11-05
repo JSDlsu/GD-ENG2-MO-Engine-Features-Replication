@@ -6,7 +6,7 @@
 #include <string>
 #include <iostream>
 #include "UI_Prerequisites.h"
-#include "EnumHandler.h"
+#include "BNS_EnumHandler.h"
 
 class AUIScreen
 {

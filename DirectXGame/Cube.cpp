@@ -1,30 +1,30 @@
 #include "Cube.h"
-#include "AppWindow.h"
+#include "BNS_AppWindow.h"
 #include "ConstantBuffer.h"
-#include "ContantBufferTypes.h"
+#include "BNS_ContantBufferTypes.h"
 #include "DeviceContext.h"
-#include "GraphicsEngine.h"
+#include "BNS_GraphicsEngine.h"
 #include "IndexBuffer.h"
-#include "Mesh.h"
+#include "BNS_Mesh.h"
 #include "PrimitiveCreation.h"
-#include "CameraHandler.h"
-#include "EngineTime.h"
+#include "BNS_CameraHandler.h"
+#include "BNS_EngineTime.h"
 #include "ShaderEngine.h"
 #include "VertexShaderManager.h"
 
-Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
+Cube::Cube(std::string name, BNS_ObjectTypes type) : AGameObject(name, type)
 {
 	// Set the object type
 	ObjectType = type;
 	
 	// create CB
-	constant_transform cc;
+	BNS_constant_transform cc;
 	cc.m_time = 0;
-	m_cb = GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc, sizeof(constant_transform));
+	m_cb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc, sizeof(BNS_constant_transform));
 	// create CB_texture
-	constant_texture cc_texture;
+	BNS_constant_texture cc_texture;
 	cc_texture.alpha = 1.0f;
-	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc_texture, sizeof(constant_texture));
+	m_cb_texture = BNS_GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc_texture, sizeof(BNS_constant_texture));
 	
 }
 
@@ -33,15 +33,15 @@ Cube::~Cube()
 
 }
 
-void Cube::Update(float deltaTime, AppWindow* app_window)
+void Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 {
-	// Texture update
-	constant_texture cc_texture;
+	// BNS_Texture update
+	BNS_constant_texture cc_texture;
 	cc_texture.alpha = alpha;
-	m_cb_texture->update(GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc_texture);
+	m_cb_texture->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc_texture);
 
 	// transform update
-	constant_transform cc;
+	BNS_constant_transform cc;
 	cc.m_time = ::GetTickCount();
 
 	// objects matrix
@@ -59,78 +59,78 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	cc.m_world *= temp;
 
 	// creating the camera matrix
-	Matrix4x4 cameraMatrix = CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
+	Matrix4x4 cameraMatrix = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
 	cc.m_view = cameraMatrix;
 
 #define VIEW 1
 #if VIEW == 0
 	// setting for the orthographic projection
-	cc.m_proj = CameraHandler::GetInstance()->GetSceneCameraOrthoMatrix();
+	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraOrthoMatrix();
 #elif VIEW == 1
 	// setting the perspective projection
-	cc.m_proj = CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
+	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
 #endif
 
-	m_cb->update(GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
+	m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
 }
 
 void Cube::Draw(const BlenderPtr& m_blender)
 {
 	// for the transform
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
 
 	// for the texture
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb_texture);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb_texture);
 
 	//SET TEXTURE SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexShader(m_vs);
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setPixelShader(m_ps);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexShader(m_vs);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setPixelShader(m_ps);
 
 	if(m_tex != nullptr)
-		GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setTexture(m_ps, m_tex);
+		BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setTexture(m_ps, m_tex);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexBuffer(m_vb);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexBuffer(m_vb);
 	//SET THE INDICES OF THE TRIANGLE TO DRAW
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setIndexBuffer(m_ib);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setIndexBuffer(m_ib);
 	// FINALLY DRAW THE TRIANGLE
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->drawIndexedTriangleList(
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->drawIndexedTriangleList(
 		m_ib->getSizeIndexList(), 0, 0);
 	//SET THE BLENDING
-	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setBlender(m_blender);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setBlender(m_blender);
 }
 
 void Cube::SetMesh(const wchar_t* tex_path)
 {
 	// sets the new Index and Vertex buffer based from the mesh
-	m_mesh = GraphicsEngine::get()->getMeshManager()->createMeshFromFile(tex_path);
+	m_mesh = BNS_GraphicsEngine::get()->getMeshManager()->createMeshFromFile(tex_path);
 	m_ib = m_mesh.get()->getIndexBuffer();
 	m_vb = m_mesh.get()->getVertexBuffer();
 
 	// change the pixel shader for mesh types
-	SetPixelShader(PixelShaderType::MESH);
+	SetPixelShader(BNS_PixelShaderType::MESH);
 }
 
 void Cube::SetTexture(const wchar_t* tex_path)
 {
-	// assign the texture file to the Texture pointer by passing the its path in the file
-	m_tex = GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+	// assign the texture file to the BNS_Texture pointer by passing the its path in the file
+	m_tex = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
 }
 
-void Cube::SetVertex_Index_Buffer(VertexShaderType vs_type, PC_Cube_ColorData color_data)
+void Cube::SetVertex_Index_Buffer(BNS_VertexShaderType vs_type, BNS_PC_Cube_ColorData color_data)
 {
 	PrimitiveCreation::Instance()->ChangeVB_IB_Buffer(vs_type, m_vb, m_ib, color_data);
 }
 
-void Cube::SetVertexShader(VertexShaderType vs_type)
+void Cube::SetVertexShader(BNS_VertexShaderType vs_type)
 {
 	// assign a new vertexShader to this object
 	ShaderEngine::get()->getVertexShaderManager()->ChangeVertexShader(m_vs, vs_type);
 	this->vs_type = vs_type;
 }
 
-void Cube::SetPixelShader(PixelShaderType ps_type)
+void Cube::SetPixelShader(BNS_PixelShaderType ps_type)
 {
 	// assign a new pixelShader to this object
 	ShaderEngine::get()->getPixelShaderManager()->ChangePixelShader(m_ps, ps_type);

@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 
-class AppWindow;
+class BNS_AppWindow;
 /*
  * stores the created object in the scene;
  * use to access the draw function for each
@@ -23,6 +23,6 @@ public:
 private:
 	std::vector<AGameObjectPtr> objectList;
 	static GameObjectManager* m_instance;
-	friend class AppWindow;
+	friend class BNS_AppWindow;
 	friend class Cube;
 };

@@ -1,13 +1,13 @@
 #pragma once
 #include <string>
 
-#include "EnumHandler.h"
+#include "BNS_EnumHandler.h"
 #include "Matrix4x4.h"
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 #include "Vector3D.h"
 
 class Matrix4x4;
-class AppWindow;
+class BNS_AppWindow;
 
 /*
  * Abstract class for primitive type objects(cube,plane,sphere,etc..)
@@ -15,12 +15,12 @@ class AppWindow;
 class AGameObject
 {
 public:
-	AGameObject(std::string name ,ObjectTypes type);
+	AGameObject(std::string name ,BNS_ObjectTypes type);
 	virtual ~AGameObject();
 public:
-	ObjectTypes ObjectType;
+	BNS_ObjectTypes ObjectType;
 public:
-	virtual void Update(float deltaTime, AppWindow* app_window) = 0;
+	virtual void Update(float deltaTime, BNS_AppWindow* app_window) = 0;
 	virtual void Draw(const BlenderPtr& m_blender);
 public:
 	void SetTransform(Vector3D position, Vector3D scale, Vector3D rotation);

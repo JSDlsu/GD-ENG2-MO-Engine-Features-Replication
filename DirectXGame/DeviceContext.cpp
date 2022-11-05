@@ -5,7 +5,7 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
-#include "Texture.h"
+#include "BNS_Texture.h"
 #include <exception>
 
 #include "Blender.h"
@@ -27,11 +27,11 @@ void DeviceContext::clearRenderTargetColor(const SwapChainPtr& swap_chain, float
 
 void DeviceContext::setVertexBuffer(const VertexBufferPtr& vertex_buffer)
 {
-	// the size of our vertex_tex type
+	// the size of our BNS_vertex_tex type
 	UINT stride = vertex_buffer->m_size_vertex;
 	// starting point of our buffer
 	UINT offset = 0;
-	// Bind an array of vertex_tex buffers to the input-assembler stage.
+	// Bind an array of BNS_vertex_tex buffers to the input-assembler stage.
 	m_device_context->IASetVertexBuffers(0, 1, &vertex_buffer->m_buffer, &stride, &offset);
 	m_device_context->IASetInputLayout(vertex_buffer->m_layout);
 }
@@ -90,7 +90,7 @@ void DeviceContext::setViewportSize(UINT width, UINT height)
 
 void DeviceContext::setVertexShader(const VertexShaderPtr& vertex_shader)
 {
-	// Set a vertex_tex shader to the device.
+	// Set a BNS_vertex_tex shader to the device.
 	m_device_context->VSSetShader(vertex_shader->m_vs, nullptr, 0);
 }
 

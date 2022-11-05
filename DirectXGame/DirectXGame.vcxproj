@@ -155,19 +155,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AGameObject.cpp" />
-    <ClCompile Include="AppWindow.cpp" />
+    <ClCompile Include="BNS_AppWindow.cpp" />
     <ClCompile Include="AUIScreen.cpp" />
     <ClCompile Include="Blender.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CameraHandler.cpp" />
-    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="BNS_Camera.cpp" />
+    <ClCompile Include="BNS_CameraHandler.cpp" />
+    <ClCompile Include="BNS_Color.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Credits_UI.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
-    <ClCompile Include="EngineTime.cpp" />
+    <ClCompile Include="BNS_EngineTime.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
-    <ClCompile Include="GraphicsEngine.cpp" />
+    <ClCompile Include="BNS_GraphicsEngine.cpp" />
     <ClCompile Include="IMGUI\imgui.cpp" />
     <ClCompile Include="IMGUI\imgui_demo.cpp" />
     <ClCompile Include="IMGUI\imgui_draw.cpp" />
@@ -178,22 +178,22 @@
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputLayoutManager.cpp" />
     <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="BNS_main.cpp" />
     <ClCompile Include="MenuToolbar_UI.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="MeshManager.cpp" />
+    <ClCompile Include="BNS_Mesh.cpp" />
+    <ClCompile Include="BNS_MeshManager.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PixelShaderManager.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PrimitiveCreation.cpp" />
     <ClCompile Include="RenderBufferEngine.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
-    <ClCompile Include="Resource.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="BNS_Resource.cpp" />
+    <ClCompile Include="BNS_ResourceManager.cpp" />
     <ClCompile Include="ShaderEngine.cpp" />
     <ClCompile Include="SwapChain.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="BNS_Texture.cpp" />
+    <ClCompile Include="BNS_TextureManager.cpp" />
     <ClCompile Include="UICreation.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
@@ -203,21 +203,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AGameObject.h" />
-    <ClInclude Include="AppWindow.h" />
+    <ClInclude Include="BNS_AppWindow.h" />
     <ClInclude Include="AUIScreen.h" />
     <ClInclude Include="Blender.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CameraHandler.h" />
-    <ClInclude Include="Color.h" />
+    <ClInclude Include="BNS_Camera.h" />
+    <ClInclude Include="BNS_CameraHandler.h" />
+    <ClInclude Include="BNS_Color.h" />
     <ClInclude Include="ConstantBuffer.h" />
-    <ClInclude Include="ContantBufferTypes.h" />
+    <ClInclude Include="BNS_ContantBufferTypes.h" />
     <ClInclude Include="Credits_UI.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DeviceContext.h" />
-    <ClInclude Include="EngineTime.h" />
-    <ClInclude Include="EnumHandler.h" />
+    <ClInclude Include="BNS_EngineTime.h" />
+    <ClInclude Include="BNS_EnumHandler.h" />
     <ClInclude Include="GameObjectManager.h" />
-    <ClInclude Include="GraphicsEngine.h" />
+    <ClInclude Include="BNS_GraphicsEngine.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
     <ClInclude Include="IMGUI\imgui.h" />
     <ClInclude Include="IMGUI\imgui_impl_dx11.h" />
@@ -232,25 +232,25 @@
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="MenuToolbar_UI.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="MeshManager.h" />
+    <ClInclude Include="BNS_Mesh.h" />
+    <ClInclude Include="BNS_MeshManager.h" />
     <ClInclude Include="PassRender.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PixelShaderManager.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="Prerequisites.h" />
+    <ClInclude Include="BNS_Prerequisites.h" />
     <ClInclude Include="PrimitiveCreation.h" />
     <ClInclude Include="RenderBufferEngine.h" />
     <ClInclude Include="RenderPolicies.h" />
     <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="BNS_Resource.h" />
+    <ClInclude Include="BNS_ResourceManager.h" />
     <ClInclude Include="ShaderEngine.h" />
-    <ClInclude Include="StructHandler.h" />
+    <ClInclude Include="BNS_StructHandler.h" />
     <ClInclude Include="SwapChain.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="BNS_Texture.h" />
+    <ClInclude Include="BNS_TextureManager.h" />
     <ClInclude Include="UICreation.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UI_Prerequisites.h" />
@@ -264,57 +264,56 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelColor.hlsl">
+    <FxCompile Include="BNS_PixelColor.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="PixelColorLerp.hlsl">
+    <FxCompile Include="BNS_PixelColorLerp.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="PixelTex.hlsl">
+    <FxCompile Include="BNS_PixelTex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="PixelMesh.hlsl">
+    <FxCompile Include="BNS_PixelMesh.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="shader.fx" />
-    <FxCompile Include="VertexColor.hlsl">
+    <FxCompile Include="BNS_VertexColor.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="VertexColorLerp.hlsl">
+    <FxCompile Include="BNS_VertexColorLerp.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="VertexMesh.hlsl">
+    <FxCompile Include="BNS_VertexMesh.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="VertexTex.hlsl">
+    <FxCompile Include="BNS_VertexTex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

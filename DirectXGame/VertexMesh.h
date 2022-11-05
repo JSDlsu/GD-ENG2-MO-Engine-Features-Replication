@@ -4,7 +4,7 @@
 
 /*
  * a class structure that will contain the Vector3
- * vertex_tex and Vector2 tex-coordinates of each point.
+ * BNS_vertex_tex and Vector2 tex-coordinates of each point.
  */
 class VertexMesh
 {

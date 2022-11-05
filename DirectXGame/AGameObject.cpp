@@ -3,7 +3,7 @@
 #include "Matrix4x4.h"
 #include <math.h>
 
-AGameObject::AGameObject(std::string name, ObjectTypes type) : name(name), ObjectType(type)
+AGameObject::AGameObject(std::string name, BNS_ObjectTypes type) : name(name), ObjectType(type)
 {
 	m_position = Vector3D::zero();
 	m_scale = Vector3D::one();

@@ -1,6 +1,6 @@
 #pragma once
 #include <d3d11.h>
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 
 /*
  * blending combines pixel shader colors of incoming pixel

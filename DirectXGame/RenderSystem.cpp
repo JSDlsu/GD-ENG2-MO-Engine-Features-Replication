@@ -87,7 +87,7 @@ DeviceContextPtr RenderSystem::GetImmediateDeviceContext()
 	return this->m_imm_device_context;
 }
 
-VertexBufferPtr RenderSystem::CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type)
+VertexBufferPtr RenderSystem::CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, BNS_InputLayoutType il_type)
 {
 	VertexBufferPtr vb = nullptr;
 	try

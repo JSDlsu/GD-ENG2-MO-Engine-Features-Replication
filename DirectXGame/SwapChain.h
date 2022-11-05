@@ -1,6 +1,6 @@
 #pragma once
 #include <d3d11.h>
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 
 // a double buffer screen that draws simultaneously the image/frame scene
 class SwapChain

@@ -1,6 +1,6 @@
 #pragma once
 #include <d3d11.h>
-#include "Prerequisites.h"
+#include "BNS_Prerequisites.h"
 
 // constant buffer is a block of data which can store different kinds of data types.
 // In the case of game engine, this is use to share data with the shaders(i.e. changing world view projection matrix).

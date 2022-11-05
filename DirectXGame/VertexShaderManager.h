@@ -1,8 +1,8 @@
 #pragma once
 #include <map>
-#include "EnumHandler.h"
-#include "Prerequisites.h"
-#include "StructHandler.h"
+#include "BNS_EnumHandler.h"
+#include "BNS_Prerequisites.h"
+#include "BNS_StructHandler.h"
 
 class VertexShaderManager
 {
@@ -11,13 +11,13 @@ public:
 	~VertexShaderManager();
 
 public:
-	void ChangeVertexShader(VertexShaderPtr& m_vs, VertexShaderType vs_type = VertexShaderType::TEXTURE);
-	ShaderByteData GetVertexShaderData(VertexShaderType vs_type);
+	void ChangeVertexShader(VertexShaderPtr& m_vs, BNS_VertexShaderType vs_type = BNS_VertexShaderType::TEXTURE);
+	BNS_ShaderByteData GetVertexShaderData(BNS_VertexShaderType vs_type);
 
 private:
-	void CompileVertexShader(const wchar_t* file_name, const char* entry_point_name, VertexShaderType vs_type);
+	void CompileVertexShader(const wchar_t* file_name, const char* entry_point_name, BNS_VertexShaderType vs_type);
 
 private:
-	std::map<VertexShaderType, ShaderByteData> VertexShaderMap;
+	std::map<BNS_VertexShaderType, BNS_ShaderByteData> VertexShaderMap;
 };
 

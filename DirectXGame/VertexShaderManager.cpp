@@ -1,55 +1,55 @@
 #include "VertexShaderManager.h"
 #include <iostream>
-#include "GraphicsEngine.h"
+#include "BNS_GraphicsEngine.h"
 #include "ShaderEngine.h"
 
 VertexShaderManager::VertexShaderManager()
 {
-	CompileVertexShader(L"VertexTex.hlsl", "vsmain", VertexShaderType::TEXTURE);
-	CompileVertexShader(L"VertexMesh.hlsl", "vsmain", VertexShaderType::MESH);
-	CompileVertexShader(L"VertexColor.hlsl", "vsmain", VertexShaderType::COLOR);
-	CompileVertexShader(L"VertexColorLerp.hlsl", "vsmain", VertexShaderType::COLOR_LERP);
+	CompileVertexShader(L"BNS_VertexTex.hlsl", "vsmain", BNS_VertexShaderType::TEXTURE);
+	CompileVertexShader(L"BNS_VertexMesh.hlsl", "vsmain", BNS_VertexShaderType::MESH);
+	CompileVertexShader(L"BNS_VertexColor.hlsl", "vsmain", BNS_VertexShaderType::COLOR);
+	CompileVertexShader(L"BNS_VertexColorLerp.hlsl", "vsmain", BNS_VertexShaderType::COLOR_LERP);
 }
 
 VertexShaderManager::~VertexShaderManager()
 {
 }
 
-void VertexShaderManager::ChangeVertexShader(VertexShaderPtr& m_vs, VertexShaderType vs_type)
+void VertexShaderManager::ChangeVertexShader(VertexShaderPtr& m_vs, BNS_VertexShaderType vs_type)
 {
-	ShaderByteData l_vs = GetVertexShaderData(vs_type);
+	BNS_ShaderByteData l_vs = GetVertexShaderData(vs_type);
 
-	// after a successful compiling, create the vertex_tex buffer then
-	m_vs = GraphicsEngine::get()->getRenderSystem()->CreateVertexShader(l_vs.m_byte_code, l_vs.m_size);
+	// after a successful compiling, create the BNS_vertex_tex buffer then
+	m_vs = BNS_GraphicsEngine::get()->getRenderSystem()->CreateVertexShader(l_vs.m_byte_code, l_vs.m_size);
 }
 
-ShaderByteData VertexShaderManager::GetVertexShaderData(VertexShaderType vs_type)
+BNS_ShaderByteData VertexShaderManager::GetVertexShaderData(BNS_VertexShaderType vs_type)
 {
 	for (auto it = VertexShaderMap.begin(); it != VertexShaderMap.end(); ++it)
 		if (it->first == vs_type)
 			return it->second;
 
-	ShaderByteData no_result;
+	BNS_ShaderByteData no_result;
 	return no_result;
 }
 
 void VertexShaderManager::CompileVertexShader(const wchar_t* file_name, const char* entry_point_name,
-                                              VertexShaderType vs_type)
+                                              BNS_VertexShaderType vs_type)
 {
-	ShaderByteData m_data;
-	// gets the byte code and size of the vertex_tex shader
+	BNS_ShaderByteData m_data;
+	// gets the byte code and size of the BNS_vertex_tex shader
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
 	// access the VertexMeshLayoutShader.hlsl and compile
-	GraphicsEngine::get()->getRenderSystem()->CompileVertexShader(file_name, entry_point_name, &shader_byte_code, &size_shader);
+	BNS_GraphicsEngine::get()->getRenderSystem()->CompileVertexShader(file_name, entry_point_name, &shader_byte_code, &size_shader);
 	// copy the bytecode into our public field(layout and shader byte codes)
 	::memcpy(m_data.m_byte_code, shader_byte_code, size_shader);
 	// set the layout size
 	m_data.m_size = size_shader;
 	// release compiled shader
-	GraphicsEngine::get()->getRenderSystem()->ReleaseCompiledShader();
+	BNS_GraphicsEngine::get()->getRenderSystem()->ReleaseCompiledShader();
 
 	// add the byteData obj to the map
-	VertexShaderMap.insert(std::pair<VertexShaderType, ShaderByteData>(vs_type, m_data));
+	VertexShaderMap.insert(std::pair<BNS_VertexShaderType, BNS_ShaderByteData>(vs_type, m_data));
 }

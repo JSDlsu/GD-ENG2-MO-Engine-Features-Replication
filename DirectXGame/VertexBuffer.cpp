@@ -5,7 +5,7 @@
 #include "RenderBufferEngine.h"
 
 
-VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type,
+VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, BNS_InputLayoutType il_type,
                            RenderSystem* system) : m_system(system), m_layout(0), m_buffer(0)
 {
 	// describe a buffer resource
@@ -13,7 +13,7 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
 	// checks if our buffer is accessible by CPU and GPU; default means it could be written by both CPU and GPU
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
 	buff_desc.ByteWidth = size_vertex * size_list;
-	// we want our buffer to be bind as a vertex_tex buffer
+	// we want our buffer to be bind as a BNS_vertex_tex buffer
 	buff_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	buff_desc.CPUAccessFlags = 0;
 	buff_desc.MiscFlags = 0;

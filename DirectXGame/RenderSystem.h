@@ -1,8 +1,8 @@
 #pragma once
 #include <d3d11.h>
 
-#include "EnumHandler.h"
-#include "Prerequisites.h"
+#include "BNS_EnumHandler.h"
+#include "BNS_Prerequisites.h"
 
 /*
  * Initializes the IDXGI components and setting the graphics pipeline stages.
@@ -13,14 +13,14 @@
 class RenderSystem
 {
 public:
-	//Initialize the GraphicsEngine and DirectX 11 Device
+	//Initialize the BNS_GraphicsEngine and DirectX 11 Device
 	RenderSystem();
 	//Release all the resources loaded
 	~RenderSystem();
 public:
 	SwapChainPtr CreateSwapChain(HWND hwnd, UINT width, UINT height);
 	DeviceContextPtr GetImmediateDeviceContext();
-	VertexBufferPtr CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type);
+	VertexBufferPtr CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, BNS_InputLayoutType il_type);
 	IndexBufferPtr CreateIndexBuffer(void* list_indices, UINT size_list);
 	ConstantBufferPtr CreateConstantBuffer(void* buffer, UINT size_buffer);
 	VertexShaderPtr CreateVertexShader(const void* shader_byte_code, size_t byte_code_size);
@@ -47,7 +47,7 @@ private:
 	ID3D11DeviceContext* m_imm_context;
 
 private:
-	// a buffer that contains the compiled vertex_tex shader and its size in the memory
+	// a buffer that contains the compiled BNS_vertex_tex shader and its size in the memory
 	ID3DBlob* m_blob = nullptr;
 	ID3DBlob* m_vsblob = nullptr;
 	ID3DBlob* m_psblob = nullptr;
@@ -60,10 +60,10 @@ private:
 	friend class ConstantBuffer;
 	friend class VertexShader;
 	friend class PixelShader;
-	friend class Texture;
+	friend class BNS_Texture;
 	friend class Blender;
 	friend class InputLayoutManager;
-	friend class AppWindow;
+	friend class BNS_AppWindow;
 
 };
 
