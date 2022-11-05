@@ -1,16 +1,22 @@
 #include "UIManager.h"
 #include "GraphicsEngine.h"
+#include "UICreation.h"
 
-UIManager* UIManager::sharedInstance = NULL;
+UIManager* UIManager::sharedInstance = nullptr;
+UICreation* UIManager::m_ui_creation = nullptr;
 
 UIManager* UIManager::GetInstance()
 {
 	return sharedInstance;
 }
 
-void UIManager::initialize(HWND hwnd)
+void UIManager::Initialize(HWND hwnd)
 {
 	sharedInstance = new UIManager(hwnd);
+
+	// initialize the UI screens
+	m_ui_creation->CreateCreditsUI();
+	m_ui_creation->CreateMenuToolbarUI();
 }
 
 void UIManager::Release()
@@ -18,52 +24,57 @@ void UIManager::Release()
 	delete sharedInstance;
 }
 
-void UIManager::drawAllUIScreens()
+void UIManager::DrawAllUIScreens()
 {
 	//START IMGUI FRAME
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	for (int i = 0; i < this->_uiScreenList.size(); i++)
+	// Call each UIScreen members in the list
+	uiScreenList::iterator i;
+	for (i = _uiScreenList.begin(); i != _uiScreenList.end(); ++i)
 	{
-		if (this->_uiScreenList[i]->toShow == true)
-			this->_uiScreenList[i]->drawUI();
+		if ((*i)->toShow)
+		{
+			(*i)->DrawUI();
+		}
 	}
 
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-UIManager::uiScreenList UIManager::getUIList()
+UIManager::uiScreenList UIManager::GetUIList()
 {
 	return _uiScreenList;
 }
 
-UIManager::uiScreenHashTable UIManager::getUIHashTable()
+UIManager::uiScreenHashTable UIManager::GetUIHashTable()
 {
 	return uiTable;
 }
 
 UIManager::UIManager(HWND hwnd)
 {
+	// Setup ImGui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	(void)io;
-
 	ImGui_ImplWin32_Init(hwnd);
-	ImGui_ImplDX11_Init(GraphicsEngine::get()->getRenderSystem()->getD3DDevice(), GraphicsEngine::get()->getRenderSystem()->getD3DDeviceContext());
-
+	ImGui_ImplDX11_Init(GraphicsEngine::get()->getRenderSystem()->GetDevice(), GraphicsEngine::get()->getRenderSystem()->GetDeviceContext());
 	ImGui::StyleColorsDark();
 
-	Credits_UI* credits_uiScreen = new Credits_UI("creditsUI");
-	this->uiTable[UINames::CREDITS_SCREEN] = credits_uiScreen;
-	this->_uiScreenList.push_back(credits_uiScreen);
-
-	MenuToolbar* menuToolbar = new MenuToolbar("menuToolbar");
-	this->uiTable[UINames::MENU_SCREEN] = menuToolbar;
-	this->_uiScreenList.push_back(menuToolbar);
+	try
+	{
+		// instantiate our RenderSystem
+		m_ui_creation = new UICreation();
+	}
+	catch (...)
+	{
+		throw std::exception("UICreation not created successfully");
+	}
 }
 
 UIManager::~UIManager()

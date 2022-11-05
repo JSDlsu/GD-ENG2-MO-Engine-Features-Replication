@@ -69,7 +69,7 @@ RenderSystem::~RenderSystem()
 	m_d3d_device->Release();
 }
 
-SwapChainPtr RenderSystem::createSwapChain(HWND hwnd, UINT width, UINT height)
+SwapChainPtr RenderSystem::CreateSwapChain(HWND hwnd, UINT width, UINT height)
 {
 	SwapChainPtr sc = nullptr;
 
@@ -82,12 +82,12 @@ SwapChainPtr RenderSystem::createSwapChain(HWND hwnd, UINT width, UINT height)
 }
 
 
-DeviceContextPtr RenderSystem::getImmediateDeviceContext()
+DeviceContextPtr RenderSystem::GetImmediateDeviceContext()
 {
 	return this->m_imm_device_context;
 }
 
-VertexBufferPtr RenderSystem::createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type)
+VertexBufferPtr RenderSystem::CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type)
 {
 	VertexBufferPtr vb = nullptr;
 	try
@@ -98,7 +98,7 @@ VertexBufferPtr RenderSystem::createVertexBuffer(void* list_vertices, UINT size_
 	return vb;
 }
 
-IndexBufferPtr RenderSystem::createIndexBuffer(void* list_indices, UINT size_list)
+IndexBufferPtr RenderSystem::CreateIndexBuffer(void* list_indices, UINT size_list)
 {
 	IndexBufferPtr ib = nullptr;
 	try
@@ -109,7 +109,7 @@ IndexBufferPtr RenderSystem::createIndexBuffer(void* list_indices, UINT size_lis
 	return ib;
 }
 
-ConstantBufferPtr RenderSystem::createConstantBuffer(void* buffer, UINT size_buffer)
+ConstantBufferPtr RenderSystem::CreateConstantBuffer(void* buffer, UINT size_buffer)
 {
 	ConstantBufferPtr cb = nullptr;
 	try
@@ -120,7 +120,7 @@ ConstantBufferPtr RenderSystem::createConstantBuffer(void* buffer, UINT size_buf
 	return cb;
 }
 
-VertexShaderPtr RenderSystem::createVertexShader(const void* shader_byte_code, size_t byte_code_size)
+VertexShaderPtr RenderSystem::CreateVertexShader(const void* shader_byte_code, size_t byte_code_size)
 {
 	// a buffer that contains the error and warning messages in case the compilation fails
 	VertexShaderPtr vs = nullptr;
@@ -132,7 +132,7 @@ VertexShaderPtr RenderSystem::createVertexShader(const void* shader_byte_code, s
 	return vs;
 }
 
-PixelShaderPtr RenderSystem::createPixelShader(const void* shader_byte_code, size_t byte_code_size)
+PixelShaderPtr RenderSystem::CreatePixelShader(const void* shader_byte_code, size_t byte_code_size)
 {
 	PixelShaderPtr ps = nullptr;
 	try
@@ -143,7 +143,7 @@ PixelShaderPtr RenderSystem::createPixelShader(const void* shader_byte_code, siz
 	return ps;
 }
 
-BlenderPtr RenderSystem::createBlender()
+BlenderPtr RenderSystem::CreateBlender()
 {
 	BlenderPtr blender = nullptr;
 	try
@@ -154,7 +154,7 @@ BlenderPtr RenderSystem::createBlender()
 	return blender;
 }
 
-bool RenderSystem::compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)
+bool RenderSystem::CompileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)
 {
 	ID3DBlob* error_blob = nullptr;
 	if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "vs_5_0", 0, 0, &m_blob, &error_blob)))
@@ -169,7 +169,7 @@ bool RenderSystem::compileVertexShader(const wchar_t* file_name, const char* ent
 	return true;
 }
 
-bool RenderSystem::compilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)
+bool RenderSystem::CompilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)
 {
 	ID3DBlob* error_blob = nullptr;
 	if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "ps_5_0", 0, 0, &m_blob, &error_blob)))
@@ -184,17 +184,17 @@ bool RenderSystem::compilePixelShader(const wchar_t* file_name, const char* entr
 	return true;
 }
 
-void RenderSystem::releaseCompiledShader()
+void RenderSystem::ReleaseCompiledShader()
 {
 	if (m_blob)m_blob->Release();
 }
 
-ID3D11Device* RenderSystem::getD3DDevice()
+ID3D11Device* RenderSystem::GetDevice()
 {
 	return m_d3d_device;
 }
 
-ID3D11DeviceContext* RenderSystem::getD3DDeviceContext()
+ID3D11DeviceContext* RenderSystem::GetDeviceContext()
 {
 	return m_imm_context;
 }

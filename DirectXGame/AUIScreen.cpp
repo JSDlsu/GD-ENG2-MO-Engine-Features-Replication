@@ -1,6 +1,15 @@
 #include "AUIScreen.h"
 
-AUIScreen::AUIScreen(std::string name)
+AUIScreen::AUIScreen(std::string name) : name(name)
 {
-	this->name = name;
+
+}
+
+AUIScreen::~AUIScreen()
+{
+}
+
+std::string AUIScreen::GetName()
+{
+	return name;
 }

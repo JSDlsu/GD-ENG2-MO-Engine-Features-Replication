@@ -83,11 +83,11 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	}
 
 	// create the index buffer
-	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer(&list_indices[0],
+	m_ib = GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer(&list_indices[0],
 		(UINT)list_indices.size());
 
 	// create a vertex_tex buffer
-	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(&list_vertices[0],
+	m_vb = GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(&list_vertices[0],
 		sizeof(VertexMesh), (UINT)list_vertices.size(),
 		InputLayoutType::MESH);
 	

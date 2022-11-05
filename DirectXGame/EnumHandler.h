@@ -32,6 +32,15 @@ enum class InputLayoutType
 	COLOR_LERP
 };
 
+enum class UINames
+{
+	PROFILER_SCREEN,
+	MENU_SCREEN,
+	INSPECTOR_SCREEN,
+	HIERARCHY_SCREEN,
+	CREDITS_SCREEN,
+};
+
 class EnumHandler
 {
 	

@@ -33,10 +33,10 @@ void AppWindow::onCreate()
 
 
 	RECT rc = this->getClientWindowRect();
-	m_swap_chain = GraphicsEngine::get()->getRenderSystem()->createSwapChain(
+	m_swap_chain = GraphicsEngine::get()->getRenderSystem()->CreateSwapChain(
 		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	UIManager::initialize(m_hwnd);
+	UIManager::Initialize(m_hwnd);
 	
 	// Color Coords
 	Vector3D color_list1[] =
@@ -110,7 +110,7 @@ void AppWindow::onCreate()
 	GameObjectManager::get()->objectList.push_back(temp_ptr4);
 
 	// create blenderPtr
-	m_blender = GraphicsEngine::get()->getRenderSystem()->createBlender();
+	m_blender = GraphicsEngine::get()->getRenderSystem()->CreateBlender();
 
 }
 
@@ -121,7 +121,7 @@ void AppWindow::update()
 	std::vector<AGameObjectPtr>::iterator i;
 	for (i = GameObjectManager::get()->objectList.begin(); i != GameObjectManager::get()->objectList.end(); ++i)
 	{
-		//std::static_pointer_cast<Cube>(*i)->m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);
+		//std::static_pointer_cast<Cube>(*i)->m_cb->update(GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
 		if ((*i) != nullptr)
 			(*i)->Update(EngineTime::getDeltaTime(), this);
 	}
@@ -136,11 +136,11 @@ void AppWindow::onUpdate()
 	InputSystem::get()->update(m_hwnd);
 
 	//CLEAR THE RENDER TARGET 
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
 		0.5f, 1.0f, 0.5f, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 	update();
 
@@ -152,7 +152,7 @@ void AppWindow::onUpdate()
 	PassRender<TransparencyFilterPolicy, BackToFrontPolicy> transparencyPass;
 	transparencyPass.Render(m_blender, CameraHandler::GetInstance()->GetSceneCameraMatrix());
 
-	UIManager::GetInstance()->drawAllUIScreens();
+	UIManager::GetInstance()->DrawAllUIScreens();
 
 	m_swap_chain->present(true);
 }
@@ -160,6 +160,8 @@ void AppWindow::onUpdate()
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
+
+	UIManager::Release();
 }
 
 void AppWindow::onFocus()

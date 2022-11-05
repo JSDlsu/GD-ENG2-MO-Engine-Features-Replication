@@ -128,11 +128,11 @@ void PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 	UINT size_index_list = ARRAYSIZE(index_list);
 
 	// create IB
-	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer
+	m_ib = GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
 	(index_list, size_index_list);
 
 	// create VB
-	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(
+	m_vb = GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
 		vertex_list,
 		sizeof(vertex_tex), size_list,
 		InputLayoutType::TEXTURE);
@@ -207,12 +207,12 @@ void PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_i
 	UINT size_index_list = ARRAYSIZE(index_list);
 
 	// create IB
-	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer
+	m_ib = GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
 	(index_list, size_index_list);
 	
 
 	// create VB
-	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(
+	m_vb = GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
 		vertex_list,
 		sizeof(vertex_color), size_list,
 		InputLayoutType::COLOR);
@@ -285,11 +285,11 @@ void PrimitiveCreation::GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr
 	UINT size_index_list = ARRAYSIZE(index_list);
 
 	// create IB
-	m_ib = GraphicsEngine::get()->getRenderSystem()->createIndexBuffer
+	m_ib = GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
 	(index_list, size_index_list);
 
 	// create VB
-	m_vb = GraphicsEngine::get()->getRenderSystem()->createVertexBuffer(
+	m_vb = GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
 		vertex_list,
 		sizeof(vertex_color_lerp), size_list,
 		InputLayoutType::COLOR_LERP);

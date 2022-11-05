@@ -19,7 +19,7 @@ void PixelShaderManager::ChangePixelShader(PixelShaderPtr& m_vs, PixelShaderType
 	ShaderByteData l_vs = GetPixelShaderData(ps_type);
 
 	// after a successful compiling, create the vertex_tex buffer then
-	m_vs = GraphicsEngine::get()->getRenderSystem()->createPixelShader(l_vs.m_byte_code, l_vs.m_size);
+	m_vs = GraphicsEngine::get()->getRenderSystem()->CreatePixelShader(l_vs.m_byte_code, l_vs.m_size);
 }
 
 ShaderByteData PixelShaderManager::GetPixelShaderData(PixelShaderType ps_type)
@@ -42,13 +42,13 @@ void PixelShaderManager::CompilePixelShader(const wchar_t* file_name, const char
 	size_t size_shader = 0;
 
 	// access the VertexMeshLayoutShader.hlsl and compile
-	GraphicsEngine::get()->getRenderSystem()->compilePixelShader(file_name, entry_point_name, &shader_byte_code, &size_shader);
+	GraphicsEngine::get()->getRenderSystem()->CompilePixelShader(file_name, entry_point_name, &shader_byte_code, &size_shader);
 	// copy the bytecode into our public field(layout and shader byte codes)
 	::memcpy(m_data.m_byte_code, shader_byte_code, size_shader);
 	// set the layout size
 	m_data.m_size = size_shader;
 	// release compiled shader
-	GraphicsEngine::get()->getRenderSystem()->releaseCompiledShader();
+	GraphicsEngine::get()->getRenderSystem()->ReleaseCompiledShader();
 
 	// add the byteData obj to the map
 	PixelShaderMap.insert(std::pair<PixelShaderType, ShaderByteData>(ps_type, m_data));

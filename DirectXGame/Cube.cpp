@@ -20,11 +20,11 @@ Cube::Cube(std::string name, ObjectTypes type) : AGameObject(name, type)
 	// create CB
 	constant_transform cc;
 	cc.m_time = 0;
-	m_cb = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc, sizeof(constant_transform));
+	m_cb = GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc, sizeof(constant_transform));
 	// create CB_texture
 	constant_texture cc_texture;
 	cc_texture.alpha = 1.0f;
-	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->createConstantBuffer(&cc_texture, sizeof(constant_texture));
+	m_cb_texture = GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc_texture, sizeof(constant_texture));
 	
 }
 
@@ -38,7 +38,7 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	// Texture update
 	constant_texture cc_texture;
 	cc_texture.alpha = alpha;
-	m_cb_texture->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc_texture);
+	m_cb_texture->update(GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc_texture);
 
 	// transform update
 	constant_transform cc;
@@ -71,34 +71,34 @@ void Cube::Update(float deltaTime, AppWindow* app_window)
 	cc.m_proj = CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
 #endif
 
-	m_cb->update(GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext(), &cc);
+	m_cb->update(GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
 }
 
 void Cube::Draw(const BlenderPtr& m_blender)
 {
 	// for the transform
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
 
 	// for the texture
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb_texture);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb_texture);
 
 	//SET TEXTURE SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setVertexShader(m_vs);
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setPixelShader(m_ps);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexShader(m_vs);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setPixelShader(m_ps);
 
 	if(m_tex != nullptr)
-		GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setTexture(m_ps, m_tex);
+		GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setTexture(m_ps, m_tex);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexBuffer(m_vb);
 	//SET THE INDICES OF THE TRIANGLE TO DRAW
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setIndexBuffer(m_ib);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setIndexBuffer(m_ib);
 	// FINALLY DRAW THE TRIANGLE
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->drawIndexedTriangleList(
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->drawIndexedTriangleList(
 		m_ib->getSizeIndexList(), 0, 0);
 	//SET THE BLENDING
-	GraphicsEngine::get()->getRenderSystem()->getImmediateDeviceContext()->setBlender(m_blender);
+	GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setBlender(m_blender);
 }
 
 void Cube::SetMesh(const wchar_t* tex_path)

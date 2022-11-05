@@ -18,22 +18,22 @@ public:
 	//Release all the resources loaded
 	~RenderSystem();
 public:
-	SwapChainPtr createSwapChain(HWND hwnd, UINT width, UINT height);
-	DeviceContextPtr getImmediateDeviceContext();
-	VertexBufferPtr createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type);
-	IndexBufferPtr createIndexBuffer(void* list_indices, UINT size_list);
-	ConstantBufferPtr createConstantBuffer(void* buffer, UINT size_buffer);
-	VertexShaderPtr createVertexShader(const void* shader_byte_code, size_t byte_code_size);
-	PixelShaderPtr createPixelShader(const void* shader_byte_code, size_t byte_code_size);
-	BlenderPtr createBlender();
+	SwapChainPtr CreateSwapChain(HWND hwnd, UINT width, UINT height);
+	DeviceContextPtr GetImmediateDeviceContext();
+	VertexBufferPtr CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, InputLayoutType il_type);
+	IndexBufferPtr CreateIndexBuffer(void* list_indices, UINT size_list);
+	ConstantBufferPtr CreateConstantBuffer(void* buffer, UINT size_buffer);
+	VertexShaderPtr CreateVertexShader(const void* shader_byte_code, size_t byte_code_size);
+	PixelShaderPtr CreatePixelShader(const void* shader_byte_code, size_t byte_code_size);
+	BlenderPtr CreateBlender();
 public:
-	bool compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
-	bool compilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
+	bool CompileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
+	bool CompilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
 
-	void releaseCompiledShader();
+	void ReleaseCompiledShader();
 
-	ID3D11Device* getD3DDevice();
-	ID3D11DeviceContext* getD3DDeviceContext();
+	ID3D11Device* GetDevice();
+	ID3D11DeviceContext* GetDeviceContext();
 	
 private:
 	DeviceContextPtr m_imm_device_context;

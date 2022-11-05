@@ -5,7 +5,7 @@ Credits_UI::Credits_UI(std::string name) : AUIScreen(name)
 	toShow = false;
 }
 
-void Credits_UI::drawUI()
+void Credits_UI::DrawUI()
 {
 	//DRAW HERE
 

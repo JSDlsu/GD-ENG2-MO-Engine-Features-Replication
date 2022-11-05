@@ -9,32 +9,26 @@
 #include "Window.h"
 #include "AUIScreen.h"
 #include "Credits_UI.h"
-#include "MenuToolbar.h"
+#include "EnumHandler.h"
+#include "MenuToolbar_UI.h"
 
+
+class UICreation;
 
 class UIManager
 {
 public:
-	enum UINames
-	{
-		PROFILER_SCREEN,
-		MENU_SCREEN,
-		INSPECTOR_SCREEN,
-		HIERARCHY_SCREEN,
-		CREDITS_SCREEN,
-	};
-
-	typedef std::vector<AUIScreen*> uiScreenList;
-	typedef std::unordered_map<UINames, AUIScreen*> uiScreenHashTable;
+	typedef std::vector<AUIScreen_Ptr> uiScreenList;
+	typedef std::unordered_map<UINames, AUIScreen_Ptr> uiScreenHashTable;
 
 public:
 	static UIManager* GetInstance();
-	static void initialize(HWND hwnd);
+	static void Initialize(HWND hwnd);
 	static void Release();
 
-	void drawAllUIScreens();
-	uiScreenList getUIList();
-	uiScreenHashTable getUIHashTable();
+	void DrawAllUIScreens();
+	uiScreenList GetUIList();
+	uiScreenHashTable GetUIHashTable();
 
 	static const int WINDOW_WIDTH = 1366;
 	static const int WINDOW_HEIGHT = 768;
@@ -46,10 +40,13 @@ private:
 	UIManager& operator=(UIManager const&) {};
 	static UIManager* sharedInstance;
 
-
 private:
+	static UICreation* m_ui_creation;
 	uiScreenList _uiScreenList;
 	uiScreenHashTable uiTable;
+
+private:
+	friend class UICreation;
 };
 
 

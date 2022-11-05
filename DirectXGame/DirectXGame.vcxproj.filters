@@ -121,6 +121,9 @@
     <Filter Include="GameEngine\UI\Menu Toolbar">
       <UniqueIdentifier>{94282bcf-3f7f-48da-a0b5-b2ca5cc8e288}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\UI\UIBackendTools">
+      <UniqueIdentifier>{2fd07d42-d221-42b1-bc70-c8397e62609b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -255,8 +258,11 @@
     <ClCompile Include="Credits_UI.cpp">
       <Filter>GameEngine\UI\Credits Screen</Filter>
     </ClCompile>
-    <ClCompile Include="MenuToolbar.cpp">
+    <ClCompile Include="MenuToolbar_UI.cpp">
       <Filter>GameEngine\UI\Menu Toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="UICreation.cpp">
+      <Filter>GameEngine\UI\UIBackendTools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -431,8 +437,14 @@
     <ClInclude Include="Credits_UI.h">
       <Filter>GameEngine\UI\Credits Screen</Filter>
     </ClInclude>
-    <ClInclude Include="MenuToolbar.h">
+    <ClInclude Include="MenuToolbar_UI.h">
       <Filter>GameEngine\UI\Menu Toolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Prerequisites.h">
+      <Filter>GameEngine\UI\UIBackendTools</Filter>
+    </ClInclude>
+    <ClInclude Include="UICreation.h">
+      <Filter>GameEngine\UI\UIBackendTools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
