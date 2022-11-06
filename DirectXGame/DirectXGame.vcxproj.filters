@@ -124,6 +124,9 @@
     <Filter Include="GameEngine\GraphicsEngine\Shaders\VertexShaders">
       <UniqueIdentifier>{fd78c96f-c241-4a57-9456-1e35f1a83635}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\FileExplorer">
+      <UniqueIdentifier>{4e396e81-0041-4802-92d2-f08638fd6d24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="BNS_UICreation.cpp">
       <Filter>GameEngine\UI\UIBackendTools</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_FileExplorer.cpp">
+      <Filter>GameEngine\FileExplorer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="BNS_UICreation.h">
       <Filter>GameEngine\UI\UIBackendTools</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_FileExplorer.h">
+      <Filter>GameEngine\FileExplorer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -38,3 +38,13 @@ BNS_Texture::~BNS_Texture()
 	m_shader_res_view->Release();
 	m_texture->Release();
 }
+
+ID3D11Resource* BNS_Texture::GetTexture()
+{
+	return m_texture;
+}
+
+ID3D11ShaderResourceView* BNS_Texture::GetShaderResourceView()
+{
+	return m_shader_res_view;
+}

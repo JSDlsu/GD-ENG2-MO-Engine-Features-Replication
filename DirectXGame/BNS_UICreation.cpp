@@ -1,5 +1,8 @@
 #include "BNS_UICreation.h"
 #include "BNS_Credits_UI.h"
+#include "BNS_GraphicsEngine.h"
+#include "BNS_MenuToolbar_UI.h"
+#include "BNS_Texture.h"
 #include "BNS_UIManager.h"
 
 BNS_UICreation::BNS_UICreation()
@@ -8,6 +11,14 @@ BNS_UICreation::BNS_UICreation()
 
 BNS_UICreation::~BNS_UICreation()
 {
+}
+
+TexturePtr BNS_UICreation::CreateUI_Image(const wchar_t* tex_path)
+{
+	// assign the texture file to the BNS_Texture pointer by passing the its path in the file
+	TexturePtr m_tex = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+
+	return m_tex;
 }
 
 void BNS_UICreation::CreateCreditsUI()

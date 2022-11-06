@@ -33,8 +33,8 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 	Matrix4x4 orthoMatrix;
 	orthoMatrix.setOrthoLH
 	(
-		BNS_Window::WIDTH / 300.0f,
-		BNS_Window::HEIGHT / 300.0f,
+		BNS_UIManager::WINDOW_WIDTH / 300.0f,
+		BNS_UIManager::WINDOW_HEIGHT / 300.0f,
 		-40.0f,
 		40.0f
 	);
@@ -44,8 +44,8 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 
 Matrix4x4 BNS_Camera::GetCamProjectionMatrix()
 {
-	int width = BNS_Window::WIDTH;
-	int height = BNS_Window::HEIGHT;
+	int width = BNS_UIManager::WINDOW_WIDTH;
+	int height = BNS_UIManager::WINDOW_HEIGHT;
 	float aspectRatio = (float)width / (float)height;
 	float fov = fovInDegrees * (3.1415926f / 180.0f);
 
@@ -145,10 +145,11 @@ void BNS_Camera::onMouseMove(const Point& mouse_pos)
 		float z = GetLocalRotation().m_z;
 
 		float speed = 0.1f;
-		x += (mouse_pos.m_y - (BNS_Window::HEIGHT / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
-		y += (mouse_pos.m_x - (BNS_Window::WIDTH / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
+		x += (mouse_pos.m_y - (BNS_UIManager::WINDOW_HEIGHT / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
+		y += (mouse_pos.m_x - (BNS_UIManager::WINDOW_WIDTH / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
 		
-		BNS_InputSystem::get()->setCursorPosition(Point((int)(BNS_Window::WIDTH / 2.0f), (int)(BNS_Window::HEIGHT / 2.0f)));
+		BNS_InputSystem::get()->setCursorPosition(Point((int)(BNS_UIManager::WINDOW_WIDTH / 2.0f),
+			(int)(BNS_UIManager::WINDOW_HEIGHT / 2.0f)));
 
 		
 		SetRotation(x, y, z);

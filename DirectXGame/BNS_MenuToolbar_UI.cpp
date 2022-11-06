@@ -12,10 +12,10 @@ void BNS_MenuToolbar_UI::DrawUI()
 	{
 		if (ImGui::BeginMenu("About"))
 		{
-			ImGui::MenuItem("Credits", NULL, &BNS_UIManager::GetInstance()->GetUIHashTable()[BNS_UINames::CREDITS_SCREEN]->toShow);
+			ImGui::MenuItem("Credits", NULL, &BNS_UIManager::GetInstance()->GetUIHashTable()[BNS_UINames::CREDITS_SCREEN]->toShow, true);
 			ImGui::EndMenu();
 		}
-
+		
 
 		ImGui::EndMainMenuBar();
 	}

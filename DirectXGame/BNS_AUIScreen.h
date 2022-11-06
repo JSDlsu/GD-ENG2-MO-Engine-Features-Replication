@@ -6,7 +6,6 @@
 #include <string>
 #include <iostream>
 #include "BNS_UI_Prerequisites.h"
-#include "BNS_EnumHandler.h"
 
 class BNS_AUIScreen
 {

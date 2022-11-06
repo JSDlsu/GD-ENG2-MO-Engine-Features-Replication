@@ -1,16 +1,9 @@
 #pragma once
-#include "IMGUI/imgui.h"
-#include "IMGUI/imgui_impl_win32.h"
-#include "IMGUI/imgui_impl_dx11.h"
-#include <iostream>
 #include <vector>
-#include <string>
 #include <unordered_map>
 #include "BNS_Window.h"
 #include "BNS_AUIScreen.h"
-#include "BNS_Credits_UI.h"
 #include "BNS_EnumHandler.h"
-#include "BNS_MenuToolbar_UI.h"
 
 
 class BNS_UICreation;
@@ -30,6 +23,8 @@ public:
 	uiScreenList GetUIList();
 	uiScreenHashTable GetUIHashTable();
 
+	static BNS_UICreation* m_ui_creation;
+
 	static const int WINDOW_WIDTH = 1366;
 	static const int WINDOW_HEIGHT = 768;
 
@@ -41,10 +36,9 @@ private:
 	static BNS_UIManager* sharedInstance;
 
 private:
-	static BNS_UICreation* m_ui_creation;
 	uiScreenList _uiScreenList;
 	uiScreenHashTable uiTable;
-
+	
 private:
 	friend class BNS_UICreation;
 };

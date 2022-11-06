@@ -1,4 +1,6 @@
 #include "BNS_UIManager.h"
+
+#include "BNS_FileExplorer.h"
 #include "BNS_GraphicsEngine.h"
 #include "BNS_UICreation.h"
 
@@ -13,6 +15,8 @@ BNS_UIManager* BNS_UIManager::GetInstance()
 void BNS_UIManager::Initialize(HWND hwnd)
 {
 	sharedInstance = new BNS_UIManager(hwnd);
+	// initialize file explorer
+	BNS_FileExplorer::Initialize();
 
 	// initialize the UI screens
 	m_ui_creation->CreateCreditsUI();
@@ -21,6 +25,8 @@ void BNS_UIManager::Initialize(HWND hwnd)
 
 void BNS_UIManager::Release()
 {
+	// release file explorer
+	BNS_FileExplorer::Release();
 	delete sharedInstance;
 }
 

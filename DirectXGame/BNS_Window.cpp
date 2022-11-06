@@ -2,11 +2,8 @@
 #include "BNS_EngineTime.h"
 #include <exception>
 
+#include "BNS_UIManager.h"
 #include "IMGUI/imgui.h"
-
-//BNS_Window* window = nullptr;
-int BNS_Window::HEIGHT = 768;
-int BNS_Window::WIDTH = 1366;
 
 //declare for handling mouse and key events in IMGUI.
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -103,7 +100,7 @@ BNS_Window::BNS_Window()
 		 */
 		 //Creation of the window; HWND - "Handle to a BNS_Window"
 	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Application",
-		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WIDTH, HEIGHT,
+		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, BNS_UIManager::WINDOW_WIDTH, BNS_UIManager::WINDOW_HEIGHT,
 		NULL, NULL, NULL, NULL);
 
 	// if the creation fail return false

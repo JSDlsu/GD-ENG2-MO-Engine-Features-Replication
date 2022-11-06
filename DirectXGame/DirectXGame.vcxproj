@@ -166,6 +166,7 @@
     <ClCompile Include="BNS_Cube.cpp" />
     <ClCompile Include="BNS_DeviceContext.cpp" />
     <ClCompile Include="BNS_EngineTime.cpp" />
+    <ClCompile Include="BNS_FileExplorer.cpp" />
     <ClCompile Include="BNS_GameObjectManager.cpp" />
     <ClCompile Include="BNS_GraphicsEngine.cpp" />
     <ClCompile Include="IMGUI\imgui.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="BNS_DeviceContext.h" />
     <ClInclude Include="BNS_EngineTime.h" />
     <ClInclude Include="BNS_EnumHandler.h" />
+    <ClInclude Include="BNS_FileExplorer.h" />
     <ClInclude Include="BNS_GameObjectManager.h" />
     <ClInclude Include="BNS_GraphicsEngine.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
