@@ -169,13 +169,6 @@
     <ClCompile Include="BNS_FileExplorer.cpp" />
     <ClCompile Include="BNS_GameObjectManager.cpp" />
     <ClCompile Include="BNS_GraphicsEngine.cpp" />
-    <ClCompile Include="IMGUI\imgui.cpp" />
-    <ClCompile Include="IMGUI\imgui_demo.cpp" />
-    <ClCompile Include="IMGUI\imgui_draw.cpp" />
-    <ClCompile Include="IMGUI\imgui_impl_dx11.cpp" />
-    <ClCompile Include="IMGUI\imgui_impl_win32.cpp" />
-    <ClCompile Include="IMGUI\imgui_tables.cpp" />
-    <ClCompile Include="IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="BNS_IndexBuffer.cpp" />
     <ClCompile Include="BNS_InputLayoutManager.cpp" />
     <ClCompile Include="BNS_InputSystem.cpp" />
@@ -201,6 +194,13 @@
     <ClCompile Include="BNS_VertexShader.cpp" />
     <ClCompile Include="BNS_VertexShaderManager.cpp" />
     <ClCompile Include="BNS_Window.cpp" />
+    <ClCompile Include="IMGUI\imgui.cpp" />
+    <ClCompile Include="IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="IMGUI\imgui_impl_dx11.cpp" />
+    <ClCompile Include="IMGUI\imgui_impl_win32.cpp" />
+    <ClCompile Include="IMGUI\imgui_tables.cpp" />
+    <ClCompile Include="IMGUI\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AGameObject.h" />
@@ -220,6 +220,10 @@
     <ClInclude Include="BNS_FileExplorer.h" />
     <ClInclude Include="BNS_GameObjectManager.h" />
     <ClInclude Include="BNS_GraphicsEngine.h" />
+    <ClInclude Include="BNS_IndexBuffer.h" />
+    <ClInclude Include="BNS_InputLayoutManager.h" />
+    <ClInclude Include="BNS_InputListener.h" />
+    <ClInclude Include="BNS_InputSystem.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
     <ClInclude Include="IMGUI\imgui.h" />
     <ClInclude Include="IMGUI\imgui_impl_dx11.h" />
@@ -228,10 +232,6 @@
     <ClInclude Include="IMGUI\imstb_rectpack.h" />
     <ClInclude Include="IMGUI\imstb_textedit.h" />
     <ClInclude Include="IMGUI\imstb_truetype.h" />
-    <ClInclude Include="BNS_IndexBuffer.h" />
-    <ClInclude Include="BNS_InputLayoutManager.h" />
-    <ClInclude Include="BNS_InputListener.h" />
-    <ClInclude Include="BNS_InputSystem.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="BNS_MenuToolbar_UI.h" />
     <ClInclude Include="BNS_Mesh.h" />

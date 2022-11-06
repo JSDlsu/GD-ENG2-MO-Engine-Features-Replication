@@ -34,7 +34,9 @@ private:
 	BNS_UIManager(BNS_UIManager const&) {};
 	BNS_UIManager& operator=(BNS_UIManager const&) {};
 	static BNS_UIManager* sharedInstance;
-
+	
+    // Our state
+    bool show_demo_window = true;
 private:
 	uiScreenList _uiScreenList;
 	uiScreenHashTable uiTable;
