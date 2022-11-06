@@ -27,6 +27,14 @@ Matrix4x4 BNS_Camera::GetCamViewMatrix()
 	return m_view_cam;
 }
 
+Matrix4x4 BNS_Camera::GetCurrentProjMatrix()
+{
+	// setting for the ort
+	if (isPerspectiveMode)
+		return GetCamPerspectiveMatrix();
+	return GetCameraOrthoMatrix();
+}
+
 Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 {
 	// setting for the orthographic projection
@@ -42,7 +50,7 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 	return orthoMatrix;
 }
 
-Matrix4x4 BNS_Camera::GetCamProjectionMatrix()
+Matrix4x4 BNS_Camera::GetCamPerspectiveMatrix()
 {
 	int width = BNS_UIManager::WINDOW_WIDTH;
 	int height = BNS_UIManager::WINDOW_HEIGHT;
@@ -177,4 +185,14 @@ void BNS_Camera::onRightMouseUp(const Point& delta_mouse_pos)
 	mouseDown = false;
 	// displays the cursor
 	BNS_InputSystem::get()->showCursor(true);
+}
+
+bool BNS_Camera::IsPerspectiveMode()
+{
+	return isPerspectiveMode;
+}
+
+void BNS_Camera::SetPerspectiveMode(bool isPerspective)
+{
+	isPerspectiveMode = isPerspective;
 }

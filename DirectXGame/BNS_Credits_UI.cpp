@@ -1,5 +1,7 @@
 #include "BNS_Credits_UI.h"
 
+#include "BNS_Camera.h"
+#include "BNS_CameraHandler.h"
 #include "BNS_FileExplorer.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
@@ -27,6 +29,15 @@ void BNS_Credits_UI::DrawUI()
 	ImGui::Text("ImGui: https://github.com/ocornut/imgui/tree/master");
 	
 
+	bool temp = dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->IsPerspectiveMode();
+	if (ImGui::Button("IsPerspective"))
+	{
+		dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->SetPerspectiveMode(!temp);
+	}
+	if (temp)
+		ImGui::Text("Perspective Mode");
+	else
+		ImGui::Text("Orthographic Mode");
 	if (ImGui::Button("Close"))
 	{
 		toShow = false;

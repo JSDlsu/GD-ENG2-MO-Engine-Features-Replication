@@ -13,8 +13,9 @@ public:
 	void Update(float deltaTime, BNS_AppWindow* app_window) override;
 
 	Matrix4x4 GetCamViewMatrix();
+	Matrix4x4 GetCurrentProjMatrix();
 	Matrix4x4 GetCameraOrthoMatrix();
-	Matrix4x4 GetCamProjectionMatrix();
+	Matrix4x4 GetCamPerspectiveMatrix();
 	void UpdateViewMatrix();
 
 	void onKeyDown(int key) override;
@@ -36,5 +37,10 @@ public:
 	float fovInDegrees = 90.0f;
 	float nearPlane = 0.1f;
 	float farPlane = 100.0f;
+private:
+	bool isPerspectiveMode = true;
+public:
+	bool IsPerspectiveMode();
+	void SetPerspectiveMode(bool isPerspective = true);
 };
 

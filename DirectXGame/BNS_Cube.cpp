@@ -62,14 +62,8 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	Matrix4x4 cameraMatrix = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
 	cc.m_view = cameraMatrix;
 
-#define VIEW 1
-#if VIEW == 0
-	// setting for the orthographic projection
-	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraOrthoMatrix();
-#elif VIEW == 1
 	// setting the perspective projection
 	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
-#endif
 
 	m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
 }

@@ -42,7 +42,7 @@ void BNS_UIManager::DrawAllUIScreens()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	/*
+	
 	// Call each UIScreen members in the list
 	uiScreenList::iterator i;
 	for (i = _uiScreenList.begin(); i != _uiScreenList.end(); ++i)
@@ -57,7 +57,8 @@ void BNS_UIManager::DrawAllUIScreens()
 		
 		
 	}
-	*/
+	
+	/*
 	static bool opt_fullscreen = true;
 	static bool opt_padding = false;
 	static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
@@ -152,7 +153,8 @@ void BNS_UIManager::DrawAllUIScreens()
 	ImGui::End();
 
 	ImGui::End();
-	
+	*/
+	ImGuiIO& io = ImGui::GetIO();
 	io.DisplaySize = ImVec2(BNS_UIManager::WINDOW_WIDTH, BNS_UIManager::WINDOW_HEIGHT);
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

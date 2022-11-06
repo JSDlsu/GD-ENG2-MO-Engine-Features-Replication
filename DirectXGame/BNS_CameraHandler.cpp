@@ -29,13 +29,17 @@ Matrix4x4 BNS_CameraHandler::GetSceneCameraViewMatrix()
 {
     return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetCamViewMatrix();
 }
+Matrix4x4 BNS_CameraHandler::GetSceneCameraProjMatrix()
+{
+    return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetCurrentProjMatrix();
+}
 Matrix4x4 BNS_CameraHandler::GetSceneCameraOrthoMatrix()
 {
     return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetCameraOrthoMatrix();
 }
-Matrix4x4 BNS_CameraHandler::GetSceneCameraProjMatrix()
+Matrix4x4 BNS_CameraHandler::GetSceneCameraPerspecMatrix()
 {
-    return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetCamProjectionMatrix();
+    return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetCamPerspectiveMatrix();
 }
 
 Matrix4x4 BNS_CameraHandler::GetSceneCameraMatrix()
@@ -46,4 +50,9 @@ Matrix4x4 BNS_CameraHandler::GetSceneCameraMatrix()
 Vector3D BNS_CameraHandler::GetSceneCameraPos()
 {
     return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetLocalPosition();
+}
+
+CameraPtr BNS_CameraHandler::GetSceneCamera()
+{
+    return sceneCamera;
 }

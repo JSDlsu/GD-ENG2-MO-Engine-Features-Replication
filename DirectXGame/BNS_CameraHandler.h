@@ -20,9 +20,11 @@ public:
 	static BNS_CameraHandler* GetInstance();
 public:
 	Matrix4x4 GetSceneCameraViewMatrix();
-	Matrix4x4 GetSceneCameraOrthoMatrix();
 	Matrix4x4 GetSceneCameraProjMatrix();
+	Matrix4x4 GetSceneCameraOrthoMatrix();
+	Matrix4x4 GetSceneCameraPerspecMatrix();
 	Matrix4x4 GetSceneCameraMatrix();
 	Vector3D GetSceneCameraPos();
+	CameraPtr GetSceneCamera();
 };
 
