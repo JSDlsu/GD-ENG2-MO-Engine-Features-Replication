@@ -43,16 +43,6 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	// transform update
 	BNS_constant_transform cc;
 	cc.m_time = ::GetTickCount();
-
-	if (ObjectType == BNS_ObjectTypes::CUBE)
-	{
-		if (m_scale.m_x < 5.0f)
-			m_scale.m_x += BNS_EngineTime::getDeltaTime() *0.5f;
-		if (m_scale.m_y > 0.01f)
-			m_scale.m_y -= BNS_EngineTime::getDeltaTime() * 0.5f;
-		if (m_scale.m_z < 5.0f)
-			m_scale.m_z += BNS_EngineTime::getDeltaTime() * 0.5f;
-	}
 	
 	//deltaScale += BNS_EngineTime::getDeltaTime() * 2.0f;
 	//m_scale = Vector3D::lerp(Vector3D(0.25, 0.25, 0.25), Vector3D(1.0f, 1.0f, 1.0f), (sin(deltaScale) + 1.0f));
