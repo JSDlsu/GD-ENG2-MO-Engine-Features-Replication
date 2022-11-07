@@ -24,6 +24,17 @@ BNS_PrimitiveCreation::BNS_PrimitiveCreation()
 	};
 	UINT cube_size = sizeof(cube_position);
 	::memcpy(cube_positionList, cube_position, cube_size);
+
+	Vector3D plane_position[] =
+	{
+		//FRONT FACE
+		{ Vector3D(-0.5f,-0.5f,-0.5f)},
+		{ Vector3D(-0.5f,0.5f,-0.5f) },
+		{ Vector3D(0.5f,0.5f,-0.5f) },
+		{ Vector3D(0.5f,-0.5f,-0.5f)},
+	};
+	UINT plane_size = sizeof(plane_position);
+	::memcpy(plane_positionList, plane_position, plane_size);
 }
 
 BNS_PrimitiveCreation::~BNS_PrimitiveCreation()
@@ -210,6 +221,52 @@ void BNS_PrimitiveCreation::GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr&
 	m_ib = BNS_GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
 	(index_list, size_index_list);
 	
+
+	// create VB
+	m_vb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(
+		vertex_list,
+		sizeof(BNS_vertex_color), size_list,
+		BNS_InputLayoutType::COLOR);
+}
+
+void BNS_PrimitiveCreation::GetPlane_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data)
+{
+	// list of all the BNS_vertex_tex in the 3D BNS_Cube
+	BNS_vertex_color vertex_list[] =
+	{
+		{ cube_positionList[3],color_data.color_list_1[1] },
+		{ cube_positionList[2],color_data.color_list_1[0] },
+		{ cube_positionList[5],color_data.color_list_1[2] },
+		{ cube_positionList[4],color_data.color_list_1[3] },
+
+		{ cube_positionList[7],color_data.color_list_1[1] },
+		{ cube_positionList[6],color_data.color_list_1[0] },
+		{ cube_positionList[1],color_data.color_list_1[2] },
+		{ cube_positionList[0],color_data.color_list_1[3] }
+
+
+	};
+
+	// list of all the triangle index with their BNS_vertex_tex compositions
+	// this index list should reflect the BNS_vertex_tex list
+	unsigned int index_list[] =
+	{
+		//FRONT SIDE
+		0,1,2,  //FIRST TRIANGLE
+		2,3,0,  //SECOND TRIANGLE
+		//BACK SIDE
+		4,5,6,
+		6,7,4
+	};
+
+	UINT size_list = ARRAYSIZE(vertex_list);
+
+	UINT size_index_list = ARRAYSIZE(index_list);
+
+	// create IB
+	m_ib = BNS_GraphicsEngine::get()->getRenderSystem()->CreateIndexBuffer
+	(index_list, size_index_list);
+
 
 	// create VB
 	m_vb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateVertexBuffer(

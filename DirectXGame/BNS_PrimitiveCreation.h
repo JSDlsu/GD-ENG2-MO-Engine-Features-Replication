@@ -19,6 +19,7 @@ public:
 private:
 	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
 	void GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
+	void GetPlane_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
 	void GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
 
 public:
@@ -28,6 +29,7 @@ public:
 
 private:
 	Vector3D cube_positionList[8];
+	Vector3D plane_positionList[8];
 
 private:
 	static BNS_PrimitiveCreation* sharedInstance;

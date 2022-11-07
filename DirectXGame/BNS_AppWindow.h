@@ -15,6 +15,7 @@ class BNS_AppWindow : public BNS_Window
 public:
 	BNS_AppWindow();
 	~BNS_AppWindow();
+	float randomFloat(float x, float y);
 
 	void update();
 

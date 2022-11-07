@@ -115,20 +115,20 @@
     <Filter Include="GameEngine\UI\UIBackendTools">
       <UniqueIdentifier>{2fd07d42-d221-42b1-bc70-c8397e62609b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\GraphicsEngine\Shaders">
-      <UniqueIdentifier>{13cc3a85-f169-413f-a356-b36ac06c8976}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\GraphicsEngine\Shaders\PixelShaders">
-      <UniqueIdentifier>{b0f3f142-5e14-4f4f-acc1-967863be04fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\GraphicsEngine\Shaders\VertexShaders">
-      <UniqueIdentifier>{fd78c96f-c241-4a57-9456-1e35f1a83635}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameEngine\FileExplorer">
       <UniqueIdentifier>{4e396e81-0041-4802-92d2-f08638fd6d24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\Components\Rendering\RenderToTexture">
+    <Filter Include="GameEngine\GraphicsEngine\RenderSystem\RenderToTexture">
       <UniqueIdentifier>{f8d70be7-6a4f-4b98-b1b2-bf0d0934f64d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\ShaderEngine\Shaders">
+      <UniqueIdentifier>{13cc3a85-f169-413f-a356-b36ac06c8976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\ShaderEngine\Shaders\PixelShaders">
+      <UniqueIdentifier>{b0f3f142-5e14-4f4f-acc1-967863be04fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\ShaderEngine\Shaders\VertexShaders">
+      <UniqueIdentifier>{fd78c96f-c241-4a57-9456-1e35f1a83635}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -274,7 +274,7 @@
       <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="BNS_RenderToTexture.cpp">
-      <Filter>GameEngine\Components\Rendering\RenderToTexture</Filter>
+      <Filter>GameEngine\GraphicsEngine\RenderSystem\RenderToTexture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -462,33 +462,33 @@
       <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
     </ClInclude>
     <ClInclude Include="BNS_RenderToTexture.h">
-      <Filter>GameEngine\Components\Rendering\RenderToTexture</Filter>
+      <Filter>GameEngine\GraphicsEngine\RenderSystem\RenderToTexture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">
-      <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
+      <Filter>GameEngine\ShaderEngine\Shaders\PixelShaders</Filter>
     </FxCompile>
     <FxCompile Include="BNS_PixelMesh.hlsl">
-      <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
+      <Filter>GameEngine\ShaderEngine\Shaders\PixelShaders</Filter>
     </FxCompile>
     <FxCompile Include="BNS_VertexMesh.hlsl">
-      <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders</Filter>
+      <Filter>GameEngine\ShaderEngine\Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="BNS_VertexTex.hlsl">
-      <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders</Filter>
+      <Filter>GameEngine\ShaderEngine\Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="BNS_VertexColor.hlsl">
-      <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders</Filter>
+      <Filter>GameEngine\ShaderEngine\Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="BNS_VertexColorLerp.hlsl">
-      <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders</Filter>
+      <Filter>GameEngine\ShaderEngine\Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="BNS_PixelColor.hlsl">
-      <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
+      <Filter>GameEngine\ShaderEngine\Shaders\PixelShaders</Filter>
     </FxCompile>
     <FxCompile Include="BNS_PixelColorLerp.hlsl">
-      <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
+      <Filter>GameEngine\ShaderEngine\Shaders\PixelShaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

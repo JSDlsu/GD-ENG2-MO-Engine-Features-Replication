@@ -24,6 +24,11 @@ BNS_AppWindow::~BNS_AppWindow()
 {
 }
 
+float BNS_AppWindow::randomFloat(float x, float y)
+{
+	return x + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (y - x)));
+}
+
 void BNS_AppWindow::onCreate()
 {
 	BNS_Window::onCreate();
@@ -48,14 +53,14 @@ void BNS_AppWindow::onCreate()
 	Vector3D color_list1[] =
 	{
 		//FRONT FACE
-		BNS_Color::Black,
+		BNS_Color::Blue,
 		BNS_Color::Red,
-		BNS_Color::White,
+		BNS_Color::Green,
 		BNS_Color::Yellow,
 		//BACK FACE
-		BNS_Color::Black,
+		BNS_Color::Blue,
 		BNS_Color::Red,
-		BNS_Color::White,
+		BNS_Color::Green,
 		BNS_Color::Yellow,
 	};
 
@@ -77,6 +82,45 @@ void BNS_AppWindow::onCreate()
 	memcpy(colorData1.color_list_1, color_list1, sizeof(color_list1));
 	memcpy(colorData1.color_list_2, color_list2, sizeof(color_list2));
 
+#define PLAY 0
+#if PLAY == 0
+	BNS_Cube* cube1 = new BNS_Cube("cube3", BNS_ObjectTypes::CUBE);
+	cube1->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR, colorData1);
+	cube1->SetVertexShader(BNS_VertexShaderType::COLOR);
+	cube1->SetPixelShader(BNS_PixelShaderType::COLOR);
+	cube1->SetPosition(Vector3D{ 0, 0.0f, 0 });
+	cube1->SetAlpha(1.0f);
+	AGameObjectPtr temp_ptr1(cube1);
+	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr1);
+
+	BNS_Cube* cube2 = new BNS_Cube("cube3", BNS_ObjectTypes::CUBE);
+	cube2->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR, colorData1);
+	cube2->SetVertexShader(BNS_VertexShaderType::COLOR);
+	cube2->SetPixelShader(BNS_PixelShaderType::COLOR);
+	cube2->SetPosition(Vector3D{ -1.5f, 2.0f, 0 });
+	cube2->SetAlpha(1.0f);
+	AGameObjectPtr temp_ptr2(cube2);
+	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr2);
+
+	BNS_Cube* cube3 = new BNS_Cube("cube3", BNS_ObjectTypes::CUBE);
+	cube3->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR, colorData1);
+	cube3->SetVertexShader(BNS_VertexShaderType::COLOR);
+	cube3->SetPixelShader(BNS_PixelShaderType::COLOR);
+	cube3->SetPosition(Vector3D{ -1.5f, 3.0f, -2.0f });
+	cube3->SetAlpha(1.0f);
+	AGameObjectPtr temp_ptr3(cube3);
+	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr3);
+
+	BNS_Plane* plane = new BNS_Plane("cube3", BNS_ObjectTypes::PLANE);
+	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR, colorData1);
+	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
+	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
+	plane->SetScale(Vector3D{ 5.0f, 0.0f, 5.0f });
+	plane->SetPosition(Vector3D{ 0.0f, -1.0f, 0 });
+	plane->SetAlpha(1.0f);
+	AGameObjectPtr temp_ptr4(plane);
+	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr4);
+#elif PLAY == 1
 	BNS_Cube* cube1 = new BNS_Cube("cube1", BNS_ObjectTypes::CUBE);
 	cube1->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	cube1->SetVertexShader(BNS_VertexShaderType::COLOR);
@@ -96,7 +140,7 @@ void BNS_AppWindow::onCreate()
 	cube2->SetAlpha(0.5f);
 	AGameObjectPtr temp_ptr2(cube2);
 	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr2);
-	
+
 	BNS_Cube* cube3 = new BNS_Cube("cube3", BNS_ObjectTypes::CUBE);
 	cube3->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR_LERP, colorData1);
 	cube3->SetVertexShader(BNS_VertexShaderType::COLOR_LERP);
@@ -114,6 +158,17 @@ void BNS_AppWindow::onCreate()
 	cube4->SetAlpha(0.5f);
 	AGameObjectPtr temp_ptr4(cube4);
 	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr4);
+
+	BNS_Plane* plane1 = new BNS_Plane("plane1", BNS_ObjectTypes::PLANE);
+	plane1->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
+	plane1->SetVertexShader(BNS_VertexShaderType::COLOR);
+	plane1->SetPixelShader(BNS_PixelShaderType::COLOR);
+	plane1->SetPosition(Vector3D{ 0, 0, -1 });
+	plane1->SetAlpha(1.0f);
+	AGameObjectPtr temp_ptr5(plane1);
+	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr5);
+#endif
+
 
 }
 

@@ -44,16 +44,29 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	BNS_constant_transform cc;
 	cc.m_time = ::GetTickCount();
 
+	if (ObjectType == BNS_ObjectTypes::CUBE)
+	{
+		if (m_scale.m_x < 5.0f)
+			m_scale.m_x += BNS_EngineTime::getDeltaTime() *0.5f;
+		if (m_scale.m_y > 0.01f)
+			m_scale.m_y -= BNS_EngineTime::getDeltaTime() * 0.5f;
+		if (m_scale.m_z < 5.0f)
+			m_scale.m_z += BNS_EngineTime::getDeltaTime() * 0.5f;
+	}
+	
+	//deltaScale += BNS_EngineTime::getDeltaTime() * 2.0f;
+	//m_scale = Vector3D::lerp(Vector3D(0.25, 0.25, 0.25), Vector3D(1.0f, 1.0f, 1.0f), (sin(deltaScale) + 1.0f));
+
 	// objects matrix
 	Matrix4x4 temp;
 	cc.m_world.setIdentity();
+	temp.setScale(m_scale);
+	cc.m_world *= temp;
 	temp.setRotationX(m_rotation.m_x);
 	cc.m_world *= temp;
 	temp.setRotationY(m_rotation.m_y);
 	cc.m_world *= temp;
 	temp.setRotationZ(m_rotation.m_z);
-	cc.m_world *= temp;
-	temp.setScale(m_scale);
 	cc.m_world *= temp;
 	temp.setTranslation(m_position);
 	cc.m_world *= temp;
