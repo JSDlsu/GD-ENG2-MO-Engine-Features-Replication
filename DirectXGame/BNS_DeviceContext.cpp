@@ -9,20 +9,36 @@
 #include <exception>
 
 #include "BNS_Blender.h"
+#include "BNS_RenderToTexture.h"
 
 BNS_DeviceContext::BNS_DeviceContext(ID3D11DeviceContext* device_context, BNS_RenderSystem* system) : m_system(system), m_device_context(device_context)
 {
 }
 
+void BNS_DeviceContext::clearRenderTargetColor(const SwapChainPtr& swap_chain, const RenderToTexturePtr& render_tex,
+	float red, float green, float blue, float alpha)
+{
+	// binds one or more render targets and the depth-stencil buffer to the output-merger stage.
+	m_device_context->OMSetRenderTargets(1, &render_tex->m_renderTargetView, swap_chain->m_dsv);
+
+	FLOAT clear_color[] = { red,green,blue,alpha };
+	// sets all the elements in a render target to one value which clears the render target view.
+	m_device_context->ClearRenderTargetView(render_tex->m_renderTargetView, clear_color);
+	// sets all the elements in a depth-stencil target to one value which clears the depth-stencil view.
+	m_device_context->ClearDepthStencilView(swap_chain->m_dsv, D3D11_CLEAR_DEPTH, 1, 0);
+
+}
+
 void BNS_DeviceContext::clearRenderTargetColor(const SwapChainPtr& swap_chain, float red, float green, float blue, float alpha)
 {
+	// binds one or more render targets and the depth-stencil buffer to the output-merger stage.
+	m_device_context->OMSetRenderTargets(1, &swap_chain->m_rtv, swap_chain->m_dsv);
+
 	FLOAT clear_color[] = { red,green,blue,alpha };
 	// sets all the elements in a render target to one value which clears the render target view.
 	m_device_context->ClearRenderTargetView(swap_chain->m_rtv, clear_color);
 	// sets all the elements in a depth-stencil target to one value which clears the depth-stencil view.
 	m_device_context->ClearDepthStencilView(swap_chain->m_dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
-	// binds one or more render targets and the depth-stencil buffer to the output-merger stage.
-	m_device_context->OMSetRenderTargets(1, &swap_chain->m_rtv, swap_chain->m_dsv);
 }
 
 void BNS_DeviceContext::setVertexBuffer(const VertexBufferPtr& vertex_buffer)

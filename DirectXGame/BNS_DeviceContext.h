@@ -7,6 +7,8 @@ class BNS_DeviceContext
 {
 public:
 	BNS_DeviceContext(ID3D11DeviceContext* device_context, BNS_RenderSystem* system);
+	void clearRenderTargetColor(const SwapChainPtr& swap_chain, const RenderToTexturePtr& render_tex, float red,
+	                            float green, float blue, float alpha);
 	void clearRenderTargetColor(const SwapChainPtr& swap_chain, float red, float green, float blue, float alpha);
 	void setVertexBuffer(const VertexBufferPtr& vertex_buffer);
 	void setIndexBuffer(const IndexBufferPtr& index_buffer);

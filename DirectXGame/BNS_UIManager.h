@@ -4,6 +4,7 @@
 #include "BNS_Window.h"
 #include "BNS_AUIScreen.h"
 #include "BNS_EnumHandler.h"
+#include "BNS_Prerequisites.h"
 
 
 class BNS_UICreation;
@@ -16,7 +17,7 @@ public:
 
 public:
 	static BNS_UIManager* GetInstance();
-	static void Initialize(HWND hwnd);
+	static void Initialize(HWND hwnd, const RenderToTexturePtr& render_tex);
 	static void Release();
 
 	void DrawAllUIScreens();
@@ -29,7 +30,7 @@ public:
 	static const int WINDOW_HEIGHT = 768;
 
 private:
-	BNS_UIManager(HWND hwnd);
+	BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex);
 	~BNS_UIManager();
 	BNS_UIManager(BNS_UIManager const&) {};
 	BNS_UIManager& operator=(BNS_UIManager const&) {};
@@ -40,6 +41,7 @@ private:
 private:
 	uiScreenList _uiScreenList;
 	uiScreenHashTable uiTable;
+	RenderToTexturePtr m_game_scene;
 	
 private:
 	friend class BNS_UICreation;

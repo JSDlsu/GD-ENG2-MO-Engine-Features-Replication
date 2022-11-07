@@ -1,6 +1,7 @@
 #include "BNS_RenderToTexture.h"
 
 #include <exception>
+#include <iostream>
 
 #include "BNS_GraphicsEngine.h"
 
@@ -27,19 +28,18 @@ BNS_RenderToTexture::BNS_RenderToTexture(int textureWidth, int textureHeight)
 	textureDesc.MiscFlags = 0;
 
 	// Create the render target texture.
-	hr = BNS_GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateTexture2D(&textureDesc, NULL, &m_renderTargetTexture);
+	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateTexture2D(&textureDesc, NULL, &m_renderTargetTexture);
 	if (FAILED(hr))
 	{
 		throw std::exception("BNS_RenderToTexture not created successfully");
 	}
-
 	// Setup the description of the render target view.
 	renderTargetViewDesc.Format = textureDesc.Format;
 	renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 	renderTargetViewDesc.Texture2D.MipSlice = 0;
 
 	// Create the render target view.
-	hr = BNS_GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateRenderTargetView(m_renderTargetTexture, &renderTargetViewDesc, &m_renderTargetView);
+	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateRenderTargetView(m_renderTargetTexture, &renderTargetViewDesc, &m_renderTargetView);
 	if (FAILED(hr))
 	{
 		throw std::exception("BNS_RenderToTexture not created successfully");
@@ -52,12 +52,11 @@ BNS_RenderToTexture::BNS_RenderToTexture(int textureWidth, int textureHeight)
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 
 	// Create the shader resource view.
-	hr = BNS_GraphicsEngine::get()->getRenderSystem()->m_d3d_device->CreateShaderResourceView(m_renderTargetTexture, &shaderResourceViewDesc, &m_shaderResourceView);
+	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateShaderResourceView(m_renderTargetTexture, &shaderResourceViewDesc, &m_shaderResourceView);
 	if (FAILED(hr))
 	{
 		throw std::exception("BNS_RenderToTexture not created successfully");
 	}
-
 }
 
 BNS_RenderToTexture::BNS_RenderToTexture(const BNS_RenderToTexture&)
@@ -66,40 +65,17 @@ BNS_RenderToTexture::BNS_RenderToTexture(const BNS_RenderToTexture&)
 
 BNS_RenderToTexture::~BNS_RenderToTexture()
 {
-}
+	m_shaderResourceView->Release();
+	m_shaderResourceView = nullptr;
 
-void BNS_RenderToTexture::Shutdown()
-{
-	if (m_shaderResourceView)
-	{
-		m_shaderResourceView->Release();
-		m_shaderResourceView = 0;
-	}
+	m_renderTargetView->Release();
+	m_renderTargetView = nullptr;
 
-	if (m_renderTargetView)
-	{
-		m_renderTargetView->Release();
-		m_renderTargetView = 0;
-	}
-
-	if (m_renderTargetTexture)
-	{
-		m_renderTargetTexture->Release();
-		m_renderTargetTexture = 0;
-	}
-
-	return;
-}
-
-void BNS_RenderToTexture::SetRenderTarget(ID3D11DeviceContext*, ID3D11DepthStencilView*)
-{
-}
-
-void BNS_RenderToTexture::ClearRenderTarget(ID3D11DeviceContext*, ID3D11DepthStencilView*, float, float, float, float)
-{
+	m_renderTargetTexture->Release();
+	m_renderTargetTexture = nullptr;
 }
 
 ID3D11ShaderResourceView* BNS_RenderToTexture::GetShaderResourceView()
 {
-	return nullptr;
+	return m_shaderResourceView;
 }

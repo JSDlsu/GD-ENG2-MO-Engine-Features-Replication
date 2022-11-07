@@ -36,7 +36,13 @@ void BNS_AppWindow::onCreate()
 	m_swap_chain = BNS_GraphicsEngine::get()->getRenderSystem()->CreateSwapChain(
 		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	BNS_UIManager::Initialize(m_hwnd);
+	// create blenderPtr
+	m_blender = BNS_GraphicsEngine::get()->getRenderSystem()->CreateBlender();
+	// create GAME SCENE view
+	//m_game_scene = BNS_GraphicsEngine::get()->getRenderSystem()->CreateRenderToTexture(512, 512);
+	m_game_scene = BNS_GraphicsEngine::get()->getRenderSystem()->CreateRenderToTexture(rc.right - rc.left, rc.bottom - rc.top);
+	// create the UI manager
+	BNS_UIManager::Initialize(m_hwnd, m_game_scene);
 	
 	// BNS_Color Coords
 	Vector3D color_list1[] =
@@ -109,11 +115,6 @@ void BNS_AppWindow::onCreate()
 	AGameObjectPtr temp_ptr4(cube4);
 	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr4);
 
-	// create blenderPtr
-	m_blender = BNS_GraphicsEngine::get()->getRenderSystem()->CreateBlender();
-	// create GAME SCENE view
-	m_game_scene = BNS_GraphicsEngine::get()->getRenderSystem()->CreateRenderToTexture(512, 512);
-
 }
 
 // updating our constant buffers
@@ -137,13 +138,9 @@ void BNS_AppWindow::onUpdate()
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);
 
-	//CLEAR THE RENDER TARGET 
-	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.5f, 1.0f, 0.5f, 1);
-	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
-	RECT rc = this->getClientWindowRect();
-	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
-
-	update();
+	//CLEAR THE RENDER TARGET FOR RENDER_TO_TEXTURE
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
+	(m_swap_chain, m_game_scene, 0.5f, 1.0f, 0.5f, 1);
 
 	// BNS_PassRender; Draw objects in order
 	// Opaque objects are draw first
@@ -152,6 +149,23 @@ void BNS_AppWindow::onUpdate()
 	// Transparent objects are draw last
 	BNS_PassRender<BNS_TransparencyFilterPolicy, BNS_BackToFrontPolicy> transparencyPass;
 	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCameraMatrix());
+
+	//CLEAR THE RENDER TARGET 
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
+	(m_swap_chain, 0.5f, 1.0f, 0.5f, 1);
+	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
+	RECT rc = this->getClientWindowRect();
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setViewportSize
+	(rc.right - rc.left, rc.bottom - rc.top);
+
+	update();
+	/*
+	// BNS_PassRender; Draw objects in order
+	// Opaque objects are draw first
+	opaquePass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	// Transparent objects are draw last
+	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	*/
 
 	BNS_UIManager::GetInstance()->DrawAllUIScreens();
 

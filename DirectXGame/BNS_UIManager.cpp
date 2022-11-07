@@ -2,6 +2,7 @@
 
 #include "BNS_FileExplorer.h"
 #include "BNS_GraphicsEngine.h"
+#include "BNS_RenderToTexture.h"
 #include "BNS_UICreation.h"
 
 BNS_UIManager* BNS_UIManager::sharedInstance = nullptr;
@@ -12,9 +13,9 @@ BNS_UIManager* BNS_UIManager::GetInstance()
 	return sharedInstance;
 }
 
-void BNS_UIManager::Initialize(HWND hwnd)
+void BNS_UIManager::Initialize(HWND hwnd, const RenderToTexturePtr& render_tex)
 {
-	sharedInstance = new BNS_UIManager(hwnd);
+	sharedInstance = new BNS_UIManager(hwnd, render_tex);
 	// initialize file explorer
 	BNS_FileExplorer::Initialize();
 
@@ -58,7 +59,7 @@ void BNS_UIManager::DrawAllUIScreens()
 		
 	}
 	
-	/*
+	
 	static bool opt_fullscreen = true;
 	static bool opt_padding = false;
 	static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
@@ -130,31 +131,15 @@ void BNS_UIManager::DrawAllUIScreens()
 
 		ImGui::EndMenuBar();
 	}
+
+	ImGui::Begin("GameScene");
+	ImVec2 game_scene_size = ImGui::GetWindowSize();
+	//ImGui::Image(texture->GetResource(), ImVec2(512, 512)); // my image from the disk
+	ImGui::Image(m_game_scene.get()->GetShaderResourceView(), game_scene_size); // render texture 
+	ImGui::End();
+
+	ImGui::End();
 	
-	// Call each UIScreen members in the list
-	uiScreenList::iterator i;
-	for (i = _uiScreenList.begin(); i != _uiScreenList.end(); ++i)
-	{
-
-
-		// screens to show should be within the dockspace code
-		if ((*i)->toShow)
-		{
-			(*i)->DrawUI();
-		}
-
-
-	}
-
-	ImGui::Begin("Settings");
-	ImGui::Button("Hello");
-	static float value = 0.0f;
-	ImGui::DragFloat("Value", &value);
-	ImGui::End();
-
-	ImGui::End();
-	*/
-	ImGuiIO& io = ImGui::GetIO();
 	io.DisplaySize = ImVec2(BNS_UIManager::WINDOW_WIDTH, BNS_UIManager::WINDOW_HEIGHT);
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -176,8 +161,11 @@ BNS_UIManager::uiScreenHashTable BNS_UIManager::GetUIHashTable()
 	return uiTable;
 }
 
-BNS_UIManager::BNS_UIManager(HWND hwnd)
+BNS_UIManager::BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex)
 {
+	// assign game scene render
+	m_game_scene = render_tex;
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
