@@ -111,6 +111,8 @@ void BNS_AppWindow::onCreate()
 
 	// create blenderPtr
 	m_blender = BNS_GraphicsEngine::get()->getRenderSystem()->CreateBlender();
+	// create GAME SCENE view
+	m_game_scene = BNS_GraphicsEngine::get()->getRenderSystem()->CreateRenderToTexture(512, 512);
 
 }
 
@@ -136,8 +138,7 @@ void BNS_AppWindow::onUpdate()
 	BNS_InputSystem::get()->update(m_hwnd);
 
 	//CLEAR THE RENDER TARGET 
-	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
-		0.5f, 1.0f, 0.5f, 1);
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.5f, 1.0f, 0.5f, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);

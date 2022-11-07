@@ -11,6 +11,7 @@
 #include <exception>
 
 #include "BNS_Blender.h"
+#include "BNS_RenderToTexture.h"
 
 BNS_RenderSystem::BNS_RenderSystem()
 {
@@ -152,6 +153,17 @@ BlenderPtr BNS_RenderSystem::CreateBlender()
 	}
 	catch (...) {}
 	return blender;
+}
+
+RenderToTexturePtr BNS_RenderSystem::CreateRenderToTexture(int textureWidth, int textureHeight)
+{
+	RenderToTexturePtr renderToTex = nullptr;
+	try
+	{
+		renderToTex = std::make_shared<BNS_RenderToTexture>(textureWidth, textureHeight);
+	}
+	catch (...) {}
+	return renderToTex;
 }
 
 bool BNS_RenderSystem::CompileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)

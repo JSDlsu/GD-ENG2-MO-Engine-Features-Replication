@@ -127,6 +127,9 @@
     <Filter Include="GameEngine\FileExplorer">
       <UniqueIdentifier>{4e396e81-0041-4802-92d2-f08638fd6d24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Components\Rendering\RenderToTexture">
+      <UniqueIdentifier>{f8d70be7-6a4f-4b98-b1b2-bf0d0934f64d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -269,6 +272,9 @@
     </ClCompile>
     <ClCompile Include="IMGUI\imgui_widgets.cpp">
       <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_RenderToTexture.cpp">
+      <Filter>GameEngine\Components\Rendering\RenderToTexture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -454,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="IMGUI\imstb_truetype.h">
       <Filter>GameEngine\GraphicsEngine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_RenderToTexture.h">
+      <Filter>GameEngine\Components\Rendering\RenderToTexture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

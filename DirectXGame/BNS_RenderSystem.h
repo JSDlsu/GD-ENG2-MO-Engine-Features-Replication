@@ -26,6 +26,7 @@ public:
 	VertexShaderPtr CreateVertexShader(const void* shader_byte_code, size_t byte_code_size);
 	PixelShaderPtr CreatePixelShader(const void* shader_byte_code, size_t byte_code_size);
 	BlenderPtr CreateBlender();
+	RenderToTexturePtr CreateRenderToTexture(int textureWidth, int textureHeight);
 public:
 	bool CompileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
 	bool CompilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
@@ -64,6 +65,7 @@ private:
 	friend class BNS_Blender;
 	friend class BNS_InputLayoutManager;
 	friend class BNS_AppWindow;
+	friend class BNS_RenderToTexture;
 
 };
 

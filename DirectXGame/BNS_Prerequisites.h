@@ -26,6 +26,7 @@ class BNS_VertexShaderManager;
 class BNS_PixelShaderManager;
 class BNS_InputLayoutManager;
 class BNS_AppWindow;
+class BNS_RenderToTexture;
 
 typedef std::shared_ptr<BNS_SwapChain> SwapChainPtr;
 typedef std::shared_ptr<BNS_DeviceContext> DeviceContextPtr;
@@ -37,6 +38,7 @@ typedef std::shared_ptr<BNS_PixelShader> PixelShaderPtr;
 typedef std::shared_ptr<BNS_Resource> ResourcePtr;
 typedef std::shared_ptr<BNS_Texture> TexturePtr;
 typedef std::shared_ptr<BNS_Mesh> MeshPtr;
+typedef std::shared_ptr<BNS_RenderToTexture> RenderToTexturePtr;
 typedef std::shared_ptr<BNS_Blender> BlenderPtr;
 typedef std::shared_ptr<BNS_AGameObject> AGameObjectPtr;
 typedef std::shared_ptr<BNS_AGameObject> CameraPtr;
