@@ -85,7 +85,6 @@ void BNS_AppWindow::onCreate()
 #define PLAY 0
 #if PLAY == 0
 	BNS_Cube* cube1 = new BNS_Cube("cube3", BNS_ObjectTypes::CUBE);
-	cube1->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR, colorData1);
 	cube1->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	cube1->SetVertexShader(BNS_VertexShaderType::COLOR);
 	cube1->SetPixelShader(BNS_PixelShaderType::COLOR);
