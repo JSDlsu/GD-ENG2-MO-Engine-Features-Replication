@@ -8,6 +8,7 @@
 
 
 class BNS_UICreation;
+class BNS_MenuToolbar_UI;
 
 class BNS_UIManager
 {
@@ -26,8 +27,8 @@ public:
 
 	static BNS_UICreation* m_ui_creation;
 
-	static const int WINDOW_WIDTH = 1366;
-	static const int WINDOW_HEIGHT = 768;
+	static const int WINDOW_WIDTH = 1920;
+	static const int WINDOW_HEIGHT = 1080;
 
 private:
 	BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex);
@@ -42,9 +43,14 @@ private:
 	uiScreenList _uiScreenList;
 	uiScreenHashTable uiTable;
 	RenderToTexturePtr m_game_scene;
+private:
+	bool opt_fullscreen = true;
+	bool opt_padding = true;
+	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 	
 private:
 	friend class BNS_UICreation;
+	friend class BNS_MenuToolbar_UI;
 };
 
 
