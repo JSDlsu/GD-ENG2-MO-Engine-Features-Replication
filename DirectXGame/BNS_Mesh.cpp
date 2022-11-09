@@ -47,8 +47,14 @@ BNS_Mesh::BNS_Mesh(const wchar_t* full_path) : BNS_Resource(full_path)
 	{
 		size_t index_offset = 0;
 		// reserve the size of our vector in order to speed up the insertion
-		list_vertices.reserve(shapes[s].mesh.indices.size());
-		list_indices.reserve(shapes[s].mesh.indices.size());
+		//list_vertices.reserve(shapes[s].mesh.indices.size());
+		//list_indices.reserve(shapes[s].mesh.indices.size());
+		int vector_size = 0;
+		for (size_t s = shapes.size(); s-- > 0; ) {
+			vector_size += shapes[s].mesh.indices.size();
+		}
+		list_vertices.reserve(vector_size);
+		list_indices.reserve(vector_size);
 
 		// iterate all of the face
 		for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++)

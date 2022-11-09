@@ -15,5 +15,6 @@ public:
 	void CreateCreditsUI();
 	void CreateMenuToolbarUI();
 	void CreateHierarchyUI();
+	void CreateSceneViewUI();
 };
 

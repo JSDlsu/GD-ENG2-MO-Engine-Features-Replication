@@ -22,14 +22,15 @@ public:
 	static void Release();
 	static void HelpMarker(const char* desc);
 
-	void DrawAllUIScreens();
-	uiScreenList GetUIList();
-	uiScreenHashTable GetUIHashTable();
-
 	static BNS_UICreation* m_ui_creation;
 
 	static const int WINDOW_WIDTH = 1920;
 	static const int WINDOW_HEIGHT = 1080;
+	RenderToTexturePtr GetGameSceneView();
+public:
+	void DrawAllUIScreens();
+	uiScreenList GetUIList();
+	uiScreenHashTable GetUIHashTable();
 
 private:
 	BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex);

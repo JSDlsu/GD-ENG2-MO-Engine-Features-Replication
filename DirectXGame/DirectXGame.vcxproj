@@ -186,6 +186,7 @@
     <ClCompile Include="BNS_RenderToTexture.cpp" />
     <ClCompile Include="BNS_Resource.cpp" />
     <ClCompile Include="BNS_ResourceManager.cpp" />
+    <ClCompile Include="BNS_SceneView_UI.cpp" />
     <ClCompile Include="BNS_ShaderEngine.cpp" />
     <ClCompile Include="BNS_SwapChain.cpp" />
     <ClCompile Include="BNS_Texture.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="BNS_InputListener.h" />
     <ClInclude Include="BNS_InputSystem.h" />
     <ClInclude Include="BNS_RenderToTexture.h" />
+    <ClInclude Include="BNS_SceneView_UI.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
     <ClInclude Include="IMGUI\imgui.h" />
     <ClInclude Include="IMGUI\imgui_impl_dx11.h" />

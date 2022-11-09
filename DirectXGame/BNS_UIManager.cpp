@@ -23,6 +23,7 @@ void BNS_UIManager::Initialize(HWND hwnd, const RenderToTexturePtr& render_tex)
 	m_ui_creation->CreateCreditsUI();
 	m_ui_creation->CreateMenuToolbarUI();
 	m_ui_creation->CreateHierarchyUI();
+	m_ui_creation->CreateSceneViewUI();
 }
 
 void BNS_UIManager::Release()
@@ -50,6 +51,11 @@ void BNS_UIManager::HelpMarker(const char* desc)
 		ImGui::PopTextWrapPos();
 		ImGui::EndTooltip();
 	}
+}
+
+RenderToTexturePtr BNS_UIManager::GetGameSceneView()
+{
+	return m_game_scene;
 }
 
 void BNS_UIManager::DrawAllUIScreens()
@@ -109,13 +115,7 @@ void BNS_UIManager::DrawAllUIScreens()
 			(*i)->DrawUI();
 		}
 	}
-
-	ImGui::Begin("GameScene");
-	ImVec2 game_scene_size = ImGui::GetWindowSize();
-	//ImGui::Image(texture->GetResource(), ImVec2(512, 512)); // my image from the disk
-	ImGui::Image(m_game_scene.get()->GetShaderResourceView(), game_scene_size); // render texture 
-	ImGui::End();
-
+	// End DockSpace
 	ImGui::End();
 	
 	io.DisplaySize = ImVec2(BNS_UIManager::WINDOW_WIDTH, BNS_UIManager::WINDOW_HEIGHT);

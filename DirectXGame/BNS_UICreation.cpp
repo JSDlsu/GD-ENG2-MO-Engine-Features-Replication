@@ -3,6 +3,7 @@
 #include "BNS_GraphicsEngine.h"
 #include "BNS_Hierarchy_UI.h"
 #include "BNS_MenuToolbar_UI.h"
+#include "BNS_SceneView_UI.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
 
@@ -45,6 +46,15 @@ void BNS_UICreation::CreateHierarchyUI()
 	BNS_Hierarchy_UI* screen = new BNS_Hierarchy_UI("hierarchyUI");
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::HIERARCHY_SCREEN] = ptr_screen;
+	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
+
+}
+
+void BNS_UICreation::CreateSceneViewUI()
+{
+	BNS_SceneView_UI* screen = new BNS_SceneView_UI("sceneViewUI");
+	AUIScreen_Ptr ptr_screen(screen);
+	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::SCENEVIEW_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
 
 }
