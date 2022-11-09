@@ -13,7 +13,12 @@ cbuffer BNS_constant_transform: register(b0)
 	unsigned int m_time;
 };
 
+cbuffer BNS_constant_texture: register(b0)
+{
+	float alpha;
+};
+
 float4 psmain(PS_INPUT input) : SV_TARGET
 {
-	return float4(lerp(input.color, input.color1, (float)((sin((float)(m_time / (float)500.0f)) + 1.0f) / 2.0f)),1.0f);
+	return float4(lerp(input.color, input.color1, (float)((sin((float)(m_time / (float)500.0f)) + 1.0f) / 2.0f)), 1.0f);
 }

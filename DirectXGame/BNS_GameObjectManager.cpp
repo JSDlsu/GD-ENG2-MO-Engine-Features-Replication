@@ -29,7 +29,13 @@ void BNS_GameObjectManager::release()
 	delete BNS_GameObjectManager::m_instance;
 }
 
-std::vector<AGameObjectPtr>& BNS_GameObjectManager::getObjectList()
+std::vector<AGameObjectPtr>& BNS_GameObjectManager::GetObjectList()
 {
 	return objectList;
+}
+
+std::vector<AGameObjectPtr>& BNS_GameObjectManager::GetRenderObjectList()
+{
+	render_objectList = objectList;
+	return render_objectList;
 }

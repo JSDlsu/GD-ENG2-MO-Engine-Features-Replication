@@ -67,11 +67,16 @@ void BNS_Camera::UpdateViewMatrix()
 {
 	Matrix4x4 world_cam; world_cam.setIdentity();
 	Matrix4x4 temp; temp.setIdentity();
-	// rotation first
+	// scale first
+	temp.setScale(m_scale);
+	world_cam *= temp;
+	// rotation 
 	Vector3D localRot = this->GetLocalRotation();
 	temp.setRotationX(localRot.m_x);
 	world_cam *= temp;
 	temp.setRotationY(localRot.m_y);
+	world_cam *= temp;
+	temp.setRotationZ(localRot.m_z);
 	world_cam *= temp;
 	// position next
 	// moving or setting the camera position in the x,y,z axis

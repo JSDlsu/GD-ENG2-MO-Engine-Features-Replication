@@ -21,9 +21,6 @@ public:
 	void SetVertex_Index_Buffer(BNS_VertexShaderType vs_type, BNS_PC_Cube_ColorData color_data = BNS_PC_Cube_ColorData());
 	void SetVertexShader(BNS_VertexShaderType vs_type);
 	void SetPixelShader(BNS_PixelShaderType ps_type);
-public:
-	void SetAlpha(float alpha);
-	float GetAlpha();
 protected:
 	MeshPtr m_mesh;
 	TexturePtr m_tex;
@@ -41,7 +38,6 @@ protected:
 	float deltaPos = 0.0f;
 	float deltaScale = 0.0f;
 	float deltaTime = 0.0f;
-	float alpha = 1.0f;
 protected:
 	friend class BNS_AppWindow;
 };

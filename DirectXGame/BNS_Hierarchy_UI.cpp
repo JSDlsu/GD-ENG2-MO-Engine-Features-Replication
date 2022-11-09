@@ -20,11 +20,11 @@ void BNS_Hierarchy_UI::DrawUI()
         int node_clicked = -1;
 
         // Call each object's in the scene
-        std::vector<AGameObjectPtr> objects = BNS_GameObjectManager::get()->getObjectList();
+        std::vector<AGameObjectPtr> objects = BNS_GameObjectManager::get()->GetObjectList();
         for (int i = 0; i < objects.size(); i++)
         {
             ImGuiTreeNodeFlags node_flags = base_flags;
-            const bool is_selected = (selection_mask & (1 << i)) != 0;
+            const bool is_selected = true;
             if (is_selected)
                 node_flags |= ImGuiTreeNodeFlags_Selected;
 
@@ -39,7 +39,7 @@ void BNS_Hierarchy_UI::DrawUI()
             }
             if (node_open)
             {
-                ImGui::BulletText("Blah blah\nBlah Blah");
+                ImGui::BulletText("Child");
                 ImGui::TreePop();
             }
         }

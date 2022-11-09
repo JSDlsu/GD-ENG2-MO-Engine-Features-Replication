@@ -1,4 +1,5 @@
 #pragma once
+#include <math.h>
 
 class Vector3D
 {
@@ -53,6 +54,15 @@ public:
 		return Vector3D(m_x + vec.m_x, m_y + vec.m_y, m_z + vec.m_z);
 	}
 
+	double GetMagnitude(const Vector3D& secondP)
+	{
+		Vector3D temp;
+		temp.m_x = secondP.m_x - m_x;
+		temp.m_y = secondP.m_y - m_y;
+		temp.m_z = secondP.m_z - m_z;
+
+		return sqrt(pow(temp.m_x, 2) + pow(temp.m_y, 2) + pow(temp.m_z, 2));
+	}
 	~Vector3D()
 	{
 	}

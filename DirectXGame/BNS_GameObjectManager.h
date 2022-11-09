@@ -18,10 +18,12 @@ public:
 	static BNS_GameObjectManager* get();
 	static void create();
 	static void release();
-	std::vector<AGameObjectPtr>& getObjectList();
-	
+	std::vector<AGameObjectPtr>& GetObjectList();
+	std::vector<AGameObjectPtr>& GetRenderObjectList();
+
 private:
 	std::vector<AGameObjectPtr> objectList;
+	std::vector<AGameObjectPtr> render_objectList;
 	static BNS_GameObjectManager* m_instance;
 	friend class BNS_AppWindow;
 	friend class BNS_Cube;

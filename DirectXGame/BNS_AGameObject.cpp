@@ -71,17 +71,6 @@ Vector3D BNS_AGameObject::GetLocalRotation()
 	return m_rotation;
 }
 
-double BNS_AGameObject::GetDistance(const Matrix4x4& camera)
-{
-	Vector3D cam = { camera.m_mat[3][2], camera.m_mat[3][2] ,camera.m_mat[3][2] };
-	Vector3D temp;
-	temp.m_x = cam.m_x - m_position.m_x;
-	temp.m_y = cam.m_y - m_position.m_y;
-	temp.m_z = cam.m_z - m_position.m_z;
-
-	return sqrt(pow(temp.m_x, 2) + pow(temp.m_y, 2) + pow(temp.m_z, 2));
-}
-
 std::string BNS_AGameObject::GetName()
 {
 	return name;
@@ -90,6 +79,16 @@ std::string BNS_AGameObject::GetName()
 Matrix4x4 BNS_AGameObject::GetMatrix()
 {
 	return m_matrix;
+}
+
+void BNS_AGameObject::SetAlpha(float alpha)
+{
+	this->alpha = alpha;
+}
+
+float BNS_AGameObject::GetAlpha()
+{
+	return alpha;
 }
 
 

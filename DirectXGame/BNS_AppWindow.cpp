@@ -82,7 +82,7 @@ void BNS_AppWindow::onCreate()
 	cube1->SetVertexShader(BNS_VertexShaderType::COLOR);
 	cube1->SetPixelShader(BNS_PixelShaderType::COLOR);
 	cube1->SetPosition(Vector3D{ 0, 1, 0 });
-	cube1->SetAlpha(0.5f);
+	cube1->SetAlpha(0.1f);
 	AGameObjectPtr temp_ptr1(cube1);
 	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr1);
 
@@ -145,10 +145,10 @@ void BNS_AppWindow::onUpdate()
 	// BNS_PassRender; Draw objects in order
 	// Opaque objects are draw first
 	BNS_PassRender<BNS_OpaqueFilterPolicy, BNS_FrontToBackPolicy> opaquePass;
-	opaquePass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	opaquePass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
 	// Transparent objects are draw last
 	BNS_PassRender<BNS_TransparencyFilterPolicy, BNS_BackToFrontPolicy> transparencyPass;
-	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
 
 	//CLEAR THE RENDER TARGET 
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
@@ -160,11 +160,16 @@ void BNS_AppWindow::onUpdate()
 
 	update();
 	/*
+	std::cout << "Cam: X=" << BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_x <<
+		" Y=" << BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_y << " Z=" <<
+		BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_z << std::endl;
+	*/
+	/*
 	// BNS_PassRender; Draw objects in order
 	// Opaque objects are draw first
-	opaquePass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	opaquePass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
 	// Transparent objects are draw last
-	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCameraMatrix());
+	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
 	*/
 
 	BNS_UIManager::GetInstance()->DrawAllUIScreens();

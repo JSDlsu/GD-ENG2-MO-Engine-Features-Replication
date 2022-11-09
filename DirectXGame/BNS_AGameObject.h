@@ -37,8 +37,9 @@ public:
 	void SetRotation(Vector3D rot);
 	Vector3D GetLocalRotation();
 
-	double GetDistance(const Matrix4x4& camera);
 	std::string GetName();
+	void SetAlpha(float alpha);
+	float GetAlpha();
 
 	Matrix4x4 GetMatrix();
 protected:
@@ -47,5 +48,6 @@ protected:
 	Vector3D m_scale;
 	Vector3D m_rotation;
 	Matrix4x4 m_matrix;
+	float alpha = 1.0f;
 };
 
