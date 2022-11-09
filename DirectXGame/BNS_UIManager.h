@@ -20,6 +20,7 @@ public:
 	static BNS_UIManager* GetInstance();
 	static void Initialize(HWND hwnd, const RenderToTexturePtr& render_tex);
 	static void Release();
+	static void HelpMarker(const char* desc);
 
 	void DrawAllUIScreens();
 	uiScreenList GetUIList();

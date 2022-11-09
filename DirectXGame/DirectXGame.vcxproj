@@ -169,6 +169,7 @@
     <ClCompile Include="BNS_FileExplorer.cpp" />
     <ClCompile Include="BNS_GameObjectManager.cpp" />
     <ClCompile Include="BNS_GraphicsEngine.cpp" />
+    <ClCompile Include="BNS_Hierarchy_UI.cpp" />
     <ClCompile Include="BNS_IndexBuffer.cpp" />
     <ClCompile Include="BNS_InputLayoutManager.cpp" />
     <ClCompile Include="BNS_InputSystem.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="BNS_FileExplorer.h" />
     <ClInclude Include="BNS_GameObjectManager.h" />
     <ClInclude Include="BNS_GraphicsEngine.h" />
+    <ClInclude Include="BNS_Hierarchy_UI.h" />
     <ClInclude Include="BNS_IndexBuffer.h" />
     <ClInclude Include="BNS_InputLayoutManager.h" />
     <ClInclude Include="BNS_InputListener.h" />

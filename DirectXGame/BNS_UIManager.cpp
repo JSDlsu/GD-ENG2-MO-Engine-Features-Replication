@@ -22,6 +22,7 @@ void BNS_UIManager::Initialize(HWND hwnd, const RenderToTexturePtr& render_tex)
 	// initialize the UI screens
 	m_ui_creation->CreateCreditsUI();
 	m_ui_creation->CreateMenuToolbarUI();
+	m_ui_creation->CreateHierarchyUI();
 }
 
 void BNS_UIManager::Release()
@@ -34,6 +35,21 @@ void BNS_UIManager::Release()
 	// release file explorer
 	BNS_FileExplorer::Release();
 	delete sharedInstance;
+}
+
+// Helper to display a little (?) mark which shows a tooltip when hovered.
+// In your own code you may want to display an actual icon if you are using a merged icon fonts (see docs/FONTS.md)
+void BNS_UIManager::HelpMarker(const char* desc)
+{
+	ImGui::TextDisabled("(?)");
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted(desc);
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
 }
 
 void BNS_UIManager::DrawAllUIScreens()

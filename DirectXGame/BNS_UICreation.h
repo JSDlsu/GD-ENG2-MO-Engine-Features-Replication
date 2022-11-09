@@ -14,5 +14,6 @@ public:
 	TexturePtr CreateUI_Image(const wchar_t* tex_path);
 	void CreateCreditsUI();
 	void CreateMenuToolbarUI();
+	void CreateHierarchyUI();
 };
 
