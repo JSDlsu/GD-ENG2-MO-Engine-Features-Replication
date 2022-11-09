@@ -24,7 +24,8 @@ BNS_Mesh::BNS_Mesh(const wchar_t* full_path) : BNS_Resource(full_path)
 	std::string err;
 
 	// convert const wchar_t into simple string type
-	std::string inputfile = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(full_path);
+	std::wstring ws(full_path);
+	std::string inputfile(ws.begin(), ws.end());
 
 	// parse the object model into a data structure
 	bool res = tinyobj::LoadObj(&attribs, &shapes, &materials, &warn, &err, inputfile.c_str());

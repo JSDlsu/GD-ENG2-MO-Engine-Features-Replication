@@ -133,7 +133,10 @@
     <Filter Include="GameEngine\UI\Hierarchy">
       <UniqueIdentifier>{91676bc7-d5b2-41b4-b3eb-102b07b5638d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\UI\SceneView">
+    <Filter Include="GameEngine\UI\Content Browser">
+      <UniqueIdentifier>{74733073-6fc6-4ae9-9caa-0ea4e36fd82a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\UI\Scene View">
       <UniqueIdentifier>{f2b16ecc-e2c3-4a27-9566-6e75acc8ef82}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -286,8 +289,9 @@
       <Filter>GameEngine\UI\Hierarchy</Filter>
     </ClCompile>
     <ClCompile Include="BNS_SceneView_UI.cpp">
-      <Filter>GameEngine\UI\SceneView</Filter>
+      <Filter>GameEngine\UI\Scene View</Filter>
     </ClCompile>
+    <ClCompile Include="BNS_ContentBrowser_UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AppWindow.h">
@@ -480,8 +484,9 @@
       <Filter>GameEngine\UI\Hierarchy</Filter>
     </ClInclude>
     <ClInclude Include="BNS_SceneView_UI.h">
-      <Filter>GameEngine\UI\SceneView</Filter>
+      <Filter>GameEngine\UI\Scene View</Filter>
     </ClInclude>
+    <ClInclude Include="BNS_ContentBrowser_UI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">

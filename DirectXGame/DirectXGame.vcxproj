@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -162,6 +163,7 @@
     <ClCompile Include="BNS_CameraHandler.cpp" />
     <ClCompile Include="BNS_Color.cpp" />
     <ClCompile Include="BNS_ConstantBuffer.cpp" />
+    <ClCompile Include="BNS_ContentBrowser_UI.cpp" />
     <ClCompile Include="BNS_Credits_UI.cpp" />
     <ClCompile Include="BNS_Cube.cpp" />
     <ClCompile Include="BNS_DeviceContext.cpp" />
@@ -215,6 +217,7 @@
     <ClInclude Include="BNS_Color.h" />
     <ClInclude Include="BNS_ConstantBuffer.h" />
     <ClInclude Include="BNS_ContantBufferTypes.h" />
+    <ClInclude Include="BNS_ContentBrowser_UI.h" />
     <ClInclude Include="BNS_Credits_UI.h" />
     <ClInclude Include="BNS_Cube.h" />
     <ClInclude Include="BNS_DeviceContext.h" />

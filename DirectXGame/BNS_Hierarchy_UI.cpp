@@ -24,7 +24,7 @@ void BNS_Hierarchy_UI::DrawUI()
         for (int i = 0; i < objects.size(); i++)
         {
             ImGuiTreeNodeFlags node_flags = base_flags;
-            const bool is_selected = true;
+            const bool is_selected = false;
             if (is_selected)
                 node_flags |= ImGuiTreeNodeFlags_Selected;
 

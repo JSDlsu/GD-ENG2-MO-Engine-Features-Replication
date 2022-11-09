@@ -16,5 +16,6 @@ public:
 	void CreateMenuToolbarUI();
 	void CreateHierarchyUI();
 	void CreateSceneViewUI();
+	void CreateContentBrowserUI();
 };
 

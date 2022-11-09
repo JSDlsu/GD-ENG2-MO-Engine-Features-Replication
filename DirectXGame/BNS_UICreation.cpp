@@ -1,4 +1,6 @@
 #include "BNS_UICreation.h"
+
+#include "BNS_ContentBrowser_UI.h"
 #include "BNS_Credits_UI.h"
 #include "BNS_GraphicsEngine.h"
 #include "BNS_Hierarchy_UI.h"
@@ -55,6 +57,15 @@ void BNS_UICreation::CreateSceneViewUI()
 	BNS_SceneView_UI* screen = new BNS_SceneView_UI("sceneViewUI");
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::SCENEVIEW_SCREEN] = ptr_screen;
+	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
+
+}
+
+void BNS_UICreation::CreateContentBrowserUI()
+{
+	BNS_ContentBrowser_UI* screen = new BNS_ContentBrowser_UI("contentBrowserUI");
+	AUIScreen_Ptr ptr_screen(screen);
+	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::CONTENT_BROWSER_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
 
 }

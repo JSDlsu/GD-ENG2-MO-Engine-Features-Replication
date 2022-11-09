@@ -24,6 +24,7 @@ void BNS_UIManager::Initialize(HWND hwnd, const RenderToTexturePtr& render_tex)
 	m_ui_creation->CreateMenuToolbarUI();
 	m_ui_creation->CreateHierarchyUI();
 	m_ui_creation->CreateSceneViewUI();
+	m_ui_creation->CreateContentBrowserUI();
 }
 
 void BNS_UIManager::Release()
@@ -159,6 +160,11 @@ BNS_UIManager::BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex)
 	//io.ConfigDockingTransparentPayload = true;
 	//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: Experimental. THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
 	//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI: Experimental.
+
+	// Change font setting
+	float fontSize = 18.0f;
+	//io.Fonts->AddFontFromFileTTF("Assets/Fonts/blah.ttf", fontSize);
+	//io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/blah.ttf", fontSize);
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
