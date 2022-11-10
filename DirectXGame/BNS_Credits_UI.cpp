@@ -11,6 +11,10 @@ BNS_Credits_UI::BNS_Credits_UI(std::string name) : BNS_AUIScreen(name)
 	toShow = false;
 }
 
+BNS_Credits_UI::~BNS_Credits_UI()
+{
+}
+
 void BNS_Credits_UI::DrawUI()
 {
 	//DRAW HERE

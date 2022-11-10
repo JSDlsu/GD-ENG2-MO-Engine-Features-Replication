@@ -8,6 +8,10 @@ BNS_Hierarchy_UI::BNS_Hierarchy_UI(std::string name) : BNS_AUIScreen(name)
 
 }
 
+BNS_Hierarchy_UI::~BNS_Hierarchy_UI()
+{
+}
+
 void BNS_Hierarchy_UI::DrawUI()
 {
     ImGui::Begin("Hierarchy");

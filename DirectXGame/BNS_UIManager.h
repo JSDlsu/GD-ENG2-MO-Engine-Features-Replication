@@ -29,9 +29,9 @@ public:
 	RenderToTexturePtr GetGameSceneView();
 public:
 	void DrawAllUIScreens();
-	uiScreenList GetUIList();
 	uiScreenHashTable GetUIHashTable();
-
+private:
+	uiScreenList GetUIList();
 private:
 	BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex);
 	~BNS_UIManager();
