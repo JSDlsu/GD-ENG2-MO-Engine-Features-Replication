@@ -119,7 +119,7 @@ public:
 				return lhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) <
 					rhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition());
 			});
-		std::cout << "First Object: " << inputArray[0].get()->GetName() << std::endl;
+		//std::cout << "First Object: " << inputArray[0].get()->GetName() << std::endl;
 		return inputArray;
 
 	}

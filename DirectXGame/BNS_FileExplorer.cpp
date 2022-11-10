@@ -24,6 +24,10 @@ void BNS_FileExplorer::InitializeFiles()
 {
 	imageTable["dlsu_logo"] =
 		BNS_UIManager::m_ui_creation->CreateUI_Image(L"Assets\\Textures\\dlsu_logo.png");
+	imageTable["file_icon"] =
+		BNS_UIManager::m_ui_creation->CreateUI_Image(L"Assets\\Icons\\file_icon.png");
+	imageTable["folder_icon"] =
+		BNS_UIManager::m_ui_creation->CreateUI_Image(L"Assets\\Icons\\folder_icon.png");
 }
 
 BNS_FileExplorer::uiImageHashTable BNS_FileExplorer::GetImageHashTable()
