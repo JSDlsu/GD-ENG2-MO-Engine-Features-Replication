@@ -15,6 +15,8 @@ BNS_ContentBrowser_UI::~BNS_ContentBrowser_UI()
 
 void BNS_ContentBrowser_UI::DrawUI()
 {
+
+	
 	ImGui::Begin("Content Browser");
 
 	// Check if the current path leaves the source path, which will add a back button

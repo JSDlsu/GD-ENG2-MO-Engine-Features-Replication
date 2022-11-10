@@ -294,6 +294,8 @@
     <ClCompile Include="BNS_ContentBrowser_UI.cpp">
       <Filter>GameEngine\UI\Content Browser</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectUI.cpp" />
+    <ClCompile Include="ConsoleUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AppWindow.h">
@@ -491,6 +493,8 @@
     <ClInclude Include="BNS_ContentBrowser_UI.h">
       <Filter>GameEngine\UI\Content Browser</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectUI.h" />
+    <ClInclude Include="ConsoleUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">

@@ -3,6 +3,7 @@
 #include "BNS_Camera.h"
 #include "BNS_CameraHandler.h"
 #include "BNS_UIManager.h"
+#include "IMGUI/imgui_internal.h"
 
 BNS_MenuToolbar_UI::BNS_MenuToolbar_UI(std::string name) : BNS_AUIScreen(name)
 {
@@ -39,6 +40,27 @@ void BNS_MenuToolbar_UI::DrawUI()
 			if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (UM->dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0)) { UM->dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar; }
 			if (ImGui::MenuItem("Flag: PassthruCentralNode", "", (UM->dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0, UM->opt_fullscreen)) { UM->dockspace_flags ^= ImGuiDockNodeFlags_PassthruCentralNode; }
 			ImGui::Separator();
+			ImGui::EndMenu();
+		}
+
+	
+		if (ImGui::BeginMenu("GameObject"))
+		{
+			
+			ImGui::MenuItem("PRIMITIVES", NULL, &UM->GetUIHashTable()[BNS_UINames::GAMEOBJECT_SCREEN]->toShow);
+			ImGui::MenuItem("CUBE", NULL, &UM->GetUIHashTable()[BNS_UINames::GAMEOBJECT_SCREEN]->toShow);
+			ImGui::MenuItem("PLANE", NULL, &UM->GetUIHashTable()[BNS_UINames::GAMEOBJECT_SCREEN]->toShow);
+			ImGui::EndMenu();
+		}
+
+		
+		
+		ImGui::Dummy(ImVec2(1600.0f, 0.0f));
+
+		if (ImGui::BeginMenu("CONSOLE"))
+		{
+
+			ImGui::MenuItem("CONSOLE", NULL, &UM->GetUIHashTable()[BNS_UINames::CONSOLE_SCREEN]->toShow);
 			ImGui::EndMenu();
 		}
 

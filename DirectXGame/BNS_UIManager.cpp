@@ -25,6 +25,8 @@ void BNS_UIManager::Initialize(HWND hwnd, const RenderToTexturePtr& render_tex)
 	m_ui_creation->CreateHierarchyUI();
 	m_ui_creation->CreateSceneViewUI();
 	m_ui_creation->CreateContentBrowserUI();
+	m_ui_creation->CreateGameObjectUI();
+	m_ui_creation->CreateConsoletUI();
 }
 
 void BNS_UIManager::Release()

@@ -17,5 +17,7 @@ public:
 	void CreateHierarchyUI();
 	void CreateSceneViewUI();
 	void CreateContentBrowserUI();
+	void CreateGameObjectUI();
+	void CreateConsoletUI();
 };
 

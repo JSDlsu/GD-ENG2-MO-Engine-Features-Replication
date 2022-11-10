@@ -8,6 +8,8 @@
 #include "BNS_SceneView_UI.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
+#include "GameObjectUI.h"
+#include  "ConsoleUI.h"
 
 BNS_UICreation::BNS_UICreation()
 {
@@ -66,6 +68,24 @@ void BNS_UICreation::CreateContentBrowserUI()
 	BNS_ContentBrowser_UI* screen = new BNS_ContentBrowser_UI("contentBrowserUI");
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::CONTENT_BROWSER_SCREEN] = ptr_screen;
+	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
+
+}
+
+void BNS_UICreation::CreateGameObjectUI()
+{
+	GameObjectUI* screen = new GameObjectUI("GameObjectUI");
+	AUIScreen_Ptr ptr_screen(screen);
+	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::GAMEOBJECT_SCREEN] = ptr_screen;
+	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
+
+}
+
+void BNS_UICreation::CreateConsoletUI()
+{
+	ConsoleUI* screen = new ConsoleUI("GameObjectUI");
+	AUIScreen_Ptr ptr_screen(screen);
+	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::CONSOLE_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
 
 }
