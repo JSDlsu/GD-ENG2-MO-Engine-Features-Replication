@@ -1,5 +1,4 @@
 #include "BNS_ContentBrowser_UI.h"
-
 #include "BNS_FileExplorer.h"
 #include "BNS_Texture.h"
 

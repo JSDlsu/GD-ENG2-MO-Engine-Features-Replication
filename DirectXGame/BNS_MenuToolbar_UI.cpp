@@ -9,6 +9,10 @@ BNS_MenuToolbar_UI::BNS_MenuToolbar_UI(std::string name) : BNS_AUIScreen(name)
 	toShow = true;
 }
 
+BNS_MenuToolbar_UI::~BNS_MenuToolbar_UI()
+{
+}
+
 void BNS_MenuToolbar_UI::DrawUI()
 {
 	BNS_UIManager* UM =  BNS_UIManager::GetInstance();

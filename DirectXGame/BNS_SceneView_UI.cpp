@@ -7,6 +7,10 @@ BNS_SceneView_UI::BNS_SceneView_UI(std::string name) : BNS_AUIScreen(name)
 {
 }
 
+BNS_SceneView_UI::~BNS_SceneView_UI()
+{
+}
+
 void BNS_SceneView_UI::DrawUI()
 {
 	ImGui::Begin("GameScene");
