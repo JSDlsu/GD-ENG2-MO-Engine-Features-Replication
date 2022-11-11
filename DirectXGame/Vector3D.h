@@ -56,6 +56,7 @@ public:
 
 	double GetMagnitude(const Vector3D& secondP)
 	{
+
 		Vector3D temp;
 		temp.m_x = secondP.m_x - m_x;
 		temp.m_y = secondP.m_y - m_y;

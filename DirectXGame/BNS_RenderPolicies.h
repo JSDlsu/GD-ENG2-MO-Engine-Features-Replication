@@ -61,7 +61,7 @@ public:
 	}
 	std::vector<AGameObjectPtr>& sort(std::vector<AGameObjectPtr>& inputArray)
 	{
-		/*
+		
 		int i, j, max_idx;
 		int n = inputArray.size();
 		// selection sort
@@ -83,14 +83,6 @@ public:
 				swap(inputArray[max_idx], inputArray[i]);
 		}
 
-		return inputArray;
-		*/
-		
-		std::sort(inputArray.begin(), inputArray.end(), [&](AGameObjectPtr& lhs, AGameObjectPtr& rhs)
-			{
-				return lhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) >
-			rhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition());
-			});
 		return inputArray;
 		
 	}
@@ -114,13 +106,37 @@ public:
 	}
 	std::vector<AGameObjectPtr>& sort(std::vector<AGameObjectPtr>& inputArray)
 	{
+		int i, j, min_idx;
+		int n = inputArray.size();
+		// selection sort
+		for (i = 0; i < n - 1; i++)
+		{
+			// Find the maximum element in
+			// unsorted array
+			min_idx = i;
+			for (j = i + 1; j < n; j++)
+			{
+				if (inputArray[j]->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) <
+					inputArray[min_idx]->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()))
+					min_idx = j;
+			}
+
+			// Swap the found minimum element
+			// with the first element
+			if (min_idx != i)
+				swap(inputArray[min_idx], inputArray[i]);
+		}
+
+		return inputArray;
+		/*
 		std::sort(inputArray.begin(), inputArray.end(), [&](AGameObjectPtr& lhs, AGameObjectPtr& rhs)
 			{
 				return lhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) <
 					rhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition());
 			});
-		//std::cout << "First Object: " << inputArray[0].get()->GetName() << std::endl;
+		std::cout << "First Object: " << inputArray[0].get()->GetName() << std::endl;
 		return inputArray;
+		*/
 
 	}
 private:
