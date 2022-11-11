@@ -1,24 +1,18 @@
-#include "ConsoleUI.h"
-#include "GameObjectUI.h"
-#include "BNS_Credits_UI.h"
-
-#include "BNS_Camera.h"
-#include "BNS_CameraHandler.h"
+#include "BNS_Console_UI.h"
 #include "BNS_EngineTime.h"
-#include "BNS_FileExplorer.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
 
-ConsoleUI::ConsoleUI(std::string name) : BNS_AUIScreen(name)
+BNS_Console_UI::BNS_Console_UI(std::string name) : BNS_AUIScreen(name)
 {
 	toShow = false;
 }
 
-ConsoleUI::~ConsoleUI()
+BNS_Console_UI::~BNS_Console_UI()
 {
 }
 
-void ConsoleUI::DrawUI()
+void BNS_Console_UI::DrawUI()
 {
 	float fps = 0;
 	fps = CLOCKS_PER_SEC / BNS_EngineTime::getDeltaTime() * 0.001f;

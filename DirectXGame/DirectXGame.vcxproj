@@ -164,7 +164,6 @@
     <ClCompile Include="BNS_Color.cpp" />
     <ClCompile Include="BNS_ConstantBuffer.cpp" />
     <ClCompile Include="BNS_ContentBrowser_UI.cpp" />
-    <ClCompile Include="BNS_Credits_UI.cpp" />
     <ClCompile Include="BNS_Cube.cpp" />
     <ClCompile Include="BNS_DeviceContext.cpp" />
     <ClCompile Include="BNS_EngineTime.cpp" />
@@ -199,8 +198,7 @@
     <ClCompile Include="BNS_VertexShader.cpp" />
     <ClCompile Include="BNS_VertexShaderManager.cpp" />
     <ClCompile Include="BNS_Window.cpp" />
-    <ClCompile Include="ConsoleUI.cpp" />
-    <ClCompile Include="GameObjectUI.cpp" />
+    <ClCompile Include="BNS_Console_UI.cpp" />
     <ClCompile Include="IMGUI\imgui.cpp" />
     <ClCompile Include="IMGUI\imgui_demo.cpp" />
     <ClCompile Include="IMGUI\imgui_draw.cpp" />
@@ -220,7 +218,6 @@
     <ClInclude Include="BNS_ConstantBuffer.h" />
     <ClInclude Include="BNS_ContantBufferTypes.h" />
     <ClInclude Include="BNS_ContentBrowser_UI.h" />
-    <ClInclude Include="BNS_Credits_UI.h" />
     <ClInclude Include="BNS_Cube.h" />
     <ClInclude Include="BNS_DeviceContext.h" />
     <ClInclude Include="BNS_EngineTime.h" />
@@ -235,8 +232,7 @@
     <ClInclude Include="BNS_InputSystem.h" />
     <ClInclude Include="BNS_RenderToTexture.h" />
     <ClInclude Include="BNS_SceneView_UI.h" />
-    <ClInclude Include="ConsoleUI.h" />
-    <ClInclude Include="GameObjectUI.h" />
+    <ClInclude Include="BNS_Console_UI.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
     <ClInclude Include="IMGUI\imgui.h" />
     <ClInclude Include="IMGUI\imgui_impl_dx11.h" />

@@ -1,6 +1,7 @@
 #ifndef STRUCT_HANDLER_H
 #define STRUCT_HANDLER_H
 #include "BNS_Color.h"
+#include "BNS_UIManager.h"
 #include "Vector2D.h"
 
 struct BNS_vertex_tex
@@ -60,7 +61,7 @@ public:
 	float fovInDegrees = 90.0f;
 	float nearPlane = 0.1f;
 	float farPlane = 100.0f;
-	float aspectRatio = 0.8f;
+	float aspectRatio = BNS_UIManager::WINDOW_WIDTH / BNS_UIManager::WINDOW_HEIGHT;
 };
 
 

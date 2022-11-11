@@ -9,6 +9,16 @@ public:
 	BNS_MenuToolbar_UI(std::string name);
 	~BNS_MenuToolbar_UI();
 	void DrawUI() override;
-
+private:
+	BNS_UIManager* UM = nullptr;
+private:
+	void CreateTab_File();
+	void CreateTab_Edit();
+	void CreateTab_Assets();
+	void CreateTab_Gameobject();
+	void CreateTab_Components();
+	void CreateTab_Tools();
+	void CreateTab_Window();
+	void CreateTab_Help();
 };
 

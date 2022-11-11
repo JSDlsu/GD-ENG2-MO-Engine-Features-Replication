@@ -1,15 +1,13 @@
 #include "BNS_UICreation.h"
 
 #include "BNS_ContentBrowser_UI.h"
-#include "BNS_Credits_UI.h"
 #include "BNS_GraphicsEngine.h"
 #include "BNS_Hierarchy_UI.h"
 #include "BNS_MenuToolbar_UI.h"
 #include "BNS_SceneView_UI.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
-#include "GameObjectUI.h"
-#include  "ConsoleUI.h"
+#include  "BNS_Console_UI.h"
 
 BNS_UICreation::BNS_UICreation()
 {
@@ -25,15 +23,6 @@ TexturePtr BNS_UICreation::CreateUI_Image(const wchar_t* tex_path)
 	TexturePtr m_tex = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
 
 	return m_tex;
-}
-
-void BNS_UICreation::CreateCreditsUI()
-{
-	BNS_Credits_UI* screen = new BNS_Credits_UI("creditsUI");
-	AUIScreen_Ptr ptr_screen(screen);
-	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
-	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::CREDITS_SCREEN] = ptr_screen;
-	
 }
 
 void BNS_UICreation::CreateMenuToolbarUI()
@@ -72,18 +61,9 @@ void BNS_UICreation::CreateContentBrowserUI()
 
 }
 
-void BNS_UICreation::CreateGameObjectUI()
+void BNS_UICreation::CreateConsoleUI()
 {
-	GameObjectUI* screen = new GameObjectUI("GameObjectUI");
-	AUIScreen_Ptr ptr_screen(screen);
-	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::GAMEOBJECT_SCREEN] = ptr_screen;
-	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
-
-}
-
-void BNS_UICreation::CreateConsoletUI()
-{
-	ConsoleUI* screen = new ConsoleUI("GameObjectUI");
+	BNS_Console_UI* screen = new BNS_Console_UI("GameObjectUI");
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::CONSOLE_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);

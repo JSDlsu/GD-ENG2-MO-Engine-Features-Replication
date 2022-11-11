@@ -23,13 +23,11 @@ void BNS_UIManager::Initialize(HWND hwnd, const RenderToTexturePtr& render_tex)
 	BNS_FileExplorer::Initialize();
 
 	// initialize the UI screens
-	m_ui_creation->CreateCreditsUI();
 	m_ui_creation->CreateMenuToolbarUI();
 	m_ui_creation->CreateHierarchyUI();
 	m_ui_creation->CreateSceneViewUI();
 	m_ui_creation->CreateContentBrowserUI();
-	m_ui_creation->CreateGameObjectUI();
-	m_ui_creation->CreateConsoletUI();
+	m_ui_creation->CreateConsoleUI();
 }
 
 void BNS_UIManager::Release()

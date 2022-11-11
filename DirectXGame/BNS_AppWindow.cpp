@@ -142,6 +142,8 @@ void BNS_AppWindow::onUpdate()
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
 	(m_swap_chain, m_game_scene, 0.5f, 1.0f, 0.5f, 1);
 
+	update();
+
 	// BNS_PassRender; Draw objects in order
 	// Opaque objects are draw first
 	BNS_PassRender<BNS_OpaqueFilterPolicy, BNS_FrontToBackPolicy> opaquePass;
@@ -157,8 +159,7 @@ void BNS_AppWindow::onUpdate()
 	RECT rc = this->getClientWindowRect();
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setViewportSize
 	(rc.right - rc.left, rc.bottom - rc.top);
-
-	update();
+	
 	/*
 	std::cout << "Cam: X=" << BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_x <<
 		" Y=" << BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_y << " Z=" <<
