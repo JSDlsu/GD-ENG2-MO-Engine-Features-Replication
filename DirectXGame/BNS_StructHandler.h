@@ -53,6 +53,12 @@ struct BNS_PC_Cube_ColorData
 	Vector3D color_list_2[8];
 	bool is_CL2_initialized;
 };
+
+
+
+
+
+
 class BNS_StructHandler
 {
 	

@@ -1,5 +1,7 @@
 #pragma once
 #include "BNS_AUIScreen.h"
+#include "BNS_CameraHandler.h"
+#include "BNS_Camera.h"
 
 class BNS_MenuToolbar_UI : public BNS_AUIScreen
 {

@@ -1,8 +1,11 @@
 #pragma once
 #include "BNS_AGameObject.h"
 #include "BNS_InputListener.h"
+#include "BNS_UIManager.h"
 
 class Point;
+
+
 
 class BNS_Camera : public BNS_AGameObject, public BNS_InputListener
 {
@@ -37,10 +40,18 @@ public:
 	float fovInDegrees = 90.0f;
 	float nearPlane = 0.1f;
 	float farPlane = 100.0f;
+	float fovValue = (3.1415926f / 180.0f);
+	float aspectRatio = BNS_UIManager::WINDOW_WIDTH / BNS_UIManager::WINDOW_HEIGHT;
+	float fov = fovInDegrees * fovValue;
+
+	float Oheight = BNS_UIManager::WINDOW_WIDTH / 300.0f;
+	float Owidth = BNS_UIManager::WINDOW_HEIGHT / 300.0f;
+	
 private:
 	bool isPerspectiveMode = true;
 public:
 	bool IsPerspectiveMode();
 	void SetPerspectiveMode(bool isPerspective = true);
+
 };
 

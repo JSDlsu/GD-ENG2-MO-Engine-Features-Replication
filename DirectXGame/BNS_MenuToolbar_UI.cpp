@@ -100,19 +100,46 @@ void BNS_MenuToolbar_UI::DrawUI()
 		ImGui::EndMenuBar();
 	}
 
+	static const char* items[] = { "Perspective", "Orthographic" };
+	static int selectedItem = 0;
 
+
+
+
+
+	
 	//DRAW HERE
 	ImGui::Begin("View Mode");
-	
-	bool temp = dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->IsPerspectiveMode();
-	if (ImGui::Button("IsPerspective"))
-	{
-		dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->SetPerspectiveMode(!temp);
-	}
-	if (temp)
-		ImGui::Text("Perspective Mode");
-	else
-		ImGui::Text("Orthographic Mode");
+		ImGui::Combo("Camera", &selectedItem, items, IM_ARRAYSIZE(items));
+		//std::cout << "selected:" << selectedItem << std::endl;
+		if( selectedItem == 0)
+		{
+			dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->SetPerspectiveMode(true);
+			ImGui::SliderFloat("FOV", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->fov, -1000.0f, 1000.0f, "%.3f");
+			ImGui::SliderFloat("AspectRatio", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->aspectRatio, -1000.0f, 1000.0f, "%.3f");
+			ImGui::SliderFloat("NearPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->nearPlane, -1000.0f, 1000.0f, "%.3f");
+			ImGui::SliderFloat("FarPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->farPlane, -1000.0f, 1000.0f, "%.3f");
+		}
+		else
+		{
+			dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->SetPerspectiveMode(false);
+			ImGui::SliderFloat("FOV", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->Owidth, -1000.0f, 1000.0f, "%.3f");
+			ImGui::SliderFloat("AspectRatio", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->Oheight, -1000.0f, 1000.0f, "%.3f");
+			ImGui::SliderFloat("NearPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->nearPlane, -1000.0f, 1000.0f, "%.3f");
+			ImGui::SliderFloat("FarPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->farPlane, -1000.0f, 1000.0f, "%.3f");
+		}
 
-	ImGui::End();
+		
+
+
+		//std::cout << "Value: " << f4 << std::endl;
+
+
+	
+		ImGui::End();
+	
+	
+
+	
+	
 }

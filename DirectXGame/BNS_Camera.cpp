@@ -41,10 +41,10 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 	Matrix4x4 orthoMatrix;
 	orthoMatrix.setOrthoLH
 	(
-		BNS_UIManager::WINDOW_WIDTH / 300.0f,
-		BNS_UIManager::WINDOW_HEIGHT / 300.0f,
-		-40.0f,
-		40.0f
+		Owidth,
+		Oheight,
+		nearPlane,
+		farPlane
 	);
 
 	return orthoMatrix;
@@ -52,10 +52,7 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 
 Matrix4x4 BNS_Camera::GetCamPerspectiveMatrix()
 {
-	int width = BNS_UIManager::WINDOW_WIDTH;
-	int height = BNS_UIManager::WINDOW_HEIGHT;
-	float aspectRatio = (float)width / (float)height;
-	float fov = fovInDegrees * (3.1415926f / 180.0f);
+	
 
 	Matrix4x4 projectionMatrix;
 	projectionMatrix.setPerspectiveFovLH(fov, aspectRatio, nearPlane, farPlane);
