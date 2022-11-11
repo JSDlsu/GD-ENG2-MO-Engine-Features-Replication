@@ -21,13 +21,7 @@ ConsoleUI::~ConsoleUI()
 void ConsoleUI::DrawUI()
 {
 	float fps = 0;
-	/*clock_t current_ticks, delta_ticks;
-	
-	current_ticks = clock();
-
-	delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
-	if (delta_ticks > 0)*/
-		fps = CLOCKS_PER_SEC / BNS_EngineTime::getDeltaTime() *0.001f;
+	fps = CLOCKS_PER_SEC / BNS_EngineTime::getDeltaTime() * 0.001f;
 
 	
 	//DRAW HERE

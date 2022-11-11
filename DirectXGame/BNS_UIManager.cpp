@@ -8,6 +8,9 @@
 BNS_UIManager* BNS_UIManager::sharedInstance = nullptr;
 BNS_UICreation* BNS_UIManager::m_ui_creation = nullptr;
 
+float BNS_UIManager::WINDOW_WIDTH = 1920.0f;
+float BNS_UIManager::WINDOW_HEIGHT = 1080.0f;
+	
 BNS_UIManager* BNS_UIManager::GetInstance()
 {
 	return sharedInstance;

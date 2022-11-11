@@ -41,10 +41,10 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 	Matrix4x4 orthoMatrix;
 	orthoMatrix.setOrthoLH
 	(
-		Owidth,
-		Oheight,
-		nearPlane,
-		farPlane
+		BNS_UIManager::WINDOW_WIDTH / 300.0f,
+		BNS_UIManager::WINDOW_HEIGHT / 300.0f,
+		cam_properties.nearPlane,
+		cam_properties.farPlane
 	);
 
 	return orthoMatrix;
@@ -52,10 +52,9 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 
 Matrix4x4 BNS_Camera::GetCamPerspectiveMatrix()
 {
-	
 
 	Matrix4x4 projectionMatrix;
-	projectionMatrix.setPerspectiveFovLH(fov, aspectRatio, nearPlane, farPlane);
+	projectionMatrix.setPerspectiveFovLH(cam_properties.fovInDegrees * (3.1415926f / 180.0f), cam_properties.aspectRatio, cam_properties.nearPlane, cam_properties.farPlane);
 
 	return projectionMatrix;
 }
@@ -197,4 +196,9 @@ bool BNS_Camera::IsPerspectiveMode()
 void BNS_Camera::SetPerspectiveMode(bool isPerspective)
 {
 	isPerspectiveMode = isPerspective;
+}
+
+BNS_Cam_Struct& BNS_Camera::GetCamProperties()
+{
+	return cam_properties;
 }

@@ -4,6 +4,7 @@
 #include "BNS_CameraHandler.h"
 #include "BNS_UIManager.h"
 #include "IMGUI/imgui_internal.h"
+#include "BNS_StructHandler.h"
 
 BNS_MenuToolbar_UI::BNS_MenuToolbar_UI(std::string name) : BNS_AUIScreen(name)
 {
@@ -115,18 +116,26 @@ void BNS_MenuToolbar_UI::DrawUI()
 		if( selectedItem == 0)
 		{
 			dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->SetPerspectiveMode(true);
-			ImGui::SliderFloat("FOV", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->fov, -1000.0f, 1000.0f, "%.3f");
-			ImGui::SliderFloat("AspectRatio", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->aspectRatio, -1000.0f, 1000.0f, "%.3f");
-			ImGui::SliderFloat("NearPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->nearPlane, -1000.0f, 1000.0f, "%.3f");
-			ImGui::SliderFloat("FarPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->farPlane, -1000.0f, 1000.0f, "%.3f");
+			ImGui::SliderFloat("FOV", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().fovInDegrees,
+				1, 179, "%.2f");
+			ImGui::SliderFloat("AspectRatio", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().aspectRatio,
+				0.8f, 2.44f, "%.2f");
+			ImGui::SliderFloat("NearPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().nearPlane,
+				0.01f, dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().farPlane - 0.01f, "%.2f");
+			ImGui::SliderFloat("FarPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().farPlane,
+				0.02f, 1000.0f, "%.2f");
 		}
 		else
 		{
 			dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->SetPerspectiveMode(false);
-			ImGui::SliderFloat("FOV", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->Owidth, -1000.0f, 1000.0f, "%.3f");
-			ImGui::SliderFloat("AspectRatio", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->Oheight, -1000.0f, 1000.0f, "%.3f");
-			ImGui::SliderFloat("NearPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->nearPlane, -1000.0f, 1000.0f, "%.3f");
-			ImGui::SliderFloat("FarPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->farPlane, -1000.0f, 1000.0f, "%.3f");
+			ImGui::SliderFloat("FOV", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().fovInDegrees,
+				1, 179, "%.2f");
+			ImGui::SliderFloat("AspectRatio", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().aspectRatio,
+				0.8f, 2.44f, "%.2f");
+			ImGui::SliderFloat("NearPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().nearPlane,
+				0.01f, dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().farPlane - 0.01f, "%.2f");
+			ImGui::SliderFloat("FarPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().farPlane,
+				0.02f, 1000.0f, "%.2f");
 		}
 
 		

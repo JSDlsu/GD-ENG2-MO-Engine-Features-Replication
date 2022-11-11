@@ -54,7 +54,14 @@ struct BNS_PC_Cube_ColorData
 	bool is_CL2_initialized;
 };
 
-
+struct BNS_Cam_Struct
+{
+public:
+	float fovInDegrees = 90.0f;
+	float nearPlane = 0.1f;
+	float farPlane = 100.0f;
+	float aspectRatio = 0.8f;
+};
 
 
 

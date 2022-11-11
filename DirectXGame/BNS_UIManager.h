@@ -24,8 +24,8 @@ public:
 
 	static BNS_UICreation* m_ui_creation;
 
-	static const int WINDOW_WIDTH = 1920;
-	static const int WINDOW_HEIGHT = 1080;
+	static float WINDOW_WIDTH;
+	static float WINDOW_HEIGHT;
 	RenderToTexturePtr GetGameSceneView();
 public:
 	void DrawAllUIScreens();
