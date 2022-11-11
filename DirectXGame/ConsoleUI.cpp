@@ -4,6 +4,7 @@
 
 #include "BNS_Camera.h"
 #include "BNS_CameraHandler.h"
+#include "BNS_EngineTime.h"
 #include "BNS_FileExplorer.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
@@ -19,13 +20,14 @@ ConsoleUI::~ConsoleUI()
 
 void ConsoleUI::DrawUI()
 {
-	clock_t current_ticks, delta_ticks;
-	clock_t fps = 0;
+	float fps = 0;
+	/*clock_t current_ticks, delta_ticks;
+	
 	current_ticks = clock();
 
 	delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
-	if (delta_ticks > 0)
-		fps = CLOCKS_PER_SEC / delta_ticks;
+	if (delta_ticks > 0)*/
+		fps = CLOCKS_PER_SEC / BNS_EngineTime::getDeltaTime() *0.001f;
 
 	
 	//DRAW HERE
