@@ -16,6 +16,7 @@ public:
 	BNS_AppWindow();
 	~BNS_AppWindow();
 
+	void render();
 	void update();
 
 	// Inherited via BNS_Window
@@ -24,6 +25,7 @@ public:
 	virtual void onDestroy() override;
 	virtual void onFocus() override;
 	virtual void onKillFocus() override;
+	virtual void onSize() override;
 
 private:
 	SwapChainPtr m_swap_chain;

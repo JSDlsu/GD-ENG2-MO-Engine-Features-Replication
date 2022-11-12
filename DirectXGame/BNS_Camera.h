@@ -36,8 +36,12 @@ private:
 	bool mouseDown = false;
 	const float NAVIGATE_SPEED = 2.5f;
 	bool isPerspectiveMode = true;
+	bool m_play_state = false;
+	bool m_fullscreen_state = false;
+private:
 	Matrix4x4 m_view_cam;
 	BNS_Cam_Struct cam_properties;
+	BNS_AppWindow* m_app_window = nullptr;
 public:
 	//NEW: FOR TRANSFERRING PROJECTION MATRIX TO CAM INSTEAD OF INDIVIDUAL PRIMS
 	Matrix4x4 m_proj_cam;

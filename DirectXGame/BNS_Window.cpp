@@ -26,6 +26,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		break;
 	}
 
+	case WM_SIZE:
+	{
+		// Event fired when the window is resized
+		BNS_Window* window = (BNS_Window*)GetWindowLong(hwnd, GWLP_USERDATA);
+		if (window) window->onSize();
+
+		break;
+	}
+
 	case WM_SETFOCUS:
 	{
 		// Event fired when the window get focus
@@ -173,6 +182,16 @@ RECT BNS_Window::getClientWindowRect()
 	return rc;
 }
 
+RECT BNS_Window::getSizeScreen()
+{
+	RECT rc;
+
+	rc.right = ::GetSystemMetrics(SM_CXSCREEN);
+	rc.bottom = ::GetSystemMetrics(SM_CYSCREEN);
+
+	return rc;
+}
+
 void BNS_Window::onCreate()
 {
 	
@@ -193,5 +212,9 @@ void BNS_Window::onFocus()
 }
 
 void BNS_Window::onKillFocus()
+{
+}
+
+void BNS_Window::onSize()
 {
 }

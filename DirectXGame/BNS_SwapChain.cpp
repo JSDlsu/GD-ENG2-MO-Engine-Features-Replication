@@ -25,6 +25,7 @@ BNS_SwapChain::BNS_SwapChain(HWND hwnd, UINT width, UINT height, BNS_RenderSyste
 	desc.OutputWindow = hwnd;
 	desc.SampleDesc.Count = 1;
 	desc.SampleDesc.Quality = 0;
+	desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 	// enabled window mode
 	desc.Windowed = TRUE;
 
@@ -88,6 +89,28 @@ BNS_SwapChain::BNS_SwapChain(HWND hwnd, UINT width, UINT height, BNS_RenderSyste
 	{
 		throw std::exception("BNS_SwapChain not created successfully");
 	}
+
+	reloadBuffers(width, height);
+}
+
+void BNS_SwapChain::setFullScreen(bool fullscreen, unsigned width, unsigned height)
+{
+	resize(width, height);
+	m_swap_chain->SetFullscreenState(fullscreen, nullptr);
+}
+
+void BNS_SwapChain::resize(unsigned width, unsigned height)
+{
+	/*
+	 * release render target viewand depth stencil view before creating
+	 * the new resizedBuffers
+	*/
+	if (m_rtv) m_rtv->Release();
+	if (m_dsv) m_dsv->Release();
+
+	m_swap_chain->ResizeBuffers(
+		1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+	reloadBuffers(width, height);
 }
 
 bool BNS_SwapChain::present(bool vsync)
@@ -104,4 +127,63 @@ BNS_SwapChain::~BNS_SwapChain()
 {
 	m_rtv->Release();
 	m_swap_chain->Release();
+}
+
+void BNS_SwapChain::reloadBuffers(unsigned width, unsigned height)
+{
+	// reference of the DirectX device
+	ID3D11Device* device = m_system->m_d3d_device;
+
+	// Get the back buffer color and create its render target view
+	//--------------------------------
+	ID3D11Texture2D* buffer = NULL;
+	HRESULT hr = m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buffer);
+
+	if (FAILED(hr))
+	{
+		throw std::exception("BNS_SwapChain not created successfully");
+	}
+
+	// Create a render-target view for accessing resource data.
+	hr = device->CreateRenderTargetView(buffer, NULL, &m_rtv);
+	buffer->Release();
+
+	if (FAILED(hr))
+	{
+		throw std::exception("BNS_SwapChain not created successfully");
+	}
+
+	// create a depth buffer
+	D3D11_TEXTURE2D_DESC tex_desc = {};
+	tex_desc.Width = width;
+	tex_desc.Height = height;
+	// a format where we want the buffer to have
+	// 24 bits for depth data
+	// 8 buts for stencil data
+	tex_desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	tex_desc.Usage = D3D11_USAGE_DEFAULT;
+	// define the type of buffer (depth and stencil)
+	tex_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	tex_desc.MipLevels = 1;
+	tex_desc.SampleDesc.Count = 1;
+	tex_desc.SampleDesc.Quality = 0;
+	tex_desc.MiscFlags = 0;
+	tex_desc.ArraySize = 1;
+	tex_desc.CPUAccessFlags = 0;
+
+	hr = device->CreateTexture2D(&tex_desc, nullptr, &buffer);
+
+	if (FAILED(hr))
+	{
+		throw std::exception("BNS_SwapChain not created successfully");
+	}
+
+	// Create a depth-stencil view
+	hr = device->CreateDepthStencilView(buffer, NULL, &m_dsv);
+	buffer->Release();
+
+	if (FAILED(hr))
+	{
+		throw std::exception("BNS_SwapChain not created successfully");
+	}
 }

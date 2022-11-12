@@ -3,6 +3,7 @@
 #include "BNS_AppWindow.h"
 #include "BNS_EngineTime.h"
 #include "BNS_InputSystem.h"
+#include "BNS_SwapChain.h"
 
 BNS_Camera::BNS_Camera(std::string name, BNS_ObjectTypes type) : BNS_AGameObject(name, type)
 {
@@ -11,6 +12,8 @@ BNS_Camera::BNS_Camera(std::string name, BNS_ObjectTypes type) : BNS_AGameObject
 	this->UpdateViewMatrix();
 	// subscribe this class to the BNS_InputSystem
 	BNS_InputSystem::get()->addListener(this);
+
+	m_play_state = true;
 }
 
 BNS_Camera::~BNS_Camera()
@@ -20,6 +23,12 @@ BNS_Camera::~BNS_Camera()
 
 void BNS_Camera::Update(float deltaTime, BNS_AppWindow* app_window)
 {
+	static bool isAppWindowAssign = false;
+	if (!isAppWindowAssign)
+	{
+		isAppWindowAssign = true;
+		m_app_window = app_window;
+	}
 }
 
 Matrix4x4 BNS_Camera::GetCamViewMatrix()
@@ -144,10 +153,25 @@ void BNS_Camera::onKeyUp(int key)
 	m_upward = 0.0f;
 	m_forward = 0.0f;
 	m_rightward = 0.0f;
+
+	if (key == 'G')
+	{
+		m_play_state = (m_play_state) ? false : true;
+	}
+	if (key == 'F')
+	{
+		m_fullscreen_state = (m_fullscreen_state) ? false : true;
+		RECT size_screen = m_app_window->getSizeScreen();
+		m_app_window->m_swap_chain->setFullScreen(m_fullscreen_state,
+			size_screen.right, size_screen.bottom);
+		
+	}
 }
 
 void BNS_Camera::onMouseMove(const Point& mouse_pos)
 {
+	if (!m_play_state) return;
+
 	if (this->mouseDown) {
 		float x = GetLocalRotation().m_x;
 		float y = GetLocalRotation().m_y;
