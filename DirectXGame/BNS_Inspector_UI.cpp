@@ -20,9 +20,9 @@ void BNS_Inspector_UI::DrawUI()
 	ImGui::Begin("Inspector");
 	if (ImGui::CollapsingHeader("Transform"))
 	{
-		ImGui::DragFloat3("Position", positionTest, 0.5f, (float)-std::numeric_limits<int>::max(), (float)-std::numeric_limits<int>::min());
-		ImGui::DragFloat3("Rotation", rotationTest, 0.5f, (float)-std::numeric_limits<int>::max(), (float)-std::numeric_limits<int>::min());
-		ImGui::DragFloat3("Scale", scaleTest, 0.1f, (float)-std::numeric_limits<int>::max(), (float)-std::numeric_limits<int>::min());
+		ImGui::DragFloat3("Position", positionTest, 0.5f, (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max());
+		ImGui::DragFloat3("Rotation", rotationTest, 0.5f, (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max());
+		ImGui::DragFloat3("Scale", scaleTest, 0.1f, (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max());
 	}
 
 
