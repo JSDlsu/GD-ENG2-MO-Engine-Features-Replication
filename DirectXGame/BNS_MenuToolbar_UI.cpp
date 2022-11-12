@@ -49,7 +49,7 @@ void BNS_MenuToolbar_UI::CreateTab_Edit()
 	{
 		ImGui::MenuItem("Play", NULL);
 		ImGui::MenuItem("Pause", NULL);
-		ImGui::MenuItem("Fullscreen", NULL, &UM->opt_fullscreen);
+		//ImGui::MenuItem("Fullscreen", NULL, &UM->opt_fullscreen);
 		ImGui::MenuItem("Padding", NULL, &UM->opt_padding);
 		ImGui::Separator();
 

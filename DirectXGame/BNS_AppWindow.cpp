@@ -13,6 +13,7 @@
 #include "BNS_GraphicsEngine.h"
 #include "BNS_PassRender.h"
 #include "BNS_Plane.h"
+#include "BNS_RenderToTexture.h"
 #include "BNS_SwapChain.h"
 
 
@@ -28,7 +29,7 @@ void BNS_AppWindow::render()
 {
 	//CLEAR THE RENDER TARGET FOR RENDER_TO_TEXTURE
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
-	(m_swap_chain, m_game_scene, 0.5f, 1.0f, 0.5f, 1);
+	(m_swap_chain, m_scene_view, 0.5f, 1.0f, 0.5f, 1);
 	// update camera
 	BNS_CameraHandler::GetInstance()->GetSceneCamera()->Update(BNS_EngineTime::getDeltaTime(), this);
 	// update models
@@ -55,13 +56,13 @@ void BNS_AppWindow::render()
 		" Y=" << BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_y << " Z=" <<
 		BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_z << std::endl;
 	*/
-	
+	/*
 	// BNS_PassRender; Draw objects in order
 	// Opaque objects are draw first
 	opaquePass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
 	// Transparent objects are draw last
 	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
-	
+	*/
 
 	BNS_UIManager::GetInstance()->DrawAllUIScreens();
 
@@ -81,10 +82,10 @@ void BNS_AppWindow::onCreate()
 	// create blenderPtr
 	m_blender = BNS_GraphicsEngine::get()->getRenderSystem()->CreateBlender();
 	// create GAME SCENE view
-	m_game_scene = BNS_GraphicsEngine::get()->getRenderSystem()->
-	CreateRenderToTexture(rc.right - rc.left, rc.bottom - rc.top);
+	m_scene_view = BNS_GraphicsEngine::get()->getRenderSystem()->
+		CreateRenderToTexture(rc.right - rc.left, rc.bottom - rc.top);
 	// create the UI manager
-	BNS_UIManager::Initialize(this, m_hwnd, m_game_scene);
+	BNS_UIManager::Initialize(this, m_hwnd, m_scene_view);
 	
 	// BNS_Color Coords
 	Vector3D color_list1[] =
@@ -206,6 +207,7 @@ void BNS_AppWindow::onSize()
 {
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->resize(rc.right, rc.bottom);
+	m_scene_view->resize(rc.right, rc.bottom);
 	render();
 }
 

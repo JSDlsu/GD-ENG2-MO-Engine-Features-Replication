@@ -7,6 +7,31 @@
 
 BNS_RenderToTexture::BNS_RenderToTexture(int textureWidth, int textureHeight)
 {
+	reloadBuffers(textureWidth, textureHeight);
+}
+
+BNS_RenderToTexture::BNS_RenderToTexture(const BNS_RenderToTexture&)
+{
+}
+
+BNS_RenderToTexture::~BNS_RenderToTexture()
+{
+	m_srv->Release();m_srv = nullptr;
+	m_rtv->Release();m_rtv = nullptr;
+	m_rtt->Release();m_rtt = nullptr;
+}
+
+void BNS_RenderToTexture::resize(unsigned width, unsigned height)
+{
+	m_srv->Release(); m_srv = nullptr;
+	m_rtv->Release(); m_rtv = nullptr;
+	m_rtt->Release(); m_rtt = nullptr;
+	
+	reloadBuffers(width, height);
+}
+
+void BNS_RenderToTexture::reloadBuffers(unsigned width, unsigned height)
+{
 	D3D11_TEXTURE2D_DESC textureDesc;
 	HRESULT hr;
 	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
@@ -16,8 +41,8 @@ BNS_RenderToTexture::BNS_RenderToTexture(int textureWidth, int textureHeight)
 	ZeroMemory(&textureDesc, sizeof(textureDesc));
 
 	// Setup the render target texture description.
-	textureDesc.Width = textureWidth;
-	textureDesc.Height = textureHeight;
+	textureDesc.Width = width;
+	textureDesc.Height = height;
 	textureDesc.MipLevels = 1;
 	textureDesc.ArraySize = 1;
 	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -28,7 +53,7 @@ BNS_RenderToTexture::BNS_RenderToTexture(int textureWidth, int textureHeight)
 	textureDesc.MiscFlags = 0;
 
 	// Create the render target texture.
-	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateTexture2D(&textureDesc, NULL, &m_renderTargetTexture);
+	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateTexture2D(&textureDesc, NULL, &m_rtt);
 	if (FAILED(hr))
 	{
 		throw std::exception("BNS_RenderToTexture not created successfully");
@@ -39,7 +64,7 @@ BNS_RenderToTexture::BNS_RenderToTexture(int textureWidth, int textureHeight)
 	renderTargetViewDesc.Texture2D.MipSlice = 0;
 
 	// Create the render target view.
-	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateRenderTargetView(m_renderTargetTexture, &renderTargetViewDesc, &m_renderTargetView);
+	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateRenderTargetView(m_rtt, &renderTargetViewDesc, &m_rtv);
 	if (FAILED(hr))
 	{
 		throw std::exception("BNS_RenderToTexture not created successfully");
@@ -52,30 +77,14 @@ BNS_RenderToTexture::BNS_RenderToTexture(int textureWidth, int textureHeight)
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 
 	// Create the shader resource view.
-	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateShaderResourceView(m_renderTargetTexture, &shaderResourceViewDesc, &m_shaderResourceView);
+	hr = BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice()->CreateShaderResourceView(m_rtt, &shaderResourceViewDesc, &m_srv);
 	if (FAILED(hr))
 	{
 		throw std::exception("BNS_RenderToTexture not created successfully");
 	}
 }
 
-BNS_RenderToTexture::BNS_RenderToTexture(const BNS_RenderToTexture&)
-{
-}
-
-BNS_RenderToTexture::~BNS_RenderToTexture()
-{
-	m_shaderResourceView->Release();
-	m_shaderResourceView = nullptr;
-
-	m_renderTargetView->Release();
-	m_renderTargetView = nullptr;
-
-	m_renderTargetTexture->Release();
-	m_renderTargetTexture = nullptr;
-}
-
 ID3D11ShaderResourceView* BNS_RenderToTexture::GetShaderResourceView()
 {
-	return m_shaderResourceView;
+	return m_srv;
 }
