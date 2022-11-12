@@ -28,6 +28,7 @@ void BNS_UIManager::Initialize(HWND hwnd, const RenderToTexturePtr& render_tex)
 	m_ui_creation->CreateSceneViewUI();
 	m_ui_creation->CreateContentBrowserUI();
 	m_ui_creation->CreateConsoleUI();
+	m_ui_creation->CreateInspectorUI();
 }
 
 void BNS_UIManager::Release()

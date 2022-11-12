@@ -16,5 +16,6 @@ public:
 	void CreateSceneViewUI();
 	void CreateContentBrowserUI();
 	void CreateConsoleUI();
+	void CreateInspectorUI();
 };
 

@@ -139,6 +139,9 @@
     <Filter Include="GameEngine\UI\ConsoleWindow">
       <UniqueIdentifier>{b597e833-9458-47cb-b935-ba0974fd42b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\UI\Inspector">
+      <UniqueIdentifier>{f2fc40ea-6df2-4030-bb19-1c0a24a1bfee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -293,6 +296,9 @@
     </ClCompile>
     <ClCompile Include="BNS_Console_UI.cpp">
       <Filter>GameEngine\UI\ConsoleWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_Inspector_UI.cpp">
+      <Filter>GameEngine\UI\Inspector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +496,9 @@
     </ClInclude>
     <ClInclude Include="BNS_Console_UI.h">
       <Filter>GameEngine\UI\ConsoleWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_Inspector_UI.h">
+      <Filter>GameEngine\UI\Inspector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
