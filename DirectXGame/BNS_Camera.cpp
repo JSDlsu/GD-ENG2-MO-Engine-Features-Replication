@@ -50,8 +50,8 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 	Matrix4x4 orthoMatrix;
 	orthoMatrix.setOrthoLH
 	(
-		BNS_UIManager::WINDOW_WIDTH / 300.0f,
-		BNS_UIManager::WINDOW_HEIGHT / 300.0f,
+		BNS_UIManager::SCENE_VIEW_WIDTH / 300.0f,
+		BNS_UIManager::SCENE_VIEW_HEIGHT / 300.0f,
 		cam_properties.nearPlane,
 		cam_properties.farPlane
 	);
@@ -178,11 +178,11 @@ void BNS_Camera::onMouseMove(const Point& mouse_pos)
 		float z = GetLocalRotation().m_z;
 
 		float speed = 0.1f;
-		x += (mouse_pos.m_y - (BNS_UIManager::WINDOW_HEIGHT / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
-		y += (mouse_pos.m_x - (BNS_UIManager::WINDOW_WIDTH / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
+		x += (mouse_pos.m_y - (BNS_UIManager::SCENE_VIEW_HEIGHT / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
+		y += (mouse_pos.m_x - (BNS_UIManager::SCENE_VIEW_WIDTH / 2.0f)) * BNS_EngineTime::getDeltaTime() * speed;
 		
-		BNS_InputSystem::get()->setCursorPosition(Point((int)(BNS_UIManager::WINDOW_WIDTH / 2.0f),
-			(int)(BNS_UIManager::WINDOW_HEIGHT / 2.0f)));
+		BNS_InputSystem::get()->setCursorPosition(Point((int)(BNS_UIManager::SCENE_VIEW_WIDTH / 2.0f),
+			(int)(BNS_UIManager::SCENE_VIEW_HEIGHT / 2.0f)));
 
 		
 		SetRotation(x, y, z);

@@ -29,7 +29,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	case WM_SIZE:
 	{
 		// Event fired when the window is resized
-		BNS_Window* window = (BNS_Window*)GetWindowLong(hwnd, GWLP_USERDATA);
+		BNS_Window* window = (BNS_Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		if (window) window->onSize();
 
 		break;

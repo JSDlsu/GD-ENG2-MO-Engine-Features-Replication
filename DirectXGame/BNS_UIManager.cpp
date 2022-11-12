@@ -1,5 +1,6 @@
 #include "BNS_UIManager.h"
 
+#include "BNS_AppWindow.h"
 #include "BNS_FileExplorer.h"
 #include "BNS_GraphicsEngine.h"
 #include "BNS_RenderToTexture.h"
@@ -8,17 +9,19 @@
 BNS_UIManager* BNS_UIManager::sharedInstance = nullptr;
 BNS_UICreation* BNS_UIManager::m_ui_creation = nullptr;
 
-float BNS_UIManager::WINDOW_WIDTH = 1920.0f;
-float BNS_UIManager::WINDOW_HEIGHT = 1080.0f;
+float BNS_UIManager::WINDOW_WIDTH = 1920;
+float BNS_UIManager::WINDOW_HEIGHT = 1080;
+float BNS_UIManager::SCENE_VIEW_WIDTH = 400.0f;
+float BNS_UIManager::SCENE_VIEW_HEIGHT = 400.0f;
 	
 BNS_UIManager* BNS_UIManager::GetInstance()
 {
 	return sharedInstance;
 }
 
-void BNS_UIManager::Initialize(HWND hwnd, const RenderToTexturePtr& render_tex)
+void BNS_UIManager::Initialize(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr& render_tex)
 {
-	sharedInstance = new BNS_UIManager(hwnd, render_tex);
+	sharedInstance = new BNS_UIManager(appW, hwnd, render_tex);
 	// initialize file explorer
 	BNS_FileExplorer::Initialize();
 
@@ -122,8 +125,11 @@ void BNS_UIManager::DrawAllUIScreens()
 	}
 	// End DockSpace
 	ImGui::End();
-	
-	io.DisplaySize = ImVec2(BNS_UIManager::WINDOW_WIDTH, BNS_UIManager::WINDOW_HEIGHT);
+
+	RECT size_screen = m_app_window->getSizeScreen();
+	WINDOW_WIDTH = size_screen.right;
+	WINDOW_HEIGHT = size_screen.bottom;
+	io.DisplaySize = ImVec2(size_screen.right, size_screen.bottom);
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	// Update and Render additional Platform Windows
@@ -144,9 +150,11 @@ BNS_UIManager::uiScreenHashTable BNS_UIManager::GetUIHashTable()
 	return uiTable;
 }
 
-BNS_UIManager::BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex)
+BNS_UIManager::BNS_UIManager(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr& render_tex)
 {
-	// assign game scene render
+	// assign app window reference
+	m_app_window = appW;
+	// assign game scene render reference
 	m_game_scene = render_tex;
 
 	// Setup Dear ImGui context

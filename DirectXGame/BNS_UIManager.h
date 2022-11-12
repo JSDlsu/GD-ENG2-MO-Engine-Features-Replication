@@ -18,7 +18,7 @@ public:
 
 public:
 	static BNS_UIManager* GetInstance();
-	static void Initialize(HWND hwnd, const RenderToTexturePtr& render_tex);
+	static void Initialize(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr& render_tex);
 	static void Release();
 	static void HelpMarker(const char* desc);
 
@@ -26,6 +26,8 @@ public:
 
 	static float WINDOW_WIDTH;
 	static float WINDOW_HEIGHT;
+	static float SCENE_VIEW_WIDTH;
+	static float SCENE_VIEW_HEIGHT;
 	RenderToTexturePtr GetGameSceneView();
 public:
 	void DrawAllUIScreens();
@@ -33,7 +35,7 @@ public:
 private:
 	uiScreenList GetUIList();
 private:
-	BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex);
+	BNS_UIManager(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr& render_tex);
 	~BNS_UIManager();
 	BNS_UIManager(BNS_UIManager const&) {};
 	BNS_UIManager& operator=(BNS_UIManager const&) {};
@@ -43,6 +45,7 @@ private:
 	uiScreenList _uiScreenList;
 	uiScreenHashTable uiTable;
 	RenderToTexturePtr m_game_scene;
+	BNS_AppWindow* m_app_window;
 private:
 	bool opt_fullscreen = true;
 	bool opt_padding = true;
