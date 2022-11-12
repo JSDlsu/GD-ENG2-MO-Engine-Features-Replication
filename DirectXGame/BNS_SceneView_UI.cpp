@@ -58,5 +58,11 @@ void BNS_SceneView_UI::DrawUI()
 	}
 	//std::cout << "Value: " << f4 << std::endl;
 
+	if (ImGui::Button("Fix AspectRatio"))
+	{
+		dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera().get())->GetCamProperties().aspectRatio =
+			BNS_UIManager::WINDOW_WIDTH / BNS_UIManager::WINDOW_HEIGHT;
+	}
+
 	ImGui::End();
 }

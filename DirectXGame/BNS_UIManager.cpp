@@ -156,18 +156,11 @@ BNS_UIManager::BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex)
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-	//io.ConfigViewportsNoAutoMerge = true;
-	//io.ConfigViewportsNoTaskBarIcon = true;
-	//io.ConfigViewportsNoDefaultParent = true;
-	//io.ConfigDockingAlwaysTabBar = true;
-	//io.ConfigDockingTransparentPayload = true;
-	//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: Experimental. THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
-	//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI: Experimental.
 
 	// Change font setting
 	float fontSize = 18.0f;
-	//io.Fonts->AddFontFromFileTTF("Assets/Fonts/blah.ttf", fontSize);
-	//io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/blah.ttf", fontSize);
+	io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans-Bold.ttf", fontSize);
+	io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans-Regular.ttf", fontSize);
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -182,7 +175,8 @@ BNS_UIManager::BNS_UIManager(HWND hwnd, const RenderToTexturePtr& render_tex)
 	}
 
 	ImGui_ImplWin32_Init(hwnd);
-	ImGui_ImplDX11_Init(BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice(), BNS_GraphicsEngine::get()->getRenderSystem()->GetDeviceContext());
+	ImGui_ImplDX11_Init(BNS_GraphicsEngine::get()->getRenderSystem()->GetDevice(), 
+		BNS_GraphicsEngine::get()->getRenderSystem()->GetDeviceContext());
 
 	try
 	{
