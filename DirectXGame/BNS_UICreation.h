@@ -2,7 +2,6 @@
 #include "BNS_Prerequisites.h"
 #include "BNS_UI_Prerequisites.h"
 
-
 struct ImVec2;
 
 class BNS_UICreation

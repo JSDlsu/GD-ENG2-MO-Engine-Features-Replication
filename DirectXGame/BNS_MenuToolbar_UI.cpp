@@ -108,7 +108,7 @@ void BNS_MenuToolbar_UI::CreateTab_Window()
 {
 	if (ImGui::BeginMenu("Window"))
 	{
-		ImGui::MenuItem("Console", NULL, &UM->GetUIHashTable()[BNS_UINames::CONSOLE_SCREEN]->toShow);
+		ImGui::MenuItem("Console", NULL, &UM->GetUIHashTable()[BNS_UINames::CONSOLE_SCREEN]->GetShow());
 		ImGui::MenuItem("Profiler", NULL);
 		ImGui::EndMenu();
 	}
@@ -143,3 +143,4 @@ void BNS_MenuToolbar_UI::CreateTab_Help()
 
 	}
 }
+

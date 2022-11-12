@@ -17,14 +17,10 @@ void BNS_Console_UI::DrawUI()
 	float fps = 0;
 	fps = CLOCKS_PER_SEC / BNS_EngineTime::getDeltaTime() * 0.001f;
 
-	
 	//DRAW HERE
 	ImGui::Begin("Console");
-
 	ImGui::Text(" ");
 	ImGui::Text("FPS : %f",fps);
 	
-
-
 	ImGui::End();
 }

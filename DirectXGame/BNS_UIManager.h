@@ -5,6 +5,7 @@
 #include "BNS_AUIScreen.h"
 #include "BNS_EnumHandler.h"
 #include "BNS_Prerequisites.h"
+#include "BNS_UI_Prerequisites.h"
 
 class BNS_UICreation;
 class BNS_MenuToolbar_UI;

@@ -15,8 +15,6 @@ BNS_ContentBrowser_UI::~BNS_ContentBrowser_UI()
 
 void BNS_ContentBrowser_UI::DrawUI()
 {
-
-	
 	ImGui::Begin("Content Browser");
 
 	// Check if the current path leaves the source path, which will add a back button
@@ -51,7 +49,8 @@ void BNS_ContentBrowser_UI::DrawUI()
 			BNS_FileExplorer::GetInstance()->GetImageHashTable()["folder_icon"] :
 			BNS_FileExplorer::GetInstance()->GetImageHashTable()["file_icon"];
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0,0,0,0));
-		ImGui::ImageButton((void*)icon.get()->GetShaderResourceView(), { thumbnailSize, thumbnailSize }, { -1, 0}, { 0,1 });
+		ImGui::ImageButton((void*)icon.get()->GetShaderResourceView(), 
+			{ thumbnailSize, thumbnailSize }, { -1, 0}, { 0,1 });
 		ImGui::PopStyleColor();
 
 		// selection functionality
@@ -68,7 +67,7 @@ void BNS_ContentBrowser_UI::DrawUI()
 	}
 
 	ImGui::Columns(1);
-
+	// sliders for adjusting content browser
 	ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);
 	ImGui::SliderFloat("Padding", &padding, 0, 32);
 

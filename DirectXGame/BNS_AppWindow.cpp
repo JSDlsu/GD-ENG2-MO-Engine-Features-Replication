@@ -27,20 +27,17 @@ BNS_AppWindow::~BNS_AppWindow()
 void BNS_AppWindow::onCreate()
 {
 	BNS_Window::onCreate();
-
 	// create cameras
 	BNS_CameraHandler::Initialize();
-
-
+	// create swap chain
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = BNS_GraphicsEngine::get()->getRenderSystem()->CreateSwapChain(
 		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
-
 	// create blenderPtr
 	m_blender = BNS_GraphicsEngine::get()->getRenderSystem()->CreateBlender();
 	// create GAME SCENE view
-	//m_game_scene = BNS_GraphicsEngine::get()->getRenderSystem()->CreateRenderToTexture(512, 512);
-	m_game_scene = BNS_GraphicsEngine::get()->getRenderSystem()->CreateRenderToTexture(rc.right - rc.left, rc.bottom - rc.top);
+	m_game_scene = BNS_GraphicsEngine::get()->getRenderSystem()->
+	CreateRenderToTexture(rc.right - rc.left, rc.bottom - rc.top);
 	// create the UI manager
 	BNS_UIManager::Initialize(m_hwnd, m_game_scene);
 	

@@ -9,21 +9,17 @@
 
 class BNS_AUIScreen
 {
+public:
+	virtual void DrawUI() = 0;
+public:
+	bool& GetShow();
 protected:
 	BNS_AUIScreen(std::string name);
 	~BNS_AUIScreen();
-
 	std::string GetName();
-
-public:
-	virtual void DrawUI() = 0;
-
-public:
-	bool toShow = true;
-
 protected:
 	std::string name;
-
+	bool toShow = true;
 protected:
 	friend class BNS_UIManager;
 };
