@@ -24,9 +24,10 @@ public:
 	{
 		m_sortingPolicy.SetCamera(camera);
 		m_filterPolicy.SetCamera(camera);
-		
-		std::vector<AGameObjectPtr>& sortedObjects = m_sortingPolicy.sort(BNS_GameObjectManager::get()->GetObjectList());
 
+		std::vector<AGameObjectPtr> objectsToRender = BNS_GameObjectManager::get()->GetRenderObjectList();
+		std::vector<AGameObjectPtr> sortedObjects = m_sortingPolicy.sort(objectsToRender);
+		
 		for (auto object : sortedObjects)
 		{
 			if (m_filterPolicy.ShouldRender(object))

@@ -92,7 +92,7 @@ void BNS_AppWindow::onCreate()
 	cube2->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	cube2->SetMesh(L"Assets\\Meshes\\teapot.obj");
 	cube2->SetTexture(L"Assets\\Textures\\brick.png");
-	cube2->SetPosition(Vector3D{ 0, 0, 0 });
+	cube2->SetPosition(Vector3D{ 1, 0, 2 });
 	cube2->SetAlpha(0.5f);
 	AGameObjectPtr temp_ptr2(cube2);
 	BNS_GameObjectManager::get()->objectList.push_back(temp_ptr2);

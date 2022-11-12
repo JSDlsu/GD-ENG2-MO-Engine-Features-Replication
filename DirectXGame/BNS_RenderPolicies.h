@@ -59,30 +59,13 @@ public:
 	{
 		_camera = camera;
 	}
-	std::vector<AGameObjectPtr>& sort(std::vector<AGameObjectPtr>& inputArray)
+	std::vector<AGameObjectPtr> sort(std::vector<AGameObjectPtr> inputArray)
 	{
-		
-		int i, j, max_idx;
-		int n = inputArray.size();
-		// selection sort
-		for (i = 0; i < n - 1; i++)
-		{
-			// Find the maximum element in
-			// unsorted array
-			max_idx = i;
-			for (j = i + 1; j < n; j++)
+		std::sort(inputArray.begin(), inputArray.end(), [&](AGameObjectPtr& lhs, AGameObjectPtr& rhs)
 			{
-				if (inputArray[j]->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) >
-					inputArray[max_idx]->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()))
-					max_idx = j;
-			}
-
-			// Swap the found minimum element
-			// with the first element
-			if (max_idx != i)
-				swap(inputArray[max_idx], inputArray[i]);
-		}
-
+				return lhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) >
+					rhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition());
+			});
 		return inputArray;
 		
 	}
@@ -104,39 +87,15 @@ public:
 	{
 		_camera = camera;
 	}
-	std::vector<AGameObjectPtr>& sort(std::vector<AGameObjectPtr>& inputArray)
+	std::vector<AGameObjectPtr> sort(std::vector<AGameObjectPtr> inputArray)
 	{
-		int i, j, min_idx;
-		int n = inputArray.size();
-		// selection sort
-		for (i = 0; i < n - 1; i++)
-		{
-			// Find the maximum element in
-			// unsorted array
-			min_idx = i;
-			for (j = i + 1; j < n; j++)
-			{
-				if (inputArray[j]->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) <
-					inputArray[min_idx]->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()))
-					min_idx = j;
-			}
-
-			// Swap the found minimum element
-			// with the first element
-			if (min_idx != i)
-				swap(inputArray[min_idx], inputArray[i]);
-		}
-
-		return inputArray;
-		/*
 		std::sort(inputArray.begin(), inputArray.end(), [&](AGameObjectPtr& lhs, AGameObjectPtr& rhs)
 			{
 				return lhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) <
 					rhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition());
 			});
-		std::cout << "First Object: " << inputArray[0].get()->GetName() << std::endl;
+
 		return inputArray;
-		*/
 
 	}
 private:
