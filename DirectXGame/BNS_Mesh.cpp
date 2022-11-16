@@ -42,26 +42,30 @@ BNS_Mesh::BNS_Mesh(const wchar_t* full_path) : BNS_Resource(full_path)
 	std::vector<VertexMesh> list_vertices;
 	std::vector<unsigned int> list_indices;
 
+	// reserve the size of our vector in order to speed up the insertion
+	int vector_size = 0;
+	for (size_t s = shapes.size(); s-- > 0; ) {
+		vector_size += shapes[s].mesh.indices.size();
+	}
+	list_vertices.reserve(vector_size);
+	list_indices.reserve(vector_size);
+
+	size_t index_global_offset = 0;
+
 	// get all the retrieved data and process them
 	// iterate all of the shapes
 	for (size_t s = 0; s < shapes.size(); s++)
 	{
 		size_t index_offset = 0;
-		// reserve the size of our vector in order to speed up the insertion
-		//list_vertices.reserve(shapes[s].mesh.indices.size());
-		//list_indices.reserve(shapes[s].mesh.indices.size());
-		int vector_size = 0;
-		for (size_t s = shapes.size(); s-- > 0; ) {
-			vector_size += shapes[s].mesh.indices.size();
-		}
-		list_vertices.reserve(vector_size);
-		list_indices.reserve(vector_size);
 
 		// iterate all of the face
 		for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++)
 		{
 			// for each phase we have to get the number of vertices that compose it
 			unsigned char num_face_verts = shapes[s].mesh.num_face_vertices[f];
+
+			Vector3D vertices_face[3];
+			Vector2D texcoords_face[3];
 
 			// iterate all of those vertices
 			for (unsigned char v = 0; v < num_face_verts; v++)
@@ -74,18 +78,25 @@ BNS_Mesh::BNS_Mesh(const wchar_t* full_path) : BNS_Resource(full_path)
 				tinyobj::real_t vy = attribs.vertices[index.vertex_index * 3 + 1];
 				tinyobj::real_t vz = attribs.vertices[index.vertex_index * 3 + 2];
 
-				// texture coordinates
-				tinyobj::real_t tx = attribs.texcoords[index.texcoord_index * 2 + 0];
-				tinyobj::real_t ty = attribs.texcoords[index.texcoord_index * 2 + 1];
+				tinyobj::real_t tx = 0;
+				tinyobj::real_t ty = 0;
+				if (attribs.texcoords.size())
+				{
+					tx = attribs.texcoords[(int)index.texcoord_index * 2 + 0];
+					ty = attribs.texcoords[(int)index.texcoord_index * 2 + 1];
+				}
+				vertices_face[v] = Vector3D(vx, vy, vz);
+				texcoords_face[v] = Vector2D(tx, ty);
 
 				// passing the attributes to our BNS_vertex_tex _mesh; then push it to the vector
 				VertexMesh vertex(Vector3D(vx, vy, vz), Vector2D(tx, ty));
 				list_vertices.push_back(vertex);
 				// passing the attributes to our index _mesh; then push it to the vector
-				list_indices.push_back(index_offset + v);
+				list_indices.push_back((unsigned int)index_global_offset + v);
 			}
 
 			index_offset += num_face_verts;
+			index_global_offset += num_face_verts;
 		}
 	}
 

@@ -102,6 +102,34 @@ void BNS_PrimitiveCreation::CreateTeapot()
 	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
 }
 
+void BNS_PrimitiveCreation::CreateBunny()
+{
+	const char* name = "bunny";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
+	cube->SetMesh(L"Assets\\Meshes\\bunny.obj");
+	cube->SetTexture(L"Assets\\Textures\\brick.png");
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	AGameObjectPtr temp_ptr(cube);
+	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+}
+
+void BNS_PrimitiveCreation::CreateArmadillo()
+{
+	const char* name = "armadillo";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
+	cube->SetMesh(L"Assets\\Meshes\\armadillo.obj");
+	cube->SetTexture(L"Assets\\Textures\\brick.png");
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	AGameObjectPtr temp_ptr(cube);
+	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+}
+
 void BNS_PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 {
 

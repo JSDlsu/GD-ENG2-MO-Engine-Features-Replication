@@ -20,6 +20,8 @@ public:
 	void CreateTexturedCube();
 	void CreatePlane();
 	void CreateTeapot();
+	void CreateBunny();
+	void CreateArmadillo();
 private:
 	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
 	void GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
