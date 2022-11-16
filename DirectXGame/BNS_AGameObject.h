@@ -52,13 +52,13 @@ public:
 	void SetLocalMatrix(float matrix[16]);
 	Matrix4x4 GetMatrix();
 public:
-	void attachComponent(BNS_AComponent* component);
-	void detachComponent(BNS_AComponent* component);
+	void AttachComponent(BNS_AComponent* component);
+	void DetachComponent(BNS_AComponent* component);
 
-	BNS_AComponent* findComponentByName(String name);
-	BNS_AComponent* findComponentOfType(ComponentType type, String name);
-	ComponentList getComponentsOfType(ComponentType type);
-	ComponentList getComponentsOfTypeRecursive(ComponentType type);
+	BNS_AComponent* FindComponentByName(String name);
+	BNS_AComponent* FindComponentOfType(ComponentType type, String name);
+	ComponentList GetComponentsOfType(ComponentType type);
+	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
 protected:
 	std::string name;
 	Vector3D m_position;

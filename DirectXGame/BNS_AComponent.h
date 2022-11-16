@@ -19,7 +19,7 @@ public:
 	ComponentType GetType();
 	String GetName();
 
-	virtual void Perform(float deltaTime) = 0; // performs the associated action.
+	virtual void Perform(float deltaTime); // performs the associated action.
 
 protected:
 	AGameObjectPtr owner;

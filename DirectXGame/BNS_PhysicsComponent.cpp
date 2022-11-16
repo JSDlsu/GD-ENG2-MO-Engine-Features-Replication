@@ -15,7 +15,7 @@ BNS_PhysicsComponent::BNS_PhysicsComponent(String name, AGameObjectPtr owner) : 
 	// Create a rigid body in the world
 	Vector3D scale = GetOwner()->GetLocalScale();
 	Transform transform; transform.setFromOpenGL(GetOwner()->GetPhysicsLocalMatrix());
-	BoxShape* boxShape = physicsCommon->createBoxShape(Vector3(scale.m_x / 2, scale.m_y / 2, scale.m_z / 2);
+	BoxShape* boxShape = physicsCommon->createBoxShape(Vector3(scale.m_x / 2, scale.m_y / 2, scale.m_z / 2));
 	rigidBody = physicsWorld->createRigidBody(transform);
 	rigidBody->addCollider(boxShape, transform);
 	rigidBody->updateMassPropertiesFromColliders();
