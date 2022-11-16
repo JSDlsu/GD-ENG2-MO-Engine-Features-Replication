@@ -1,4 +1,5 @@
 #pragma once
+#define NOMINMAX // to avoid conflict with WIndows.h MIN and MAX declarations
 #include <Windows.h>
 
 // this window class can handle events in a customized way (creation/opening, release/closing)

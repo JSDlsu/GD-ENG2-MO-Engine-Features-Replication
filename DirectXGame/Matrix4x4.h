@@ -152,6 +152,22 @@ public:
 	}
 
 	// deep copy of the passed matrix
+	void setMatrix(float matrix[16])
+	{
+		Matrix4x4 out;
+		int index = 0;
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				out.m_mat[i][j] = matrix[index];
+			}
+		}
+		setMatrix(out);
+	}
+
+
+	// deep copy of the passed matrix
 	void setMatrix(const Matrix4x4& matrix)
 	{
 		::memcpy(m_mat, matrix.m_mat, sizeof(float) * 16);
@@ -201,6 +217,10 @@ public:
 		m_mat[1][1] = 2.0f / height;
 		m_mat[2][2] = 1.0f / (far_plane - near_plane);
 		m_mat[3][2] = -(near_plane / (far_plane - near_plane));
+	}
+	float* GetMatrix()
+	{
+		return *m_mat;
 	}
 
 	~Matrix4x4()

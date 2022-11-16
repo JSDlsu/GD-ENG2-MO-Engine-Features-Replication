@@ -44,6 +44,15 @@ enum class BNS_UINames
 	CONSOLE_SCREEN
 };
 
+enum class ComponentType
+{
+	NotSet = -1,
+	Script,
+	Renderer,
+	Input,
+	Physics
+};
+
 class BNS_EnumHandler
 {
 	

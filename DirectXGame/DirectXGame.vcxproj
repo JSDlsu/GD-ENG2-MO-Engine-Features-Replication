@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\DirectXGame\Libs\DirectXTex\include;..\DirectXGame\Libs\tinyobjloader\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\DirectXGame\Libs\DirectXTex\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\DirectXGame\Libs\DirectXTex\include;..\DirectXGame\Libs\ReactPhysics3D\include;..\DirectXGame\Libs\tinyobjloader\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\DirectXGame\Libs\DirectXTex\bin;..\DirectXGame\Libs\ReactPhysics3D\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -90,14 +90,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTexD_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTexD_x86.lib;reactphysics3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
@@ -120,6 +120,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -155,6 +156,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BNS_AComponent.cpp" />
+    <ClCompile Include="BNS_BaseComponentSystem.cpp" />
     <ClCompile Include="BNS_AGameObject.cpp" />
     <ClCompile Include="BNS_AppWindow.cpp" />
     <ClCompile Include="BNS_AUIScreen.cpp" />
@@ -207,8 +210,12 @@
     <ClCompile Include="IMGUI\imgui_impl_win32.cpp" />
     <ClCompile Include="IMGUI\imgui_tables.cpp" />
     <ClCompile Include="IMGUI\imgui_widgets.cpp" />
+    <ClCompile Include="BNS_PhysicsComponent.cpp" />
+    <ClCompile Include="BNS_PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BNS_AComponent.h" />
+    <ClInclude Include="BNS_BaseComponentSystem.h" />
     <ClInclude Include="BNS_AGameObject.h" />
     <ClInclude Include="BNS_AppWindow.h" />
     <ClInclude Include="BNS_AUIScreen.h" />
@@ -251,6 +258,8 @@
     <ClInclude Include="BNS_PixelShader.h" />
     <ClInclude Include="BNS_PixelShaderManager.h" />
     <ClInclude Include="BNS_Plane.h" />
+    <ClInclude Include="BNS_PhysicsComponent.h" />
+    <ClInclude Include="BNS_PhysicsSystem.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="BNS_Prerequisites.h" />
     <ClInclude Include="BNS_PrimitiveCreation.h" />

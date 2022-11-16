@@ -1,11 +1,13 @@
 #pragma once
 #include <string>
+#include <vector>
 
 #include "BNS_EnumHandler.h"
 #include "Matrix4x4.h"
 #include "BNS_Prerequisites.h"
 #include "Vector3D.h"
 
+class BNS_AComponent;
 class Matrix4x4;
 class BNS_AppWindow;
 
@@ -14,6 +16,8 @@ class BNS_AppWindow;
  */
 class BNS_AGameObject
 {
+	typedef std::string String;
+	typedef std::vector<BNS_AComponent*> ComponentList;
 public:
 	BNS_AGameObject(std::string name ,BNS_ObjectTypes type);
 	virtual ~BNS_AGameObject();
@@ -43,8 +47,18 @@ public:
 	std::string GetName();
 	void SetAlpha(float alpha);
 	float GetAlpha();
+	float* GetPhysicsLocalMatrix();
 
+	void SetLocalMatrix(float matrix[16]);
 	Matrix4x4 GetMatrix();
+public:
+	void attachComponent(BNS_AComponent* component);
+	void detachComponent(BNS_AComponent* component);
+
+	BNS_AComponent* findComponentByName(String name);
+	BNS_AComponent* findComponentOfType(ComponentType type, String name);
+	ComponentList getComponentsOfType(ComponentType type);
+	ComponentList getComponentsOfTypeRecursive(ComponentType type);
 protected:
 	std::string name;
 	Vector3D m_position;
@@ -52,5 +66,6 @@ protected:
 	Vector3D m_rotation;
 	Matrix4x4 m_matrix;
 	float alpha = 1.0f;
+	ComponentList componentList;
 };
 
