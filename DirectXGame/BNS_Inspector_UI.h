@@ -9,10 +9,6 @@ public:
 	void DrawUI() override;
 
 private:
-	float positionTest[3] = { 0, 0, 0 };
-	float rotationTest[3] = { 0, 0, 0 };
-	float scaleTest[3] = { 0, 0, 0 };
-
 	bool transformMenu = true;
 };
 

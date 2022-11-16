@@ -15,7 +15,11 @@ private:
 
 public:
 	void ChangeVB_IB_Buffer(BNS_VertexShaderType vs_type, VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
-
+public:
+	void CreateCube();
+	void CreateTexturedCube();
+	void CreatePlane();
+	void CreateTeapot();
 private:
 	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
 	void GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);

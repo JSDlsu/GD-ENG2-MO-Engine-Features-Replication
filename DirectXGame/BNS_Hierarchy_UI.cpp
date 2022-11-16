@@ -28,9 +28,12 @@ void BNS_Hierarchy_UI::DrawUI()
         for (int i = 0; i < objects.size(); i++)
         {
             ImGuiTreeNodeFlags node_flags = base_flags;
-            const bool is_selected = false;
+            const bool is_selected = (selection_mask & (1 << i)) != 0;
             if (is_selected)
-                node_flags |= ImGuiTreeNodeFlags_Selected;
+            {
+	            node_flags |= ImGuiTreeNodeFlags_Selected;
+                selectedGameObject = objects[i];
+            }
 
             bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, objects[i]->GetName().c_str(), i);
             if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())

@@ -1,6 +1,7 @@
 #include "BNS_MenuToolbar_UI.h"
 
 #include "BNS_FileExplorer.h"
+#include "BNS_PrimitiveCreation.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
 
@@ -76,12 +77,14 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 {
 	if (ImGui::BeginMenu("GameObject"))
 	{
-
-		ImGui::MenuItem("Create Cube", NULL);
-		ImGui::MenuItem("Create Sphere", NULL);
-		ImGui::MenuItem("Create Plane", NULL);
-		ImGui::MenuItem("Create Capsule", NULL);
-		ImGui::MenuItem("Create Cylinder", NULL);
+		if (ImGui::MenuItem("Create Cube", NULL))
+			BNS_PrimitiveCreation::Instance()->CreateCube();
+		if (ImGui::MenuItem("Create Textured Cube", NULL))
+			BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
+		if (ImGui::MenuItem("Create Plane", NULL))
+			BNS_PrimitiveCreation::Instance()->CreatePlane();
+		if (ImGui::MenuItem("Create Teapot", NULL))
+			BNS_PrimitiveCreation::Instance()->CreateTeapot();
 		ImGui::EndMenu();
 	}
 }

@@ -2,7 +2,10 @@
 #include <iostream>
 #include "BNS_AppWindow.h"
 #include "BNS_Color.h"
+#include "BNS_Cube.h"
+#include "BNS_GameObjectManager.h"
 #include "BNS_GraphicsEngine.h"
+#include "BNS_Plane.h"
 #include "BNS_ShaderEngine.h"
 
 BNS_PrimitiveCreation* BNS_PrimitiveCreation::sharedInstance = nullptr;
@@ -45,6 +48,58 @@ void BNS_PrimitiveCreation::ChangeVB_IB_Buffer(BNS_VertexShaderType vs_type, Ver
 		GetCube_Color_Lerp(m_vb, m_ib, color_data);
 		break;
 	}
+}
+
+void BNS_PrimitiveCreation::CreateCube()
+{
+	std::cout << "Create Cube" << std::endl;
+	const char* name = "cube";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
+	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
+	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	AGameObjectPtr temp_ptr(cube);
+	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+}
+
+void BNS_PrimitiveCreation::CreateTexturedCube()
+{
+	const char* name = "cube";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
+	cube->SetTexture(L"Assets\\Textures\\brick.png");
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	AGameObjectPtr temp_ptr(cube);
+	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+}
+
+void BNS_PrimitiveCreation::CreatePlane()
+{
+	const char* name = "plane";
+	BNS_Plane* plane = new BNS_Plane(name, BNS_ObjectTypes::PLANE);
+	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
+	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
+	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
+	plane->SetPosition(Vector3D{ 0, 0, 0 });
+	AGameObjectPtr temp_ptr(plane);
+	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+}
+
+void BNS_PrimitiveCreation::CreateTeapot()
+{
+	const char* name = "teapot";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
+	cube->SetMesh(L"Assets\\Meshes\\teapot.obj");
+	cube->SetTexture(L"Assets\\Textures\\brick.png");
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	AGameObjectPtr temp_ptr(cube);
+	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
 }
 
 void BNS_PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)

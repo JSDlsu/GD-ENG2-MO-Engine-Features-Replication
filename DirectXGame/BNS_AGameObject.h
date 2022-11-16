@@ -24,17 +24,20 @@ public:
 	virtual void Draw(const BlenderPtr& m_blender);
 public:
 	void SetTransform(Vector3D position, Vector3D scale, Vector3D rotation);
-
+	
 	void SetPosition(float x, float y, float z);
 	void SetPosition(Vector3D pos);
-	Vector3D GetLocalPosition();
 
+	Vector3D GetLocalPosition();
+	
 	void SetScale(float x, float y, float z);
 	void SetScale(Vector3D scale);
-	Vector3D GetLocalScale();
 
+	Vector3D GetLocalScale();
+	
 	void SetRotation(float x, float y, float z);
 	void SetRotation(Vector3D rot);
+
 	Vector3D GetLocalRotation();
 
 	std::string GetName();
