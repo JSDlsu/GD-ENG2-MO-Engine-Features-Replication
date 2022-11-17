@@ -151,6 +151,11 @@ public:
 		return out;
 	}
 
+	void setMatrix(float matrix[4][4])
+	{
+		::memcpy(m_mat, matrix, sizeof(float) * 16);
+	}
+
 	// deep copy of the passed matrix
 	void setMatrix(float matrix[16])
 	{

@@ -1,6 +1,6 @@
 /********************************************************************************
 * ReactPhysics3D physics library, http://www.reactphysics3d.com                 *
-* Copyright (c) 2010-2022 Daniel Chappuis                                       *
+* Copyright (c) 2010-2020 Daniel Chappuis                                       *
 *********************************************************************************
 *                                                                               *
 * This software is provided 'as-is', without any express or implied warranty.   *
@@ -28,7 +28,7 @@
 
 // Libraries
 #include <reactphysics3d/mathematics/mathematics.h>
-#include <reactphysics3d/containers/Array.h>
+#include <reactphysics3d/containers/List.h>
 #include <reactphysics3d/constraint/Joint.h>
 #include <reactphysics3d/memory/MemoryManager.h>
 #include <reactphysics3d/engine/EntityManager.h>
@@ -59,7 +59,6 @@ namespace reactphysics3d {
 // Declarations
 class Island;
 class RigidBody;
-class PhysicsCommon;
 struct JointInfo;
 
 // Class PhysicsWorld
@@ -94,14 +93,17 @@ class PhysicsWorld {
             /// Velocity threshold for contact velocity restitution
             decimal restitutionVelocityThreshold;
 
+            /// Default rolling resistance
+            decimal defaultRollingRestistance;
+
             /// True if the sleeping technique is enabled
             bool isSleepingEnabled;
 
             /// Number of iterations when solving the velocity constraints of the Sequential Impulse technique
-            uint16 defaultVelocitySolverNbIterations;
+            uint defaultVelocitySolverNbIterations;
 
             /// Number of iterations when solving the position constraints of the Sequential Impulse technique
-            uint16 defaultPositionSolverNbIterations;
+            uint defaultPositionSolverNbIterations;
 
             /// Time (in seconds) that a body must stay still to be considered sleeping
             float defaultTimeBeforeSleep;
@@ -113,6 +115,9 @@ class PhysicsWorld {
             /// A body with angular velocity smaller than the sleep angular velocity (in rad/s)
             /// might enter sleeping mode
             decimal defaultSleepAngularVelocity;
+
+            /// Maximum number of contact manifolds in an overlapping pair
+            uint nbMaxContactManifolds;
 
             /// This is used to test if two contact manifold are similar (same contact normal) in order to
             /// merge them. If the cosine of the angle between the normals of the two manifold are larger
@@ -127,13 +132,16 @@ class PhysicsWorld {
                 defaultFrictionCoefficient = decimal(0.3);
                 defaultBounciness = decimal(0.5);
                 restitutionVelocityThreshold = decimal(0.5);
+                defaultRollingRestistance = decimal(0.0);
                 isSleepingEnabled = true;
-                defaultVelocitySolverNbIterations = 6;
-                defaultPositionSolverNbIterations = 3;
+                defaultVelocitySolverNbIterations = 10;
+                defaultPositionSolverNbIterations = 5;
                 defaultTimeBeforeSleep = 1.0f;
                 defaultSleepLinearVelocity = decimal(0.02);
-                defaultSleepAngularVelocity = decimal(3.0) * (PI_RP3D / decimal(180.0));
+                defaultSleepAngularVelocity = decimal(3.0) * (PI / decimal(180.0));
+                nbMaxContactManifolds = 3;
                 cosAngleSimilarContactManifold = decimal(0.95);
+
             }
 
             ~WorldSettings() = default;
@@ -149,12 +157,14 @@ class PhysicsWorld {
                 ss << "defaultFrictionCoefficient=" << defaultFrictionCoefficient << std::endl;
                 ss << "defaultBounciness=" << defaultBounciness << std::endl;
                 ss << "restitutionVelocityThreshold=" << restitutionVelocityThreshold << std::endl;
+                ss << "defaultRollingRestistance=" << defaultRollingRestistance << std::endl;
                 ss << "isSleepingEnabled=" << isSleepingEnabled << std::endl;
                 ss << "defaultVelocitySolverNbIterations=" << defaultVelocitySolverNbIterations << std::endl;
                 ss << "defaultPositionSolverNbIterations=" << defaultPositionSolverNbIterations << std::endl;
                 ss << "defaultTimeBeforeSleep=" << defaultTimeBeforeSleep << std::endl;
                 ss << "defaultSleepLinearVelocity=" << defaultSleepLinearVelocity << std::endl;
                 ss << "defaultSleepAngularVelocity=" << defaultSleepAngularVelocity << std::endl;
+                ss << "nbMaxContactManifolds=" << nbMaxContactManifolds << std::endl;
                 ss << "cosAngleSimilarContactManifold=" << cosAngleSimilarContactManifold << std::endl;
 
                 return ss.str();
@@ -211,7 +221,7 @@ class PhysicsWorld {
         CollisionDetectionSystem mCollisionDetection;
 
         /// All the collision bodies of the world
-        Array<CollisionBody*> mCollisionBodies;
+        List<CollisionBody*> mCollisionBodies;
 
         /// Pointer to an event listener object
         EventListener* mEventListener;
@@ -226,15 +236,10 @@ class PhysicsWorld {
 #endif
 
         /// Total number of worlds
-        static uint32 mNbWorlds;
+        static uint mNbWorlds;
 
         /// All the islands of bodies of the current frame
         Islands mIslands;
-
-        /// Order in which to process the ContactPairs for contact creation such that
-        /// all the contact manifolds and contact points of a given island are packed together
-        /// This array contains the indices of the ContactPairs.
-        Array<uint32> mProcessContactPairsOrderIslands;
 
         /// Contact solver system
         ContactSolverSystem mContactSolverSystem;
@@ -246,16 +251,16 @@ class PhysicsWorld {
         DynamicsSystem mDynamicsSystem;
 
         /// Number of iterations for the velocity solver of the Sequential Impulses technique
-        uint16 mNbVelocitySolverIterations;
+        uint mNbVelocitySolverIterations;
 
         /// Number of iterations for the position solver of the Sequential Impulses technique
-        uint16 mNbPositionSolverIterations;
+        uint mNbPositionSolverIterations;
 
         /// True if the spleeping technique for inactive bodies is enabled
         bool mIsSleepingEnabled;
 
         /// All the rigid bodies of the physics world
-        Array<RigidBody*> mRigidBodies;
+        List<RigidBody*> mRigidBodies;
 
         /// True if the gravity force is on
         bool mIsGravityEnabled;
@@ -270,10 +275,13 @@ class PhysicsWorld {
         /// becomes smaller than the sleep velocity.
         decimal mTimeBeforeSleep;
 
+        /// Current joint id
+        uint mCurrentJointId;
+
         // -------------------- Methods -------------------- //
 
         /// Constructor
-        PhysicsWorld(MemoryManager& memoryManager, PhysicsCommon& physicsCommon, const WorldSettings& worldSettings = WorldSettings(), Profiler* profiler = nullptr);
+        PhysicsWorld(MemoryManager& memoryManager, const WorldSettings& worldSettings = WorldSettings(), Profiler* profiler = nullptr);
 
         /// Notify the world if a body is disabled (slepping or inactive) or not
         void setBodyDisabled(Entity entity, bool isDisabled);
@@ -296,11 +304,8 @@ class PhysicsWorld {
         /// Put bodies to sleep if needed.
         void updateSleepingBodies(decimal timeStep);
 
-        /// Add the joint to the array of joints of the two bodies involved in the joint
+        /// Add the joint to the list of joints of the two bodies involved in the joint
         void addJointToBodies(Entity body1, Entity body2, Entity joint);
-
-        /// Update the world inverse inertia tensors of rigid bodies
-        void updateBodiesInverseWorldInertiaTensors();
 
         /// Destructor
         ~PhysicsWorld();
@@ -358,25 +363,28 @@ class PhysicsWorld {
         void update(decimal timeStep);
 
         /// Get the number of iterations for the velocity constraint solver
-        uint16 getNbIterationsVelocitySolver() const;
+        uint getNbIterationsVelocitySolver() const;
 
         /// Set the number of iterations for the velocity constraint solver
-        void setNbIterationsVelocitySolver(uint16 nbIterations);
+        void setNbIterationsVelocitySolver(uint nbIterations);
 
         /// Get the number of iterations for the position constraint solver
-        uint16 getNbIterationsPositionSolver() const;
+        uint getNbIterationsPositionSolver() const;
 
         /// Set the number of iterations for the position constraint solver
-        void setNbIterationsPositionSolver(uint32 nbIterations);
+        void setNbIterationsPositionSolver(uint nbIterations);
 
         /// Set the position correction technique used for contacts
         void setContactsPositionCorrectionTechnique(ContactsPositionCorrectionTechnique technique);
+
+        /// Set the position correction technique used for joints
+        void setJointsPositionCorrectionTechnique(JointsPositionCorrectionTechnique technique);
 
         /// Create a rigid body into the physics world.
         RigidBody* createRigidBody(const Transform& transform);
 
         /// Disable the joints for pair of sleeping bodies
-        void enableDisableJoints();
+        void disableJointsOfSleepingBodies();
 
         /// Destroy a rigid body and all the joints which it belongs
         void destroyRigidBody(RigidBody* rigidBody);
@@ -391,7 +399,7 @@ class PhysicsWorld {
         Vector3 getGravity() const;
 
         /// Set the gravity vector of the world
-        void setGravity(const Vector3& gravity);
+        void setGravity(Vector3& gravity);
 
         /// Return if the gravity is on
         bool isGravityEnabled() const;
@@ -427,22 +435,22 @@ class PhysicsWorld {
         void setEventListener(EventListener* eventListener);
 
         /// Return the number of CollisionBody in the physics world
-        uint32 getNbCollisionBodies() const;
+        uint getNbCollisionBodies() const;
 
         /// Return a constant pointer to a given CollisionBody of the world
-        const CollisionBody* getCollisionBody(uint32 index) const;
+        const CollisionBody* getCollisionBody(uint index) const;
 
         /// Return a pointer to a given CollisionBody of the world
-        CollisionBody* getCollisionBody(uint32 index) ;
+        CollisionBody* getCollisionBody(uint index) ;
 
         /// Return the number of RigidBody in the physics world
-        uint32 getNbRigidBodies() const;
+        uint getNbRigidBodies() const;
 
         /// Return a constant pointer to a given RigidBody of the world
-        const RigidBody* getRigidBody(uint32 index) const;
+        const RigidBody* getRigidBody(uint index) const;
 
         /// Return a pointer to a given RigidBody of the world
-        RigidBody* getRigidBody(uint32 index) ;
+        RigidBody* getRigidBody(uint index) ;
 
         /// Return true if the debug rendering is enabled
         bool getIsDebugRenderingEnabled() const;
@@ -487,7 +495,7 @@ class PhysicsWorld {
  * @param CollisionDispatch Pointer to a collision dispatch object describing
  * which collision detection algorithm to use for two given collision shapes
  */
-RP3D_FORCE_INLINE CollisionDispatch& PhysicsWorld::getCollisionDispatch() {
+inline CollisionDispatch& PhysicsWorld::getCollisionDispatch() {
     return mCollisionDetection.getCollisionDispatch();
 }
 
@@ -498,7 +506,7 @@ RP3D_FORCE_INLINE CollisionDispatch& PhysicsWorld::getCollisionDispatch() {
  * @param raycastWithCategoryMaskBits Bits mask corresponding to the category of
  *                                    bodies to be raycasted
  */
-RP3D_FORCE_INLINE void PhysicsWorld::raycast(const Ray& ray,
+inline void PhysicsWorld::raycast(const Ray& ray,
                                     RaycastCallback* raycastCallback,
                                     unsigned short raycastWithCategoryMaskBits) const {
     mCollisionDetection.raycast(raycastCallback, ray, raycastWithCategoryMaskBits);
@@ -514,7 +522,7 @@ RP3D_FORCE_INLINE void PhysicsWorld::raycast(const Ray& ray,
  * @param body2 Pointer to the second body to test
  * @param callback Pointer to the object with the callback method
  */
-RP3D_FORCE_INLINE void PhysicsWorld::testCollision(CollisionBody* body1, CollisionBody* body2, CollisionCallback& callback) {
+inline void PhysicsWorld::testCollision(CollisionBody* body1, CollisionBody* body2, CollisionCallback& callback) {
     mCollisionDetection.testCollision(body1, body2, callback);
 }
 
@@ -527,7 +535,7 @@ RP3D_FORCE_INLINE void PhysicsWorld::testCollision(CollisionBody* body1, Collisi
  * @param body Pointer to the body against which we need to test collision
  * @param callback Pointer to the object with the callback method to report contacts
  */
-RP3D_FORCE_INLINE void PhysicsWorld::testCollision(CollisionBody* body, CollisionCallback& callback) {
+inline void PhysicsWorld::testCollision(CollisionBody* body, CollisionCallback& callback) {
     mCollisionDetection.testCollision(body, callback);
 }
 
@@ -539,7 +547,7 @@ RP3D_FORCE_INLINE void PhysicsWorld::testCollision(CollisionBody* body, Collisio
 /**
  * @param callback Pointer to the object with the callback method to report contacts
  */
-RP3D_FORCE_INLINE void PhysicsWorld::testCollision(CollisionCallback& callback) {
+inline void PhysicsWorld::testCollision(CollisionCallback& callback) {
     mCollisionDetection.testCollision(callback);
 }
 
@@ -551,7 +559,7 @@ RP3D_FORCE_INLINE void PhysicsWorld::testCollision(CollisionCallback& callback) 
  * @param body Pointer to the collision body to test overlap with
  * @param overlapCallback Pointer to the callback class to report overlap
  */
-RP3D_FORCE_INLINE void PhysicsWorld::testOverlap(CollisionBody* body, OverlapCallback& overlapCallback) {
+inline void PhysicsWorld::testOverlap(CollisionBody* body, OverlapCallback& overlapCallback) {
     mCollisionDetection.testOverlap(body, overlapCallback);
 }
 
@@ -562,12 +570,12 @@ RP3D_FORCE_INLINE void PhysicsWorld::testOverlap(CollisionBody* body, OverlapCal
 /**
  * @param overlapCallback Pointer to the callback class to report overlap
  */
-RP3D_FORCE_INLINE void PhysicsWorld::testOverlap(OverlapCallback& overlapCallback) {
+inline void PhysicsWorld::testOverlap(OverlapCallback& overlapCallback) {
     mCollisionDetection.testOverlap(overlapCallback);
 }
 
 // Return a reference to the memory manager of the world
-RP3D_FORCE_INLINE MemoryManager& PhysicsWorld::getMemoryManager() {
+inline MemoryManager& PhysicsWorld::getMemoryManager() {
     return mMemoryManager;
 }
 
@@ -575,7 +583,7 @@ RP3D_FORCE_INLINE MemoryManager& PhysicsWorld::getMemoryManager() {
 /**
  * @return Name of the world
  */
-RP3D_FORCE_INLINE const std::string& PhysicsWorld::getName() const {
+inline const std::string& PhysicsWorld::getName() const {
     return mName;
 }
 
@@ -585,7 +593,7 @@ RP3D_FORCE_INLINE const std::string& PhysicsWorld::getName() const {
 /**
  * @return A pointer to the profiler
  */
-RP3D_FORCE_INLINE Profiler* PhysicsWorld::getProfiler() {
+inline Profiler* PhysicsWorld::getProfiler() {
     return mProfiler;
 }
 
@@ -595,7 +603,7 @@ RP3D_FORCE_INLINE Profiler* PhysicsWorld::getProfiler() {
 /**
  * @return The number of iterations of the velocity constraint solver
  */
-RP3D_FORCE_INLINE uint16 PhysicsWorld::getNbIterationsVelocitySolver() const {
+inline uint PhysicsWorld::getNbIterationsVelocitySolver() const {
     return mNbVelocitySolverIterations;
 }
 
@@ -603,7 +611,7 @@ RP3D_FORCE_INLINE uint16 PhysicsWorld::getNbIterationsVelocitySolver() const {
 /**
  * @return The number of iterations of the position constraint solver
  */
-RP3D_FORCE_INLINE uint16 PhysicsWorld::getNbIterationsPositionSolver() const {
+inline uint PhysicsWorld::getNbIterationsPositionSolver() const {
     return mNbPositionSolverIterations;
 }
 
@@ -611,7 +619,7 @@ RP3D_FORCE_INLINE uint16 PhysicsWorld::getNbIterationsPositionSolver() const {
 /**
  * @param technique Technique used for the position correction (Baumgarte or Split Impulses)
  */
-RP3D_FORCE_INLINE void PhysicsWorld::setContactsPositionCorrectionTechnique(
+inline void PhysicsWorld::setContactsPositionCorrectionTechnique(
                               ContactsPositionCorrectionTechnique technique) {
     if (technique == ContactsPositionCorrectionTechnique::BAUMGARTE_CONTACTS) {
         mContactSolverSystem.setIsSplitImpulseActive(false);
@@ -621,11 +629,25 @@ RP3D_FORCE_INLINE void PhysicsWorld::setContactsPositionCorrectionTechnique(
     }
 }
 
+// Set the position correction technique used for joints
+/**
+ * @param technique Technique used for the joins position correction (Baumgarte or Non Linear Gauss Seidel)
+ */
+inline void PhysicsWorld::setJointsPositionCorrectionTechnique(
+                              JointsPositionCorrectionTechnique technique) {
+    if (technique == JointsPositionCorrectionTechnique::BAUMGARTE_JOINTS) {
+        mConstraintSolverSystem.setIsNonLinearGaussSeidelPositionCorrectionActive(false);
+    }
+    else {
+        mConstraintSolverSystem.setIsNonLinearGaussSeidelPositionCorrectionActive(true);
+    }
+}
+
 // Return the gravity vector of the world
 /**
  * @return The current gravity vector (in meter per seconds squared)
  */
-RP3D_FORCE_INLINE Vector3 PhysicsWorld::getGravity() const {
+inline Vector3 PhysicsWorld::getGravity() const {
     return mConfig.gravity;
 }
 
@@ -633,7 +655,7 @@ RP3D_FORCE_INLINE Vector3 PhysicsWorld::getGravity() const {
 /**
  * @return True if the gravity is enabled in the world
  */
-RP3D_FORCE_INLINE bool PhysicsWorld::isGravityEnabled() const {
+inline bool PhysicsWorld::isGravityEnabled() const {
     return mIsGravityEnabled;
 }
 
@@ -641,7 +663,7 @@ RP3D_FORCE_INLINE bool PhysicsWorld::isGravityEnabled() const {
 /**
  * @return True if the sleeping technique is enabled and false otherwise
  */
-RP3D_FORCE_INLINE bool PhysicsWorld::isSleepingEnabled() const {
+inline bool PhysicsWorld::isSleepingEnabled() const {
     return mIsSleepingEnabled;
 }
 
@@ -649,7 +671,7 @@ RP3D_FORCE_INLINE bool PhysicsWorld::isSleepingEnabled() const {
 /**
  * @return The sleep linear velocity (in meters per second)
  */
-RP3D_FORCE_INLINE decimal PhysicsWorld::getSleepLinearVelocity() const {
+inline decimal PhysicsWorld::getSleepLinearVelocity() const {
     return mSleepLinearVelocity;
 }
 
@@ -657,7 +679,7 @@ RP3D_FORCE_INLINE decimal PhysicsWorld::getSleepLinearVelocity() const {
 /**
  * @return The sleep angular velocity (in radian per second)
  */
-RP3D_FORCE_INLINE decimal PhysicsWorld::getSleepAngularVelocity() const {
+inline decimal PhysicsWorld::getSleepAngularVelocity() const {
     return mSleepAngularVelocity;
 }
 
@@ -665,7 +687,7 @@ RP3D_FORCE_INLINE decimal PhysicsWorld::getSleepAngularVelocity() const {
 /**
  * @return Time a body is required to stay still before sleeping (in seconds)
  */
-RP3D_FORCE_INLINE decimal PhysicsWorld::getTimeBeforeSleep() const {
+inline decimal PhysicsWorld::getTimeBeforeSleep() const {
     return mTimeBeforeSleep;
 }
 
@@ -675,7 +697,7 @@ RP3D_FORCE_INLINE decimal PhysicsWorld::getTimeBeforeSleep() const {
  * @param eventListener Pointer to the event listener object that will receive
  *                      event callbacks during the simulation
  */
-RP3D_FORCE_INLINE void PhysicsWorld::setEventListener(EventListener* eventListener) {
+inline void PhysicsWorld::setEventListener(EventListener* eventListener) {
     mEventListener = eventListener;
 }
 
@@ -684,23 +706,23 @@ RP3D_FORCE_INLINE void PhysicsWorld::setEventListener(EventListener* eventListen
 /**
  * @return The number of collision bodies in the physics world
  */
-RP3D_FORCE_INLINE uint32 PhysicsWorld::getNbCollisionBodies() const {
-   return static_cast<uint32>(mCollisionBodies.size());
+inline uint PhysicsWorld::getNbCollisionBodies() const {
+   return mCollisionBodies.size();
 }
 
 // Return the number of RigidBody in the physics world
 /**
  * @return The number of rigid bodies in the physics world
  */
-RP3D_FORCE_INLINE uint32 PhysicsWorld::getNbRigidBodies() const {
-   return static_cast<uint32>(mRigidBodies.size());
+inline uint PhysicsWorld::getNbRigidBodies() const {
+   return mRigidBodies.size();
 }
 
 // Return true if the debug rendering is enabled
 /**
  * @return True if the debug rendering is enabled and false otherwise
  */
-RP3D_FORCE_INLINE bool PhysicsWorld::getIsDebugRenderingEnabled() const {
+inline bool PhysicsWorld::getIsDebugRenderingEnabled() const {
     return mIsDebugRenderingEnabled;
 }
 
@@ -708,7 +730,7 @@ RP3D_FORCE_INLINE bool PhysicsWorld::getIsDebugRenderingEnabled() const {
 /**
  * @param isEnabled True if you want to enable the debug rendering and false otherwise
  */
-RP3D_FORCE_INLINE void PhysicsWorld::setIsDebugRenderingEnabled(bool isEnabled) {
+inline void PhysicsWorld::setIsDebugRenderingEnabled(bool isEnabled) {
     mIsDebugRenderingEnabled = isEnabled;
 }
 
@@ -716,7 +738,7 @@ RP3D_FORCE_INLINE void PhysicsWorld::setIsDebugRenderingEnabled(bool isEnabled) 
 /**
  * @return A reference to the DebugRenderer object of the world
  */
-RP3D_FORCE_INLINE DebugRenderer& PhysicsWorld::getDebugRenderer() {
+inline DebugRenderer& PhysicsWorld::getDebugRenderer() {
     return mDebugRenderer;
 }
 

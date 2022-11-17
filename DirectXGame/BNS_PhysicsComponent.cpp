@@ -1,5 +1,4 @@
 #include "BNS_PhysicsComponent.h"
-
 #include "BNS_AGameObject.h"
 #include "BNS_BaseComponentSystem.h"
 #include "BNS_PhysicsSystem.h"
@@ -10,7 +9,6 @@ BNS_PhysicsComponent::BNS_PhysicsComponent(String name, AGameObjectPtr owner) : 
 	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->RegisterComponent(this);
 	PhysicsCommon* physicsCommon = BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->GetPhysicsCommon();
 	PhysicsWorld* physicsWorld = BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->GetPhysicsWorld();
-
 
 	// Create a rigid body in the world
 	Vector3D scale = GetOwner()->GetLocalScale();
@@ -26,7 +24,7 @@ BNS_PhysicsComponent::BNS_PhysicsComponent(String name, AGameObjectPtr owner) : 
 	float matrix[16];
 	transform.getOpenGLMatrix(matrix);
 
-	GetOwner().get()->SetLocalMatrix(matrix);
+	GetOwner().get()->RecomputeMatrix(matrix);
 }
 
 BNS_PhysicsComponent::~BNS_PhysicsComponent()
@@ -41,7 +39,7 @@ void BNS_PhysicsComponent::Perform(float deltaTime)
 	float matrix[16];
 	transform.getOpenGLMatrix(matrix);
 
-	GetOwner().get()->SetLocalMatrix(matrix);
+	GetOwner().get()->RecomputeMatrix(matrix);
 }
 
 RigidBody* BNS_PhysicsComponent::GetRigidBody()

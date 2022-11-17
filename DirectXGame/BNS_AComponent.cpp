@@ -1,8 +1,10 @@
 #include "BNS_AComponent.h"
 
-BNS_AComponent::BNS_AComponent(String name, ComponentType type, AGameObjectPtr owner) : name(name), owner(owner), type(type)
+BNS_AComponent::BNS_AComponent(String name, ComponentType type, AGameObjectPtr owner)
 {
-
+    this->name = name;
+    this->owner = owner;
+    this->type = type;
 }
 
 BNS_AComponent::~BNS_AComponent()

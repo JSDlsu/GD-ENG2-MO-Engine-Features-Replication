@@ -1,6 +1,6 @@
 /********************************************************************************
 * ReactPhysics3D physics library, http://www.reactphysics3d.com                 *
-* Copyright (c) 2010-2022 Daniel Chappuis                                       *
+* Copyright (c) 2010-2020 Daniel Chappuis                                       *
 *********************************************************************************
 *                                                                               *
 * This software is provided 'as-is', without any express or implied warranty.   *
@@ -92,7 +92,8 @@ class SolveHingeJointSystem {
                                                     decimal upperLimitAngle) const;
 
         /// Compute the current angle around the hinge axis
-        decimal computeCurrentHingeAngle(Entity jointEntity, const Quaternion& orientationBody1, const Quaternion& orientationBody2);
+        decimal computeCurrentHingeAngle(Entity jointEntity, const Quaternion& orientationBody1,
+                                         const Quaternion& orientationBody2);
 
     public :
 
@@ -132,29 +133,25 @@ class SolveHingeJointSystem {
 
 #endif
 
-        // ---------- Friendship ----------
-
-        friend class HingeJoint;
-
 };
 
 #ifdef IS_RP3D_PROFILING_ENABLED
 
 // Set the profiler
-RP3D_FORCE_INLINE void SolveHingeJointSystem::setProfiler(Profiler* profiler) {
+inline void SolveHingeJointSystem::setProfiler(Profiler* profiler) {
     mProfiler = profiler;
 }
 
 #endif
 
 // Set the time step
-RP3D_FORCE_INLINE void SolveHingeJointSystem::setTimeStep(decimal timeStep) {
+inline void SolveHingeJointSystem::setTimeStep(decimal timeStep) {
     assert(timeStep > decimal(0.0));
     mTimeStep = timeStep;
 }
 
 // Set to true to enable warm starting
-RP3D_FORCE_INLINE void SolveHingeJointSystem::setIsWarmStartingActive(bool isWarmStartingActive) {
+inline void SolveHingeJointSystem::setIsWarmStartingActive(bool isWarmStartingActive) {
     mIsWarmStartingActive = isWarmStartingActive;
 }
 

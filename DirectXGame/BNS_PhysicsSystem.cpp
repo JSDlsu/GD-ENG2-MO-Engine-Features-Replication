@@ -1,5 +1,6 @@
 #include "BNS_PhysicsSystem.h"
 #include "BNS_PhysicsComponent.h"
+#include <iostream>
 #include "BNS_EngineTime.h"
 
 BNS_PhysicsSystem::BNS_PhysicsSystem()
@@ -43,10 +44,10 @@ void BNS_PhysicsSystem::UnRegisterComponent(BNS_PhysicsComponent* component)
 		{
 			componentList.erase(componentList.begin() + index);
 		}
-		else
-		{
-			std::cout << "Component " << component->GetName() << " not registered in physics component. \n";
-		}
+	}
+	else
+	{
+		std::cout << "Component " << component->GetName() << " not registered in physics component. \n";
 	}
 }
 

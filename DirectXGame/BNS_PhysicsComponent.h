@@ -1,13 +1,12 @@
 #pragma once
 #include "BNS_AComponent.h"
 #include <reactphysics3d/reactphysics3d.h>
-
 using namespace reactphysics3d;
 class BNS_PhysicsComponent : public BNS_AComponent
 {
 public:
 	BNS_PhysicsComponent(String name, AGameObjectPtr owner);
-	~BNS_PhysicsComponent();
+	~BNS_PhysicsComponent() override;
 	// executes the physics system per frame
 	void Perform(float deltaTime) override;
 	RigidBody* GetRigidBody();

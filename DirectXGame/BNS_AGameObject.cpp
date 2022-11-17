@@ -1,9 +1,7 @@
 #include "BNS_AGameObject.h"
+#include "BNS_AComponent.h"
 #include "Vector3D.h"
 #include "Matrix4x4.h"
-#include <math.h>
-
-#include "BNS_AComponent.h"
 
 BNS_AGameObject::BNS_AGameObject(std::string name, BNS_ObjectTypes type) : name(name), ObjectType(type)
 {
@@ -183,9 +181,34 @@ float* BNS_AGameObject::GetPhysicsLocalMatrix()
 }
 
 
-void BNS_AGameObject::SetLocalMatrix(float matrix[16])
+void BNS_AGameObject::RecomputeMatrix(float matrix[16])
 {
-	m_matrix.setMatrix(matrix);
+	float matrix4x4[4][4];
+	matrix4x4[0][0] = matrix[0];
+	matrix4x4[0][1] = matrix[1];
+	matrix4x4[0][2] = matrix[2];
+	matrix4x4[0][3] = matrix[3];
+
+	matrix4x4[1][0] = matrix[4];
+	matrix4x4[1][1] = matrix[5];
+	matrix4x4[1][2] = matrix[6];
+	matrix4x4[1][3] = matrix[7];
+
+	matrix4x4[2][0] = matrix[8];
+	matrix4x4[2][1] = matrix[9];
+	matrix4x4[2][2] = matrix[10];
+	matrix4x4[2][3] = matrix[11];
+
+	matrix4x4[3][0] = matrix[12];
+	matrix4x4[3][1] = matrix[13];
+	matrix4x4[3][2] = matrix[14];
+	matrix4x4[3][3] = matrix[15];
+
+	Matrix4x4 newMatrix; newMatrix.setMatrix(matrix4x4);
+	Matrix4x4 scaleMatrix; scaleMatrix.setScale(GetLocalScale());
+	Matrix4x4 transMatrix; transMatrix.setTranslation(GetLocalPosition());
+	m_matrix = scaleMatrix.MultiplyTo(transMatrix.MultiplyTo(newMatrix));
+	this->overrideMatrix = true;
 }
 
 

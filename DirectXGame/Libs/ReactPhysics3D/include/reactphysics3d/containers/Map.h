@@ -1,6 +1,6 @@
 /********************************************************************************
 * ReactPhysics3D physics library, http://www.reactphysics3d.com                 *
-* Copyright (c) 2010-2022 Daniel Chappuis                                       *
+* Copyright (c) 2010-2020 Daniel Chappuis                                       *
 *********************************************************************************
 *                                                                               *
 * This software is provided 'as-is', without any express or implied warranty.   *
@@ -47,102 +47,244 @@ class Map {
 
     private:
 
+        /// An entry of the map
+        struct Entry {
+
+            size_t hashCode;			// Hash code of the entry
+            int next;					// Index of the next entry
+            Pair<K, V>* keyValue;	    // Pointer to the pair with key and value
+
+            /// Constructor
+            Entry() {
+                next = -1;
+                keyValue = nullptr;
+            }
+
+            /// Constructor
+            Entry(size_t hashcode, int nextEntry) {
+                hashCode = hashcode;
+                next = nextEntry;
+                keyValue = nullptr;
+            }
+
+            /// Copy-constructor
+            Entry(const Entry& entry) {
+                hashCode = entry.hashCode;
+                next = entry.next;
+                keyValue = entry.keyValue;
+            }
+
+            /// Destructor
+            ~Entry() {
+
+            }
+
+        };
+
         // -------------------- Constants -------------------- //
 
-        /// Default load factor
-        static constexpr float DEFAULT_LOAD_FACTOR = 0.75;
+        /// Number of prime numbers in array
+        static constexpr int NB_PRIMES = 70;
 
-        /// Invalid index in the array
-        static constexpr uint64 INVALID_INDEX = -1;
+        /// Array of prime numbers for the size of the map
+        static const int PRIMES[NB_PRIMES];
+
+        /// Largest prime number
+        static int LARGEST_PRIME;
 
         // -------------------- Attributes -------------------- //
 
-        /// Total number of allocated entries
-        uint64 mNbAllocatedEntries;
+        /// Current number of used entries in the map
+        int mNbUsedEntries;
 
-        /// Number of items in the set
-        uint64 mNbEntries;
+        /// Number of free entries among the used ones
+        int mNbFreeEntries;
 
-        /// Number of buckets and size of the hash table (nbEntries = loadFactor * mHashSize)
-        uint64 mHashSize ;
+        /// Current capacity of the map
+        int mCapacity;
 
         /// Array with all the buckets
-        uint64* mBuckets;
+        int* mBuckets;
 
         /// Array with all the entries
-        Pair<K, V>* mEntries;
-
-        /// For each entry, index of the next entry at the same bucket
-        uint64* mNextEntries;
+        Entry* mEntries;
 
         /// Memory allocator
         MemoryAllocator& mAllocator;
 
         /// Index to the fist free entry
-        uint64 mFreeIndex;
+        int mFreeIndex;
 
         // -------------------- Methods -------------------- //
 
-        /// Return the index of the entry with a given key or INVALID_INDEX if there is no entry with this key
-        uint64 findEntry(const K& key) const {
+        /// Initialize the map
+        void initialize(int capacity) {
 
-            if (mHashSize > 0) {
+            // Compute the next larger prime size
+            mCapacity = getPrimeSize(capacity);
+            assert(mCapacity >= 0);
+
+            // Allocate memory for the buckets
+            mBuckets = static_cast<int*>(mAllocator.allocate(mCapacity * sizeof(int)));
+
+            // Allocate memory for the entries
+            mEntries = static_cast<Entry*>(mAllocator.allocate(mCapacity * sizeof(Entry)));
+
+            // Initialize the buckets and entries
+            for (int i=0; i<mCapacity; i++) {
+
+                mBuckets[i] = -1;
+
+                // Construct the entry
+                new (&mEntries[i]) Entry();
+            }
+
+            mNbUsedEntries = 0;
+            mNbFreeEntries = 0;
+            mFreeIndex = -1;
+
+            assert(size() >= 0);
+        }
+
+        /// Expand the capacity of the map
+        void expand(int newCapacity) {
+
+            assert(newCapacity > mCapacity);
+            assert(isPrimeNumber(newCapacity));
+
+            // Allocate memory for the buckets
+            int* newBuckets = static_cast<int*>(mAllocator.allocate(newCapacity * sizeof(int)));
+
+            // Allocate memory for the entries
+            Entry* newEntries = static_cast<Entry*>(mAllocator.allocate(newCapacity * sizeof(Entry)));
+
+            // Initialize the new buckets
+            for (int i=0; i<newCapacity; i++) {
+                newBuckets[i] = -1;
+            }
+
+            if (mNbUsedEntries > 0) {
+
+                // Copy the old entries to the new allocated memory location
+                std::uninitialized_copy(mEntries, mEntries + mNbUsedEntries, newEntries);
+
+                // Destruct the old entries in the previous location
+                for (int i=0; i < mNbUsedEntries; i++) {
+                    mEntries[i].~Entry();
+                }
+            }
+
+            // Construct the new entries
+            for (int i=mNbUsedEntries; i<newCapacity; i++) {
+
+                // Construct the entry
+                new (static_cast<void*>(&newEntries[i])) Entry();
+            }
+
+            // For each used entry
+            for (int i=0; i<mNbUsedEntries; i++) {
+
+                // If the entry is not free
+                if (newEntries[i].keyValue != nullptr) {
+
+                    // Get the corresponding bucket
+                    int bucket = newEntries[i].hashCode % newCapacity;
+
+                    newEntries[i].next = newBuckets[bucket];
+                    newBuckets[bucket] = i;
+                }
+            }
+
+            // Release previously allocated memory
+            mAllocator.release(mBuckets, mCapacity * sizeof(int));
+            mAllocator.release(mEntries, mCapacity * sizeof(Entry));
+
+            mCapacity = newCapacity;
+            mBuckets = newBuckets;
+            mEntries = newEntries;
+
+            assert(mCapacity >= 0);
+        }
+
+        /// Return the index of the entry with a given key or -1 if there is no entry with this key
+        int findEntry(const K& key) const {
+
+            if (mCapacity > 0) {
 
                const size_t hashCode = Hash()(key);
-               const size_t divider = mHashSize - 1;
-               const uint64 bucket = static_cast<uint64>(hashCode & divider);
+               int bucket = hashCode % mCapacity;
                auto keyEqual = KeyEqual();
 
-               for (uint64 i = mBuckets[bucket]; i != INVALID_INDEX; i = mNextEntries[i]) {
-                   if (Hash()(mEntries[i].first) == hashCode && keyEqual(mEntries[i].first, key)) {
+               for (int i = mBuckets[bucket]; i >= 0; i = mEntries[i].next) {
+                   if (mEntries[i].hashCode == hashCode && keyEqual(mEntries[i].keyValue->first, key)) {
                        return i;
                    }
                }
             }
 
-            return INVALID_INDEX;
+            return -1;
+        }
+
+        /// Return the prime number that is larger or equal to the number in parameter
+        /// for the size of the map
+        static int getPrimeSize(int number) {
+
+            // Check if the next larger prime number is in the precomputed array of primes
+            for (int i = 0; i < NB_PRIMES; i++) {
+                if (PRIMES[i] >= number) return PRIMES[i];
+            }
+
+            // Manually compute the next larger prime number
+            for (int i = (number | 1); i < std::numeric_limits<int>::max(); i+=2) {
+
+                if (isPrimeNumber(i)) {
+                    return i;
+                }
+            }
+
+            return number;
         }
 
     public:
 
         /// Class Iterator
         /**
-         * This class represents an iterator for the Map.
+         * This class represents an iterator for the Map
          */
         class Iterator {
 
             private:
 
-                /// Pointer to the map
-                const Map* mMap;
+                /// Array of entries
+                const Entry* mEntries;
 
-                /// Index of the current bucket
-                uint64 mCurrentBucketIndex;
+                /// Capacity of the map
+                int mCapacity;
+
+                /// Number of used entries in the map
+                int mNbUsedEntries;
 
                 /// Index of the current entry
-                uint64 mCurrentEntryIndex;
+                int mCurrentEntry;
 
                 /// Advance the iterator
                 void advance() {
 
-                    assert(mCurrentBucketIndex < mMap->mHashSize);
-                    assert(mCurrentEntryIndex < mMap->mNbAllocatedEntries);
+                    // If we are trying to move past the end
+                    assert(mCurrentEntry < mNbUsedEntries);
 
-                    // Try the next entry
-                    if (mMap->mNextEntries[mCurrentEntryIndex] != INVALID_INDEX) {
-                        mCurrentEntryIndex = mMap->mNextEntries[mCurrentEntryIndex];
-                        return;
+                    for (mCurrentEntry += 1; mCurrentEntry < mNbUsedEntries; mCurrentEntry++) {
+
+                        // If the entry is not empty
+                        if (mEntries[mCurrentEntry].keyValue != nullptr) {
+
+                           // We have found the next non empty entry
+                           return;
+                        }
                     }
 
-                    // Try to move to the next bucket
-                    mCurrentEntryIndex = 0;
-                    mCurrentBucketIndex++;
-                    while(mCurrentBucketIndex < mMap->mHashSize && mMap->mBuckets[mCurrentBucketIndex] == INVALID_INDEX) {
-                       mCurrentBucketIndex++;
-                    }
-                    if (mCurrentBucketIndex < mMap->mHashSize) {
-                        mCurrentEntryIndex = mMap->mBuckets[mCurrentBucketIndex];
-                    }
+                    // We have not find a non empty entry, we return an iterator to the end
+                    mCurrentEntry = mCapacity;
                 }
 
             public:
@@ -158,33 +300,39 @@ class Map {
                 Iterator() = default;
 
                 /// Constructor
-                Iterator(const Map* map, uint64 bucketIndex, uint64 entryIndex)
-                     :mMap(map), mCurrentBucketIndex(bucketIndex), mCurrentEntryIndex(entryIndex) {
+                Iterator(const Entry* entries, int capacity, int nbUsedEntries, int currentEntry)
+                     :mEntries(entries), mCapacity(capacity), mNbUsedEntries(nbUsedEntries), mCurrentEntry(currentEntry) {
+
+                }
+
+                /// Copy constructor
+                Iterator(const Iterator& it)
+                     :mEntries(it.mEntries), mCapacity(it.mCapacity), mNbUsedEntries(it.mNbUsedEntries), mCurrentEntry(it.mCurrentEntry) {
 
                 }
 
                 /// Deferencable
                 reference operator*() const {
-                    assert(mCurrentEntryIndex < mMap->mNbAllocatedEntries);
-                    assert(mCurrentEntryIndex != INVALID_INDEX);
-                    return mMap->mEntries[mCurrentEntryIndex];
+                    assert(mCurrentEntry >= 0 && mCurrentEntry < mNbUsedEntries);
+                    assert(mEntries[mCurrentEntry].keyValue != nullptr);
+                    return *(mEntries[mCurrentEntry].keyValue);
                 }
 
                 /// Deferencable
                 pointer operator->() const {
-                    assert(mCurrentEntryIndex < mMap->mNbAllocatedEntries);
-                    assert(mCurrentEntryIndex != INVALID_INDEX);
-                    return &(mMap->mEntries[mCurrentEntryIndex]);
+                    assert(mCurrentEntry >= 0 && mCurrentEntry < mNbUsedEntries);
+                    assert(mEntries[mCurrentEntry].keyValue != nullptr);
+                    return mEntries[mCurrentEntry].keyValue;
                 }
 
-                /// Pre increment (++it)
+                /// Post increment (it++)
                 Iterator& operator++() {
                     advance();
                     return *this;
                 }
 
-                /// Post increment (it++)
-                Iterator operator++(int) {
+                /// Pre increment (++it)
+                Iterator operator++(int number) {
                     Iterator tmp = *this;
                     advance();
                     return tmp;
@@ -192,7 +340,7 @@ class Map {
 
                 /// Equality operator (it == end())
                 bool operator==(const Iterator& iterator) const {
-                    return mCurrentBucketIndex == iterator.mCurrentBucketIndex && mCurrentEntryIndex == iterator.mCurrentEntryIndex && mMap == iterator.mMap;
+                    return mCurrentEntry == iterator.mCurrentEntry && mEntries == iterator.mEntries;
                 }
 
                 /// Inequality operator (it != end())
@@ -205,49 +353,56 @@ class Map {
         // -------------------- Methods -------------------- //
 
         /// Constructor
-        Map(MemoryAllocator& allocator, uint64 capacity = 0)
-            : mNbAllocatedEntries(0), mNbEntries(0), mHashSize(0), mBuckets(nullptr),
-              mEntries(nullptr), mNextEntries(nullptr), mAllocator(allocator), mFreeIndex(INVALID_INDEX) {
+        Map(MemoryAllocator& allocator, size_t capacity = 0)
+            : mNbUsedEntries(0), mNbFreeEntries(0), mCapacity(0), mBuckets(nullptr),
+              mEntries(nullptr), mAllocator(allocator), mFreeIndex(-1) {
+
+            // If the largest prime has not been computed yet
+            if (LARGEST_PRIME == -1) {
+
+                // Compute the largest prime number (largest map capacity)
+                LARGEST_PRIME = getPrimeSize(PRIMES[NB_PRIMES - 1] + 2);
+            }
 
             if (capacity > 0) {
 
-               reserve(capacity);
+               initialize(capacity);
             }
         }
 
         /// Copy constructor
         Map(const Map<K, V>& map)
-          :mNbAllocatedEntries(map.mNbAllocatedEntries), mNbEntries(map.mNbEntries), mHashSize(map.mHashSize),
-           mBuckets(nullptr), mEntries(nullptr), mNextEntries(nullptr), mAllocator(map.mAllocator), mFreeIndex(map.mFreeIndex) {
+          :mNbUsedEntries(map.mNbUsedEntries), mNbFreeEntries(map.mNbFreeEntries), mCapacity(map.mCapacity),
+           mBuckets(nullptr), mEntries(nullptr), mAllocator(map.mAllocator), mFreeIndex(map.mFreeIndex) {
 
-            if (mHashSize > 0) {
+            assert(capacity() >= 0);
+
+            if (mCapacity > 0) {
 
                 // Allocate memory for the buckets
-                mBuckets = static_cast<uint64*>(mAllocator.allocate(mHashSize * sizeof(uint64)));
+                mBuckets = static_cast<int*>(mAllocator.allocate(mCapacity * sizeof(int)));
 
                 // Allocate memory for the entries
-                mEntries = static_cast<Pair<K, V>*>(mAllocator.allocate(mNbAllocatedEntries * sizeof(Pair<K, V>)));
-                mNextEntries = static_cast<uint64*>(mAllocator.allocate(mNbAllocatedEntries * sizeof(uint64)));
+                mEntries = static_cast<Entry*>(mAllocator.allocate(mCapacity * sizeof(Entry)));
 
-                // Copy the buckets array
-                std::memcpy(mBuckets, map.mBuckets, mHashSize * sizeof(uint64));
-
-                // Copy the next entries indices
-                std::memcpy(mNextEntries, map.mNextEntries, mNbAllocatedEntries * sizeof(uint64));
+                // Copy the buckets
+                std::uninitialized_copy(map.mBuckets, map.mBuckets + mCapacity, mBuckets);
 
                 // Copy the entries
-                for (uint64 i=0; i<mHashSize; i++) {
+                for (int i=0; i < mCapacity; i++) {
 
-                    uint64 entryIndex = mBuckets[i];
-                    while(entryIndex != INVALID_INDEX) {
+                    new (&mEntries[i]) Entry(map.mEntries[i].hashCode, map.mEntries[i].next);
 
-                        // Copy the entry to the new location and destroy the previous one
-                        new (mEntries + entryIndex) Pair<K,V>(map.mEntries[entryIndex]);
-
-                        entryIndex = mNextEntries[entryIndex];
+                    if (map.mEntries[i].keyValue != nullptr) {
+                       mEntries[i].keyValue = static_cast<Pair<K,V>*>(mAllocator.allocate(sizeof(Pair<K, V>)));
+                       new (mEntries[i].keyValue) Pair<K,V>(*(map.mEntries[i].keyValue));
                     }
                 }
+
             }
+
+            assert(size() >= 0);
+            assert((*this) == map);
         }
 
         /// Destructor
@@ -257,166 +412,95 @@ class Map {
         }
 
         /// Allocate memory for a given number of elements
-        void reserve(uint64 capacity) {
+        void reserve(int capacity) {
 
-            if (capacity <= mHashSize) return;
+           if (capacity <= mCapacity) return;
 
-            if (capacity < 16) capacity = 16;
+           if (capacity > LARGEST_PRIME && LARGEST_PRIME > mCapacity) {
+               capacity = LARGEST_PRIME;
+           }
+           else {
+               capacity = getPrimeSize(capacity);
+           }
 
-            // Make sure we have a power of two size
-            if (!isPowerOfTwo(capacity)) {
-                capacity = nextPowerOfTwo64Bits(capacity);
-            }
-
-            assert(capacity < INVALID_INDEX);
-
-            assert(capacity > mHashSize);
-
-            // Allocate memory for the buckets
-            uint64* newBuckets = static_cast<uint64*>(mAllocator.allocate(capacity * sizeof(uint64)));
-
-            // Allocate memory for the entries
-            const uint64 nbAllocatedEntries = static_cast<uint64>(capacity * double(DEFAULT_LOAD_FACTOR));
-            assert(nbAllocatedEntries > 0);
-            Pair<K, V>* newEntries = static_cast<Pair<K, V>*>(mAllocator.allocate(nbAllocatedEntries * sizeof(Pair<K, V>)));
-            uint64* newNextEntries = static_cast<uint64*>(mAllocator.allocate(nbAllocatedEntries * sizeof(uint64)));
-
-            assert(newEntries != nullptr);
-            assert(newNextEntries != nullptr);
-
-            // Initialize the new buckets
-            for (uint64 i=0; i<capacity; i++) {
-                newBuckets[i] = INVALID_INDEX;
-            }
-
-            if (mNbAllocatedEntries > 0) {
-
-                assert(mNextEntries != nullptr);
-
-                // Copy the free nodes indices in the nextEntries array
-                std::memcpy(newNextEntries, mNextEntries, mNbAllocatedEntries * sizeof(uint64));
-            }
-
-            // Recompute the buckets (hash) with the new hash size
-            for (uint64 i=0; i<mHashSize; i++) {
-
-                uint64 entryIndex = mBuckets[i];
-                while(entryIndex != INVALID_INDEX) {
-
-                    // Get the corresponding bucket
-                    const size_t hashCode = Hash()(mEntries[entryIndex].first);
-                    const size_t divider = capacity - 1;
-                    const uint64 bucketIndex = static_cast<uint64>(hashCode & divider);
-
-                    newNextEntries[entryIndex] = newBuckets[bucketIndex];
-                    newBuckets[bucketIndex] = entryIndex;
-
-                    // Copy the entry to the new location and destroy the previous one
-                    new (newEntries + entryIndex) Pair<K,V>(mEntries[entryIndex]);
-                    mEntries[entryIndex].~Pair<K,V>();
-
-                    entryIndex = mNextEntries[entryIndex];
-                }
-            }
-
-            if (mNbAllocatedEntries > 0) {
-
-                // Release previously allocated memory
-                mAllocator.release(mBuckets, mHashSize * sizeof(uint64));
-                mAllocator.release(mEntries, mNbAllocatedEntries * sizeof(Pair<K, V>));
-                mAllocator.release(mNextEntries, mNbAllocatedEntries * sizeof(uint64));
-            }
-
-            // Add the new entries to the free list
-            for (uint64 i=mNbAllocatedEntries; i < nbAllocatedEntries-1; i++) {
-                newNextEntries[i] = i + 1;
-            }
-            newNextEntries[nbAllocatedEntries - 1] = mFreeIndex;
-            mFreeIndex = mNbAllocatedEntries;
-
-            mHashSize = capacity;
-            mNbAllocatedEntries = nbAllocatedEntries;
-            mBuckets = newBuckets;
-            mEntries = newEntries;
-            mNextEntries = newNextEntries;
-
-            assert(mFreeIndex != INVALID_INDEX);
+           expand(capacity);
         }
 
         /// Return true if the map contains an item with the given key
         bool containsKey(const K& key) const {
-            return findEntry(key) != INVALID_INDEX;
+            return findEntry(key) != -1;
         }
 
         /// Add an element into the map
-        /// Returns true if the item has been inserted and false otherwise.
-        bool add(const Pair<K,V>& keyValue, bool insertIfAlreadyPresent = false) {
+        void add(const Pair<K,V>& keyValue, bool insertIfAlreadyPresent = false) {
 
-            uint64 bucket = INVALID_INDEX;
+            if (mCapacity == 0) {
+                initialize(0);
+            }
 
-            // Compute the hash code of the value
+            // Compute the hash code of the key
             const size_t hashCode = Hash()(keyValue.first);
 
-            if (mHashSize > 0) {
+            // Compute the corresponding bucket index
+            int bucket = hashCode % mCapacity;
 
-                // Compute the corresponding bucket index
-                const size_t divider = mHashSize - 1;
-                bucket = static_cast<uint64>(hashCode & divider);
+            auto keyEqual = KeyEqual();
 
-                auto keyEqual = KeyEqual();
+            // Check if the item is already in the map
+            for (int i = mBuckets[bucket]; i >= 0; i = mEntries[i].next) {
 
-                // Check if the item is already in the set
-                for (uint64 i = mBuckets[bucket]; i != INVALID_INDEX; i = mNextEntries[i]) {
+                // If there is already an item with the same key in the map
+                if (mEntries[i].hashCode == hashCode && keyEqual(mEntries[i].keyValue->first, keyValue.first)) {
 
-                    // If there is already an item with the same value in the set
-                    if (Hash()(mEntries[i].first) == hashCode && keyEqual(mEntries[i].first, keyValue.first)) {
+                    if (insertIfAlreadyPresent) {
 
-                        if (insertIfAlreadyPresent) {
+                        // Destruct the previous key/value
+                        mEntries[i].keyValue->~Pair<K, V>();
 
-                            // Destruct the previous key/value
-                            mEntries[i].~Pair<K, V>();
+                        // Copy construct the new key/value
+                        new (mEntries[i].keyValue) Pair<K,V>(keyValue);
 
-                            // Copy construct the new key/value
-                            new (mEntries + i) Pair<K,V>(keyValue);
-
-                            return true;
-                        }
-                        else {
-                            assert(false);
-                            throw std::runtime_error("The key and value pair already exists in the map");
-                        }
+                        return;
+                    }
+                    else {
+                        throw std::runtime_error("The key and value pair already exists in the map");
                     }
                 }
             }
 
-            uint64 entryIndex;
+            size_t entryIndex;
 
-            // If there are no more free entries to use
-            if (mFreeIndex == INVALID_INDEX) {
+            // If there are free entries to use
+            if (mNbFreeEntries > 0) {
+                assert(mFreeIndex >= 0);
+                entryIndex = mFreeIndex;
+                mFreeIndex = mEntries[entryIndex].next;
+                mNbFreeEntries--;
+            }
+            else {
 
-                // Allocate more memory
-                reserve(mHashSize == 0 ? 16 : mHashSize * 2);
+                // If we need to allocator more entries
+                if (mNbUsedEntries == mCapacity) {
 
-                // Recompute the bucket index
-                const size_t divider = mHashSize - 1;
-                bucket = static_cast<uint64>(hashCode & divider);
+                    // Allocate more memory
+                    reserve(mCapacity * 2);
+
+                    // Recompute the bucket index
+                    bucket = hashCode % mCapacity;
+                }
+
+                entryIndex = mNbUsedEntries;
+                mNbUsedEntries++;
             }
 
-            assert(mNbEntries < mNbAllocatedEntries);
-            assert(mFreeIndex != INVALID_INDEX);
-
-            // Get the next free entry
-            entryIndex = mFreeIndex;
-            mFreeIndex = mNextEntries[entryIndex];
-
-            mNbEntries++;
-
-            assert(bucket != INVALID_INDEX);
-            mNextEntries[entryIndex] = mBuckets[bucket];
-            new (mEntries + entryIndex) Pair<K, V>(keyValue);
+            assert(size() >= 0);
+            assert(mEntries[entryIndex].keyValue == nullptr);
+            mEntries[entryIndex].hashCode = hashCode;
+            mEntries[entryIndex].next = mBuckets[bucket];
+            mEntries[entryIndex].keyValue = static_cast<Pair<K,V>*>(mAllocator.allocate(sizeof(Pair<K,V>)));
+            assert(mEntries[entryIndex].keyValue != nullptr);
+            new (mEntries[entryIndex].keyValue) Pair<K,V>(keyValue);
             mBuckets[bucket] = entryIndex;
-
-            return true;
         }
 
         /// Remove the element pointed by some iterator
@@ -433,103 +517,110 @@ class Map {
         /// the one that has been removed
         Iterator remove(const K& key) {
 
-            if (mHashSize > 0) {
+            if (mCapacity > 0) {
 
                 const size_t hashcode = Hash()(key);
+                int bucket = hashcode % mCapacity;
+                int last = -1;
                 auto keyEqual = KeyEqual();
-                const size_t divider = mHashSize - 1;
-                const uint64 bucket = static_cast<uint64>(hashcode & divider);
-                uint64 last = INVALID_INDEX;
-                for (uint64 i = mBuckets[bucket]; i != INVALID_INDEX; last = i, i = mNextEntries[i]) {
 
-                    // If we have found the item
-                    if (Hash()(mEntries[i].first) == hashcode && keyEqual(mEntries[i].first, key)) {
+                for (int i = mBuckets[bucket]; i >= 0; last = i, i = mEntries[i].next) {
 
-                        if (last == INVALID_INDEX) {
-                           mBuckets[bucket] = mNextEntries[i];
+                    if (mEntries[i].hashCode == hashcode &&  keyEqual(mEntries[i].keyValue->first, key)) {
+
+                        if (last < 0 ) {
+                           mBuckets[bucket] = mEntries[i].next;
                         }
                         else {
-                           mNextEntries[last] = mNextEntries[i];
+                           mEntries[last].next = mEntries[i].next;
                         }
 
-                        uint64 nextEntryIndex = mNextEntries[i];
-                        uint64 nextBucketIndex = bucket;
-
-                        mEntries[i].~Pair<K,V>();
-                        mNextEntries[i] = mFreeIndex;
+                        // Release memory for the key/value pair if any
+                        if (mEntries[i].keyValue != nullptr) {
+                            mEntries[i].keyValue->~Pair<K,V>();
+                            mAllocator.release(mEntries[i].keyValue, sizeof(Pair<K,V>));
+                            mEntries[i].keyValue = nullptr;
+                        }
+                        assert(mEntries[i].keyValue == nullptr);
+                        mEntries[i].next = mFreeIndex;
                         mFreeIndex = i;
-                        mNbEntries--;
+                        mNbFreeEntries++;
 
-                        // Find the next entry to return an iterator
-                        if (nextEntryIndex == INVALID_INDEX) {
-                            nextEntryIndex = 0;
-                            nextBucketIndex++;
-                            while(nextBucketIndex < mHashSize && mBuckets[nextBucketIndex] == INVALID_INDEX) {
-                               nextBucketIndex++;
-                            }
-                            if (nextBucketIndex < mHashSize) {
-                                nextEntryIndex = mBuckets[nextBucketIndex];
+                        // Find the next entry to return the iterator
+                        for (i += 1; i < mNbUsedEntries; i++) {
+
+                            // If the entry is not empty
+                            if (mEntries[i].keyValue != nullptr) {
+
+                               // We have found the next non empty entry
+                               return Iterator(mEntries, mCapacity, mNbUsedEntries, i);
                             }
                         }
 
-                        // We have found the next non empty entry
-                        return Iterator(this, nextBucketIndex, nextEntryIndex);
+                        return end();
                     }
                 }
             }
 
+            assert(size() >= 0);
+
+            // Return the end iterator
             return end();
         }
 
         /// Clear the map
         void clear(bool releaseMemory = false) {
 
-            for (uint64 i=0; i<mHashSize; i++) {
+            if (mNbUsedEntries > 0) {
 
-                uint64 entryIndex = mBuckets[i];
-                while(entryIndex != INVALID_INDEX) {
+                // Remove the key/value pair of each entry
+                for (int i=0; i < mCapacity; i++) {
 
-                    // Destroy the entry
-                    mEntries[entryIndex].~Pair<K,V>();
-
-                    uint64 nextEntryIndex = mNextEntries[entryIndex];
-
-                    // Add entry to the free list
-                    mNextEntries[entryIndex] = mFreeIndex;
-                    mFreeIndex = entryIndex;
-
-                    entryIndex = nextEntryIndex;
+                    mBuckets[i] = -1;
+                    mEntries[i].next = -1;
+                    if (mEntries[i].keyValue != nullptr) {
+                        mEntries[i].keyValue->~Pair<K,V>();
+                        mAllocator.release(mEntries[i].keyValue, sizeof(Pair<K,V>));
+                        mEntries[i].keyValue = nullptr;
+                    }
                 }
 
-                mBuckets[i] = INVALID_INDEX;
+                mFreeIndex = -1;
+                mNbUsedEntries = 0;
+                mNbFreeEntries = 0;
+
+                assert(size() >= 0);
             }
 
-            if (releaseMemory && mNbAllocatedEntries > 0) {
+            // If elements have been allocated
+            if (releaseMemory && mCapacity > 0) {
 
-                // Release previously allocated memory
-                mAllocator.release(mBuckets, mHashSize * sizeof(uint64));
-                mAllocator.release(mEntries, mNbAllocatedEntries * sizeof(Pair<K, V>));
-                mAllocator.release(mNextEntries, mNbAllocatedEntries * sizeof(uint64));
+                // Destroy the entries
+                for (int i=0; i < mCapacity; i++) {
+                    mEntries[i].~Entry();
+                }
 
+                // Release memory
+                mAllocator.release(mBuckets, mCapacity * sizeof(int));
+                mAllocator.release(mEntries, mCapacity * sizeof(Entry));
+
+                mCapacity = 0;
                 mBuckets = nullptr;
                 mEntries = nullptr;
-                mNextEntries = nullptr;
-
-                mNbAllocatedEntries = 0;
-                mHashSize = 0;
             }
 
-            mNbEntries = 0;
-       }
+            assert(size() == 0);
+        }
 
         /// Return the number of elements in the map
-        uint64 size() const {
-            return mNbEntries;
+        int size() const {
+            assert(mNbUsedEntries - mNbFreeEntries >= 0);
+            return mNbUsedEntries - mNbFreeEntries;
         }
 
         /// Return the capacity of the map
-        uint64 capacity() const {
-            return mHashSize;
+        int capacity() const {
+            return mCapacity;
         }
 
         /// Try to find an item of the map given a key.
@@ -537,55 +628,68 @@ class Map {
         /// an iterator pointing to the end if not found
         Iterator find(const K& key) const {
 
-            uint64 bucket;
-            uint64 entry = INVALID_INDEX;
+            int bucket;
+            int entry = -1;
 
-            if (mHashSize > 0) {
+            if (mCapacity > 0) {
 
                const size_t hashCode = Hash()(key);
-               const size_t divider = mHashSize - 1;
-               bucket = static_cast<uint64>(hashCode & divider);
+               bucket = hashCode % mCapacity;
+
                auto keyEqual = KeyEqual();
 
-               for (uint64 i = mBuckets[bucket]; i != INVALID_INDEX; i = mNextEntries[i]) {
-                   if (Hash()(mEntries[i].first) == hashCode && keyEqual(mEntries[i].first, key)) {
+               for (int i = mBuckets[bucket]; i >= 0; i = mEntries[i].next) {
+                   if (mEntries[i].hashCode == hashCode && keyEqual(mEntries[i].keyValue->first, key)) {
                        entry = i;
                        break;
                    }
                }
             }
 
-            if (entry == INVALID_INDEX) {
+            if (entry == -1) {
                 return end();
             }
 
-            return Iterator(this, bucket, entry);
+            assert(mEntries[entry].keyValue != nullptr);
+
+            return Iterator(mEntries, mCapacity, mNbUsedEntries, entry);
         }
 
         /// Overloaded index operator
         V& operator[](const K& key) {
 
-            const uint64 entry = findEntry(key);
+            int entry = -1;
 
-            if (entry == INVALID_INDEX) {
+            if (mCapacity > 0) {
+                entry = findEntry(key);
+            }
+
+            if (entry == -1) {
                 assert(false);
                 throw std::runtime_error("No item with given key has been found in the map");
             }
 
-            return mEntries[entry].second;
+            assert(mEntries[entry].keyValue != nullptr);
+
+            return mEntries[entry].keyValue->second;
         }
 
         /// Overloaded index operator
         const V& operator[](const K& key) const {
 
-            const uint64 entry = findEntry(key);
+            int entry = -1;
 
-            if (entry == INVALID_INDEX) {
-                assert(false);
+            if (mCapacity > 0) {
+                entry = findEntry(key);
+            }
+
+            if (entry == -1) {
                 throw std::runtime_error("No item with given key has been found in the map");
             }
 
-            return mEntries[entry].second;
+            assert(mEntries[entry].keyValue != nullptr);
+
+            return mEntries[entry].keyValue->second;
         }
 
         /// Overloaded equality operator
@@ -625,40 +729,39 @@ class Map {
                 // Clear the map
                 clear(true);
 
-                mNbAllocatedEntries = map.mNbAllocatedEntries;
-                mNbEntries = map.mNbEntries;
-                mHashSize = map.mHashSize;
-                mFreeIndex = map.mFreeIndex;
+                if (map.mCapacity > 0) {
 
-                if (mHashSize > 0) {
+                    // Compute the next larger prime size
+                    mCapacity = getPrimeSize(map.mCapacity);
+                    assert(mCapacity >= 0);
 
                     // Allocate memory for the buckets
-                    mBuckets = static_cast<uint64*>(mAllocator.allocate(mHashSize * sizeof(uint64)));
+                    mBuckets = static_cast<int*>(mAllocator.allocate(mCapacity * sizeof(int)));
 
                     // Allocate memory for the entries
-                    mEntries = static_cast<Pair<K,V>*>(mAllocator.allocate(mNbAllocatedEntries * sizeof(Pair<K,V>)));
-                    mNextEntries = static_cast<uint64*>(mAllocator.allocate(mNbAllocatedEntries * sizeof(uint64)));
+                    mEntries = static_cast<Entry*>(mAllocator.allocate(mCapacity * sizeof(Entry)));
 
-                    // Copy the buckets array
-                    std::memcpy(mBuckets, map.mBuckets, mHashSize * sizeof(uint64));
-
-                    // Copy the next entries indices
-                    std::memcpy(mNextEntries, map.mNextEntries, mNbAllocatedEntries * sizeof(uint64));
+                    // Copy the buckets
+                    std::uninitialized_copy(map.mBuckets, map.mBuckets + mCapacity, mBuckets);
 
                     // Copy the entries
-                    for (uint64 i=0; i<mHashSize; i++) {
+                    for (int i=0; i < mCapacity; i++) {
 
-                        uint64 entryIndex = mBuckets[i];
-                        while(entryIndex != INVALID_INDEX) {
+                        new (&mEntries[i]) Entry(map.mEntries[i].hashCode, map.mEntries[i].next);
 
-                            // Copy the entry to the new location and destroy the previous one
-                            new (mEntries + entryIndex) Pair<K,V>(map.mEntries[entryIndex]);
-
-                            entryIndex = mNextEntries[entryIndex];
+                        if (map.mEntries[i].keyValue != nullptr) {
+                           mEntries[i].keyValue = static_cast<Pair<K,V>*>(mAllocator.allocate(sizeof(Pair<K, V>)));
+                           new (mEntries[i].keyValue) Pair<K,V>(*(map.mEntries[i].keyValue));
                         }
                     }
+
+                    mNbUsedEntries = map.mNbUsedEntries;
+                    mNbFreeEntries = map.mNbFreeEntries;
+                    mFreeIndex = map.mFreeIndex;
                 }
             }
+
+            assert(size() >= 0);
 
             return *this;
         }
@@ -674,27 +777,32 @@ class Map {
             }
 
             // Find the first used entry
-            uint64 bucketIndex = 0;
-            while (mBuckets[bucketIndex] == INVALID_INDEX) {
-
-                bucketIndex++;
+            int entry;
+            for (entry=0; entry < mNbUsedEntries; entry++) {
+                if (mEntries[entry].keyValue != nullptr) {
+                    return Iterator(mEntries, mCapacity, mNbUsedEntries, entry);
+                }
             }
 
-            assert(bucketIndex < mHashSize);
-            assert(mBuckets[bucketIndex] != INVALID_INDEX);
-
-            return Iterator(this, bucketIndex, mBuckets[bucketIndex]);
+            assert(false);
+            return end();
         }
 
         /// Return a end iterator
         Iterator end() const {
-            return Iterator(this, mHashSize, 0);
+            return Iterator(mEntries, mCapacity, mNbUsedEntries, mCapacity);
         }
-
-        // ---------- Friendship ---------- //
-
-        friend class Iterator;
 };
+
+template<typename K, typename V, class Hash, class KeyEqual>
+const int Map<K,V, Hash, KeyEqual>::PRIMES[NB_PRIMES] = {3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
+                             1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
+                             17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431, 90523, 108631, 130363, 156437,
+                             187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263,
+                             1674319, 2009191, 2411033, 2893249, 3471899, 4166287, 4999559};
+
+template<typename K, typename V, class Hash, class KeyEqual>
+int Map<K,V, Hash, KeyEqual>::LARGEST_PRIME = -1;
 
 }
 

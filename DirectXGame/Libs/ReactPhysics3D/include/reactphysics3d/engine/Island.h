@@ -1,6 +1,6 @@
 /********************************************************************************
 * ReactPhysics3D physics library, http://www.reactphysics3d.com                 *
-* Copyright (c) 2010-2022 Daniel Chappuis                                       *
+* Copyright (c) 2010-2020 Daniel Chappuis                                       *
 *********************************************************************************
 *                                                                               *
 * This software is provided 'as-is', without any express or implied warranty.   *
@@ -54,17 +54,17 @@ class Island {
         ContactManifold** mContactManifolds;
 
         /// Current number of bodies in the island
-        uint32 mNbBodies;
+        uint mNbBodies;
 
         /// Current number of contact manifold in the island
-        uint32 mNbContactManifolds;
+        uint mNbContactManifolds;
 
     public:
 
         // -------------------- Methods -------------------- //
 
         /// Constructor
-        Island(uint32 nbMaxBodies, uint32 nbMaxContactManifolds, MemoryManager& memoryManager);
+        Island(uint nbMaxBodies, uint nbMaxContactManifolds, MemoryManager& memoryManager);
 
         /// Destructor
         ~Island();
@@ -85,13 +85,13 @@ class Island {
         void addJoint(Joint* joint);
 
         /// Return the number of bodies in the island
-        uint32 getNbBodies() const;
+        uint getNbBodies() const;
 
         /// Return the number of contact manifolds in the island
-        uint32 getNbContactManifolds() const;
+        uint getNbContactManifolds() const;
 
         /// Return the number of joints in the island
-        uint32 getNbJoints() const;
+        uint getNbJoints() const;
 
         /// Return a pointer to the array of bodies
         RigidBody** getBodies();
@@ -105,35 +105,35 @@ class Island {
 };
 
 // Add a body into the island
-RP3D_FORCE_INLINE void Island::addBody(RigidBody* body) {
+inline void Island::addBody(RigidBody* body) {
     assert(!body->isSleeping());
     mBodies[mNbBodies] = body;
     mNbBodies++;
 }
 
 // Add a contact manifold into the island
-RP3D_FORCE_INLINE void Island::addContactManifold(ContactManifold* contactManifold) {
+inline void Island::addContactManifold(ContactManifold* contactManifold) {
     mContactManifolds[mNbContactManifolds] = contactManifold;
     mNbContactManifolds++;
 }
 
 // Return the number of bodies in the island
-RP3D_FORCE_INLINE uint32 Island::getNbBodies() const {
+inline uint Island::getNbBodies() const {
     return mNbBodies;
 }
 
 // Return the number of contact manifolds in the island
-RP3D_FORCE_INLINE uint32 Island::getNbContactManifolds() const {
+inline uint Island::getNbContactManifolds() const {
     return mNbContactManifolds;
 }
 
 // Return a pointer to the array of bodies
-RP3D_FORCE_INLINE RigidBody** Island::getBodies() {
+inline RigidBody** Island::getBodies() {
     return mBodies;
 }
 
 // Return a pointer to the array of contact manifolds
-RP3D_FORCE_INLINE ContactManifold** Island::getContactManifolds() {
+inline ContactManifold** Island::getContactManifolds() {
     return mContactManifolds;
 }
 

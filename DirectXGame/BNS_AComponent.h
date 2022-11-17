@@ -1,17 +1,18 @@
 #pragma once
+#include <memory>
 #include <string>
 
 #include "BNS_EnumHandler.h"
-#include "BNS_Prerequisites.h"
 
 class BNS_AGameObject;
+typedef std::shared_ptr<BNS_AGameObject> AGameObjectPtr;
 class BNS_AComponent
 {
 public:
 	typedef std::string String;
 
 	BNS_AComponent(String name, ComponentType type, AGameObjectPtr owner);
-	~BNS_AComponent();
+	virtual ~BNS_AComponent();
 
 	void AttachOwner(AGameObjectPtr owner);
 	void DetachOwner();

@@ -1,7 +1,7 @@
 #include "BNS_BaseComponentSystem.h"
 #include "BNS_PhysicsSystem.h"
 
-BNS_BaseComponentSystem* BNS_BaseComponentSystem::sharedInstance = NULL;
+BNS_BaseComponentSystem* BNS_BaseComponentSystem::sharedInstance = nullptr;
 BNS_BaseComponentSystem* BNS_BaseComponentSystem::GetInstance()
 {
 	return sharedInstance;

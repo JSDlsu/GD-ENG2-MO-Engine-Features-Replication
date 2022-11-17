@@ -49,7 +49,7 @@ public:
 	float GetAlpha();
 	float* GetPhysicsLocalMatrix();
 
-	void SetLocalMatrix(float matrix[16]);
+	void RecomputeMatrix(float matrix[16]);
 	Matrix4x4 GetMatrix();
 public:
 	void AttachComponent(BNS_AComponent* component);
@@ -67,5 +67,6 @@ protected:
 	Matrix4x4 m_matrix;
 	float alpha = 1.0f;
 	ComponentList componentList;
+	bool overrideMatrix = false;
 };
 
