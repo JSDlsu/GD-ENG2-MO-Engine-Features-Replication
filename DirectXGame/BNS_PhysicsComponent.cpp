@@ -1,6 +1,6 @@
+#include "BNS_BaseComponentSystem.h"
 #include "BNS_PhysicsComponent.h"
 #include "BNS_AGameObject.h"
-#include "BNS_BaseComponentSystem.h"
 #include "BNS_PhysicsSystem.h"
 
 BNS_PhysicsComponent::BNS_PhysicsComponent(String name, AGameObjectPtr owner) : BNS_AComponent(name, ComponentType::Physics, owner)
@@ -40,6 +40,7 @@ void BNS_PhysicsComponent::Perform(float deltaTime)
 	transform.getOpenGLMatrix(matrix);
 
 	GetOwner().get()->RecomputeMatrix(matrix);
+	std::cout << "My component is updating: " << this->name << "\n";
 }
 
 RigidBody* BNS_PhysicsComponent::GetRigidBody()

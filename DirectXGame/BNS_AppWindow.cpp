@@ -8,10 +8,13 @@
 #include "BNS_GameObjectManager.h"
 #include "BNS_PrimitiveCreation.h"
 #include <vector>
+
+#include "BNS_BaseComponentSystem.h"
 #include "BNS_Camera.h"
 #include "BNS_CameraHandler.h"
 #include "BNS_GraphicsEngine.h"
 #include "BNS_PassRender.h"
+#include "BNS_PhysicsSystem.h"
 #include "BNS_Plane.h"
 #include "BNS_RenderToTexture.h"
 #include "BNS_SwapChain.h"
@@ -23,6 +26,29 @@ BNS_AppWindow::BNS_AppWindow()
 
 BNS_AppWindow::~BNS_AppWindow()
 {
+}
+
+void BNS_AppWindow::onCreate()
+{
+	// create window
+	BNS_Window::onCreate();
+	// create physics
+	BNS_BaseComponentSystem::Initialize();
+	// create cameras
+	BNS_CameraHandler::Initialize();
+
+	// create swap chain
+	RECT rc = this->getClientWindowRect();
+	m_swap_chain = BNS_GraphicsEngine::get()->getRenderSystem()->CreateSwapChain(
+		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+	// create blenderPtr
+	m_blender = BNS_GraphicsEngine::get()->getRenderSystem()->CreateBlender();
+	// create GAME SCENE view
+	m_scene_view = BNS_GraphicsEngine::get()->getRenderSystem()->
+		CreateRenderToTexture(rc.right - rc.left, rc.bottom - rc.top);
+	// create the UI manager
+	BNS_UIManager::Initialize(this, m_hwnd, m_scene_view);
+
 }
 
 void BNS_AppWindow::render()
@@ -69,26 +95,6 @@ void BNS_AppWindow::render()
 	m_swap_chain->present(true);
 }
 
-void BNS_AppWindow::onCreate()
-{
-	BNS_Window::onCreate();
-	// create cameras
-	BNS_CameraHandler::Initialize();
-
-	// create swap chain
-	RECT rc = this->getClientWindowRect();
-	m_swap_chain = BNS_GraphicsEngine::get()->getRenderSystem()->CreateSwapChain(
-		this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
-	// create blenderPtr
-	m_blender = BNS_GraphicsEngine::get()->getRenderSystem()->CreateBlender();
-	// create GAME SCENE view
-	m_scene_view = BNS_GraphicsEngine::get()->getRenderSystem()->
-		CreateRenderToTexture(rc.right - rc.left, rc.bottom - rc.top);
-	// create the UI manager
-	BNS_UIManager::Initialize(this, m_hwnd, m_scene_view);
-	
-}
-
 // updating our constant buffers
 void BNS_AppWindow::update()
 {
@@ -109,17 +115,19 @@ void BNS_AppWindow::onUpdate()
 
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);
-
+	// update for physics engine
+	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
+	// update for graphics engine
 	render();
 }
 
 void BNS_AppWindow::onDestroy()
 {
-	BNS_Window::onDestroy();
-
-	BNS_UIManager::Release();
-
 	m_swap_chain->setFullScreen(false, 1, 1);
+	BNS_UIManager::Release();
+	// destroy physics
+	BNS_BaseComponentSystem::Destroy();
+	BNS_Window::onDestroy();
 }
 
 void BNS_AppWindow::onFocus()

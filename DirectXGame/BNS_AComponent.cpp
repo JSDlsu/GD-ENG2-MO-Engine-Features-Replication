@@ -15,7 +15,7 @@ BNS_AComponent::~BNS_AComponent()
 
 void BNS_AComponent::AttachOwner(AGameObjectPtr owner)
 {
-	owner = owner;
+	this->owner = owner;
 }
 
 void BNS_AComponent::DetachOwner()

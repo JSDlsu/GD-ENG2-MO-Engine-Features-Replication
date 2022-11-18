@@ -3,6 +3,8 @@
 #include <vector>
 
 #include "BNS_EnumHandler.h"
+#include "BNS_PhysicsComponent.h"
+#include "BNS_Physics_Prerequisites.h"
 #include "Matrix4x4.h"
 #include "BNS_Prerequisites.h"
 #include "Vector3D.h"
@@ -17,7 +19,7 @@ class BNS_AppWindow;
 class BNS_AGameObject
 {
 	typedef std::string String;
-	typedef std::vector<BNS_AComponent*> ComponentList;
+	typedef std::vector<AComponentPtr> ComponentList;
 public:
 	BNS_AGameObject(std::string name ,BNS_ObjectTypes type);
 	virtual ~BNS_AGameObject();
@@ -52,11 +54,11 @@ public:
 	void RecomputeMatrix(float matrix[16]);
 	Matrix4x4 GetMatrix();
 public:
-	void AttachComponent(BNS_AComponent* component);
-	void DetachComponent(BNS_AComponent* component);
+	void AttachComponent(const AComponentPtr& component);
+	void DetachComponent(const AComponentPtr& component);
 
-	BNS_AComponent* FindComponentByName(String name);
-	BNS_AComponent* FindComponentOfType(ComponentType type, String name);
+	AComponentPtr FindComponentByName(String name);
+	AComponentPtr FindComponentOfType(ComponentType type, String name);
 	ComponentList GetComponentsOfType(ComponentType type);
 	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
 protected:
@@ -68,5 +70,7 @@ protected:
 	float alpha = 1.0f;
 	ComponentList componentList;
 	bool overrideMatrix = false;
+public:
+	AComponentPtr temporary_ptr = nullptr;
 };
 

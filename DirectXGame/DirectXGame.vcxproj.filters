@@ -530,6 +530,9 @@
     <ClInclude Include="BNS_AComponent.h">
       <Filter>GameEngine\BaseSystem</Filter>
     </ClInclude>
+    <ClInclude Include="BNS_Physics_Prerequisites.h">
+      <Filter>GameEngine\PhysicsSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">

@@ -30,7 +30,7 @@ BNS_Cube::BNS_Cube(std::string name, BNS_ObjectTypes type) : BNS_AGameObject(nam
 
 BNS_Cube::~BNS_Cube()
 {
-
+	std::cout << "Bye bye cube!\n";
 }
 
 void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
@@ -47,6 +47,9 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	// objects matrix
 	Matrix4x4 temp;
 	cc.m_world.setIdentity();
+	if (this->overrideMatrix) {
+		cc.m_world = m_matrix;
+	}
 	temp.setScale(m_scale);
 	cc.m_world *= temp;
 	temp.setRotationX(m_rotation.m_x);
@@ -57,6 +60,8 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	cc.m_world *= temp;
 	temp.setTranslation(m_position);
 	cc.m_world *= temp;
+	// update m_matrix
+	m_matrix = cc.m_world;
 
 	// creating the camera matrix
 	Matrix4x4 cameraMatrix = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();

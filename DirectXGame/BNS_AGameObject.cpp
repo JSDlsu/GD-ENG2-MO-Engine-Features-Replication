@@ -29,11 +29,13 @@ void BNS_AGameObject::SetTransform(Vector3D position, Vector3D scale, Vector3D r
 void BNS_AGameObject::SetPosition(float x, float y, float z)
 {
 	m_position = Vector3D{ x,y,z };
+	this->overrideMatrix = false;
 }
 
 void BNS_AGameObject::SetPosition(Vector3D pos)
 {
 	m_position = pos;
+	this->overrideMatrix = false;
 }
 
 Vector3D BNS_AGameObject::GetLocalPosition()
@@ -44,11 +46,13 @@ Vector3D BNS_AGameObject::GetLocalPosition()
 void BNS_AGameObject::SetScale(float x, float y, float z)
 {
 	m_scale = Vector3D{ x,y,z };
+	this->overrideMatrix = false;
 }
 
 void BNS_AGameObject::SetScale(Vector3D scale)
 {
 	m_scale = scale;
+	this->overrideMatrix = false;
 }
 
 Vector3D BNS_AGameObject::GetLocalScale()
@@ -59,11 +63,13 @@ Vector3D BNS_AGameObject::GetLocalScale()
 void BNS_AGameObject::SetRotation(float x, float y, float z)
 {
 	m_rotation = Vector3D{ x,y,z };
+	this->overrideMatrix = false;
 }
 
 void BNS_AGameObject::SetRotation(Vector3D rot)
 {
 	m_rotation = rot;
+	this->overrideMatrix = false;
 }
 
 Vector3D BNS_AGameObject::GetLocalRotation()
@@ -81,18 +87,18 @@ Matrix4x4 BNS_AGameObject::GetMatrix()
 	return m_matrix;
 }
 
-void BNS_AGameObject::AttachComponent(BNS_AComponent* component)
+void BNS_AGameObject::AttachComponent(const AComponentPtr& component)
 {
 	componentList.push_back(component);
 	AGameObjectPtr temp(this);
 	component->AttachOwner(temp);
 }
 
-void BNS_AGameObject::DetachComponent(BNS_AComponent* component)
+void BNS_AGameObject::DetachComponent(const AComponentPtr& component)
 {
 	int index = -1;
 	for (int i = 0; i < this->componentList.size(); i++) {
-		if (this->componentList[i] == component) {
+		if (this->componentList[i].get() == component.get()) {
 			index = i;
 			break;
 		}
@@ -102,7 +108,7 @@ void BNS_AGameObject::DetachComponent(BNS_AComponent* component)
 	}
 }
 
-BNS_AComponent* BNS_AGameObject::FindComponentByName(String name)
+AComponentPtr BNS_AGameObject::FindComponentByName(String name)
 {
 	for (int i = 0; i < this->componentList.size(); i++) {
 		if (this->componentList[i]->GetName() == name) {
@@ -113,7 +119,7 @@ BNS_AComponent* BNS_AGameObject::FindComponentByName(String name)
 	return nullptr;
 }
 
-BNS_AComponent* BNS_AGameObject::FindComponentOfType(ComponentType type, String name)
+AComponentPtr BNS_AGameObject::FindComponentOfType(ComponentType type, String name)
 {
 	for (int i = 0; i < this->componentList.size(); i++) {
 		if (this->componentList[i]->GetName() == name && this->componentList[i]->GetType() == type) {

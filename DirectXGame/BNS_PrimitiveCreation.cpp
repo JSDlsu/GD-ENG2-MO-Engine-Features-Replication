@@ -5,6 +5,9 @@
 #include "BNS_Cube.h"
 #include "BNS_GameObjectManager.h"
 #include "BNS_GraphicsEngine.h"
+#include "BNS_PhysicsComponent.h"
+#include "BNS_PhysicsSystem.h"
+#include "BNS_Physics_Prerequisites.h"
 #include "BNS_Plane.h"
 #include "BNS_ShaderEngine.h"
 
@@ -52,7 +55,6 @@ void BNS_PrimitiveCreation::ChangeVB_IB_Buffer(BNS_VertexShaderType vs_type, Ver
 
 void BNS_PrimitiveCreation::CreateCube()
 {
-	std::cout << "Create Cube" << std::endl;
 	const char* name = "cube";
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
@@ -73,6 +75,12 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 	AGameObjectPtr temp_ptr(cube);
+
+	// adding physics component
+	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysCube", temp_ptr);
+	AComponentPtr phys_temp(physicsComp);
+	cube->temporary_ptr = phys_temp;
+	temp_ptr.get()->AttachComponent(phys_temp);
 	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
 }
 
@@ -83,8 +91,15 @@ void BNS_PrimitiveCreation::CreatePlane()
 	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
 	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
-	plane->SetPosition(Vector3D{ 0, 0, 0 });
+	plane->SetPosition(Vector3D{ 0, -5, 0 });
 	AGameObjectPtr temp_ptr(plane);
+
+	// adding physics component
+	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", temp_ptr);
+	physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
+	AComponentPtr phys_temp(physicsComp);
+	plane->temporary_ptr = phys_temp;
+	temp_ptr.get()->AttachComponent(phys_temp);
 	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
 }
 

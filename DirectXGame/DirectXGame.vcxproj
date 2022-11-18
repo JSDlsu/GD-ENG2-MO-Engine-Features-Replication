@@ -242,6 +242,7 @@
     <ClInclude Include="BNS_InputListener.h" />
     <ClInclude Include="BNS_InputSystem.h" />
     <ClInclude Include="BNS_Inspector_UI.h" />
+    <ClInclude Include="BNS_Physics_Prerequisites.h" />
     <ClInclude Include="BNS_RenderToTexture.h" />
     <ClInclude Include="BNS_SceneView_UI.h" />
     <ClInclude Include="BNS_Console_UI.h" />
