@@ -5,6 +5,8 @@
 #include "BNS_UIManager.h"
 #include "IMGUI/imgui.h"
 
+static BNS_Window* windowInstance = nullptr;
+
 //declare for handling mouse and key events in IMGUI.
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -29,8 +31,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	case WM_SIZE:
 	{
 		// Event fired when the window is resized
-		BNS_Window* window = (BNS_Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-		if (window) window->onSize();
+		windowInstance->onSize();
 
 		break;
 	}
@@ -38,24 +39,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	case WM_SETFOCUS:
 	{
 		// Event fired when the window get focus
-		BNS_Window* window = (BNS_Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-		if (window) window->onFocus();
+		windowInstance->onFocus();
 		break;
 	}
 
 	case WM_KILLFOCUS:
 	{
 		// Event fired when the window lost focus
-		BNS_Window* window = (BNS_Window*)GetWindowLong(hwnd, GWLP_USERDATA);
-		window->onKillFocus();
+		windowInstance->onKillFocus();
 		break;
 	}
 
 	case WM_DESTROY:
 	{
 		// Event fired when the window is destroyed
-		BNS_Window* window = (BNS_Window*)GetWindowLong(hwnd, GWLP_USERDATA);
-		window->onDestroy();
+		windowInstance->onDestroy();
 		::PostQuitMessage(0);
 		break;
 	}
@@ -69,6 +67,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 BNS_Window::BNS_Window()
 {
+	windowInstance = this;
 	// Set appearance for our windows; Setting up WNDCLASSEX object
 	// WNDCLASSEX contains the properties of the window
 	WNDCLASSEX wc;
