@@ -80,7 +80,6 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 	// adding physics component
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysCube", temp_ptr);
 	AComponentPtr phys_temp(physicsComp);
-	cube->temporary_ptr = phys_temp;
 	temp_ptr.get()->AttachComponent(phys_temp);
 	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
 }
@@ -92,14 +91,13 @@ void BNS_PrimitiveCreation::CreatePlane()
 	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
 	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
-	plane->SetPosition(Vector3D{ 0, -1, 0 });
+	plane->SetPosition(Vector3D{ 0, -10, 0 });
 	AGameObjectPtr temp_ptr(plane);
 
 	// adding physics component
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", temp_ptr);
 	physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
 	AComponentPtr phys_temp(physicsComp);
-	plane->temporary_ptr = phys_temp;
 	temp_ptr.get()->AttachComponent(phys_temp);
 	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
 }

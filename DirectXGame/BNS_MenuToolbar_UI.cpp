@@ -80,7 +80,13 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 		if (ImGui::MenuItem("Create Cube", NULL))
 			BNS_PrimitiveCreation::Instance()->CreateCube();
 		if (ImGui::MenuItem("Create Textured Cube", NULL))
-			BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
+		{
+			for (int i = 0; i < 20; ++i)
+			{
+				BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
+			}
+		}
+		//BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
 		if (ImGui::MenuItem("Create Plane", NULL))
 			BNS_PrimitiveCreation::Instance()->CreatePlane();
 		if (ImGui::MenuItem("Create Teapot", NULL))

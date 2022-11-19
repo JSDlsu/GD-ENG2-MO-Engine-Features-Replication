@@ -7,6 +7,8 @@ class BNS_PhysicsComponent : public BNS_AComponent
 public:
 	BNS_PhysicsComponent(String name, AGameObjectPtr owner);
 	~BNS_PhysicsComponent() override;
+	// update rigidBody
+	void UpdateRigidBody();
 	// executes the physics system per frame
 	void Perform(float deltaTime) override;
 	RigidBody* GetRigidBody();
@@ -14,5 +16,6 @@ public:
 private:
 	float mass = 1000.0f; // in kilograms
 	RigidBody* rigidBody;
+	BoxShape* boxShape = nullptr;
 };
 

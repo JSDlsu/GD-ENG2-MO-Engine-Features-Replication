@@ -29,12 +29,26 @@ void BNS_AGameObject::SetTransform(Vector3D position, Vector3D scale, Vector3D r
 void BNS_AGameObject::SetPosition(float x, float y, float z)
 {
 	m_position = Vector3D{ x,y,z };
+	/*
+	AComponentPtr temp = FindComponentOfType(ComponentType::Physics);
+	if ( temp != nullptr)
+	{
+		dynamic_cast<BNS_PhysicsComponent*>(temp.get())->UpdateRigidBody();
+	}
+	*/
 	this->overrideMatrix = false;
 }
 
 void BNS_AGameObject::SetPosition(Vector3D pos)
 {
 	m_position = pos;
+	/*
+	AComponentPtr temp = FindComponentOfType(ComponentType::Physics);
+	if ( temp != nullptr)
+	{
+		dynamic_cast<BNS_PhysicsComponent*>(temp.get())->UpdateRigidBody();
+	}
+	*/
 	this->overrideMatrix = false;
 }
 
@@ -46,12 +60,26 @@ Vector3D BNS_AGameObject::GetLocalPosition()
 void BNS_AGameObject::SetScale(float x, float y, float z)
 {
 	m_scale = Vector3D{ x,y,z };
+	/*
+	AComponentPtr temp = FindComponentOfType(ComponentType::Physics);
+	if ( temp != nullptr)
+	{
+		dynamic_cast<BNS_PhysicsComponent*>(temp.get())->UpdateRigidBody();
+	}
+	*/
 	this->overrideMatrix = false;
 }
 
 void BNS_AGameObject::SetScale(Vector3D scale)
 {
 	m_scale = scale;
+	/*
+	AComponentPtr temp = FindComponentOfType(ComponentType::Physics);
+	if ( temp != nullptr)
+	{
+		dynamic_cast<BNS_PhysicsComponent*>(temp.get())->UpdateRigidBody();
+	}
+	*/
 	this->overrideMatrix = false;
 }
 
@@ -63,12 +91,26 @@ Vector3D BNS_AGameObject::GetLocalScale()
 void BNS_AGameObject::SetRotation(float x, float y, float z)
 {
 	m_rotation = Vector3D{ x,y,z };
+	/*
+	AComponentPtr temp = FindComponentOfType(ComponentType::Physics);
+	if ( temp != nullptr)
+	{
+		dynamic_cast<BNS_PhysicsComponent*>(temp.get())->UpdateRigidBody();
+	}
+	*/
 	this->overrideMatrix = false;
 }
 
 void BNS_AGameObject::SetRotation(Vector3D rot)
 {
 	m_rotation = rot;
+	/*
+	AComponentPtr temp = FindComponentOfType(ComponentType::Physics);
+	if ( temp != nullptr)
+	{
+		dynamic_cast<BNS_PhysicsComponent*>(temp.get())->UpdateRigidBody();
+	}
+	*/
 	this->overrideMatrix = false;
 }
 
@@ -121,9 +163,20 @@ AComponentPtr BNS_AGameObject::FindComponentByName(String name)
 
 AComponentPtr BNS_AGameObject::FindComponentOfType(ComponentType type, String name)
 {
-	for (int i = 0; i < this->componentList.size(); i++) {
-		if (this->componentList[i]->GetName() == name && this->componentList[i]->GetType() == type) {
-			return this->componentList[i];
+	if (name.empty())
+	{
+		for (int i = 0; i < componentList.size(); i++) {
+			if (componentList[i]->GetType() == type) {
+				return componentList[i];
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < componentList.size(); i++) {
+			if (componentList[i]->GetName() == name && componentList[i]->GetType() == type) {
+				return componentList[i];
+			}
 		}
 	}
 
@@ -211,10 +264,25 @@ void BNS_AGameObject::RecomputeMatrix(float matrix[16])
 	matrix4x4[3][3] = matrix[15];
 
 	Matrix4x4 newMatrix; newMatrix.setMatrix(matrix4x4);
-	Matrix4x4 scaleMatrix; scaleMatrix.setScale(GetLocalScale());
-	Matrix4x4 transMatrix; transMatrix.setTranslation(GetLocalPosition());
+	Matrix4x4 scaleMatrix; scaleMatrix.setScale(m_scale);
+	Matrix4x4 transMatrix; transMatrix.setTranslation(m_position);
 	m_matrix = scaleMatrix.MultiplyTo(transMatrix.MultiplyTo(newMatrix));
 	this->overrideMatrix = true;
 }
+
+/*
+ * 
+	Matrix4x4 scaleMatrix; scaleMatrix.setScale(m_scale);
+	newMatrix *= scaleMatrix;
+	Matrix4x4 rotMatrix; rotMatrix.setRotationX(m_rotation.m_x);
+	newMatrix *= rotMatrix;
+	rotMatrix.setRotationY(m_rotation.m_y);
+	newMatrix *= rotMatrix;
+	rotMatrix.setRotationZ(m_rotation.m_z);
+	newMatrix *= rotMatrix;
+	Matrix4x4 transMatrix; transMatrix.setTranslation(m_position);
+	newMatrix *= transMatrix;
+	m_matrix = newMatrix;
+ */
 
 

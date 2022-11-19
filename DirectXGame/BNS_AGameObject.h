@@ -58,7 +58,7 @@ public:
 	void DetachComponent(const AComponentPtr& component);
 
 	AComponentPtr FindComponentByName(String name);
-	AComponentPtr FindComponentOfType(ComponentType type, String name);
+	AComponentPtr FindComponentOfType(ComponentType type, String name = "");
 	ComponentList GetComponentsOfType(ComponentType type);
 	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
 protected:
@@ -70,7 +70,5 @@ protected:
 	float alpha = 1.0f;
 	ComponentList componentList;
 	bool overrideMatrix = false;
-public:
-	AComponentPtr temporary_ptr = nullptr;
 };
 
