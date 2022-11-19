@@ -15,7 +15,11 @@ BNS_AGameObject::~BNS_AGameObject()
 	for (int i = 0; i < this->componentList.size(); i++) {
 		this->componentList[i]->DetachOwner();
 	}
-	this->componentList.clear();
+
+	std::cout << "size: " << componentList.size() << std::endl;
+
+	if(!this->componentList.empty())
+		while (componentList.size()) componentList.erase(componentList.begin());
 }
 
 void BNS_AGameObject::Draw(const BlenderPtr& m_blender)

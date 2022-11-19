@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <vector>
 #include "BNS_Prerequisites.h"
 
@@ -20,6 +21,8 @@ public:
 	static void release();
 	std::vector<AGameObjectPtr>& GetObjectList();
 	std::vector<AGameObjectPtr>& GetRenderObjectList();
+	void deleteObject(AGameObjectPtr gameObject);
+	void deleteObjectByName(std::string name);
 
 private:
 	std::vector<AGameObjectPtr> objectList;

@@ -33,6 +33,12 @@ void BNS_Hierarchy_UI::DrawUI()
             {
 	            node_flags |= ImGuiTreeNodeFlags_Selected;
                 selectedGameObject = objects[i];
+
+                //test, for deleting objects at hierarchy with del key
+                if(ImGui::IsKeyPressed(ImGuiKey_Delete))
+                {
+                    BNS_GameObjectManager::get()->deleteObject(selectedGameObject);
+                }
             }
 
             bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, objects[i]->GetName().c_str(), i);

@@ -21,8 +21,7 @@ void BNS_AComponent::AttachOwner(AGameObjectPtr owner)
 void BNS_AComponent::DetachOwner()
 {
     //if object owner gets detached. then component must also be deleted.
-    owner = nullptr;
-    delete this;
+    owner = NULL;
 }
 
 AGameObjectPtr BNS_AComponent::GetOwner()
