@@ -22,6 +22,8 @@ public:
 	void CreateTeapot();
 	void CreateBunny();
 	void CreateArmadillo();
+	void CreateMeshFromFile(std::string full_filepath, std::string localName);
+
 private:
 	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
 	void GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);

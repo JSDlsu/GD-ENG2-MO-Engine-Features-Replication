@@ -144,6 +144,39 @@ void BNS_PrimitiveCreation::CreateArmadillo()
 	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
 }
 
+void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::string localName)
+{
+	
+	std::wstring tempPath = std::wstring(full_filepath.begin(), full_filepath.end());
+	LPCWSTR convertedFilepath = tempPath.c_str();
+
+	std::string tempname;
+	std::string::size_type pos = localName.find('.');
+	if (pos != std::string::npos)
+	{
+		tempname = localName.substr(0, pos);
+	}
+	else
+	{
+		tempname = localName;
+	}
+	const char* name = tempname.c_str();
+
+	
+
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
+	cube->SetMesh(convertedFilepath);
+	cube->SetTexture(L"Assets\\Textures\\brick.png");
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	AGameObjectPtr temp_ptr(cube);
+	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+	
+
+}
+
 void BNS_PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)
 {
 

@@ -1,5 +1,6 @@
 #include "BNS_ContentBrowser_UI.h"
 #include "BNS_FileExplorer.h"
+#include "BNS_PrimitiveCreation.h"
 #include "BNS_Texture.h"
 
 std::filesystem::path const BNS_ContentBrowser_UI::s_AssetPath = "Assets";
@@ -44,6 +45,7 @@ void BNS_ContentBrowser_UI::DrawUI()
 		auto relativePath = std::filesystem::relative(path, s_AssetPath);
 		std::string filenameString = relativePath.filename().string();
 
+
 		// creates an icon to the file
 		TexturePtr icon = directory_entry.is_directory() ? 
 			BNS_FileExplorer::GetInstance()->GetImageHashTable()["folder_icon"] :
@@ -60,6 +62,17 @@ void BNS_ContentBrowser_UI::DrawUI()
 			{
 				m_CurrentDirectory /= path.filename();
 			}
+			
+			else //if selection is a file
+			{
+				//get the file extension for 3 LETTER WORD EXTENSIONS (works for opening obj files)
+				std::string fileExtension = filenameString.substr(filenameString.find('.') + 1, 3);
+				if(fileExtension == "obj")
+				{
+					BNS_PrimitiveCreation::Instance()->CreateMeshFromFile(path.string(), filenameString);
+				}
+			}
+				
 		}
 		ImGui::TextWrapped(filenameString.c_str());
 
