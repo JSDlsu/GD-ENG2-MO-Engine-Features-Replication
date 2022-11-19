@@ -19,7 +19,7 @@ class BNS_AppWindow;
 class BNS_AGameObject
 {
 	typedef std::string String;
-	typedef std::vector<AComponentPtr> ComponentList;
+	typedef std::vector<BNS_AComponent*> ComponentList;
 public:
 	BNS_AGameObject(std::string name ,BNS_ObjectTypes type);
 	virtual ~BNS_AGameObject();
@@ -54,11 +54,11 @@ public:
 	void RecomputeMatrix(float matrix[16]);
 	Matrix4x4 GetMatrix();
 public:
-	void AttachComponent(const AComponentPtr& component);
-	void DetachComponent(const AComponentPtr& component);
+	void AttachComponent(BNS_AComponent* component);
+	void DetachComponent(BNS_AComponent* component);
 
-	AComponentPtr FindComponentByName(String name);
-	AComponentPtr FindComponentOfType(ComponentType type, String name = "");
+	BNS_AComponent* FindComponentByName(String name);
+	BNS_AComponent* FindComponentOfType(ComponentType type, String name = "");
 	ComponentList GetComponentsOfType(ComponentType type);
 	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
 protected:

@@ -12,8 +12,8 @@ BNS_PhysicsComponent::BNS_PhysicsComponent(String name, AGameObjectPtr owner) : 
 
 BNS_PhysicsComponent::~BNS_PhysicsComponent()
 {
-	BNS_AComponent::~BNS_AComponent();
 	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UnRegisterComponent(this);
+	BNS_AComponent::~BNS_AComponent();
 }
 
 void BNS_PhysicsComponent::UpdateRigidBody()

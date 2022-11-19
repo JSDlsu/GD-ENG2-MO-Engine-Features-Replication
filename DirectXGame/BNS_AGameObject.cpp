@@ -12,6 +12,10 @@ BNS_AGameObject::BNS_AGameObject(std::string name, BNS_ObjectTypes type) : name(
 
 BNS_AGameObject::~BNS_AGameObject()
 {
+	for (int i = 0; i < this->componentList.size(); i++) {
+		this->componentList[i]->DetachOwner();
+	}
+	this->componentList.clear();
 }
 
 void BNS_AGameObject::Draw(const BlenderPtr& m_blender)
@@ -129,18 +133,18 @@ Matrix4x4 BNS_AGameObject::GetMatrix()
 	return m_matrix;
 }
 
-void BNS_AGameObject::AttachComponent(const AComponentPtr& component)
+void BNS_AGameObject::AttachComponent(BNS_AComponent* component)
 {
 	componentList.push_back(component);
 	AGameObjectPtr temp(this);
 	component->AttachOwner(temp);
 }
 
-void BNS_AGameObject::DetachComponent(const AComponentPtr& component)
+void BNS_AGameObject::DetachComponent(BNS_AComponent* component)
 {
 	int index = -1;
 	for (int i = 0; i < this->componentList.size(); i++) {
-		if (this->componentList[i].get() == component.get()) {
+		if (this->componentList[i] == component) {
 			index = i;
 			break;
 		}
@@ -150,7 +154,7 @@ void BNS_AGameObject::DetachComponent(const AComponentPtr& component)
 	}
 }
 
-AComponentPtr BNS_AGameObject::FindComponentByName(String name)
+BNS_AComponent* BNS_AGameObject::FindComponentByName(String name)
 {
 	for (int i = 0; i < this->componentList.size(); i++) {
 		if (this->componentList[i]->GetName() == name) {
@@ -161,7 +165,7 @@ AComponentPtr BNS_AGameObject::FindComponentByName(String name)
 	return nullptr;
 }
 
-AComponentPtr BNS_AGameObject::FindComponentOfType(ComponentType type, String name)
+BNS_AComponent* BNS_AGameObject::FindComponentOfType(ComponentType type, String name)
 {
 	if (name.empty())
 	{
@@ -265,8 +269,16 @@ void BNS_AGameObject::RecomputeMatrix(float matrix[16])
 
 	Matrix4x4 newMatrix; newMatrix.setMatrix(matrix4x4);
 	Matrix4x4 scaleMatrix; scaleMatrix.setScale(m_scale);
+	newMatrix *= scaleMatrix;
+	Matrix4x4 rotMatrix; rotMatrix.setRotationX(m_rotation.m_x);
+	newMatrix *= rotMatrix;
+	rotMatrix.setRotationY(m_rotation.m_y);
+	newMatrix *= rotMatrix;
+	rotMatrix.setRotationZ(m_rotation.m_z);
+	newMatrix *= rotMatrix;
 	Matrix4x4 transMatrix; transMatrix.setTranslation(m_position);
-	m_matrix = scaleMatrix.MultiplyTo(transMatrix.MultiplyTo(newMatrix));
+	newMatrix *= transMatrix;
+	m_matrix = newMatrix;
 	this->overrideMatrix = true;
 }
 

@@ -38,7 +38,33 @@ void BNS_Inspector_UI::DrawUI()
 		selectedGO.get()->SetRotation(rot[0], rot[1], rot[2]);
 		selectedGO.get()->SetScale(scale[0], scale[1], scale[2]);
 	}
-	
+	if (selectedGO != nullptr)
+	{
+		// use to access physics component
+		BNS_AComponent* physics_comp = selectedGO.get()->FindComponentOfType(ComponentType::Physics);
+		if (physics_comp != nullptr)
+		{
+			ImGui::Separator();
+			BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
+
+			//ImGui::Text("Body Type");
+			static const char* items[] = { "Dynamic", "Kinematic" , "Static"};
+			static int selectedItem = 0;
+			ImGui::Combo("Body Type", &selectedItem, items, IM_ARRAYSIZE(items));
+			if (selectedItem == 0)
+			{
+				physicsComp->GetRigidBody()->setType(BodyType::DYNAMIC);
+			}
+			if (selectedItem == 1)
+			{
+				physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
+			}
+			else
+			{
+				physicsComp->GetRigidBody()->setType(BodyType::STATIC);
+			}
+		}
+	}
 	
 
 
