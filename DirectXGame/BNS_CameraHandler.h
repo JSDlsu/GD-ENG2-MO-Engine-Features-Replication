@@ -14,7 +14,7 @@ private:
 
 	static BNS_CameraHandler* sharedInstance;
 private:
-	CameraPtr sceneCamera;
+	BNS_Camera* sceneCamera;
 public:
 	static void Initialize();
 	static BNS_CameraHandler* GetInstance();
@@ -25,6 +25,6 @@ public:
 	Matrix4x4 GetSceneCameraPerspecMatrix();
 	Matrix4x4 GetSceneCameraMatrix();
 	Vector3D GetSceneCameraPos();
-	CameraPtr GetSceneCamera();
+	BNS_Camera* GetSceneCamera();
 };
 

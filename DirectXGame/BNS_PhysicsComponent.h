@@ -5,7 +5,7 @@ using namespace reactphysics3d;
 class BNS_PhysicsComponent : public BNS_AComponent
 {
 public:
-	BNS_PhysicsComponent(String name, AGameObjectPtr owner);
+	BNS_PhysicsComponent(String name, BNS_AGameObject* owner);
 	~BNS_PhysicsComponent() override;
 	// update rigidBody
 	void UpdateRigidBody();

@@ -17,16 +17,16 @@ class Matrix4x4;
 struct BNS_TransparencyFilterPolicy
 {
 private:
-	CameraPtr _camera;
+	BNS_Camera* _camera;
 public:
-	void SetCamera(const CameraPtr& camera)
+	void SetCamera(BNS_Camera* camera)
 	{
 		_camera = camera;
 	}
 	// ignore Opaque pass
-	bool ShouldRender(AGameObjectPtr object)
+	bool ShouldRender(BNS_AGameObject* object)
 	{
-		if (object.get()->GetAlpha() >= 1.0f)
+		if (object->GetAlpha() >= 1.0f)
 			return false;
 		return true;
 	}
@@ -35,16 +35,16 @@ public:
 struct BNS_OpaqueFilterPolicy
 {
 private:
-	CameraPtr _camera;
+	BNS_Camera* _camera;
 public:
-	void SetCamera(const CameraPtr& camera)
+	void SetCamera(BNS_Camera* camera)
 	{
 		_camera = camera;
 	}
 	// ignore Transparent pass
-	bool ShouldRender(AGameObjectPtr object)
+	bool ShouldRender(BNS_AGameObject* object)
 	{
-		if (object.get()->GetAlpha() < 1.0f)
+		if (object->GetAlpha() < 1.0f)
 			return false;
 		return true;
 	}
@@ -53,57 +53,43 @@ public:
 struct BNS_BackToFrontPolicy
 {
 private:
-	CameraPtr _camera;
+	BNS_Camera* _camera;
 public:
-	void SetCamera(const CameraPtr& camera)
+	void SetCamera(BNS_Camera* camera)
 	{
 		_camera = camera;
 	}
-	std::vector<AGameObjectPtr> sort(std::vector<AGameObjectPtr> inputArray)
+	std::vector<BNS_AGameObject*> sort(std::vector<BNS_AGameObject*> inputArray)
 	{
-		std::sort(inputArray.begin(), inputArray.end(), [&](AGameObjectPtr& lhs, AGameObjectPtr& rhs)
+		std::sort(inputArray.begin(), inputArray.end(), [&](BNS_AGameObject* lhs, BNS_AGameObject* rhs)
 			{
-				return lhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) >
-					rhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition());
+				return lhs->GetLocalPosition().GetMagnitude(_camera->GetLocalPosition()) >
+					rhs->GetLocalPosition().GetMagnitude(_camera->GetLocalPosition());
 			});
 		return inputArray;
 		
-	}
-private:
-	void swap(AGameObjectPtr& xp, AGameObjectPtr& yp)
-	{
-		AGameObjectPtr temp = xp;
-		xp = yp;
-		yp = temp;
 	}
 };
 
 struct BNS_FrontToBackPolicy
 {
 private:
-	CameraPtr _camera;
+	BNS_Camera* _camera;
 public:
-	void SetCamera(const CameraPtr& camera)
+	void SetCamera(BNS_Camera* camera)
 	{
 		_camera = camera;
 	}
-	std::vector<AGameObjectPtr> sort(std::vector<AGameObjectPtr> inputArray)
+	std::vector<BNS_AGameObject*> sort(std::vector<BNS_AGameObject*> inputArray)
 	{
-		std::sort(inputArray.begin(), inputArray.end(), [&](AGameObjectPtr& lhs, AGameObjectPtr& rhs)
+		std::sort(inputArray.begin(), inputArray.end(), [&](BNS_AGameObject* lhs, BNS_AGameObject* rhs)
 			{
-				return lhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition()) <
-					rhs->GetLocalPosition().GetMagnitude(_camera.get()->GetLocalPosition());
+				return lhs->GetLocalPosition().GetMagnitude(_camera->GetLocalPosition()) <
+					rhs->GetLocalPosition().GetMagnitude(_camera->GetLocalPosition());
 			});
 
 		return inputArray;
 
-	}
-private:
-	void swap(AGameObjectPtr& xp, AGameObjectPtr& yp)
-	{
-		AGameObjectPtr temp = xp;
-		xp = yp;
-		yp = temp;
 	}
 };
 

@@ -31,62 +31,55 @@ void BNS_GameObjectManager::release()
 	delete BNS_GameObjectManager::m_instance;
 }
 
-std::vector<AGameObjectPtr>& BNS_GameObjectManager::GetObjectList()
+std::vector<BNS_AGameObject*>& BNS_GameObjectManager::GetObjectList()
 {
 	return objectList;
 }
 
-std::vector<AGameObjectPtr>& BNS_GameObjectManager::GetRenderObjectList()
+std::vector<BNS_AGameObject*>& BNS_GameObjectManager::GetRenderObjectList()
 {
 	render_objectList = objectList;
 	return render_objectList;
 }
 
 
-void BNS_GameObjectManager::deleteObject(AGameObjectPtr gameObject)
+void BNS_GameObjectManager::DeleteObject(BNS_AGameObject* gameObject)
 {
-	
 	int indexObjList = -1;
 	int indexRenderList = -1;
 
-	//DELETE AT OBJECT LIST
-	for (int i = 0; i < this->objectList.size(); i++)
+	// DELETE AT OBJECT LIST
+	for (int i = 0; i < objectList.size(); i++)
 	{
-		if (this->objectList[i] == gameObject)
+		if (objectList[i] == gameObject)
 		{
 			indexObjList = i;
+			delete objectList[i];
 			break;
 		}
 	}
-
 	
-
-	//DELETE AT RENDER OBJECT LIST
-	for (int i = 0; i < this->render_objectList.size(); i++)
+	for (int i = 0; i < render_objectList.size(); i++)
 	{
-		if (this->render_objectList[i] == gameObject)
+		if (render_objectList[i] == gameObject)
 		{
 			indexRenderList = i;
 			break;
 		}
 	}
-	 
+
 	if (indexObjList != -1)
 	{
-		this->objectList.erase(this->objectList.begin() + indexObjList);
+		objectList.erase(objectList.begin() + indexObjList);
 	}
 	if (indexRenderList != -1)
 	{
-		this->render_objectList.erase(this->render_objectList.begin() + indexRenderList);
+		render_objectList.erase(render_objectList.begin() + indexRenderList);
 	}
-	
-	
-	
 
-	//gameObject.reset();
 }
 
-void BNS_GameObjectManager::deleteObjectByName(std::string name)
+void BNS_GameObjectManager::DeleteObjectByName(std::string name)
 {
 }
 

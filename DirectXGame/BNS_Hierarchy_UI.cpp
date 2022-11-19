@@ -24,7 +24,7 @@ void BNS_Hierarchy_UI::DrawUI()
         int node_clicked = -1;
 
         // Call each object's in the scene
-        std::vector<AGameObjectPtr> objects = BNS_GameObjectManager::get()->GetObjectList();
+        std::vector<BNS_AGameObject*> objects = BNS_GameObjectManager::get()->GetObjectList();
         for (int i = 0; i < objects.size(); i++)
         {
             ImGuiTreeNodeFlags node_flags = base_flags;
@@ -89,7 +89,7 @@ void BNS_Hierarchy_UI::DrawUI()
     {
         if (ImGui::IsKeyPressed(ImGuiKey_Delete))
         {
-            BNS_GameObjectManager::get()->deleteObject(selectedGameObject);
+            BNS_GameObjectManager::get()->DeleteObject(selectedGameObject);
         }
     }
     else

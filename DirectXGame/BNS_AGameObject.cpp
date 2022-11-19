@@ -141,8 +141,7 @@ Matrix4x4 BNS_AGameObject::GetMatrix()
 void BNS_AGameObject::AttachComponent(BNS_AComponent* component)
 {
 	componentList.push_back(component);
-	AGameObjectPtr temp(this);
-	component->AttachOwner(temp);
+	component->AttachOwner(this);
 }
 
 void BNS_AGameObject::DetachComponent(BNS_AComponent* component)

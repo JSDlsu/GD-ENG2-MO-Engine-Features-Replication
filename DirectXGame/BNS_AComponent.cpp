@@ -1,6 +1,6 @@
 #include "BNS_AComponent.h"
 
-BNS_AComponent::BNS_AComponent(String name, ComponentType type, AGameObjectPtr owner)
+BNS_AComponent::BNS_AComponent(String name, ComponentType type, BNS_AGameObject* owner)
 {
     this->name = name;
     this->owner = owner;
@@ -13,7 +13,7 @@ BNS_AComponent::~BNS_AComponent()
     type = ComponentType::NotSet;
 }
 
-void BNS_AComponent::AttachOwner(AGameObjectPtr owner)
+void BNS_AComponent::AttachOwner(BNS_AGameObject* owner)
 {
 	this->owner = owner;
 }
@@ -24,7 +24,7 @@ void BNS_AComponent::DetachOwner()
     owner = NULL;
 }
 
-AGameObjectPtr BNS_AComponent::GetOwner()
+BNS_AGameObject* BNS_AComponent::GetOwner()
 {
     return owner;
 }

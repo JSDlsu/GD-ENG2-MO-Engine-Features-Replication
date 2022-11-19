@@ -99,7 +99,7 @@ void BNS_AppWindow::render()
 void BNS_AppWindow::update()
 {
 	// Call each object's constant buffer in the scene
-	std::vector<AGameObjectPtr>::iterator i;
+	std::vector<BNS_AGameObject*>::iterator i;
 	for (i = BNS_GameObjectManager::get()->objectList.begin(); i != BNS_GameObjectManager::get()->objectList.end(); ++i)
 	{
 		//std::static_pointer_cast<BNS_Cube>(*i)->m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);

@@ -3,7 +3,7 @@
 #include "BNS_AGameObject.h"
 #include "BNS_PhysicsSystem.h"
 
-BNS_PhysicsComponent::BNS_PhysicsComponent(String name, AGameObjectPtr owner) : BNS_AComponent(name, ComponentType::Physics, owner)
+BNS_PhysicsComponent::BNS_PhysicsComponent(String name, BNS_AGameObject* owner) : BNS_AComponent(name, ComponentType::Physics, owner)
 {
 	// whenever a new physics component is initialized. Register to physics system
 	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->RegisterComponent(this);
@@ -34,7 +34,7 @@ void BNS_PhysicsComponent::UpdateRigidBody()
 	float matrix[16];
 	transform.getOpenGLMatrix(matrix);
 
-	GetOwner().get()->RecomputeMatrix(matrix);
+	GetOwner()->RecomputeMatrix(matrix);
 }
 
 void BNS_PhysicsComponent::Perform(float deltaTime)
@@ -43,7 +43,7 @@ void BNS_PhysicsComponent::Perform(float deltaTime)
 	float matrix[16];
 	transform.getOpenGLMatrix(matrix);
 
-	GetOwner().get()->RecomputeMatrix(matrix);
+	GetOwner()->RecomputeMatrix(matrix);
 	//std::cout << "My component is updating: " << this->name << "\n";
 }
 

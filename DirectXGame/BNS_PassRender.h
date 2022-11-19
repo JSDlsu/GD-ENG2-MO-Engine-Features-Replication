@@ -20,13 +20,13 @@ template<typename FilteringPolicy, typename SortingPolicy>
 class BNS_PassRender
 {
 public:
-	void Render(const BlenderPtr& m_blender, const CameraPtr& camera)
+	void Render(const BlenderPtr& m_blender, BNS_Camera* camera)
 	{
 		m_sortingPolicy.SetCamera(camera);
 		m_filterPolicy.SetCamera(camera);
 
-		std::vector<AGameObjectPtr> objectsToRender = BNS_GameObjectManager::get()->GetRenderObjectList();
-		std::vector<AGameObjectPtr> sortedObjects = m_sortingPolicy.sort(objectsToRender);
+		std::vector<BNS_AGameObject*> objectsToRender = BNS_GameObjectManager::get()->GetRenderObjectList();
+		std::vector<BNS_AGameObject*> sortedObjects = m_sortingPolicy.sort(objectsToRender);
 		
 		for (auto object : sortedObjects)
 		{

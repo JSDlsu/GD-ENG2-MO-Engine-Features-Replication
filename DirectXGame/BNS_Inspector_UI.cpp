@@ -21,7 +21,7 @@ void BNS_Inspector_UI::DrawUI()
 {
 	//DRAW HERE
 	ImGui::Begin("Inspector");
-	AGameObjectPtr selectedGO = dynamic_cast<BNS_Hierarchy_UI*>(
+	BNS_AGameObject* selectedGO = dynamic_cast<BNS_Hierarchy_UI*>(
 		BNS_UIManager::GetInstance()->GetUIHashTable()[BNS_UINames::HIERARCHY_SCREEN].get())->selectedGameObject;
 	if (selectedGO == nullptr)
 	{
@@ -31,22 +31,22 @@ void BNS_Inspector_UI::DrawUI()
 	bool show = selectedGO != nullptr;
 	if ( show && ImGui::CollapsingHeader("Transform"))
 	{
-		vec3 pos = { selectedGO.get()->GetLocalPosition().m_x, selectedGO.get()->GetLocalPosition().m_y, selectedGO.get()->GetLocalPosition().m_z };
-		vec3 scale = { selectedGO.get()->GetLocalScale().m_x, selectedGO.get()->GetLocalScale().m_y, selectedGO.get()->GetLocalScale().m_z };
-		vec3 rot = { selectedGO.get()->GetLocalRotation().m_x, selectedGO.get()->GetLocalRotation().m_y, selectedGO.get()->GetLocalRotation().m_z };
+		vec3 pos = { selectedGO->GetLocalPosition().m_x, selectedGO->GetLocalPosition().m_y, selectedGO->GetLocalPosition().m_z };
+		vec3 scale = { selectedGO->GetLocalScale().m_x, selectedGO->GetLocalScale().m_y, selectedGO->GetLocalScale().m_z };
+		vec3 rot = { selectedGO->GetLocalRotation().m_x, selectedGO->GetLocalRotation().m_y, selectedGO->GetLocalRotation().m_z };
 
 		ImGui::DragFloat3("Position", pos, BNS_EngineTime::getDeltaTime(), (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max());
 		ImGui::DragFloat3("Rotation", rot, BNS_EngineTime::getDeltaTime(), (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max());
 		ImGui::DragFloat3("Scale", scale, BNS_EngineTime::getDeltaTime(), (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max());
 
-		selectedGO.get()->SetPosition(pos[0], pos[1], pos[2]);
-		selectedGO.get()->SetRotation(rot[0], rot[1], rot[2]);
-		selectedGO.get()->SetScale(scale[0], scale[1], scale[2]);
+		selectedGO->SetPosition(pos[0], pos[1], pos[2]);
+		selectedGO->SetRotation(rot[0], rot[1], rot[2]);
+		selectedGO->SetScale(scale[0], scale[1], scale[2]);
 	}
 	if (selectedGO != nullptr)
 	{
 		// use to access physics component
-		BNS_AComponent* physics_comp = selectedGO.get()->FindComponentOfType(ComponentType::Physics);
+		BNS_AComponent* physics_comp = selectedGO->FindComponentOfType(ComponentType::Physics);
 		if (physics_comp != nullptr)
 		{
 			ImGui::Separator();

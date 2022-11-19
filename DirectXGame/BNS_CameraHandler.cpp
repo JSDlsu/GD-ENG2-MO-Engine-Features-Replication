@@ -6,12 +6,13 @@ BNS_CameraHandler* BNS_CameraHandler::sharedInstance = nullptr;
 
 BNS_CameraHandler::BNS_CameraHandler()
 {
-    CameraPtr cameraPtr(new BNS_Camera("BNS_Camera", BNS_ObjectTypes::CAMERA));
+    BNS_Camera* cameraPtr(new BNS_Camera("BNS_Camera", BNS_ObjectTypes::CAMERA));
     this->sceneCamera = cameraPtr;
 }
 
 BNS_CameraHandler::~BNS_CameraHandler()
 {
+    delete sceneCamera;
     delete sharedInstance;
 }
 
@@ -52,7 +53,7 @@ Vector3D BNS_CameraHandler::GetSceneCameraPos()
     return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetLocalPosition();
 }
 
-CameraPtr BNS_CameraHandler::GetSceneCamera()
+BNS_Camera* BNS_CameraHandler::GetSceneCamera()
 {
     return sceneCamera;
 }
