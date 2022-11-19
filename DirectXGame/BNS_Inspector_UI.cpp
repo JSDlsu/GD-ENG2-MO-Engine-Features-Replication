@@ -38,6 +38,8 @@ void BNS_Inspector_UI::DrawUI()
 		selectedGO.get()->SetRotation(rot[0], rot[1], rot[2]);
 		selectedGO.get()->SetScale(scale[0], scale[1], scale[2]);
 	}
+	
+	
 
 
 	ImGui::End();

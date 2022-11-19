@@ -233,7 +233,7 @@ float* BNS_AGameObject::GetPhysicsLocalMatrix()
 	Matrix4x4 rotMatrix; rotMatrix.setIdentity();
 	rotMatrix = rotMatrix.MultiplyTo(xMatrix.MultiplyTo(yMatrix.MultiplyTo(zMatrix)));
 
-	allMatrix = allMatrix.MultiplyTo(scaleMatrix.MultiplyTo(rotMatrix));
+	allMatrix = allMatrix.MultiplyTo(rotMatrix.MultiplyTo(scaleMatrix));
 	allMatrix = allMatrix.MultiplyTo(translationMatrix);
 
 	return allMatrix.GetMatrix();
