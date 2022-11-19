@@ -33,12 +33,10 @@ void BNS_Hierarchy_UI::DrawUI()
             {
 	            node_flags |= ImGuiTreeNodeFlags_Selected;
                 selectedGameObject = objects[i];
-
-                //test, for deleting objects at hierarchy with del key
-                if(ImGui::IsKeyPressed(ImGuiKey_Delete))
-                {
-                    BNS_GameObjectManager::get()->deleteObject(selectedGameObject);
-                }
+            }
+            else
+            {
+                selectedGameObject = nullptr;
             }
 
             bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, objects[i]->GetName().c_str(), i);
@@ -80,7 +78,23 @@ void BNS_Hierarchy_UI::DrawUI()
             else //if (!(selection_mask & (1 << node_clicked))) // Depending on selection behavior you want, may want to preserve selection when clicking on item that is part of the selection
                 selection_mask = (1 << node_clicked);           // Click to single-select
         }
+        else
+        {
+
+        }
         ImGui::TreePop();
+    }
+    //test, for deleting objects at hierarchy with del key
+    if (selectedGameObject != nullptr)
+    {
+        if (ImGui::IsKeyPressed(ImGuiKey_Delete))
+        {
+            BNS_GameObjectManager::get()->deleteObject(selectedGameObject);
+        }
+    }
+    else
+    {
+	    
     }
     ImGui::End();
 }

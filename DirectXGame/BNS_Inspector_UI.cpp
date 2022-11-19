@@ -23,6 +23,11 @@ void BNS_Inspector_UI::DrawUI()
 	ImGui::Begin("Inspector");
 	AGameObjectPtr selectedGO = dynamic_cast<BNS_Hierarchy_UI*>(
 		BNS_UIManager::GetInstance()->GetUIHashTable()[BNS_UINames::HIERARCHY_SCREEN].get())->selectedGameObject;
+	if (selectedGO == nullptr)
+	{
+		ImGui::End();
+		return;
+	}
 	bool show = selectedGO != nullptr;
 	if ( show && ImGui::CollapsingHeader("Transform"))
 	{

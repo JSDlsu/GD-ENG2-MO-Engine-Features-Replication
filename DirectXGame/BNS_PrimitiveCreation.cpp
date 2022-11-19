@@ -62,7 +62,7 @@ void BNS_PrimitiveCreation::CreateCube()
 	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 	AGameObjectPtr temp_ptr(cube);
-	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(temp_ptr);
 }
 
 void BNS_PrimitiveCreation::CreateTexturedCube()
@@ -80,7 +80,7 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 	// adding physics component
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysCube", temp_ptr);
 	temp_ptr.get()->AttachComponent(physicsComp);
-	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(temp_ptr);
 }
 
 void BNS_PrimitiveCreation::CreatePlane()
@@ -97,7 +97,7 @@ void BNS_PrimitiveCreation::CreatePlane()
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", temp_ptr);
 	physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
 	temp_ptr.get()->AttachComponent(physicsComp);
-	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(temp_ptr);
 }
 
 void BNS_PrimitiveCreation::CreateTeapot()
@@ -111,7 +111,7 @@ void BNS_PrimitiveCreation::CreateTeapot()
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 	AGameObjectPtr temp_ptr(cube);
-	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(temp_ptr);
 }
 
 void BNS_PrimitiveCreation::CreateBunny()
@@ -125,7 +125,7 @@ void BNS_PrimitiveCreation::CreateBunny()
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 	AGameObjectPtr temp_ptr(cube);
-	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(temp_ptr);
 }
 
 void BNS_PrimitiveCreation::CreateArmadillo()
@@ -139,7 +139,7 @@ void BNS_PrimitiveCreation::CreateArmadillo()
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 	AGameObjectPtr temp_ptr(cube);
-	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(temp_ptr);
 }
 
 void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::string localName)
@@ -170,7 +170,7 @@ void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::s
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 	AGameObjectPtr temp_ptr(cube);
-	BNS_GameObjectManager::get()->GetObjectList().push_back(temp_ptr);
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(temp_ptr);
 	
 
 }

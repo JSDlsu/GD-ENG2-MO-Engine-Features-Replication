@@ -12,14 +12,15 @@ BNS_AGameObject::BNS_AGameObject(std::string name, BNS_ObjectTypes type) : name(
 
 BNS_AGameObject::~BNS_AGameObject()
 {
-	for (int i = 0; i < this->componentList.size(); i++) {
-		this->componentList[i]->DetachOwner();
+	if (!componentList.empty())
+		return;
+	ComponentList::iterator a;
+	for (a = componentList.begin(); a != componentList.end(); a++)
+	{
+		(*a)->DetachOwner();
+		delete (*a);
 	}
-
-	std::cout << "size: " << componentList.size() << std::endl;
-
-	if(!this->componentList.empty())
-		while (componentList.size()) componentList.erase(componentList.begin());
+	componentList.clear();
 }
 
 void BNS_AGameObject::Draw(const BlenderPtr& m_blender)

@@ -77,9 +77,9 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 {
 	if (ImGui::BeginMenu("GameObject"))
 	{
-		if (ImGui::MenuItem("Create Cube", NULL))
+		if (ImGui::MenuItem("Create Cube", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateCube();
-		if (ImGui::MenuItem("Create Textured Cube", NULL))
+		if (ImGui::MenuItem("Create Textured Cube", nullptr))
 		{
 			for (int i = 0; i < 20; ++i)
 			{
@@ -87,13 +87,13 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 			}
 		}
 		//BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
-		if (ImGui::MenuItem("Create Plane", NULL))
+		if (ImGui::MenuItem("Create Plane", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreatePlane();
-		if (ImGui::MenuItem("Create Teapot", NULL))
+		if (ImGui::MenuItem("Create Teapot", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateTeapot();
-		if (ImGui::MenuItem("Create Bunny", NULL))
+		if (ImGui::MenuItem("Create Bunny", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateBunny();
-		if (ImGui::MenuItem("Create Armadillo", NULL))
+		if (ImGui::MenuItem("Create Armadillo", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateArmadillo();
 		ImGui::EndMenu();
 	}
