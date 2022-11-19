@@ -40,7 +40,7 @@ void BNS_PhysicsComponent::Perform(float deltaTime)
 	transform.getOpenGLMatrix(matrix);
 
 	GetOwner().get()->RecomputeMatrix(matrix);
-	std::cout << "My component is updating: " << this->name << "\n";
+	//std::cout << "My component is updating: " << this->name << "\n";
 }
 
 RigidBody* BNS_PhysicsComponent::GetRigidBody()

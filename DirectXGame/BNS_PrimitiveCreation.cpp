@@ -74,6 +74,7 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	//cube->SetScale(Vector3D{ 2, 2, 2 });
 	AGameObjectPtr temp_ptr(cube);
 
 	// adding physics component
@@ -91,7 +92,7 @@ void BNS_PrimitiveCreation::CreatePlane()
 	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
 	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
-	plane->SetPosition(Vector3D{ 0, -5, 0 });
+	plane->SetPosition(Vector3D{ 0, -1, 0 });
 	AGameObjectPtr temp_ptr(plane);
 
 	// adding physics component
