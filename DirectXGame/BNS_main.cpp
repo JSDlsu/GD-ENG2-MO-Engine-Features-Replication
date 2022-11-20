@@ -5,6 +5,7 @@
 #include "BNS_PrimitiveCreation.h"
 #include "BNS_ShaderEngine.h"
 #include "BNS_RenderBufferEngine.h"
+#include "BNS_Log.h"
 
 int main()
 {
@@ -22,6 +23,8 @@ int main()
 		BNS_GameObjectManager::create();
 		// initialize our BNS_PrimitiveCreation
 		BNS_PrimitiveCreation::create();
+		// initialize our BNS_Log
+		BNS_Log::create();
 	}
 	catch (...) { return -1; }
 	{
@@ -31,6 +34,7 @@ int main()
 			while (app.isRun());
 		}
 		catch (...) {
+			BNS_Log::release();
 			BNS_PrimitiveCreation::release();
 			BNS_GameObjectManager::release();
 			BNS_InputSystem::release();
@@ -45,6 +49,7 @@ int main()
 	 * The order of release should be based on the order of creation.
 	 * Will follow the First in, Last out principle.
 	 */
+	BNS_Log::release();
 	BNS_PrimitiveCreation::release();
 	BNS_GameObjectManager::release();
 	BNS_InputSystem::release();

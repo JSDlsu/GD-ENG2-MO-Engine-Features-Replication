@@ -53,6 +53,13 @@ enum class ComponentType
 	Physics
 };
 
+enum class LogType
+{
+	Display = 0,
+	Warning,
+	Error
+};
+
 class BNS_EnumHandler
 {
 	

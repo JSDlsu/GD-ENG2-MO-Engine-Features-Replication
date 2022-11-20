@@ -181,6 +181,7 @@
     <ClCompile Include="BNS_InputLayoutManager.cpp" />
     <ClCompile Include="BNS_InputSystem.cpp" />
     <ClCompile Include="BNS_Inspector_UI.cpp" />
+    <ClCompile Include="BNS_Log.cpp" />
     <ClCompile Include="BNS_main.cpp" />
     <ClCompile Include="BNS_MenuToolbar_UI.cpp" />
     <ClCompile Include="BNS_Mesh.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="BNS_InputListener.h" />
     <ClInclude Include="BNS_InputSystem.h" />
     <ClInclude Include="BNS_Inspector_UI.h" />
+    <ClInclude Include="BNS_Log.h" />
     <ClInclude Include="BNS_Physics_Prerequisites.h" />
     <ClInclude Include="BNS_RenderToTexture.h" />
     <ClInclude Include="BNS_SceneView_UI.h" />
