@@ -129,31 +129,30 @@ void BNS_MenuToolbar_UI::CreateTab_Window()
 
 void BNS_MenuToolbar_UI::CreateTab_Help()
 {
+	static bool isAbout = false;
 	if (ImGui::BeginMenu("Help"))
 	{
-		static bool isAbout = false;
 		ImGui::MenuItem("About", NULL, &isAbout);
-		if (isAbout)
-		{
-			//DRAW HERE
-			ImGui::Begin("Credits");
-
-			// assign the texture file to the BNS_Texture pointer by passing the its path in the file
-			TexturePtr m_tex = BNS_FileExplorer::GetInstance()->GetImageHashTable()["dlsu_logo"];
-			ImGui::Image((void*)m_tex.get()->GetShaderResourceView(), ImVec2(256, 256));
-
-			ImGui::Text("About:");
-			ImGui::Text("Scene Editor V.3.0");
-			ImGui::Text("Developed By: Celestial, Emerson\nGaurana, Aldrey\nSantos, Joseph\nTallador, Eryn");
-			ImGui::Text("SPECIAL THANKS");
-			ImGui::Text("Sir Patrick");
-			ImGui::Text("PardCode");
-			ImGui::Text("ImGui: https://github.com/ocornut/imgui/tree/master");
-
-			ImGui::End();
-		}
 		ImGui::EndMenu();
+	}
+	if (isAbout)
+	{
+		//DRAW HERE
+		ImGui::Begin("Credits");
 
+		// assign the texture file to the BNS_Texture pointer by passing the its path in the file
+		TexturePtr m_tex = BNS_FileExplorer::GetInstance()->GetImageHashTable()["dlsu_logo"];
+		ImGui::Image((void*)m_tex.get()->GetShaderResourceView(), ImVec2(256, 256));
+
+		ImGui::Text("About:");
+		ImGui::Text("Scene Editor V.3.0");
+		ImGui::Text("Developed By: Celestial, Emerson\nGaurana, Aldrey\nSantos, Joseph\nTallador, Eryn");
+		ImGui::Text("SPECIAL THANKS");
+		ImGui::Text("Sir Patrick");
+		ImGui::Text("PardCode");
+		ImGui::Text("ImGui: https://github.com/ocornut/imgui/tree/master");
+
+		ImGui::End();
 	}
 }
 

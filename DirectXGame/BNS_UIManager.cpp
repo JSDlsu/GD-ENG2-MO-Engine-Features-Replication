@@ -72,7 +72,6 @@ void BNS_UIManager::DrawAllUIScreens()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 	if (opt_fullscreen)
 	{
@@ -86,25 +85,20 @@ void BNS_UIManager::DrawAllUIScreens()
 		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 	}
 	else
-	{
 		dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
-	}
 	
 	if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
 		window_flags |= ImGuiWindowFlags_NoBackground;
 	
 	if (!opt_padding)
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-
 	// NOTE: Screens should be within the dockspace for them to be dockable
 	// Start DockSpace
 	ImGui::Begin("DockSpace Demo", nullptr, window_flags);
 	if (!opt_padding)
 		ImGui::PopStyleVar();
-
 	if (opt_fullscreen)
 		ImGui::PopStyleVar(2);
-
 	// Submit the DockSpace
 	ImGuiIO& io = ImGui::GetIO();
 	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
@@ -112,7 +106,6 @@ void BNS_UIManager::DrawAllUIScreens()
 		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 	}
-
 	// Call each UIScreen members in the list
 	uiScreenList::iterator i;
 	for (i = _uiScreenList.begin(); i != _uiScreenList.end(); ++i)
@@ -125,7 +118,6 @@ void BNS_UIManager::DrawAllUIScreens()
 	}
 	// End DockSpace
 	ImGui::End();
-
 	RECT size_screen = m_app_window->getSizeScreen();
 	WINDOW_WIDTH = size_screen.right;
 	WINDOW_HEIGHT = size_screen.bottom;
