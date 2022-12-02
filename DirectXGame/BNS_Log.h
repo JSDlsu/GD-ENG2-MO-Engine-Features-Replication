@@ -23,4 +23,6 @@ private:
 	static BNS_Log* m_instance;
 	friend class BNS_AppWindow;
 	std::vector<std::string> logList;
+
+
 };

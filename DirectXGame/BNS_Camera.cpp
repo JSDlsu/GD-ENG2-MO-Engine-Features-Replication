@@ -132,14 +132,14 @@ void BNS_Camera::onKeyDown(int key)
 		UpdateViewMatrix();
 		m_rightward = 1.0f * BNS_EngineTime::getDeltaTime() * NAVIGATE_SPEED;
 	}
-	else if (key == 'Q')
+	else if (key == 'E')
 	{
 		y += BNS_EngineTime::getDeltaTime() * NAVIGATE_SPEED;
 		SetPosition(x, y, z);
 		UpdateViewMatrix();
 		m_upward = 1.0f * BNS_EngineTime::getDeltaTime() * NAVIGATE_SPEED;
 	}
-	else if (key == 'E')
+	else if (key == 'Q')
 	{
 		y -= BNS_EngineTime::getDeltaTime() * NAVIGATE_SPEED;
 		SetPosition(x, y, z);

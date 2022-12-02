@@ -18,6 +18,7 @@
 #include "BNS_Plane.h"
 #include "BNS_RenderToTexture.h"
 #include "BNS_SwapChain.h"
+#include "BNS_Log.h"
 
 
 BNS_AppWindow::BNS_AppWindow()
@@ -36,6 +37,7 @@ void BNS_AppWindow::onCreate()
 	BNS_BaseComponentSystem::Initialize();
 	// create cameras
 	BNS_CameraHandler::Initialize();
+
 
 	// create swap chain
 	RECT rc = this->getClientWindowRect();
@@ -113,6 +115,8 @@ void BNS_AppWindow::onUpdate()
 {
 	BNS_Window::onUpdate();
 
+	BNS_Log::get()->DisplayLog(LogType::Display, "test");
+
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);
 	// update for physics engine
@@ -124,6 +128,7 @@ void BNS_AppWindow::onUpdate()
 void BNS_AppWindow::onDestroy()
 {
 	m_swap_chain->setFullScreen(false, 1, 1);
+
 	BNS_UIManager::Release();
 	// destroy physics
 	BNS_BaseComponentSystem::Destroy();

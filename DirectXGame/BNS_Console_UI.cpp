@@ -24,6 +24,7 @@ void BNS_Console_UI::DrawUI()
 	ImGui::Text("FPS : %f",fps);
 	ImGui::Text("\n");
 
+	/*
 	if(!BNS_Log::get()->getLogList().empty())
 	{
 		for(int i = 0; i < BNS_Log::get()->getLogList().size(); i++)
@@ -31,7 +32,13 @@ void BNS_Console_UI::DrawUI()
 			ImGui::Text(BNS_Log::get()->getLogList().at(i).c_str());
 		}
 	}
-	
+	*/
 
 	ImGui::End();
 }
+
+void BNS_Console_UI::DrawLog(LogType logType, std::string logMessage)
+{
+	ImGui::Text(logMessage.c_str());
+}
+
