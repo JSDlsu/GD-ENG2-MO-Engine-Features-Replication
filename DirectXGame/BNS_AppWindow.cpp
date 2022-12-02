@@ -115,7 +115,7 @@ void BNS_AppWindow::onUpdate()
 {
 	BNS_Window::onUpdate();
 
-	BNS_Log::get()->DisplayLog(LogType::Display, "test");
+	//BNS_Log::get()->DisplayLog(LogType::Display, "test");
 
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);
