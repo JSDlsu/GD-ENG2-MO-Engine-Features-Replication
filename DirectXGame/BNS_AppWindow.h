@@ -2,7 +2,8 @@
 #include "BNS_Window.h"
 #include "BNS_DeviceContext.h"
 #include "Matrix4x4.h"
-#include "BNS_UIManager.h"	
+#include "BNS_UIManager.h"
+#include "BNS_Log.h"
 
 class BNS_Cube;
 class BNS_Plane;
@@ -31,6 +32,7 @@ private:
 	SwapChainPtr m_swap_chain;
 	BlenderPtr m_blender;
 	RenderToTexturePtr m_scene_view;
+
 private:
 	friend class BNS_Cube;
 	friend class BNS_Plane;

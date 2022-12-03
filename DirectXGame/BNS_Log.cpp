@@ -4,13 +4,14 @@ BNS_Log* BNS_Log::m_instance = nullptr;
 
 BNS_Log::BNS_Log()
 {
+	
 }
 
 BNS_Log::~BNS_Log()
 {
 }
 
-BNS_Log* BNS_Log::get()
+BNS_Log* BNS_Log::GetInstance()
 {
 	return m_instance;
 }
@@ -29,13 +30,20 @@ void BNS_Log::release()
 	delete BNS_Log::m_instance;
 }
 
-void BNS_Log::DisplayLog(LogType logType, std::string logMessage)
+std::string BNS_Log::enum_to_string(LogVerbosity verbosity)
 {
-	logMessage = std::to_string(static_cast<int>(logType)) + ": " + logMessage;
-	logList.push_back(logMessage);
-}
+	switch (verbosity)
+	{
+	case Display:
+		return "Display";
+		break;
 
-std::vector<std::string> BNS_Log::getLogList()
-{
-	return logList;
+	case Warning:
+		return "Warning";
+		break;
+
+	case Error:
+		return "Error";
+		break;
+	}
 }

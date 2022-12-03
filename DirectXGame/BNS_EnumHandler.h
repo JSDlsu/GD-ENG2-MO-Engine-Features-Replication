@@ -53,6 +53,7 @@ enum class ComponentType
 	Physics
 };
 
+//DEPRECATED
 enum class LogType
 {
 	Display = 0,

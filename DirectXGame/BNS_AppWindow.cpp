@@ -18,7 +18,7 @@
 #include "BNS_Plane.h"
 #include "BNS_RenderToTexture.h"
 #include "BNS_SwapChain.h"
-#include "BNS_Log.h"
+
 
 
 BNS_AppWindow::BNS_AppWindow()
@@ -91,7 +91,7 @@ void BNS_AppWindow::render()
 	// Transparent objects are draw last
 	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
 	*/
-
+	
 	BNS_UIManager::GetInstance()->DrawAllUIScreens();
 
 	m_swap_chain->present(true);
@@ -115,7 +115,7 @@ void BNS_AppWindow::onUpdate()
 {
 	BNS_Window::onUpdate();
 
-	//BNS_Log::get()->DisplayLog(LogType::Display, "test");
+	
 
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);

@@ -2,7 +2,7 @@
 #include "BNS_EngineTime.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
-#include "BNS_Log.h"
+
 
 BNS_Console_UI::BNS_Console_UI(std::string name) : BNS_AUIScreen(name)
 {
@@ -33,6 +33,8 @@ void BNS_Console_UI::DrawUI()
 		}
 	}
 	*/
+
+	BNS_Log::GetInstance()->Draw();
 
 	ImGui::End();
 }

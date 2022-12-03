@@ -56,6 +56,8 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 		cam_properties.farPlane
 	);
 
+	
+
 	return orthoMatrix;
 }
 

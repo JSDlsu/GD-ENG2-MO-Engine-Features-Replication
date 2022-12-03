@@ -1,6 +1,7 @@
 #pragma once
 #include "BNS_AUIScreen.h"
 #include "BNS_EnumHandler.h"
+#include "BNS_Log.h"
 
 class BNS_Console_UI : public BNS_AUIScreen
 {
@@ -10,6 +11,7 @@ public:
 	void DrawUI() override;
 
 	void DrawLog(LogType logType, std::string logMessage);
+
 };
 
 
