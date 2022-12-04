@@ -37,7 +37,7 @@ void BNS_UICreation::CreateMenuToolbarUI()
 
 void BNS_UICreation::CreateHierarchyUI()
 {
-	BNS_AUIScreen* screen = new BNS_Hierarchy_UI("HierarchyUI", currentID++);
+	BNS_AUIScreen* screen = new BNS_Hierarchy_UI("Hierarchy", currentID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::HIERARCHY_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
@@ -46,7 +46,7 @@ void BNS_UICreation::CreateHierarchyUI()
 
 void BNS_UICreation::CreateSceneViewUI()
 {
-	BNS_AUIScreen* screen = new BNS_SceneView_UI("SceneViewUI", currentID++);
+	BNS_AUIScreen* screen = new BNS_SceneView_UI("Scene View", currentID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::SCENEVIEW_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
@@ -55,7 +55,7 @@ void BNS_UICreation::CreateSceneViewUI()
 
 void BNS_UICreation::CreateContentBrowserUI()
 {
-	BNS_AUIScreen* screen = new BNS_ContentBrowser_UI("ContentBrowserUI", currentID++);
+	BNS_AUIScreen* screen = new BNS_ContentBrowser_UI("Content Browser", currentID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::CONTENT_BROWSER_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
@@ -64,7 +64,7 @@ void BNS_UICreation::CreateContentBrowserUI()
 
 void BNS_UICreation::CreateConsoleUI()
 {
-	BNS_AUIScreen* screen = new BNS_Console_UI("GameObjectUI", currentID++);
+	BNS_AUIScreen* screen = new BNS_Console_UI("Console", currentID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::CONSOLE_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
@@ -73,7 +73,7 @@ void BNS_UICreation::CreateConsoleUI()
 
 void BNS_UICreation::CreateInspectorUI()
 {
-	BNS_AUIScreen* screen = new BNS_Inspector_UI("InspectorUI", currentID++);
+	BNS_Inspector_UI* screen = new BNS_Inspector_UI("Inspector", currentID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::INSPECTOR_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);

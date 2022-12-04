@@ -10,6 +10,7 @@
 
 BNS_Inspector_UI::BNS_Inspector_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
 {
+
 }
 
 BNS_Inspector_UI::~BNS_Inspector_UI()
@@ -20,7 +21,8 @@ typedef float vec3[3];
 void BNS_Inspector_UI::DrawUI()
 {
 	//DRAW HERE
-	ImGui::Begin(name.c_str());
+	std::string windowLabel = name + "##" + std::to_string(ID);
+	ImGui::Begin(windowLabel.c_str());
 	BNS_AGameObject* selectedGO = dynamic_cast<BNS_Hierarchy_UI*>(
 		BNS_UIManager::GetInstance()->GetUIHashTable()[BNS_UINames::HIERARCHY_SCREEN].get())->selectedGameObject;
 	if (selectedGO == nullptr)

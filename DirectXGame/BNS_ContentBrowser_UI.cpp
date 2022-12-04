@@ -16,8 +16,8 @@ BNS_ContentBrowser_UI::~BNS_ContentBrowser_UI()
 
 void BNS_ContentBrowser_UI::DrawUI()
 {
-	ImGui::Begin(name.c_str());
-
+	std::string windowLabel = name + "##" + std::to_string(ID);
+	ImGui::Begin(windowLabel.c_str());
 	// Check if the current path leaves the source path, which will add a back button
 	if (m_CurrentDirectory != std::filesystem::path(s_AssetPath))
 	{

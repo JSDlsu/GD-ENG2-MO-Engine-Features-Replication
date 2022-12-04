@@ -7,7 +7,9 @@ bool& BNS_AUIScreen::GetShow()
 
 BNS_AUIScreen::BNS_AUIScreen(std::string name, int ID)
 {
-	name.append(std::to_string(ID));
+	this->name = name;
+	this->ID = ID;
+	//std::cout << name << "\n";
 }
 
 BNS_AUIScreen::~BNS_AUIScreen()

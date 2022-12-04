@@ -19,6 +19,7 @@ public:
 	std::string GetName();
 protected:
 	std::string name;
+	int ID;
 	bool toShow = true;
 protected:
 	friend class BNS_UIManager;
