@@ -5,7 +5,7 @@
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
 
-BNS_MenuToolbar_UI::BNS_MenuToolbar_UI(std::string name) : BNS_AUIScreen(name)
+BNS_MenuToolbar_UI::BNS_MenuToolbar_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
 {
 	UM = BNS_UIManager::GetInstance();
 	toShow = true;

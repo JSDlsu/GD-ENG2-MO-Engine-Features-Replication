@@ -3,7 +3,7 @@
 #include "BNS_AGameObject.h"
 #include "BNS_GameObjectManager.h"
 
-BNS_Hierarchy_UI::BNS_Hierarchy_UI(std::string name) : BNS_AUIScreen(name)
+BNS_Hierarchy_UI::BNS_Hierarchy_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
 {
 
 }
@@ -14,7 +14,7 @@ BNS_Hierarchy_UI::~BNS_Hierarchy_UI()
 
 void BNS_Hierarchy_UI::DrawUI()
 {
-    ImGui::Begin("Hierarchy");
+    ImGui::Begin(name.c_str());
     if (ImGui::TreeNode("SceneName"))
     {
         static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_SpanAvailWidth;

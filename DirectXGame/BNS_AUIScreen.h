@@ -13,8 +13,8 @@ public:
 	virtual void DrawUI() = 0;
 public:
 	bool& GetShow();
-protected:
-	BNS_AUIScreen(std::string name);
+public:
+	BNS_AUIScreen(std::string name, int ID);
 	~BNS_AUIScreen();
 	std::string GetName();
 protected:

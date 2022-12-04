@@ -8,7 +8,7 @@
 #include "BNS_Hierarchy_UI.h"
 #include "BNS_UIManager.h"
 
-BNS_Inspector_UI::BNS_Inspector_UI(std::string name) : BNS_AUIScreen(name)
+BNS_Inspector_UI::BNS_Inspector_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
 {
 }
 
@@ -20,7 +20,7 @@ typedef float vec3[3];
 void BNS_Inspector_UI::DrawUI()
 {
 	//DRAW HERE
-	ImGui::Begin("Inspector");
+	ImGui::Begin(name.c_str());
 	BNS_AGameObject* selectedGO = dynamic_cast<BNS_Hierarchy_UI*>(
 		BNS_UIManager::GetInstance()->GetUIHashTable()[BNS_UINames::HIERARCHY_SCREEN].get())->selectedGameObject;
 	if (selectedGO == nullptr)

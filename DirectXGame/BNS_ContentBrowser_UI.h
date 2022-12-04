@@ -5,7 +5,7 @@
 class BNS_ContentBrowser_UI : public BNS_AUIScreen
 {
 public:
-	BNS_ContentBrowser_UI(std::string name);
+	BNS_ContentBrowser_UI(std::string name, int ID);
 	~BNS_ContentBrowser_UI();
 	void DrawUI() override;
 private:

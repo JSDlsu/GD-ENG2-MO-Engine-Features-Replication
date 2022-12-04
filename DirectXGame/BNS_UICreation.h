@@ -17,5 +17,7 @@ public:
 	void CreateContentBrowserUI();
 	void CreateConsoleUI();
 	void CreateInspectorUI();
+private:
+	int currentID = 0;
 };
 

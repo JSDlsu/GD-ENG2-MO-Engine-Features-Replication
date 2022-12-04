@@ -91,7 +91,7 @@ void BNS_AppWindow::render()
 	// Transparent objects are draw last
 	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
 	*/
-	
+
 	BNS_UIManager::GetInstance()->DrawAllUIScreens();
 
 	m_swap_chain->present(true);

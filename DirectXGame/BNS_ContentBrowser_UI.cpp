@@ -5,7 +5,7 @@
 
 std::filesystem::path const BNS_ContentBrowser_UI::s_AssetPath = "Assets";
 
-BNS_ContentBrowser_UI::BNS_ContentBrowser_UI(std::string name) : BNS_AUIScreen(name)
+BNS_ContentBrowser_UI::BNS_ContentBrowser_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
 {
 	m_CurrentDirectory = s_AssetPath;
 }
@@ -16,7 +16,7 @@ BNS_ContentBrowser_UI::~BNS_ContentBrowser_UI()
 
 void BNS_ContentBrowser_UI::DrawUI()
 {
-	ImGui::Begin("Content Browser");
+	ImGui::Begin(name.c_str());
 
 	// Check if the current path leaves the source path, which will add a back button
 	if (m_CurrentDirectory != std::filesystem::path(s_AssetPath))

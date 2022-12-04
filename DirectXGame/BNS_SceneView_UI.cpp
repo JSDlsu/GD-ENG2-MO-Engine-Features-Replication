@@ -5,7 +5,7 @@
 #include "BNS_RenderToTexture.h"
 #include "BNS_UIManager.h"
 
-BNS_SceneView_UI::BNS_SceneView_UI(std::string name) : BNS_AUIScreen(name)
+BNS_SceneView_UI::BNS_SceneView_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
 {
 }
 
@@ -15,7 +15,7 @@ BNS_SceneView_UI::~BNS_SceneView_UI()
 
 void BNS_SceneView_UI::DrawUI()
 {
-	ImGui::Begin("GameScene");
+	ImGui::Begin(name.c_str());
 	ImVec2 game_scene_size = ImGui::GetWindowSize();
 	// updates the scene view width and height 
 	BNS_UIManager::SCENE_VIEW_WIDTH = game_scene_size.x;
