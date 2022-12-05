@@ -68,6 +68,21 @@ void BNS_PrimitiveCreation::CreateCube()
 	cube->AttachComponent(transformComp);
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+
+	const char* name2 = "cube2";
+	BNS_Cube* cube2 = new BNS_Cube(name2, BNS_ObjectTypes::CUBE);
+	cube2->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
+	cube2->SetVertexShader(BNS_VertexShaderType::COLOR);
+	cube2->SetPixelShader(BNS_PixelShaderType::COLOR);
+	cube2->SetPosition(Vector3D{ 1, 1, 1 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp2 = new BNS_TransformComponent("PhysTransform", cube2);
+	cube2->AttachComponent(transformComp2);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube2);
+
+	cube->AttachChild(cube2);
 }
 
 void BNS_PrimitiveCreation::CreateTexturedCube()

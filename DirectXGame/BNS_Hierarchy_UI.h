@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "BNS_AUIScreen.h"
 #include "BNS_Prerequisites.h"
 
@@ -13,6 +15,7 @@ public:
 	void DrawUI() override;
 private:
 	BNS_AGameObject* selectedGameObject = nullptr;
+	void OpenChildList(std::vector<BNS_AGameObject*> objects);
 private:
 	friend class BNS_Inspector_UI;
 };

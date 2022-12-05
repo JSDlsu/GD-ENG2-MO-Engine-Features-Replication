@@ -215,6 +215,42 @@ BNS_AGameObject::ComponentList BNS_AGameObject::GetComponentsOfTypeRecursive(Com
 	return foundList;
 }
 
+void BNS_AGameObject::AttachOwner(BNS_AGameObject* owner)
+{
+	this->owner = owner;
+}
+
+void BNS_AGameObject::DetachOwner()
+{
+	owner = nullptr;
+}
+
+void BNS_AGameObject::AttachChild(BNS_AGameObject* child)
+{
+	childList.push_back(child);
+	child->AttachOwner(this);
+}
+
+void BNS_AGameObject::DetachChild(BNS_AGameObject* child)
+{
+	int index = -1;
+	for (int i = 0; i < this->childList.size(); i++) {
+		if (childList[i] == child) {
+			index = i;
+			break;
+		}
+	}
+	if (index != -1) {
+		childList[index]->DetachOwner();
+		childList.erase(childList.begin() + index);
+	}
+}
+
+BNS_AGameObject::ChildList BNS_AGameObject::GetChildList()
+{
+	return childList;
+}
+
 
 void BNS_AGameObject::SetAlpha(float alpha)
 {

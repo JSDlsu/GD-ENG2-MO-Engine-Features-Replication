@@ -21,6 +21,7 @@ class BNS_AGameObject
 {
 	typedef std::string String;
 	typedef std::vector<BNS_AComponent*> ComponentList;
+	typedef std::vector<BNS_AGameObject*> ChildList;
 public:
 	BNS_AGameObject(std::string name ,BNS_ObjectTypes type);
 	virtual ~BNS_AGameObject();
@@ -72,9 +73,17 @@ protected:
 	Vector3D m_rotation;
 	Matrix4x4 m_matrix;
 	float alpha = 1.0f;
-	ComponentList componentList;
 	bool overrideMatrix = false;
-
+public:
+	void AttachOwner(BNS_AGameObject* owner);
+	void DetachOwner();
+	void AttachChild(BNS_AGameObject* child);
+	void DetachChild(BNS_AGameObject* child);
+	ChildList GetChildList();
+protected:
+	ComponentList componentList;
+	ChildList childList;
+	BNS_AGameObject* owner = nullptr;
 private:
 	friend class BNS_TransformComponent;
 };

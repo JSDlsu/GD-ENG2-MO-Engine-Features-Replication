@@ -53,6 +53,14 @@ void BNS_TransformComponent::Perform(float deltaTime)
 		cc.m_world *= temp;
 		// update m_matrix
 		owner->m_matrix = cc.m_world;
+		// also updates the child in the child list
+		for (std::vector<BNS_AGameObject*>::iterator a = owner->childList.begin(); a != owner->childList.end(); a++)
+		{
+			(*a)->m_matrix = owner->m_matrix.MultiplyTo((*a)->m_matrix);
+			(*a)->m_scale = (*a)->m_matrix.getScale();
+			//(*a)->m_rotation = owner->m_matrix.MultiplyTo((*a)->m_matrix);
+			(*a)->m_position = (*a)->m_matrix.getTranslation();
+		}
 	}
 
 	// creating the camera matrix
