@@ -7,6 +7,7 @@
 #include "BNS_GraphicsEngine.h"
 #include "BNS_TransformSystem.h"
 #include "BNS_AGameObject.h"
+#include "BNS_Camera.h"
 
 BNS_TransformComponent::BNS_TransformComponent(String name, BNS_AGameObject* owner) : BNS_AComponent(name, ComponentType::Transform, owner)
 {
@@ -31,9 +32,16 @@ void BNS_TransformComponent::Perform(float deltaTime)
 	// transform update
 	BNS_constant_transform cc;
 	cc.m_time = ::GetTickCount();
-
+	
 	// objects matrix
 	Matrix4x4 temp;
+	// light matrix
+	Matrix4x4 m_light_rot_matrix;
+	m_light_rot_matrix.setIdentity();
+	m_light_rot_matrix.setRotationY(0.0f);
+
+	cc.m_light_direction = m_light_rot_matrix.getZDirection();
+
 	cc.m_world.setIdentity();
 
 	if (owner->overrideMatrix) {
@@ -58,6 +66,7 @@ void BNS_TransformComponent::Perform(float deltaTime)
 	// creating the camera matrix
 	Matrix4x4 cameraMatrix = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
 	cc.m_view = cameraMatrix;
+	cc.m_camera_position = BNS_CameraHandler::GetInstance()->GetSceneCamera()->GetLocalPosition();
 
 	// setting the perspective projection
 	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraProjMatrix();

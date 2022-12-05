@@ -80,6 +80,12 @@ BNS_Mesh::BNS_Mesh(const wchar_t* full_path) : BNS_Resource(full_path)
 
 				tinyobj::real_t tx = 0;
 				tinyobj::real_t ty = 0;
+
+				// used for the normals
+				tinyobj::real_t nx = attribs.normals[index.normal_index * 3 + 0];
+				tinyobj::real_t ny = attribs.normals[index.normal_index * 3 + 1];
+				tinyobj::real_t nz = attribs.normals[index.normal_index * 3 + 2];
+
 				if (attribs.texcoords.size())
 				{
 					tx = attribs.texcoords[(int)index.texcoord_index * 2 + 0];
@@ -89,11 +95,13 @@ BNS_Mesh::BNS_Mesh(const wchar_t* full_path) : BNS_Resource(full_path)
 				texcoords_face[v] = Vector2D(tx, ty);
 
 				// passing the attributes to our BNS_vertex_tex _mesh; then push it to the vector
-				VertexMesh vertex(Vector3D(vx, vy, vz), Vector2D(tx, ty));
+				VertexMesh vertex(Vector3D(vx, vy, vz), Vector2D(tx, ty), Vector3D(nx,ny,nz));
 				list_vertices.push_back(vertex);
 				// passing the attributes to our index _mesh; then push it to the vector
 				list_indices.push_back((unsigned int)index_global_offset + v);
 			}
+
+
 
 			index_offset += num_face_verts;
 			index_global_offset += num_face_verts;
