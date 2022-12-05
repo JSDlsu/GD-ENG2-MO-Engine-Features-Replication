@@ -16,6 +16,19 @@ class BNS_Log
 {
 public:
 
+	typedef enum
+	{
+		Display = 0,
+		Warning = 1,
+		Error = 2
+	} LogVerbosity;
+
+	struct LogMessage
+	{
+		LogVerbosity verbosity;
+		std::string message;
+	};
+
 	BNS_Log();
 	~BNS_Log();
 
@@ -23,17 +36,16 @@ public:
 	static void create();
 	static void release();
 
+	std::vector<LogMessage> GetLogList();
+	void setShowDisplay(bool value);
+	void setShowWarning(bool value);
+	void setShowError(bool value);
+
 	ImGuiTextBuffer textBuffer;
 	ImGuiTextFilter textFilter;
 	ImVector<int> lineOffsets;
 	bool scrollToBottom;
 
-	typedef enum
-	{
-		Display = 0,
-		Warning = 1,
-		Error = 2
-	} LogVerbosity;
 
 	void Clear()
 	{
@@ -68,6 +80,7 @@ public:
 
 	void WriteLog(const char* fmt, LogVerbosity verbosity, ...) IM_FMTARGS(2)
 	{
+		/*
 		va_list args;
 		va_start(args, fmt);
 		textBuffer.append(enum_to_string(verbosity).c_str());
@@ -76,21 +89,60 @@ public:
 		textBuffer.append("\n");
 		va_end(args);
 		scrollToBottom = true;
+		*/
 		
+	}
+
+	void WriteLog(LogVerbosity verbosity, std::string message)
+	{
+		LogMessage newLogMessage;
+		newLogMessage.verbosity = verbosity;
+		newLogMessage.message = enum_to_string(newLogMessage.verbosity) + message + "\n";
+
+		LogList.push_back(newLogMessage);
+
+
+		scrollToBottom = true;
 	}
 
 	void Draw()
 	{
+		//if display loglist is not empty, display all display messages
+		if(!LogList.empty())
+		{
+			for(int i = 0; i < LogList.size(); i++)
+			{
+				if(LogList[i].verbosity == Display && ShowDisplay)
+					ImGui::TextColored(ImVec4(0, 1, 0, 1), LogList[i].message.c_str());
+				else if(LogList[i].verbosity == Warning && ShowWarning)
+					ImGui::TextColored(ImVec4(1, 1, 0, 1), LogList[i].message.c_str());
+				else if(LogList[i].verbosity == Error && ShowError)
+					ImGui::TextColored(ImVec4(1, 0, 0, 1), LogList[i].message.c_str());
+			}
+		}
+
+		//if (scrollToBottom)
+		//	ImGui::SetScrollHereY(1.0f);
+		//scrollToBottom = false;
+
+		/*
 		ImGui::Text(textBuffer.begin());
 		if (scrollToBottom)
 			ImGui::SetScrollHereY(1.0f);
 		scrollToBottom = false;
-		
+		*/
 	}
 
 private:
 	static BNS_Log* m_instance;
-
 	std::string enum_to_string(LogVerbosity verbosity);
+
+
+	std::vector<LogMessage> LogList;
+
+	bool ShowDisplay = true;
+	bool ShowWarning = true;
+	bool ShowError = true;
+
 
 };
