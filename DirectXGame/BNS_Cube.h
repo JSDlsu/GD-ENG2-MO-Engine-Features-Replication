@@ -26,8 +26,6 @@ protected:
 	TexturePtr m_tex;
 	VertexBufferPtr m_vb;
 	IndexBufferPtr m_ib;
-	ConstantBufferPtr m_cb;
-	ConstantBufferPtr m_cb_texture;
 protected:
 	VertexShaderPtr m_vs;
 	PixelShaderPtr m_ps;

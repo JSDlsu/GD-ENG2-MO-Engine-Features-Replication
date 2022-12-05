@@ -12,6 +12,7 @@
 class BNS_AComponent;
 class Matrix4x4;
 class BNS_AppWindow;
+class BNS_TransformComponent;
 
 /*
  * Abstract class for primitive type objects(cube,plane,sphere,etc..)
@@ -62,6 +63,9 @@ public:
 	ComponentList GetComponentsOfType(ComponentType type);
 	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
 protected:
+	ConstantBufferPtr m_cb;
+	ConstantBufferPtr m_cb_texture;
+protected:
 	std::string name;
 	Vector3D m_position;
 	Vector3D m_scale;
@@ -70,5 +74,8 @@ protected:
 	float alpha = 1.0f;
 	ComponentList componentList;
 	bool overrideMatrix = false;
+
+private:
+	friend class BNS_TransformComponent;
 };
 

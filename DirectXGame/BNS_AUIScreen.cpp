@@ -20,3 +20,8 @@ std::string BNS_AUIScreen::GetName()
 {
 	return name;
 }
+
+int BNS_AUIScreen::GetID()
+{
+	return ID;
+}

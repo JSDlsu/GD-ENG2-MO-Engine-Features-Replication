@@ -4,32 +4,21 @@
 #include <vector>
 #include <reactphysics3d/reactphysics3d.h>
 
+#include "BNS_ASystem.h"
+
 using namespace reactphysics3d;
 class BNS_PhysicsComponent;
-class BNS_PhysicsSystem
+class BNS_PhysicsSystem : public BNS_ASystem<BNS_PhysicsComponent>
 {
 public:
-	typedef std::string String;
-	typedef std::unordered_map <String, BNS_PhysicsComponent*> ComponentTable;
-	typedef  std::vector<BNS_PhysicsComponent*> ComponentList;
-
 	BNS_PhysicsSystem();
 	~BNS_PhysicsSystem();
 
-	void RegisterComponent(BNS_PhysicsComponent* component);
-	void UnRegisterComponent(BNS_PhysicsComponent* component);
-	void UnRegisterComponentByName(String name);
-	BNS_PhysicsComponent* FindComponentByName(String name);
-	ComponentList GetAllComponents();
-
-	void UpdateAllComponents();
+	void UpdateAllComponents() override;
 	PhysicsWorld* GetPhysicsWorld();
 	PhysicsCommon* GetPhysicsCommon();
 
 private:
-	ComponentTable componentTable;
-	ComponentList componentList;
-
 	PhysicsCommon* physicsCommon;
 	PhysicsWorld* physicsWorld;
 };

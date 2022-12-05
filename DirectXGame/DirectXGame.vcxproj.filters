@@ -142,11 +142,14 @@
     <Filter Include="GameEngine\UI\Inspector">
       <UniqueIdentifier>{f2fc40ea-6df2-4030-bb19-1c0a24a1bfee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\PhysicsSystem">
-      <UniqueIdentifier>{c7abe2f7-44f8-4038-a471-02ce18bdf1a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameEngine\BaseSystem">
       <UniqueIdentifier>{75fb5894-b8da-4cf9-9d5f-2291371310ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\BaseSystem\PhysicsSystem">
+      <UniqueIdentifier>{c7abe2f7-44f8-4038-a471-02ce18bdf1a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\BaseSystem\TransformSystem">
+      <UniqueIdentifier>{421e0885-117f-456e-b9c4-d17acd7ca0eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -307,16 +310,26 @@
       <Filter>GameEngine\UI\Inspector</Filter>
     </ClCompile>
     <ClCompile Include="BNS_PhysicsSystem.cpp">
-      <Filter>GameEngine\PhysicsSystem</Filter>
+      <Filter>GameEngine\BaseSystem\PhysicsSystem</Filter>
     </ClCompile>
     <ClCompile Include="BNS_BaseComponentSystem.cpp">
       <Filter>GameEngine\BaseSystem</Filter>
     </ClCompile>
     <ClCompile Include="BNS_PhysicsComponent.cpp">
-      <Filter>GameEngine\PhysicsSystem</Filter>
+      <Filter>GameEngine\BaseSystem\PhysicsSystem</Filter>
     </ClCompile>
     <ClCompile Include="BNS_AComponent.cpp">
       <Filter>GameEngine\BaseSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_Log.cpp" />
+    <ClCompile Include="BNS_ASystem.cpp">
+      <Filter>GameEngine\BaseSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_TransformComponent.cpp">
+      <Filter>GameEngine\BaseSystem\TransformSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_TransformSystem.cpp">
+      <Filter>GameEngine\BaseSystem\TransformSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -519,19 +532,29 @@
       <Filter>GameEngine\UI\Inspector</Filter>
     </ClInclude>
     <ClInclude Include="BNS_PhysicsSystem.h">
-      <Filter>GameEngine\PhysicsSystem</Filter>
+      <Filter>GameEngine\BaseSystem\PhysicsSystem</Filter>
     </ClInclude>
     <ClInclude Include="BNS_BaseComponentSystem.h">
       <Filter>GameEngine\BaseSystem</Filter>
     </ClInclude>
     <ClInclude Include="BNS_PhysicsComponent.h">
-      <Filter>GameEngine\PhysicsSystem</Filter>
+      <Filter>GameEngine\BaseSystem\PhysicsSystem</Filter>
     </ClInclude>
     <ClInclude Include="BNS_AComponent.h">
       <Filter>GameEngine\BaseSystem</Filter>
     </ClInclude>
     <ClInclude Include="BNS_Physics_Prerequisites.h">
-      <Filter>GameEngine\PhysicsSystem</Filter>
+      <Filter>GameEngine\BaseSystem\PhysicsSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_Log.h" />
+    <ClInclude Include="BNS_ASystem.h">
+      <Filter>GameEngine\BaseSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_TransformComponent.h">
+      <Filter>GameEngine\BaseSystem\TransformSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_TransformSystem.h">
+      <Filter>GameEngine\BaseSystem\TransformSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

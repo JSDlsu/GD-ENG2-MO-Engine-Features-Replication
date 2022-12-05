@@ -10,6 +10,7 @@
 #include "BNS_Physics_Prerequisites.h"
 #include "BNS_Plane.h"
 #include "BNS_ShaderEngine.h"
+#include "BNS_TransformComponent.h"
 
 BNS_PrimitiveCreation* BNS_PrimitiveCreation::sharedInstance = nullptr;
 
@@ -61,6 +62,11 @@ void BNS_PrimitiveCreation::CreateCube()
 	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
 	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 }
 
@@ -75,9 +81,13 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 	//cube->SetScale(Vector3D{ 2, 2, 2 });
 
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
 	// adding physics component
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysCube", cube);
 	cube->AttachComponent(physicsComp);
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 }
 
@@ -90,10 +100,14 @@ void BNS_PrimitiveCreation::CreatePlane()
 	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
 	plane->SetPosition(Vector3D{ 0, -10, 0 });
 
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", plane);
+	plane->AttachComponent(transformComp);
 	// adding physics component
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", plane);
 	physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
 	plane->AttachComponent(physicsComp);
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(plane);
 }
 
@@ -107,6 +121,11 @@ void BNS_PrimitiveCreation::CreateTeapot()
 	cube->SetMesh(L"Assets\\Meshes\\teapot.obj");
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 }
 
@@ -120,6 +139,11 @@ void BNS_PrimitiveCreation::CreateBunny()
 	cube->SetMesh(L"Assets\\Meshes\\bunny.obj");
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 }
 
@@ -133,6 +157,11 @@ void BNS_PrimitiveCreation::CreateArmadillo()
 	cube->SetMesh(L"Assets\\Meshes\\armadillo.obj");
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 }
 
@@ -163,6 +192,11 @@ void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::s
 	cube->SetMesh(convertedFilepath);
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 	
 

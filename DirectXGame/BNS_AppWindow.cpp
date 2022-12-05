@@ -18,7 +18,7 @@
 #include "BNS_Plane.h"
 #include "BNS_RenderToTexture.h"
 #include "BNS_SwapChain.h"
-
+#include "BNS_TransformSystem.h"
 
 
 BNS_AppWindow::BNS_AppWindow()
@@ -114,15 +114,41 @@ void BNS_AppWindow::update()
 void BNS_AppWindow::onUpdate()
 {
 	BNS_Window::onUpdate();
-
-	
-
+	//CLEAR THE RENDER TARGET FOR RENDER_TO_TEXTURE
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
+	(m_swap_chain, m_scene_view, 0.5f, 1.0f, 0.5f, 1);
+	// update camera
+	BNS_CameraHandler::GetInstance()->GetSceneCamera()->Update(BNS_EngineTime::getDeltaTime(), this);
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);
 	// update for physics engine
 	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
+	// update for transforms engine
+	BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+
+	// BNS_PassRender; Draw objects in order
+	// Opaque objects are draw first
+	BNS_PassRender<BNS_OpaqueFilterPolicy, BNS_FrontToBackPolicy> opaquePass;
+	opaquePass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
+	// Transparent objects are draw last
+	BNS_PassRender<BNS_TransparencyFilterPolicy, BNS_BackToFrontPolicy> transparencyPass;
+	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
+
+	//CLEAR THE RENDER TARGET 
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
+	(m_swap_chain, 0.5f, 1.0f, 0.5f, 1);
+	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
+	RECT rc = this->getClientWindowRect();
+	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setViewportSize
+	(rc.right - rc.left, rc.bottom - rc.top);
+
+	BNS_UIManager::GetInstance()->DrawAllUIScreens();
+
+	m_swap_chain->present(true);
+
+
 	// update for graphics engine
-	render();
+	//render();
 }
 
 void BNS_AppWindow::onDestroy()

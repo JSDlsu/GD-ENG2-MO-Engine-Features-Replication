@@ -50,7 +50,8 @@ enum class ComponentType
 	Script,
 	Renderer,
 	Input,
-	Physics
+	Physics,
+	Transform
 };
 
 //DEPRECATED

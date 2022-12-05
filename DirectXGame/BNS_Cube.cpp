@@ -35,46 +35,7 @@ BNS_Cube::~BNS_Cube()
 
 void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 {
-	// BNS_Texture update
-	BNS_constant_texture cc_texture;
-	cc_texture.alpha = alpha;
-	m_cb_texture->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc_texture);
 
-	// transform update
-	BNS_constant_transform cc;
-	cc.m_time = ::GetTickCount();
-
-	// objects matrix
-	Matrix4x4 temp;
-	cc.m_world.setIdentity();
-
-	if (this->overrideMatrix) {
-		cc.m_world = m_matrix;
-	}
-	else
-	{
-		temp.setScale(m_scale);
-		cc.m_world *= temp;
-		temp.setRotationX(m_rotation.m_x);
-		cc.m_world *= temp;
-		temp.setRotationY(m_rotation.m_y);
-		cc.m_world *= temp;
-		temp.setRotationZ(m_rotation.m_z);
-		cc.m_world *= temp;
-		temp.setTranslation(m_position);
-		cc.m_world *= temp;
-		// update m_matrix
-		m_matrix = cc.m_world;
-	}
-
-	// creating the camera matrix
-	Matrix4x4 cameraMatrix = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
-	cc.m_view = cameraMatrix;
-
-	// setting the perspective projection
-	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
-
-	m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
 }
 
 void BNS_Cube::Draw(const BlenderPtr& m_blender)

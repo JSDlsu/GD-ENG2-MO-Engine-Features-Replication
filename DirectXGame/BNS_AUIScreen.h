@@ -17,6 +17,7 @@ public:
 	BNS_AUIScreen(std::string name, int ID);
 	~BNS_AUIScreen();
 	std::string GetName();
+	int GetID();
 protected:
 	std::string name;
 	int ID;

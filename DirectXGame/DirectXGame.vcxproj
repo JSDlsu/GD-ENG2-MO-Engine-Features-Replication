@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BNS_AComponent.cpp" />
+    <ClCompile Include="BNS_ASystem.cpp" />
     <ClCompile Include="BNS_BaseComponentSystem.cpp" />
     <ClCompile Include="BNS_AGameObject.cpp" />
     <ClCompile Include="BNS_AppWindow.cpp" />
@@ -200,6 +201,8 @@
     <ClCompile Include="BNS_SwapChain.cpp" />
     <ClCompile Include="BNS_Texture.cpp" />
     <ClCompile Include="BNS_TextureManager.cpp" />
+    <ClCompile Include="BNS_TransformComponent.cpp" />
+    <ClCompile Include="BNS_TransformSystem.cpp" />
     <ClCompile Include="BNS_UICreation.cpp" />
     <ClCompile Include="BNS_UIManager.cpp" />
     <ClCompile Include="BNS_VertexBuffer.cpp" />
@@ -219,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AComponent.h" />
+    <ClInclude Include="BNS_ASystem.h" />
     <ClInclude Include="BNS_BaseComponentSystem.h" />
     <ClInclude Include="BNS_AGameObject.h" />
     <ClInclude Include="BNS_AppWindow.h" />
@@ -248,6 +252,8 @@
     <ClInclude Include="BNS_RenderToTexture.h" />
     <ClInclude Include="BNS_SceneView_UI.h" />
     <ClInclude Include="BNS_Console_UI.h" />
+    <ClInclude Include="BNS_TransformComponent.h" />
+    <ClInclude Include="BNS_TransformSystem.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
     <ClInclude Include="IMGUI\imgui.h" />
     <ClInclude Include="IMGUI\imgui_impl_dx11.h" />

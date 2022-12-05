@@ -19,65 +19,11 @@ BNS_PhysicsSystem::~BNS_PhysicsSystem()
 	delete physicsCommon;
 }
 
-void BNS_PhysicsSystem::RegisterComponent(BNS_PhysicsComponent* component)
-{
-	componentTable[component->GetName()] = component;
-	componentList.push_back(component);
-}
-
-void BNS_PhysicsSystem::UnRegisterComponent(BNS_PhysicsComponent* component)
-{
-	if (componentTable[component->GetName()] != nullptr)
-	{
-		componentTable.erase(component->GetName());
-		int index = -1;
-		for (int i = 0; i < componentList.size(); ++i)
-		{
-			if (componentList[i] == component)
-			{
-				index = i;
-				break;
-			}
-		}
-
-		if (index != -1)
-		{
-			componentList.erase(componentList.begin() + index);
-		}
-	}
-	else
-	{
-		std::cout << "Component " << component->GetName() << " not registered in physics component. \n";
-	}
-}
-
-void BNS_PhysicsSystem::UnRegisterComponentByName(String name)
-{
-	if (componentTable[name] != nullptr)
-	{
-		UnRegisterComponent(componentTable[name]);
-	}
-}
-
-BNS_PhysicsComponent* BNS_PhysicsSystem::FindComponentByName(String name)
-{
-	if (componentTable[name] == nullptr)
-	{
-		std::cout << "Component " << name << " not registered in physics component.\n";
-	}
-
-	return componentTable[name];
-}
-
-BNS_PhysicsSystem::ComponentList BNS_PhysicsSystem::GetAllComponents()
-{
-	return componentList;
-}
-
 void BNS_PhysicsSystem::UpdateAllComponents()
 {
+	BNS_ASystem::UpdateAllComponents();
 	// do not update during first frame. Delta time is still 0.
-	if (BNS_EngineTime::getDeltaTime() > 0)
+	if (BNS_EngineTime::getDeltaTime() > 0.0f)
 	{
 		// update physics world
 		physicsWorld->update(BNS_EngineTime::getDeltaTime());

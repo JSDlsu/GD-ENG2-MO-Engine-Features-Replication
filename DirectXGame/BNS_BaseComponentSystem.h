@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+class BNS_TransformSystem;
 class BNS_PhysicsSystem;
 class BNS_BaseComponentSystem
 {
@@ -11,6 +12,7 @@ public:
 	static void Initialize();
 	static void Destroy();
 
+	BNS_TransformSystem* GetTransformSystem();
 	BNS_PhysicsSystem* GetPhysicsSystem();
 
 private:
@@ -20,6 +22,7 @@ private:
 	BNS_BaseComponentSystem& operator=(BNS_BaseComponentSystem const&){}; // assignment operator is private
 	static  BNS_BaseComponentSystem* sharedInstance;
 
+	BNS_TransformSystem* transformSystem;
 	BNS_PhysicsSystem* physicsSystem;
 };
 
