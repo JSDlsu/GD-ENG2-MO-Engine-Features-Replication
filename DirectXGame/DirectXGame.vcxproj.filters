@@ -337,6 +337,8 @@
     <ClCompile Include="BNS_SkyBox.cpp">
       <Filter>GameEngine\Primitives\SkyBox</Filter>
     </ClCompile>
+    <ClCompile Include="SceneReader.cpp" />
+    <ClCompile Include="SceneWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AppWindow.h">
@@ -565,6 +567,8 @@
     <ClInclude Include="BNS_SkyBox.h">
       <Filter>GameEngine\Primitives\SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="SceneReader.h" />
+    <ClInclude Include="SceneWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">

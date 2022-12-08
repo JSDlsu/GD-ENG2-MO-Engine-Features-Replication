@@ -220,6 +220,8 @@
     <ClCompile Include="IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="BNS_PhysicsComponent.cpp" />
     <ClCompile Include="BNS_PhysicsSystem.cpp" />
+    <ClCompile Include="SceneReader.cpp" />
+    <ClCompile Include="SceneWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AComponent.h" />
@@ -290,6 +292,8 @@
     <ClInclude Include="BNS_UICreation.h" />
     <ClInclude Include="BNS_UIManager.h" />
     <ClInclude Include="BNS_UI_Prerequisites.h" />
+    <ClInclude Include="SceneReader.h" />
+    <ClInclude Include="SceneWriter.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Vector4D.h" />
