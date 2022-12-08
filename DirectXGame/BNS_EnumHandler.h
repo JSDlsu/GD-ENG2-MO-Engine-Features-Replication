@@ -5,7 +5,8 @@ enum class BNS_ObjectTypes
 	CUBE = 0,
 	MESH,
 	PLANE,
-	CAMERA
+	CAMERA,
+	SKYBOX
 };
 
 enum class BNS_VertexShaderType
@@ -23,7 +24,8 @@ enum class BNS_PixelShaderType
 	MESH,
 	COLOR,
 	COLOR_LERP,
-	LIGHTING
+	LIGHTING,
+	SKYBOX
 };
 
 enum class BNS_InputLayoutType

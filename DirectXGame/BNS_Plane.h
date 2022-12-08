@@ -14,7 +14,7 @@ public:
 	BNS_Plane(std::string name, BNS_ObjectTypes type);
 	~BNS_Plane();
 public:
-	void Update(float deltaTime, BNS_AppWindow* app_window) override;
+	void Update(float deltaTime, BNS_AppWindow* app_window = nullptr) override;
 	void Draw(const BlenderPtr& m_blender) override;
 };
 

@@ -5,6 +5,7 @@
 #include "BNS_AGameObject.h"
 #include "BNS_Prerequisites.h"
 
+class BNS_SkyBox;
 class BNS_AppWindow;
 /*
  * stores the created object in the scene;
@@ -21,14 +22,19 @@ public:
 	static BNS_GameObjectManager* get();
 	static void create();
 	static void release();
+public:
 	std::vector<BNS_AGameObject*>& GetObjectList();
 	std::vector<BNS_AGameObject*>& GetRenderObjectList();
 	void DeleteObject(BNS_AGameObject* gameObject);
 	void DeleteObjectByName(std::string name);
+public:
+	void SetSkyBox(BNS_SkyBox* skybox);
+	BNS_SkyBox* GetSkyBox();
 
 private:
 	std::vector<BNS_AGameObject*> objectList;
 	std::vector<BNS_AGameObject*> render_objectList;
+	BNS_SkyBox* current_SkyBox = nullptr;
 	static BNS_GameObjectManager* m_instance;
 	friend class BNS_AppWindow;
 	friend class BNS_Cube;

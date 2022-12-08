@@ -29,6 +29,7 @@ void BNS_Camera::Update(float deltaTime, BNS_AppWindow* app_window)
 		isAppWindowAssign = true;
 		m_app_window = app_window;
 	}
+	UpdateViewMatrix();
 }
 
 Matrix4x4 BNS_Camera::GetCamViewMatrix()

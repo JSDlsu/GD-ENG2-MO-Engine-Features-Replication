@@ -28,7 +28,7 @@ public:
 public:
 	BNS_ObjectTypes ObjectType;
 public:
-	virtual void Update(float deltaTime, BNS_AppWindow* app_window) = 0;
+	virtual void Update(float deltaTime, BNS_AppWindow* app_window = nullptr) = 0;
 	virtual void Draw(const BlenderPtr& m_blender);
 public:
 	void SetTransform(Vector3D position, Vector3D scale, Vector3D rotation);

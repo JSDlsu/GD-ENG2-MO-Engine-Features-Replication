@@ -32,9 +32,12 @@ public:
 	bool CompilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
 
 	void ReleaseCompiledShader();
+	void SetRasterizerState(bool cull_front);
 
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetDeviceContext();
+private:
+	void InitRasterizerState();
 	
 private:
 	DeviceContextPtr m_imm_device_context;
@@ -50,6 +53,10 @@ private:
 private:
 	// a buffer that contains the compiled BNS_vertex_tex shader and its size in the memory
 	ID3DBlob* m_blob = nullptr;
+
+	ID3D11RasterizerState* m_cull_front_state = nullptr;
+	ID3D11RasterizerState* m_cull_back_state = nullptr;
+
 	ID3DBlob* m_vsblob = nullptr;
 	ID3DBlob* m_psblob = nullptr;
 	ID3D11VertexShader* m_vs = nullptr;

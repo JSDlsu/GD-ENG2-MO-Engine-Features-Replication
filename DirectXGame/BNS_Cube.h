@@ -12,7 +12,7 @@ public:
 	BNS_Cube(std::string name, BNS_ObjectTypes type);
 	~BNS_Cube();
 public:
-	void Update(float deltaTime, BNS_AppWindow* app_window) override;
+	void Update(float deltaTime, BNS_AppWindow* app_window = nullptr) override;
 	void Draw(const BlenderPtr& m_blender) override;
 public:
 	void SetMesh(const wchar_t* tex_path);
@@ -38,5 +38,7 @@ protected:
 	float deltaTime = 0.0f;
 protected:
 	friend class BNS_AppWindow;
+private:
+	float m_light_rot_y = 0.0f;
 };
 
