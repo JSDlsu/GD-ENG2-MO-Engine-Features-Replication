@@ -8,6 +8,7 @@
 #include "BNS_TransformSystem.h"
 #include "BNS_AGameObject.h"
 #include "BNS_Camera.h"
+#include "BNS_EngineTime.h"
 
 BNS_TransformComponent::BNS_TransformComponent(String name, BNS_AGameObject* owner) : BNS_AComponent(name, ComponentType::Transform, owner)
 {
@@ -23,22 +24,20 @@ BNS_TransformComponent::~BNS_TransformComponent()
 void BNS_TransformComponent::Perform(float deltaTime)
 {
 	BNS_AComponent::Perform(deltaTime);
-	
-	// BNS_Texture update
-	BNS_constant_texture cc_texture;
-	cc_texture.alpha = owner->alpha;
-	owner->m_cb_texture->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc_texture);
 
 	// transform update
 	BNS_constant_transform cc;
-	cc.m_time = ::GetTickCount();
+	cc.alpha = owner->alpha;
+	//cc.m_time = ::GetTickCount();
 	
 	// objects matrix
 	Matrix4x4 temp;
 	// light matrix
 	Matrix4x4 m_light_rot_matrix;
 	m_light_rot_matrix.setIdentity();
-	m_light_rot_matrix.setRotationY(0.0f);
+	m_light_rot_matrix.setRotationY(m_light_rot_y);
+
+	m_light_rot_y += 0.707f * BNS_EngineTime::getDeltaTime();
 
 	cc.m_light_direction = m_light_rot_matrix.getZDirection();
 

@@ -10,11 +10,9 @@ cbuffer BNS_constant_transform: register(b0)
 	row_major float4x4 m_world;
 	row_major float4x4 m_view;
 	row_major float4x4 m_proj;
+	float4 m_light_direction;
+	float4 m_camera_position;
 	unsigned int m_time;
-};
-
-cbuffer BNS_constant_texture: register(b0)
-{
 	float alpha;
 };
 

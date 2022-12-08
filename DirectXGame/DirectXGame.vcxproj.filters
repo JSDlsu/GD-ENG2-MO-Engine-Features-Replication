@@ -564,7 +564,7 @@
     <FxCompile Include="BNS_PixelMesh.hlsl">
       <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
     </FxCompile>
-    <FxCompile Include="BNS_VertexMesh.hlsl">
+    <FxCompile Include="BNS_VertexMeshLayout.hlsl">
       <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="BNS_VertexTex.hlsl">
@@ -581,6 +581,12 @@
     </FxCompile>
     <FxCompile Include="BNS_PixelColorLerp.hlsl">
       <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="BNS_PixelLight.hlsl">
+      <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="BNS_VertexLight.hlsl">
+      <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

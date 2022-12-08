@@ -10,6 +10,6 @@ public:
 	void Perform(float deltaTime) override;
 
 private:
-
+	float m_light_rot_y = 0.0f;
 };
 

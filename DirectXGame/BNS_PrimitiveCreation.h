@@ -20,6 +20,7 @@ public:
 	void CreateTexturedCube();
 	void CreatePlane();
 	void CreateTeapot();
+	void CreateStatue();
 	void CreateBunny();
 	void CreateArmadillo();
 	void CreateMeshFromFile(std::string full_filepath, std::string localName);

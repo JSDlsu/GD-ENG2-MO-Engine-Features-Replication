@@ -20,12 +20,8 @@ BNS_Cube::BNS_Cube(std::string name, BNS_ObjectTypes type) : BNS_AGameObject(nam
 	// create CB
 	BNS_constant_transform cc;
 	cc.m_time = 0;
+	cc.alpha = 1.0f;
 	m_cb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc, sizeof(BNS_constant_transform));
-	// create CB_texture
-	BNS_constant_texture cc_texture;
-	cc_texture.alpha = 1.0f;
-	m_cb_texture = BNS_GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc_texture, sizeof(BNS_constant_texture));
-	
 }
 
 BNS_Cube::~BNS_Cube()
@@ -45,7 +41,7 @@ void BNS_Cube::Draw(const BlenderPtr& m_blender)
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
 
 	// for the texture
-	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb_texture);
+	//BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb_texture);
 
 	//SET TEXTURE SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexShader(m_vs);
@@ -71,9 +67,6 @@ void BNS_Cube::SetMesh(const wchar_t* tex_path)
 	m_mesh = BNS_GraphicsEngine::get()->getMeshManager()->createMeshFromFile(tex_path);
 	m_ib = m_mesh.get()->getIndexBuffer();
 	m_vb = m_mesh.get()->getVertexBuffer();
-
-	// change the pixel shader for mesh types
-	SetPixelShader(BNS_PixelShaderType::MESH);
 }
 
 void BNS_Cube::SetTexture(const wchar_t* tex_path)

@@ -10,14 +10,8 @@ struct BNS_constant_transform
 	Matrix4x4 m_world;
 	Matrix4x4 m_view;
 	Matrix4x4 m_proj;
-	unsigned int m_time;
 	Vector4D m_light_direction;
 	Vector4D m_camera_position;
-};
-
-// constant buffer for object's texture attributes
-__declspec(align(16))
-struct BNS_constant_texture
-{
+	unsigned int m_time;
 	float alpha = 1.0f;
 };
