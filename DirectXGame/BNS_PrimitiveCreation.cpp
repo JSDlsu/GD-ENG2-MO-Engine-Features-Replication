@@ -130,11 +130,26 @@ void BNS_PrimitiveCreation::CreateTeapot()
 {
 	const char* name = "teapot";
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
-	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
-	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
-	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	cube->SetMesh(L"Assets\\Meshes\\teapot.obj");
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::MESH);
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+}
+
+void BNS_PrimitiveCreation::CreateStatue()
+{
+	const char* name = "statue";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetMesh(L"Assets\\Meshes\\statue.obj");
+	cube->SetVertexShader(BNS_VertexShaderType::LIGHTING);
+	cube->SetPixelShader(BNS_PixelShaderType::LIGHTING);
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 
 	// adding transform component
@@ -148,10 +163,9 @@ void BNS_PrimitiveCreation::CreateBunny()
 {
 	const char* name = "bunny";
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
-	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
-	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
-	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	cube->SetMesh(L"Assets\\Meshes\\bunny.obj");
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::MESH);
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 
@@ -166,11 +180,10 @@ void BNS_PrimitiveCreation::CreateArmadillo()
 {
 	const char* name = "armadillo";
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
-	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
-	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
-	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	cube->SetMesh(L"Assets\\Meshes\\armadillo.obj");
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::MESH);
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 
 	// adding transform component

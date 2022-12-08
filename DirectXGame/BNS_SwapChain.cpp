@@ -100,7 +100,6 @@ void BNS_SwapChain::reloadBuffers(unsigned width, unsigned height)
 	tex_desc.ArraySize = 1;
 	tex_desc.CPUAccessFlags = 0;
 
-
 	hr = device->CreateTexture2D(&tex_desc, nullptr, &buffer);
 
 	if (FAILED(hr))

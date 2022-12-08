@@ -65,7 +65,6 @@ public:
 	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
 protected:
 	ConstantBufferPtr m_cb;
-	ConstantBufferPtr m_cb_texture;
 protected:
 	std::string name;
 	Vector3D m_position;

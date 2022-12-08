@@ -13,7 +13,8 @@ enum class BNS_VertexShaderType
 	TEXTURE = 0,
 	MESH,
 	COLOR,
-	COLOR_LERP
+	COLOR_LERP,
+	LIGHTING
 };
 
 enum class BNS_PixelShaderType
@@ -21,7 +22,8 @@ enum class BNS_PixelShaderType
 	TEXTURE = 0,
 	MESH,
 	COLOR,
-	COLOR_LERP
+	COLOR_LERP,
+	LIGHTING
 };
 
 enum class BNS_InputLayoutType
