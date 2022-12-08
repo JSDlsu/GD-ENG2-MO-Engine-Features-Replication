@@ -9,6 +9,7 @@ BNS_PixelShaderManager::BNS_PixelShaderManager()
 	CompilePixelShader(L"BNS_PixelColor.hlsl", "psmain", BNS_PixelShaderType::COLOR);
 	CompilePixelShader(L"BNS_PixelColorLerp.hlsl", "psmain", BNS_PixelShaderType::COLOR_LERP);
 	CompilePixelShader(L"BNS_PixelLight.hlsl", "psmain", BNS_PixelShaderType::LIGHTING);
+	CompilePixelShader(L"BNS_PixelSkyBox.hlsl", "psmain", BNS_PixelShaderType::SKYBOX);
 }
 
 BNS_PixelShaderManager::~BNS_PixelShaderManager()

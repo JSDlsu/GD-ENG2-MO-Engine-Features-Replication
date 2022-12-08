@@ -151,6 +151,9 @@
     <Filter Include="GameEngine\BaseSystem\TransformSystem">
       <UniqueIdentifier>{421e0885-117f-456e-b9c4-d17acd7ca0eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Primitives\SkyBox">
+      <UniqueIdentifier>{87aeb098-5324-401b-aaea-a4ce50c36edf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -330,6 +333,9 @@
     </ClCompile>
     <ClCompile Include="BNS_TransformSystem.cpp">
       <Filter>GameEngine\BaseSystem\TransformSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_SkyBox.cpp">
+      <Filter>GameEngine\Primitives\SkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -556,6 +562,9 @@
     <ClInclude Include="BNS_TransformSystem.h">
       <Filter>GameEngine\BaseSystem\TransformSystem</Filter>
     </ClInclude>
+    <ClInclude Include="BNS_SkyBox.h">
+      <Filter>GameEngine\Primitives\SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">
@@ -587,6 +596,9 @@
     </FxCompile>
     <FxCompile Include="BNS_VertexLight.hlsl">
       <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="BNS_PixelSkyBox.hlsl">
+      <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

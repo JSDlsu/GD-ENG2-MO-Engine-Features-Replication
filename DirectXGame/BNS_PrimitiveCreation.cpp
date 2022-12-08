@@ -10,6 +10,7 @@
 #include "BNS_Physics_Prerequisites.h"
 #include "BNS_Plane.h"
 #include "BNS_ShaderEngine.h"
+#include "BNS_SkyBox.h"
 #include "BNS_TransformComponent.h"
 
 BNS_PrimitiveCreation* BNS_PrimitiveCreation::sharedInstance = nullptr;
@@ -176,6 +177,24 @@ void BNS_PrimitiveCreation::CreateArmadillo()
 	cube->AttachComponent(transformComp);
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+}
+
+void BNS_PrimitiveCreation::CreateSkyBox()
+{
+	const char* name = "skybox";
+	BNS_SkyBox* sky_box = new BNS_SkyBox(name, BNS_ObjectTypes::SKYBOX);
+	sky_box->SetMesh(L"Assets\\Meshes\\sphere.obj");
+	sky_box->SetTexture(L"Assets\\Textures\\sky.jpg");
+	sky_box->SetVertexShader(BNS_VertexShaderType::LIGHTING);
+	sky_box->SetPixelShader(BNS_PixelShaderType::SKYBOX);
+	sky_box->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	//BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", sky_box);
+	//sky_box->AttachComponent(transformComp);
+
+	//BNS_GameObjectManager::get()->GetObjectList().emplace_back(sky_box);
+	BNS_GameObjectManager::get()->SetSkyBox(sky_box);
 }
 
 void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::string localName)

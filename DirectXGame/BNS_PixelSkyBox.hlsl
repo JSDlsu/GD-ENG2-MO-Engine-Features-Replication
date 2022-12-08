@@ -1,0 +1,26 @@
+Texture2D Texture: register(t0);
+sampler TextureSampler: register(s0);
+
+struct PS_INPUT
+{
+	float4 position: SV_POSITION;
+	float2 texcoord: TEXCOORD0;
+	float3 normal: NORMAL0;
+	float3 direction_to_camera: TEXCOORD1;
+};
+
+cbuffer BNS_constant_transform: register(b0)
+{
+	row_major float4x4 m_world;
+	row_major float4x4 m_view;
+	row_major float4x4 m_proj;
+	float4 m_light_direction;
+	float4 m_camera_position;
+	unsigned int m_time;
+	float alpha;
+};
+
+float4 psmain(PS_INPUT input) : SV_TARGET
+{
+	return Texture.Sample(TextureSampler, 1.0f - input.texcoord);
+}

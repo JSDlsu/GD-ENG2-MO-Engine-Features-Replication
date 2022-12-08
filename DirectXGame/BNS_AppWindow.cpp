@@ -17,6 +17,7 @@
 #include "BNS_PhysicsSystem.h"
 #include "BNS_Plane.h"
 #include "BNS_RenderToTexture.h"
+#include "BNS_SkyBox.h"
 #include "BNS_SwapChain.h"
 #include "BNS_TransformSystem.h"
 
@@ -50,19 +51,29 @@ void BNS_AppWindow::onCreate()
 		CreateRenderToTexture(rc.right - rc.left, rc.bottom - rc.top);
 	// create the UI manager
 	BNS_UIManager::Initialize(this, m_hwnd, m_scene_view);
+	// Create base skybox
+	BNS_PrimitiveCreation::Instance()->CreateSkyBox();
 
 }
 
 void BNS_AppWindow::render()
 {
-	//CLEAR THE RENDER TARGET FOR RENDER_TO_TEXTURE
+	// CLEAR THE RENDER TARGET FOR RENDER_TO_TEXTURE
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
 	(m_swap_chain, m_scene_view, 0.5f, 1.0f, 0.5f, 1);
-	// update camera
+	// Update camera
 	BNS_CameraHandler::GetInstance()->GetSceneCamera()->Update(BNS_EngineTime::getDeltaTime(), this);
-	// update models
-	update();
+	// run the update for the BNS_InputSystem
+	BNS_InputSystem::get()->update(m_hwnd);
+	// update for physics engine
+	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
+	// update for transforms engine
+	BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+	// Update SkyBox
+	BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
 
+	// update renderstate (back)
+	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(false);
 	// BNS_PassRender; Draw objects in order
 	// Opaque objects are draw first
 	BNS_PassRender<BNS_OpaqueFilterPolicy, BNS_FrontToBackPolicy> opaquePass;
@@ -70,6 +81,10 @@ void BNS_AppWindow::render()
 	// Transparent objects are draw last
 	BNS_PassRender<BNS_TransparencyFilterPolicy, BNS_BackToFrontPolicy> transparencyPass;
 	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
+	// update renderstate (front)
+	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(true);
+	// Draw SkyBox
+	BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
 
 	//CLEAR THE RENDER TARGET 
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
@@ -78,37 +93,10 @@ void BNS_AppWindow::render()
 	RECT rc = this->getClientWindowRect();
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setViewportSize
 	(rc.right - rc.left, rc.bottom - rc.top);
-
-	/*
-	std::cout << "Cam: X=" << BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_x <<
-		" Y=" << BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_y << " Z=" <<
-		BNS_CameraHandler::GetInstance()->GetSceneCamera().get()->GetLocalPosition().m_z << std::endl;
-	*/
-	/*
-	// BNS_PassRender; Draw objects in order
-	// Opaque objects are draw first
-	opaquePass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
-	// Transparent objects are draw last
-	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
-	*/
-
+	
 	BNS_UIManager::GetInstance()->DrawAllUIScreens();
 
 	m_swap_chain->present(true);
-}
-
-// updating our constant buffers
-void BNS_AppWindow::update()
-{
-	// Call each object's constant buffer in the scene
-	std::vector<BNS_AGameObject*>::iterator i;
-	for (i = BNS_GameObjectManager::get()->objectList.begin(); i != BNS_GameObjectManager::get()->objectList.end(); ++i)
-	{
-		//std::static_pointer_cast<BNS_Cube>(*i)->m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
-		if ((*i) != nullptr)
-			(*i)->Update(BNS_EngineTime::getDeltaTime(), this);
-	}
-
 }
 
 void BNS_AppWindow::onUpdate()
@@ -125,7 +113,10 @@ void BNS_AppWindow::onUpdate()
 	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
 	// update for transforms engine
 	BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
-
+	// Update SkyBox
+	BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
+	// update renderstate (back)
+	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(false);
 	// BNS_PassRender; Draw objects in order
 	// Opaque objects are draw first
 	BNS_PassRender<BNS_OpaqueFilterPolicy, BNS_FrontToBackPolicy> opaquePass;
@@ -133,11 +124,15 @@ void BNS_AppWindow::onUpdate()
 	// Transparent objects are draw last
 	BNS_PassRender<BNS_TransparencyFilterPolicy, BNS_BackToFrontPolicy> transparencyPass;
 	transparencyPass.Render(m_blender, BNS_CameraHandler::GetInstance()->GetSceneCamera());
+	// update renderstate (front)
+	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(true);
+	// Draw SkyBox
+	BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
 
-	//CLEAR THE RENDER TARGET 
+	// CLEAR THE RENDER TARGET 
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
 	(m_swap_chain, 0.5f, 1.0f, 0.5f, 1);
-	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
+	// SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setViewportSize
 	(rc.right - rc.left, rc.bottom - rc.top);
@@ -146,9 +141,20 @@ void BNS_AppWindow::onUpdate()
 
 	m_swap_chain->present(true);
 
+}
 
-	// update for graphics engine
-	//render();
+// updating our constant buffers
+void BNS_AppWindow::update()
+{
+	// Call each object's constant buffer in the scene
+	std::vector<BNS_AGameObject*>::iterator i;
+	for (i = BNS_GameObjectManager::get()->objectList.begin(); i != BNS_GameObjectManager::get()->objectList.end(); ++i)
+	{
+		//std::static_pointer_cast<BNS_Cube>(*i)->m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
+		if ((*i) != nullptr)
+			(*i)->Update(BNS_EngineTime::getDeltaTime(), this);
+	}
+
 }
 
 void BNS_AppWindow::onDestroy()

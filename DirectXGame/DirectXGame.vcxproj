@@ -198,6 +198,7 @@
     <ClCompile Include="BNS_ResourceManager.cpp" />
     <ClCompile Include="BNS_SceneView_UI.cpp" />
     <ClCompile Include="BNS_ShaderEngine.cpp" />
+    <ClCompile Include="BNS_SkyBox.cpp" />
     <ClCompile Include="BNS_SwapChain.cpp" />
     <ClCompile Include="BNS_Texture.cpp" />
     <ClCompile Include="BNS_TextureManager.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="BNS_RenderToTexture.h" />
     <ClInclude Include="BNS_SceneView_UI.h" />
     <ClInclude Include="BNS_Console_UI.h" />
+    <ClInclude Include="BNS_SkyBox.h" />
     <ClInclude Include="BNS_TransformComponent.h" />
     <ClInclude Include="BNS_TransformSystem.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
@@ -374,6 +376,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="BNS_PixelSkyBox.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>

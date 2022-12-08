@@ -24,51 +24,5 @@ BNS_TransformComponent::~BNS_TransformComponent()
 void BNS_TransformComponent::Perform(float deltaTime)
 {
 	BNS_AComponent::Perform(deltaTime);
-
-	// transform update
-	BNS_constant_transform cc;
-	cc.alpha = owner->alpha;
-	//cc.m_time = ::GetTickCount();
-	
-	// objects matrix
-	Matrix4x4 temp;
-	// light matrix
-	Matrix4x4 m_light_rot_matrix;
-	m_light_rot_matrix.setIdentity();
-	m_light_rot_matrix.setRotationY(m_light_rot_y);
-
-	m_light_rot_y += 0.707f * BNS_EngineTime::getDeltaTime();
-
-	cc.m_light_direction = m_light_rot_matrix.getZDirection();
-
-	cc.m_world.setIdentity();
-
-	if (owner->overrideMatrix) {
-		cc.m_world = owner->m_matrix;
-	}
-	else
-	{
-		temp.setScale(owner->m_scale);
-		cc.m_world *= temp;
-		temp.setRotationX(owner->m_rotation.m_x);
-		cc.m_world *= temp;
-		temp.setRotationY(owner->m_rotation.m_y);
-		cc.m_world *= temp;
-		temp.setRotationZ(owner->m_rotation.m_z);
-		cc.m_world *= temp;
-		temp.setTranslation(owner->m_position);
-		cc.m_world *= temp;
-		// update m_matrix
-		owner->m_matrix = cc.m_world;
-	}
-
-	// creating the camera matrix
-	Matrix4x4 cameraMatrix = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
-	cc.m_view = cameraMatrix;
-	cc.m_camera_position = BNS_CameraHandler::GetInstance()->GetSceneCamera()->GetLocalPosition();
-
-	// setting the perspective projection
-	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
-
-	owner->m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
+	owner->Update(deltaTime);
 }

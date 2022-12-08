@@ -55,7 +55,9 @@ BNS_RenderSystem::BNS_RenderSystem()
 	m_d3d_device->QueryInterface(__uuidof(IDXGIDevice), (void**)&m_dxgi_device);
 	m_dxgi_device->GetParent(__uuidof(IDXGIAdapter), (void**)&m_dxgi_adapter);
 	m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
-	
+
+	InitRasterizerState();
+
 }
 
 BNS_RenderSystem::~BNS_RenderSystem()
@@ -201,6 +203,15 @@ void BNS_RenderSystem::ReleaseCompiledShader()
 	if (m_blob)m_blob->Release();
 }
 
+void BNS_RenderSystem::SetRasterizerState(bool cull_front)
+{
+	if (cull_front)
+		m_imm_context->RSSetState(m_cull_front_state);
+	else
+		m_imm_context->RSSetState(m_cull_back_state);
+
+}
+
 ID3D11Device* BNS_RenderSystem::GetDevice()
 {
 	return m_d3d_device;
@@ -209,4 +220,17 @@ ID3D11Device* BNS_RenderSystem::GetDevice()
 ID3D11DeviceContext* BNS_RenderSystem::GetDeviceContext()
 {
 	return m_imm_context;
+}
+
+void BNS_RenderSystem::InitRasterizerState()
+{
+	// front state
+	D3D11_RASTERIZER_DESC desc = {};
+	desc.CullMode = D3D11_CULL_FRONT;
+	desc.DepthClipEnable = true;
+	desc.FillMode = D3D11_FILL_SOLID;
+	m_d3d_device->CreateRasterizerState(&desc, &m_cull_front_state);
+	// back state
+	desc.CullMode = D3D11_CULL_BACK;
+	m_d3d_device->CreateRasterizerState(&desc, &m_cull_back_state);
 }

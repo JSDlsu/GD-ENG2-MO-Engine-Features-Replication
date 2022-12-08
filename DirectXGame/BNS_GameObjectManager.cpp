@@ -83,5 +83,15 @@ void BNS_GameObjectManager::DeleteObjectByName(std::string name)
 {
 }
 
+void BNS_GameObjectManager::SetSkyBox(BNS_SkyBox* skybox)
+{
+	current_SkyBox = skybox;
+}
+
+BNS_SkyBox* BNS_GameObjectManager::GetSkyBox()
+{
+	return current_SkyBox;
+}
+
 
 
