@@ -20,6 +20,7 @@
 #include "BNS_SkyBox.h"
 #include "BNS_SwapChain.h"
 #include "BNS_TransformSystem.h"
+#include "BNS_EngineBackend.h"
 
 
 BNS_AppWindow::BNS_AppWindow()
@@ -38,6 +39,9 @@ void BNS_AppWindow::onCreate()
 	BNS_BaseComponentSystem::Initialize();
 	// create cameras
 	BNS_CameraHandler::Initialize();
+	BNS_EngineBackend::initialize();
+
+	BNS_EngineBackend::getInstance()->setMode(BNS_EngineBackend::EDITOR);
 
 
 	// create swap chain
@@ -52,7 +56,7 @@ void BNS_AppWindow::onCreate()
 	// create the UI manager
 	BNS_UIManager::Initialize(this, m_hwnd, m_scene_view);
 	// Create base skybox
-	BNS_PrimitiveCreation::Instance()->CreateSkyBox();
+	//BNS_PrimitiveCreation::Instance()->CreateSkyBox();
 
 }
 
@@ -70,7 +74,7 @@ void BNS_AppWindow::render()
 	// update for transforms engine
 	BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
 	// Update SkyBox
-	BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
+	//BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
 
 	// update renderstate (back)
 	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(false);
@@ -84,7 +88,7 @@ void BNS_AppWindow::render()
 	// update renderstate (front)
 	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(true);
 	// Draw SkyBox
-	BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
+	//BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
 
 	//CLEAR THE RENDER TARGET 
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
@@ -109,12 +113,31 @@ void BNS_AppWindow::onUpdate()
 	BNS_CameraHandler::GetInstance()->GetSceneCamera()->Update(BNS_EngineTime::getDeltaTime(), this);
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);
-	// update for physics engine
-	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
-	// update for transforms engine
-	BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+
+	BNS_EngineBackend* backend = BNS_EngineBackend::getInstance();
+	if (backend->getMode() == BNS_EngineBackend::EditorMode::PLAY) {
+		// update for physics engine
+		BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
+		// update for transforms engine
+		BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+	}
+	else if (backend->getMode() == BNS_EngineBackend::EditorMode::EDITOR) {
+		// update for transforms engine
+		BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+
+	}
+	else if (backend->getMode() == BNS_EngineBackend::EditorMode::PAUSED) {
+		if (backend->insideFrameStep()) {
+			// update for physics engine
+			BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
+			// update for transforms engine
+			BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+			backend->endFrameStep();
+		}
+	}
+	
 	// Update SkyBox
-	BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
+	//BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
 	// update renderstate (back)
 	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(false);
 	// BNS_PassRender; Draw objects in order
@@ -127,7 +150,7 @@ void BNS_AppWindow::onUpdate()
 	// update renderstate (front)
 	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(true);
 	// Draw SkyBox
-	BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
+	//BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
 
 	// CLEAR THE RENDER TARGET 
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor

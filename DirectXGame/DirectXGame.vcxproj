@@ -173,6 +173,7 @@
     <ClCompile Include="BNS_ContentBrowser_UI.cpp" />
     <ClCompile Include="BNS_Cube.cpp" />
     <ClCompile Include="BNS_DeviceContext.cpp" />
+    <ClCompile Include="BNS_EngineBackend.cpp" />
     <ClCompile Include="BNS_EngineTime.cpp" />
     <ClCompile Include="BNS_FileExplorer.cpp" />
     <ClCompile Include="BNS_GameObjectManager.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="BNS_RenderToTexture.cpp" />
     <ClCompile Include="BNS_Resource.cpp" />
     <ClCompile Include="BNS_ResourceManager.cpp" />
+    <ClCompile Include="BNS_SceneStates_UI.cpp" />
     <ClCompile Include="BNS_SceneView_UI.cpp" />
     <ClCompile Include="BNS_ShaderEngine.cpp" />
     <ClCompile Include="BNS_SkyBox.cpp" />
@@ -239,6 +241,7 @@
     <ClInclude Include="BNS_ContentBrowser_UI.h" />
     <ClInclude Include="BNS_Cube.h" />
     <ClInclude Include="BNS_DeviceContext.h" />
+    <ClInclude Include="BNS_EngineBackend.h" />
     <ClInclude Include="BNS_EngineTime.h" />
     <ClInclude Include="BNS_EnumHandler.h" />
     <ClInclude Include="BNS_FileExplorer.h" />
@@ -253,6 +256,7 @@
     <ClInclude Include="BNS_Log.h" />
     <ClInclude Include="BNS_Physics_Prerequisites.h" />
     <ClInclude Include="BNS_RenderToTexture.h" />
+    <ClInclude Include="BNS_SceneStates_UI.h" />
     <ClInclude Include="BNS_SceneView_UI.h" />
     <ClInclude Include="BNS_Console_UI.h" />
     <ClInclude Include="BNS_SkyBox.h" />

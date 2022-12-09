@@ -17,6 +17,8 @@ public:
 	void CreateContentBrowserUI();
 	void CreateConsoleUI();
 	void CreateInspectorUI();
+	void CreateSceneStatesUI();
+
 private:
 	int currentID = 0;
 };

@@ -9,6 +9,7 @@
 #include "BNS_UIManager.h"
 #include "BNS_Console_UI.h"
 #include "BNS_Inspector_UI.h"
+#include "BNS_SceneStates_UI.h"
 
 BNS_UICreation::BNS_UICreation()
 {
@@ -76,5 +77,13 @@ void BNS_UICreation::CreateInspectorUI()
 	BNS_Inspector_UI* screen = new BNS_Inspector_UI("Inspector", currentID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::INSPECTOR_SCREEN] = ptr_screen;
+	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
+}
+
+void BNS_UICreation::CreateSceneStatesUI()
+{
+	BNS_SceneStates_UI* screen = new BNS_SceneStates_UI("Editor State", currentID++);
+	AUIScreen_Ptr ptr_screen(screen);
+	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::STATE_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
 }

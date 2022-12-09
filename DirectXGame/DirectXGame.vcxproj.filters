@@ -154,6 +154,15 @@
     <Filter Include="GameEngine\Primitives\SkyBox">
       <UniqueIdentifier>{87aeb098-5324-401b-aaea-a4ce50c36edf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\BackEndTools\EngineBackend">
+      <UniqueIdentifier>{b4ee725f-0344-41c9-a2fe-fdd3bc307e9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\BackEndTools\ConsoleLogger">
+      <UniqueIdentifier>{b685bb94-8477-4209-83a9-3b6e4f22875f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\UI\SceneStates">
+      <UniqueIdentifier>{c1888ba6-c8b3-4951-b716-0944ed99ec6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -324,7 +333,6 @@
     <ClCompile Include="BNS_AComponent.cpp">
       <Filter>GameEngine\BaseSystem</Filter>
     </ClCompile>
-    <ClCompile Include="BNS_Log.cpp" />
     <ClCompile Include="BNS_ASystem.cpp">
       <Filter>GameEngine\BaseSystem</Filter>
     </ClCompile>
@@ -339,6 +347,15 @@
     </ClCompile>
     <ClCompile Include="SceneReader.cpp" />
     <ClCompile Include="SceneWriter.cpp" />
+    <ClCompile Include="BNS_EngineBackend.cpp">
+      <Filter>GameEngine\BackEndTools\EngineBackend</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_Log.cpp">
+      <Filter>GameEngine\BackEndTools\ConsoleLogger</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_SceneStates_UI.cpp">
+      <Filter>GameEngine\UI\SceneStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AppWindow.h">
@@ -554,7 +571,6 @@
     <ClInclude Include="BNS_Physics_Prerequisites.h">
       <Filter>GameEngine\BaseSystem\PhysicsSystem</Filter>
     </ClInclude>
-    <ClInclude Include="BNS_Log.h" />
     <ClInclude Include="BNS_ASystem.h">
       <Filter>GameEngine\BaseSystem</Filter>
     </ClInclude>
@@ -569,6 +585,15 @@
     </ClInclude>
     <ClInclude Include="SceneReader.h" />
     <ClInclude Include="SceneWriter.h" />
+    <ClInclude Include="BNS_EngineBackend.h">
+      <Filter>GameEngine\BackEndTools\EngineBackend</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_Log.h">
+      <Filter>GameEngine\BackEndTools\ConsoleLogger</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_SceneStates_UI.h">
+      <Filter>GameEngine\UI\SceneStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">
