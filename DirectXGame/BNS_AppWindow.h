@@ -18,7 +18,6 @@ public:
 	~BNS_AppWindow();
 
 	void render();
-	void update();
 
 	// Inherited via BNS_Window
 	virtual void onCreate() override;

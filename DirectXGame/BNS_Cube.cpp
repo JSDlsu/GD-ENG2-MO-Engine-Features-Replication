@@ -86,9 +86,6 @@ void BNS_Cube::Draw(const BlenderPtr& m_blender)
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
 
-	// for the texture
-	//BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb_texture);
-
 	//SET TEXTURE SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexShader(m_vs);
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setPixelShader(m_ps);

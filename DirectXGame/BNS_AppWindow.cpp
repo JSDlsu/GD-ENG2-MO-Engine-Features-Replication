@@ -56,7 +56,7 @@ void BNS_AppWindow::onCreate()
 	// create the UI manager
 	BNS_UIManager::Initialize(this, m_hwnd, m_scene_view);
 	// Create base skybox
-	//BNS_PrimitiveCreation::Instance()->CreateSkyBox();
+	BNS_PrimitiveCreation::Instance()->CreateSkyBox();
 
 }
 
@@ -69,13 +69,31 @@ void BNS_AppWindow::render()
 	BNS_CameraHandler::GetInstance()->GetSceneCamera()->Update(BNS_EngineTime::getDeltaTime(), this);
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);
-	// update for physics engine
-	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
-	// update for transforms engine
-	BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
-	// Update SkyBox
-	//BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
 
+	BNS_EngineBackend* backend = BNS_EngineBackend::getInstance();
+	if (backend->getMode() == BNS_EngineBackend::EditorMode::PLAY) {
+		// update for physics engine
+		BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
+		// update for transforms engine
+		BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+	}
+	else if (backend->getMode() == BNS_EngineBackend::EditorMode::EDITOR) {
+		// update for transforms engine
+		BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+
+	}
+	else if (backend->getMode() == BNS_EngineBackend::EditorMode::PAUSED) {
+		if (backend->insideFrameStep()) {
+			// update for physics engine
+			BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UpdateAllComponents();
+			// update for transforms engine
+			BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UpdateAllComponents();
+			backend->endFrameStep();
+		}
+	}
+
+	// Update SkyBox
+	BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
 	// update renderstate (back)
 	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(false);
 	// BNS_PassRender; Draw objects in order
@@ -88,7 +106,7 @@ void BNS_AppWindow::render()
 	// update renderstate (front)
 	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(true);
 	// Draw SkyBox
-	//BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
+	BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
 
 	//CLEAR THE RENDER TARGET 
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
@@ -111,6 +129,12 @@ void BNS_AppWindow::onUpdate()
 	(m_swap_chain, m_scene_view, 0.5f, 1.0f, 0.5f, 1);
 	// update camera
 	BNS_CameraHandler::GetInstance()->GetSceneCamera()->Update(BNS_EngineTime::getDeltaTime(), this);
+	Vector3D camPos = BNS_CameraHandler::GetInstance()->GetSceneCamera()->GetMatrix().getTranslation();
+	std::string tempDisplay = "Position: X: " + std::to_string(camPos.m_x) +
+		" Y: " + std::to_string(camPos.m_y) +
+		" Z: " + std::to_string(camPos.m_z) + "\n";
+
+	BNS_Log::GetInstance()->WriteLog(BNS_Log::LogVerbosity::Display, tempDisplay);
 	// run the update for the BNS_InputSystem
 	BNS_InputSystem::get()->update(m_hwnd);
 
@@ -137,7 +161,7 @@ void BNS_AppWindow::onUpdate()
 	}
 	
 	// Update SkyBox
-	//BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
+	BNS_GameObjectManager::get()->GetSkyBox()->Update(BNS_EngineTime::getDeltaTime());
 	// update renderstate (back)
 	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(false);
 	// BNS_PassRender; Draw objects in order
@@ -150,7 +174,7 @@ void BNS_AppWindow::onUpdate()
 	// update renderstate (front)
 	BNS_GraphicsEngine::get()->getRenderSystem()->SetRasterizerState(true);
 	// Draw SkyBox
-	//BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
+	BNS_GameObjectManager::get()->GetSkyBox()->Draw(m_blender);
 
 	// CLEAR THE RENDER TARGET 
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->clearRenderTargetColor
@@ -163,20 +187,6 @@ void BNS_AppWindow::onUpdate()
 	BNS_UIManager::GetInstance()->DrawAllUIScreens();
 
 	m_swap_chain->present(true);
-
-}
-
-// updating our constant buffers
-void BNS_AppWindow::update()
-{
-	// Call each object's constant buffer in the scene
-	std::vector<BNS_AGameObject*>::iterator i;
-	for (i = BNS_GameObjectManager::get()->objectList.begin(); i != BNS_GameObjectManager::get()->objectList.end(); ++i)
-	{
-		//std::static_pointer_cast<BNS_Cube>(*i)->m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
-		if ((*i) != nullptr)
-			(*i)->Update(BNS_EngineTime::getDeltaTime(), this);
-	}
 
 }
 

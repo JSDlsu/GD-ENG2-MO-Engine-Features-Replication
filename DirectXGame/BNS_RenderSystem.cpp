@@ -68,6 +68,8 @@ BNS_RenderSystem::~BNS_RenderSystem()
 	m_dxgi_device->Release();
 	m_dxgi_adapter->Release();
 	m_dxgi_factory->Release();
+	m_cull_back_state->Release();
+	m_cull_front_state->Release();
 
 	m_d3d_device->Release();
 }

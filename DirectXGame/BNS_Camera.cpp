@@ -7,8 +7,8 @@
 
 BNS_Camera::BNS_Camera(std::string name, BNS_ObjectTypes type) : BNS_AGameObject(name, type)
 {
-	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -2.0f });
-	SetPosition(Vector3D{ 0.0f, 0.0f, -2.0f });
+	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, 0.0f });
+	SetPosition(Vector3D{ 0.0f, 0.0f, 0.0f });
 	this->UpdateViewMatrix();
 	// subscribe this class to the BNS_InputSystem
 	BNS_InputSystem::get()->addListener(this);
