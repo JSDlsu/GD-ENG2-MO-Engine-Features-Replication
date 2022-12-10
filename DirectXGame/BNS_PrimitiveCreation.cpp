@@ -199,7 +199,10 @@ void BNS_PrimitiveCreation::CreateEarth()
 	const char* name = "earth";
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetMesh(L"Assets\\Meshes\\sphere.obj");
-	cube->SetTexture(L"Assets\\Textures\\earth_color.png");
+	cube->SetTexture(L"Assets\\Textures\\earth_color.jpg");
+	cube->SetTexture(L"Assets\\Textures\\earth_spec.jpg");
+	cube->SetTexture(L"Assets\\Textures\\clouds.jpg");
+	cube->SetTexture(L"Assets\\Textures\\earth_night.jpg");
 	cube->SetVertexShader(BNS_VertexShaderType::LIGHTING);
 	cube->SetPixelShader(BNS_PixelShaderType::EARTH);
 	cube->SetPosition(Vector3D{ 0, 0, 0 });

@@ -45,8 +45,7 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	m_light_rot_matrix.setRotationY(m_light_rot_y);
 
 	m_light_rot_y += 0.707f * BNS_EngineTime::getDeltaTime();
-
-	cc.m_light_direction = m_light_rot_matrix.getZDirection();
+	
 
 	cc.m_world.setIdentity();
 
@@ -72,10 +71,15 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	// creating the camera matrix
 	Matrix4x4 cameraMatrix = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
 	cc.m_view = cameraMatrix;
-	cc.m_camera_position = BNS_CameraHandler::GetInstance()->GetSceneCamera()->GetLocalPosition();
+	cc.m_camera_position = BNS_CameraHandler::GetInstance()->GetSceneCamera()->GetMatrix().getTranslation();
+	cc.m_light_direction = m_light_rot_matrix.getZDirection();
 
 	// setting the perspective projection
 	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
+
+	// update time
+	ticks += BNS_EngineTime::getDeltaTime();
+	cc.m_time = ticks;
 
 	m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
 }
@@ -91,7 +95,7 @@ void BNS_Cube::Draw(const BlenderPtr& m_blender)
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setPixelShader(m_ps);
 
 	if(m_tex != nullptr)
-		BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setTexture(m_ps, m_tex);
+		BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setTexture(m_ps, m_tex, num_textures);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext()->setVertexBuffer(m_vb);
@@ -115,7 +119,7 @@ void BNS_Cube::SetMesh(const wchar_t* tex_path)
 void BNS_Cube::SetTexture(const wchar_t* tex_path)
 {
 	// assign the texture file to the BNS_Texture pointer by passing the its path in the file
-	m_tex = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+	m_tex[num_textures++] = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
 }
 
 void BNS_Cube::SetVertex_Index_Buffer(BNS_VertexShaderType vs_type, BNS_PC_Cube_ColorData color_data)

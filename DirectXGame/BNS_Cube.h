@@ -23,7 +23,8 @@ public:
 	void SetPixelShader(BNS_PixelShaderType ps_type);
 protected:
 	MeshPtr m_mesh;
-	TexturePtr m_tex;
+	TexturePtr m_tex[10];
+	unsigned int num_textures;
 	VertexBufferPtr m_vb;
 	IndexBufferPtr m_ib;
 protected:
@@ -35,7 +36,7 @@ protected:
 	float ticks = 0.0f;
 	float deltaPos = 0.0f;
 	float deltaScale = 0.0f;
-	float deltaTime = 0.0f;
+	float m_delta_time = 0.0f;
 protected:
 	friend class BNS_AppWindow;
 private:

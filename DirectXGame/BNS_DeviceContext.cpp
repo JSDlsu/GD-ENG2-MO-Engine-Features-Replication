@@ -119,18 +119,29 @@ void BNS_DeviceContext::setPixelShader(const PixelShaderPtr& pixel_shader)
 // binds the texture to the graphics pipeline in the BNS_VertexShader
 void BNS_DeviceContext::setTexture(const VertexShaderPtr& vertex_shader, const TexturePtr* texture, unsigned int num_textures)
 {
-	m_device_context->VSSetShaderResources(0, 1, &texture->m_shader_res_view);
+	ID3D11ShaderResourceView* list_res[32];
+	ID3D11SamplerState* list_sampler[32];
+	for (unsigned int i = 0; i < num_textures; i++)
+	{
+		list_res[i] = texture[i]->m_shader_res_view;
+		list_sampler[i] = texture[i]->m_sampler_state;
+	}
+	m_device_context->VSSetShaderResources(0, num_textures, list_res);
+	m_device_context->VSSetSamplers(0, num_textures, list_sampler);
 }
 
 // binds the texture to the graphics pipeline in the BNS_PixelShader
 void BNS_DeviceContext::setTexture(const PixelShaderPtr& pixel_shader, const TexturePtr* texture, unsigned int num_textures)
 {
 	ID3D11ShaderResourceView* list_res[32];
+	ID3D11SamplerState* list_sampler[32];
 	for (unsigned int i = 0; i < num_textures; i++)
 	{
 		list_res[i] = texture[i]->m_shader_res_view;
+		list_sampler[i] = texture[i]->m_sampler_state;
 	}
-	m_device_context->PSSetShaderResources(0, 1, &texture->m_shader_res_view);
+	m_device_context->PSSetShaderResources(0, num_textures, list_res);
+	m_device_context->PSSetSamplers(0, num_textures, list_sampler);
 }
 
 void BNS_DeviceContext::setConstantBuffer(const VertexShaderPtr& vertex_shader, const ConstantBufferPtr& buffer)

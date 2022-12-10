@@ -12,6 +12,6 @@ struct BNS_constant_transform
 	Matrix4x4 m_proj;
 	Vector4D m_light_direction;
 	Vector4D m_camera_position;
-	unsigned int m_time;
+	float m_time;
 	float alpha = 1.0f;
 };
