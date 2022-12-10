@@ -23,14 +23,14 @@ void BNS_PhysicsComponent::UpdateRigidBody()
 	// Create a rigid body in the world
 	Vector3D scale = GetOwner()->GetLocalScale();
 	Transform transform; transform.setFromOpenGL(GetOwner()->GetPhysicsLocalMatrix());
-	boxShape = physicsCommon->createBoxShape(Vector3(scale.m_x / 2, scale.m_y / 2, scale.m_z / 2));
-	rigidBody = physicsWorld->createRigidBody(transform);
-	rigidBody->addCollider(boxShape, transform);
-	rigidBody->updateMassPropertiesFromColliders();
-	rigidBody->setMass(mass);
-	rigidBody->setType(BodyType::DYNAMIC);
+	this->boxShape = physicsCommon->createBoxShape(Vector3(scale.m_x / 2, scale.m_y / 2, scale.m_z / 2));
+	this->rigidBody = physicsWorld->createRigidBody(transform);
+	this->rigidBody->addCollider(this->boxShape, transform);
+	this->rigidBody->updateMassPropertiesFromColliders();
+	this->rigidBody->setMass(this->mass);
+	this->rigidBody->setType(BodyType::DYNAMIC);
 
-	transform = rigidBody->getTransform();
+	transform = this->rigidBody->getTransform();
 	float matrix[16];
 	transform.getOpenGLMatrix(matrix);
 
@@ -39,7 +39,7 @@ void BNS_PhysicsComponent::UpdateRigidBody()
 
 void BNS_PhysicsComponent::Perform(float deltaTime)
 {
-	const Transform transform = rigidBody->getTransform();
+	const Transform transform = this->rigidBody->getTransform();
 	float matrix[16];
 	transform.getOpenGLMatrix(matrix);
 
@@ -51,5 +51,5 @@ void BNS_PhysicsComponent::Perform(float deltaTime)
 
 RigidBody* BNS_PhysicsComponent::GetRigidBody()
 {
-	return rigidBody;
+	return this->rigidBody;
 }

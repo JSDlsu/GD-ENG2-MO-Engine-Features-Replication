@@ -9,8 +9,7 @@ BNS_AComponent::BNS_AComponent(String name, ComponentType type, BNS_AGameObject*
 
 BNS_AComponent::~BNS_AComponent()
 {
-    owner = nullptr;
-    type = ComponentType::NotSet;
+
 }
 
 void BNS_AComponent::AttachOwner(BNS_AGameObject* owner)
@@ -20,23 +19,23 @@ void BNS_AComponent::AttachOwner(BNS_AGameObject* owner)
 
 void BNS_AComponent::DetachOwner()
 {
-    //if object owner gets detached. then component must also be deleted.
-    owner = NULL;
+    this->owner = nullptr;
+    delete this;
 }
 
 BNS_AGameObject* BNS_AComponent::GetOwner()
 {
-    return owner;
+    return this->owner;
 }
 
 ComponentType BNS_AComponent::GetType()
 {
-    return type;
+    return this->type;
 }
 
 BNS_AComponent::String BNS_AComponent::GetName()
 {
-    return name;
+    return this->name;
 }
 
 void BNS_AComponent::Perform(float deltaTime)

@@ -196,7 +196,7 @@ void BNS_AppWindow::onDestroy()
 
 	BNS_UIManager::Release();
 	// destroy physics
-	BNS_BaseComponentSystem::Destroy();
+	//BNS_BaseComponentSystem::Destroy();
 	BNS_Window::onDestroy();
 }
 

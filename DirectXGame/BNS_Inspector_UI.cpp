@@ -54,19 +54,28 @@ void BNS_Inspector_UI::DrawUI()
 			ImGui::Separator();
 			BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
 
+			
 			//ImGui::Text("Body Type");
 			static const char* items[] = { "Dynamic", "Kinematic" , "Static"};
-			static int selectedItem = 0;
+			static int selectedItem;
+
+			if (physicsComp->GetRigidBody()->getType() == BodyType::DYNAMIC)
+				selectedItem = 0;
+			else if (physicsComp->GetRigidBody()->getType() == BodyType::KINEMATIC)
+				selectedItem = 1;
+			else if (physicsComp->GetRigidBody()->getType() == BodyType::STATIC)
+				selectedItem = 2;
+
 			ImGui::Combo("Body Type", &selectedItem, items, IM_ARRAYSIZE(items));
 			if (selectedItem == 0)
 			{
 				physicsComp->GetRigidBody()->setType(BodyType::DYNAMIC);
 			}
-			if (selectedItem == 1)
+			else if (selectedItem == 1)
 			{
 				physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
 			}
-			else
+			else if (selectedItem == 2)
 			{
 				physicsComp->GetRigidBody()->setType(BodyType::STATIC);
 			}

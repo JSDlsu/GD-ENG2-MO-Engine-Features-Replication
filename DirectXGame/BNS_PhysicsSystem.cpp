@@ -6,17 +6,17 @@
 BNS_PhysicsSystem::BNS_PhysicsSystem()
 {
 	// Create the physics engine and world
-	physicsCommon = new PhysicsCommon();
+	this->physicsCommon = new PhysicsCommon();
 	PhysicsWorld::WorldSettings settings;
 	settings.defaultVelocitySolverNbIterations = 50;
 	settings.gravity = Vector3(0, -9.81f, 0);
-	physicsWorld = physicsCommon->createPhysicsWorld(settings);
+	this->physicsWorld = this->physicsCommon->createPhysicsWorld(settings);
 	std::cout << "Successfully created physics world.\n";
 }
 
 BNS_PhysicsSystem::~BNS_PhysicsSystem()
 {
-	delete physicsCommon;
+	delete this->physicsCommon;
 }
 
 void BNS_PhysicsSystem::UpdateAllComponents()
@@ -26,20 +26,20 @@ void BNS_PhysicsSystem::UpdateAllComponents()
 	if (BNS_EngineTime::getDeltaTime() > 0.0f)
 	{
 		// update physics world
-		physicsWorld->update(BNS_EngineTime::getDeltaTime());
-		for (int i = 0; i < componentList.size(); ++i)
+		this->physicsWorld->update(BNS_EngineTime::getDeltaTime());
+		for (int i = 0; i < this->componentList.size(); ++i)
 		{
-			componentList[i]->Perform(BNS_EngineTime::getDeltaTime());
+			this->componentList[i]->Perform(BNS_EngineTime::getDeltaTime());
 		}
 	}
 }
 
 PhysicsWorld* BNS_PhysicsSystem::GetPhysicsWorld()
 {
-	return physicsWorld;
+	return this->physicsWorld;
 }
 
 PhysicsCommon* BNS_PhysicsSystem::GetPhysicsCommon()
 {
-	return physicsCommon;
+	return this->physicsCommon;
 }

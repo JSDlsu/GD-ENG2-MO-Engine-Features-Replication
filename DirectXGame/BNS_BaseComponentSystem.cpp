@@ -31,12 +31,12 @@ BNS_PhysicsSystem* BNS_BaseComponentSystem::GetPhysicsSystem()
 BNS_BaseComponentSystem::BNS_BaseComponentSystem()
 {
 	// initialize physicsSystem
-	transformSystem = new BNS_TransformSystem();
-	physicsSystem = new BNS_PhysicsSystem();
+	this->transformSystem = new BNS_TransformSystem();
+	this->physicsSystem = new BNS_PhysicsSystem();
 }
 
 BNS_BaseComponentSystem::~BNS_BaseComponentSystem()
 {
-	delete transformSystem;
-	delete physicsSystem;
+	delete this->transformSystem;
+	delete this->physicsSystem;
 }

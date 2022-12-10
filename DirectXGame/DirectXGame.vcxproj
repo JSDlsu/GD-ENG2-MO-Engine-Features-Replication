@@ -81,7 +81,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>..\DirectXGame\Libs\tinyobjloader\include;..\DirectXGame\Libs\DirectXTex\include;..\DirectXGame\Libs\ReactPhysics3D\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\DirectXGame\Libs\DirectXTex\bin;..\DirectXGame\Libs\ReactPhysics3D;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\DirectXGame\Libs\DirectXTex\bin;..\DirectXGame\Libs\ReactPhysics3D\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
