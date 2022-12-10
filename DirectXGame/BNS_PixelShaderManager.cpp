@@ -11,6 +11,7 @@ BNS_PixelShaderManager::BNS_PixelShaderManager()
 	CompilePixelShader(L"BNS_PixelLight.hlsl", "psmain", BNS_PixelShaderType::LIGHTING);
 	CompilePixelShader(L"BNS_PixelSkyBox.hlsl", "psmain", BNS_PixelShaderType::SKYBOX);
 	CompilePixelShader(L"BNS_PixelEarth.hlsl", "psmain", BNS_PixelShaderType::EARTH);
+	CompilePixelShader(L"BNS_PixelPointLight.hlsl", "psmain", BNS_PixelShaderType::POINT_LIGHT);
 }
 
 BNS_PixelShaderManager::~BNS_PixelShaderManager()

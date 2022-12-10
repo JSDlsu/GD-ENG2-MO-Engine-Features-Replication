@@ -15,7 +15,8 @@ enum class BNS_VertexShaderType
 	MESH,
 	COLOR,
 	COLOR_LERP,
-	LIGHTING
+	LIGHTING,
+	POINT_LIGHT
 };
 
 enum class BNS_PixelShaderType
@@ -26,7 +27,8 @@ enum class BNS_PixelShaderType
 	COLOR_LERP,
 	LIGHTING,
 	SKYBOX,
-	EARTH
+	EARTH,
+	POINT_LIGHT
 };
 
 enum class BNS_InputLayoutType

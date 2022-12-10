@@ -227,6 +227,23 @@ void BNS_PrimitiveCreation::CreateSkyBox()
 	BNS_GameObjectManager::get()->SetSkyBox(sky_box);
 }
 
+void BNS_PrimitiveCreation::CreateScene()
+{
+	const char* name = "scene";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetMesh(L"Assets\\Meshes\\scene.obj");
+	cube->SetTexture(L"Assets\\Textures\\wall.jpg");
+	cube->SetVertexShader(BNS_VertexShaderType::POINT_LIGHT);
+	cube->SetPixelShader(BNS_PixelShaderType::POINT_LIGHT);
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+}
+
 void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::string localName)
 {
 	

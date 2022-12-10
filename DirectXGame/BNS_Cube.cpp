@@ -41,10 +41,9 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	Matrix4x4 temp;
 	// light matrix
 	Matrix4x4 m_light_rot_matrix;
-	m_light_rot_matrix.setIdentity();
 	m_light_rot_matrix.setRotationY(m_light_rot_y);
 
-	m_light_rot_y += 0.707f * BNS_EngineTime::getDeltaTime();
+	m_light_rot_y += 1.57f * BNS_EngineTime::getDeltaTime();
 	
 
 	cc.m_world.setIdentity();
@@ -69,13 +68,17 @@ void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 	}
 
 	// creating the camera matrix
-	Matrix4x4 cameraMatrix = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
-	cc.m_view = cameraMatrix;
-	cc.m_camera_position = BNS_CameraHandler::GetInstance()->GetSceneCamera()->GetMatrix().getTranslation();
-	cc.m_light_direction = m_light_rot_matrix.getZDirection();
-
+	cc.m_view = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
 	// setting the perspective projection
 	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
+	// update camera position
+	cc.m_camera_position = BNS_CameraHandler::GetInstance()->GetSceneCamera()->GetMatrix().getTranslation();
+	// update point light position
+	float dist_from_origin = 1.0f;
+	cc.m_light_position = Vector4D(cos(m_light_rot_y) * dist_from_origin, 3.1f, sin(m_light_rot_y) * dist_from_origin, 1.0f);
+	cc.m_light_radius = 100.0f;
+	cc.m_light_direction = m_light_rot_matrix.getZDirection();
+	
 
 	// update time
 	ticks += BNS_EngineTime::getDeltaTime();

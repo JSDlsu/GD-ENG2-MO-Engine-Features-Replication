@@ -10,6 +10,7 @@ BNS_VertexShaderManager::BNS_VertexShaderManager()
 	CompileVertexShader(L"BNS_VertexColor.hlsl", "vsmain", BNS_VertexShaderType::COLOR);
 	CompileVertexShader(L"BNS_VertexColorLerp.hlsl", "vsmain", BNS_VertexShaderType::COLOR_LERP);
 	CompileVertexShader(L"BNS_VertexLight.hlsl", "vsmain", BNS_VertexShaderType::LIGHTING);
+	CompileVertexShader(L"BNS_VertexPointLight.hlsl", "vsmain", BNS_VertexShaderType::POINT_LIGHT);
 }
 
 BNS_VertexShaderManager::~BNS_VertexShaderManager()

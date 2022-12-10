@@ -25,6 +25,7 @@ public:
 	void CreateArmadillo();
 	void CreateEarth();
 	void CreateSkyBox();
+	void CreateScene();
 	void CreateMeshFromFile(std::string full_filepath, std::string localName);
 
 private:

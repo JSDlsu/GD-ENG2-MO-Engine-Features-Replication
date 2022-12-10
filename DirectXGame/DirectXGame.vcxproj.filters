@@ -163,6 +163,12 @@
     <Filter Include="GameEngine\UI\SceneStates">
       <UniqueIdentifier>{c1888ba6-c8b3-4951-b716-0944ed99ec6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\Shaders\PixelShaders\PointLight">
+      <UniqueIdentifier>{e76bcc1e-23b4-4f64-a5db-c60d0645bcd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\Shaders\VertexShaders\PointLight">
+      <UniqueIdentifier>{0dea00e3-125e-49f8-ad8a-4ba1e01143ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -631,6 +637,12 @@
     </FxCompile>
     <FxCompile Include="BNS_PixelEarth.hlsl">
       <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="BNS_PixelPointLight.hlsl">
+      <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders\PointLight</Filter>
+    </FxCompile>
+    <FxCompile Include="BNS_VertexPointLight.hlsl">
+      <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders\PointLight</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
