@@ -26,8 +26,11 @@ public:
 public:
 	std::vector<BNS_AGameObject*>& GetObjectList();
 	std::vector<BNS_AGameObject*>& GetRenderObjectList();
+
+public:
 	void DeleteObject(BNS_AGameObject* gameObject);
 	void DeleteObjectByName(std::string name);
+	BNS_AGameObject* FindObject(BNS_AGameObject* gameObject);
 	BNS_AGameObject* FindObjectByName(std::string name);
 
 public:

@@ -66,6 +66,10 @@ public:
 	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
 
 public:
+	bool* GetActive();
+	void SetActive(bool flag);
+
+public:
 	void saveEditState();
 	void restoreEditState();
 
@@ -79,6 +83,8 @@ protected:
 	Matrix4x4 m_matrix;
 	float alpha = 1.0f;
 	bool overrideMatrix = false;
+	bool active;
+
 public:
 	void AttachOwner(BNS_AGameObject* owner);
 	void DetachOwner();

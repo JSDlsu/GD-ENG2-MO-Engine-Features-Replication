@@ -81,6 +81,49 @@ void BNS_GameObjectManager::DeleteObject(BNS_AGameObject* gameObject)
 
 void BNS_GameObjectManager::DeleteObjectByName(std::string name)
 {
+	int indexObjList = -1;
+	int indexRenderList = -1;
+
+	// DELETE AT OBJECT LIST
+	for (int i = 0; i < objectList.size(); i++)
+	{
+		if (objectList[i]->GetName() == name)
+		{
+			indexObjList = i;
+			delete objectList[i];
+			break;
+		}
+	}
+
+	for (int i = 0; i < render_objectList.size(); i++)
+	{
+		if (render_objectList[i]->GetName() == name)
+		{
+			indexRenderList = i;
+			break;
+		}
+	}
+
+	if (indexObjList != -1)
+	{
+		objectList.erase(objectList.begin() + indexObjList);
+	}
+	if (indexRenderList != -1)
+	{
+		render_objectList.erase(render_objectList.begin() + indexRenderList);
+	}
+}
+
+BNS_AGameObject* BNS_GameObjectManager::FindObject(BNS_AGameObject* gameObject)
+{
+	for (int i = 0; i < this->objectList.size(); i++)
+	{
+		if (this->objectList[i] == gameObject)
+			return this->objectList[i];
+	}
+
+	std::cout << "Object not found!";
+	return NULL;
 }
 
 BNS_AGameObject* BNS_GameObjectManager::FindObjectByName(std::string name)

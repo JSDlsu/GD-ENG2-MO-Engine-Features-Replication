@@ -10,6 +10,7 @@ BNS_AGameObject::BNS_AGameObject(std::string name, BNS_ObjectTypes type) : name(
 	m_position = Vector3D::zero();
 	m_scale = Vector3D::one();
 	m_rotation = Vector3D::zero();
+	this->active = true;
 }
 
 BNS_AGameObject::~BNS_AGameObject()
@@ -215,6 +216,16 @@ BNS_AGameObject::ComponentList BNS_AGameObject::GetComponentsOfTypeRecursive(Com
 	}
 
 	return foundList;
+}
+
+bool* BNS_AGameObject::GetActive()
+{
+	return &this->active;
+}
+
+void BNS_AGameObject::SetActive(bool flag)
+{
+	this->active = flag;
 }
 
 void BNS_AGameObject::saveEditState()
