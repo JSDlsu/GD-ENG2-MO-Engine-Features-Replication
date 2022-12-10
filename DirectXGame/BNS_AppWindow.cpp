@@ -21,6 +21,7 @@
 #include "BNS_SwapChain.h"
 #include "BNS_TransformSystem.h"
 #include "BNS_EngineBackend.h"
+#include "BNS_ActionHistory.h"
 
 
 BNS_AppWindow::BNS_AppWindow()
@@ -42,6 +43,7 @@ void BNS_AppWindow::onCreate()
 	BNS_EngineBackend::initialize();
 
 	BNS_EngineBackend::getInstance()->setMode(BNS_EngineBackend::EDITOR);
+	BNS_ActionHistory::Initialize();
 
 
 	// create swap chain

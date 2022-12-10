@@ -83,6 +83,44 @@ void BNS_GameObjectManager::DeleteObjectByName(std::string name)
 {
 }
 
+BNS_AGameObject* BNS_GameObjectManager::FindObjectByName(std::string name)
+{
+	for (int i = 0; i < this->objectList.size(); i++)
+	{
+		if (this->objectList[i]->GetName() == name)
+			return this->objectList[i];
+	}
+
+	std::cout << "Object " << name << " not found!";
+	return NULL;
+}
+
+void BNS_GameObjectManager::saveEditStates()
+{
+	for (int i = 0; i < this->objectList.size(); i++) {
+		this->objectList[i]->saveEditState();
+	}
+}
+
+void BNS_GameObjectManager::restoreEditStates()
+{
+	for (int i = 0; i < this->objectList.size(); i++) {
+		this->objectList[i]->restoreEditState();
+	}
+}
+
+void BNS_GameObjectManager::applyEditorAction(BNS_EditorAction* action)
+{
+	BNS_AGameObject* object = this->FindObjectByName(action->GetOwnerName());
+	if (object != nullptr) {
+		object->RecomputeMatrix(action->GetStoredMatrix().GetMatrix());
+		object->SetPosition(action->GetStoredPos());
+		object->SetRotation(action->GetRotation());
+		object->SetScale(action->GetStoredScale());
+
+	}
+}
+
 void BNS_GameObjectManager::SetSkyBox(BNS_SkyBox* skybox)
 {
 	current_SkyBox = skybox;

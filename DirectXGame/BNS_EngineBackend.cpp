@@ -1,4 +1,5 @@
 #include "BNS_EngineBackend.h"
+#include "BNS_GameObjectManager.h"
 
 BNS_EngineBackend* BNS_EngineBackend::sharedInstance = nullptr;
 
@@ -21,10 +22,10 @@ void BNS_EngineBackend::setMode(EditorMode mode)
 {
 	this->editorMode = mode;
 	if (this->editorMode == EditorMode::PLAY) {
-
+		BNS_GameObjectManager::get()->saveEditStates();
 	}
 	else if (this->editorMode == EditorMode::EDITOR) {
-
+		BNS_GameObjectManager::get()->restoreEditStates();
 	}
 }
 

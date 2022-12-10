@@ -13,6 +13,7 @@ class BNS_AComponent;
 class Matrix4x4;
 class BNS_AppWindow;
 class BNS_TransformComponent;
+class BNS_EditorAction;
 
 /*
  * Abstract class for primitive type objects(cube,plane,sphere,etc..)
@@ -63,6 +64,11 @@ public:
 	BNS_AComponent* FindComponentOfType(ComponentType type, String name = "");
 	ComponentList GetComponentsOfType(ComponentType type);
 	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
+
+public:
+	void saveEditState();
+	void restoreEditState();
+
 protected:
 	ConstantBufferPtr m_cb;
 protected:
@@ -85,5 +91,8 @@ protected:
 	BNS_AGameObject* owner = nullptr;
 private:
 	friend class BNS_TransformComponent;
+
+private:
+	BNS_EditorAction* lastEditState = nullptr;
 };
 

@@ -4,6 +4,7 @@
 
 #include "BNS_AGameObject.h"
 #include "BNS_Prerequisites.h"
+#include "BNS_EditorAction.h"
 
 class BNS_SkyBox;
 class BNS_AppWindow;
@@ -27,6 +28,13 @@ public:
 	std::vector<BNS_AGameObject*>& GetRenderObjectList();
 	void DeleteObject(BNS_AGameObject* gameObject);
 	void DeleteObjectByName(std::string name);
+	BNS_AGameObject* FindObjectByName(std::string name);
+
+public:
+	void saveEditStates();
+	void restoreEditStates();
+	void applyEditorAction(BNS_EditorAction* action);
+
 public:
 	void SetSkyBox(BNS_SkyBox* skybox);
 	BNS_SkyBox* GetSkyBox();

@@ -2,6 +2,8 @@
 #include "BNS_Hierarchy_UI.h"
 #include "BNS_UIManager.h"
 #include "IMGUI/imgui_internal.h"
+#include "BNS_ActionHistory.h"
+#include "BNS_GameObjectManager.h"
 
 BNS_SceneStates_UI::BNS_SceneStates_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
 {
@@ -14,10 +16,25 @@ BNS_SceneStates_UI::~BNS_SceneStates_UI()
 
 void BNS_SceneStates_UI::DrawUI()
 {
+	BNS_EngineBackend* backend = BNS_EngineBackend::getInstance();
+
 	std::string windowLabel = name + "##" + std::to_string(ID);
 	if(ImGui::Begin(windowLabel.c_str()))
 	{
 		ImVec2 button_size = ImGui::CalcItemSize(ImVec2{ 150, 0 }, 0.0f, 0.0f);
+
+		if (ImGui::Button("Undo")) {
+			if (BNS_ActionHistory::GetInstance()->hasRemainingUndoActions()) {
+				BNS_GameObjectManager::get()->applyEditorAction(BNS_ActionHistory::GetInstance()->undoAction());
+			}
+
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Redo")) {
+			if (BNS_ActionHistory::GetInstance()->hasRemainingRedoActions()) {
+				BNS_GameObjectManager::get()->applyEditorAction(BNS_ActionHistory::GetInstance()->redoAction());
+			}
+		}
 
 		// obtain size of window
 		ImVec2 avail = ImGui::GetWindowSize();
@@ -31,14 +48,22 @@ void BNS_SceneStates_UI::DrawUI()
 
 		ImGui::SetCursorPos(centre_position_for_button);
 
-		if (ImGui::Button("Play"))
-			m_state->setMode(BNS_EngineBackend::PLAY);
+		if (backend->getMode() == BNS_EngineBackend::EDITOR) {
+			if (ImGui::Button("Play")) { BNS_EngineBackend::getInstance()->setMode(BNS_EngineBackend::PLAY); }
+		}
+
+		else if (backend->getMode() != BNS_EngineBackend::EDITOR) {
+			if (ImGui::Button("Stop")) { BNS_EngineBackend::getInstance()->setMode(BNS_EngineBackend::EDITOR); }
+		}
+
 		ImGui::SameLine();
-		if (ImGui::Button("Pause"))
-			m_state->setMode(BNS_EngineBackend::PAUSED);
-		ImGui::SameLine();
-		if (ImGui::Button("Stop"))
-			m_state->setMode(BNS_EngineBackend::EDITOR);
+
+		if (backend->getMode() == BNS_EngineBackend::PLAY) {
+			if (ImGui::Button("Pause")) { BNS_EngineBackend::getInstance()->setMode(BNS_EngineBackend::PAUSED); }
+		}
+		else if (backend->getMode() == BNS_EngineBackend::PAUSED) {
+			if (ImGui::Button("Resume")) { BNS_EngineBackend::getInstance()->setMode(BNS_EngineBackend::PLAY); }
+		}
 	}
 
 	ImGui::End();

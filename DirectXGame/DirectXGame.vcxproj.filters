@@ -169,6 +169,12 @@
     <Filter Include="GameEngine\GraphicsEngine\Shaders\VertexShaders\PointLight">
       <UniqueIdentifier>{0dea00e3-125e-49f8-ad8a-4ba1e01143ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\BackEndTools\EditorAction">
+      <UniqueIdentifier>{929556d2-0e55-4a8b-b8ce-73a5b530d9ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\BackEndTools\SceneManagement">
+      <UniqueIdentifier>{9d707c2d-dc4f-4af8-9104-89447630880d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -351,8 +357,6 @@
     <ClCompile Include="BNS_SkyBox.cpp">
       <Filter>GameEngine\Primitives\SkyBox</Filter>
     </ClCompile>
-    <ClCompile Include="SceneReader.cpp" />
-    <ClCompile Include="SceneWriter.cpp" />
     <ClCompile Include="BNS_EngineBackend.cpp">
       <Filter>GameEngine\BackEndTools\EngineBackend</Filter>
     </ClCompile>
@@ -361,6 +365,18 @@
     </ClCompile>
     <ClCompile Include="BNS_SceneStates_UI.cpp">
       <Filter>GameEngine\UI\SceneStates</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_EditorAction.cpp">
+      <Filter>GameEngine\BackEndTools\EditorAction</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneReader.cpp">
+      <Filter>GameEngine\BackEndTools\SceneManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneWriter.cpp">
+      <Filter>GameEngine\BackEndTools\SceneManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_ActionHistory.cpp">
+      <Filter>GameEngine\BackEndTools\EditorAction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -589,8 +605,6 @@
     <ClInclude Include="BNS_SkyBox.h">
       <Filter>GameEngine\Primitives\SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="SceneReader.h" />
-    <ClInclude Include="SceneWriter.h" />
     <ClInclude Include="BNS_EngineBackend.h">
       <Filter>GameEngine\BackEndTools\EngineBackend</Filter>
     </ClInclude>
@@ -599,6 +613,18 @@
     </ClInclude>
     <ClInclude Include="BNS_SceneStates_UI.h">
       <Filter>GameEngine\UI\SceneStates</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_EditorAction.h">
+      <Filter>GameEngine\BackEndTools\EditorAction</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneReader.h">
+      <Filter>GameEngine\BackEndTools\SceneManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneWriter.h">
+      <Filter>GameEngine\BackEndTools\SceneManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_ActionHistory.h">
+      <Filter>GameEngine\BackEndTools\EditorAction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

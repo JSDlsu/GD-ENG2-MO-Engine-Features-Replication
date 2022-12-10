@@ -1,7 +1,9 @@
 #include "BNS_AGameObject.h"
 #include "BNS_AComponent.h"
+#include "BNS_EditorAction.h"
 #include "Vector3D.h"
 #include "Matrix4x4.h"
+#include "IMGUI/imgui.h"
 
 BNS_AGameObject::BNS_AGameObject(std::string name, BNS_ObjectTypes type) : name(name), ObjectType(type)
 {
@@ -213,6 +215,38 @@ BNS_AGameObject::ComponentList BNS_AGameObject::GetComponentsOfTypeRecursive(Com
 	}
 
 	return foundList;
+}
+
+void BNS_AGameObject::saveEditState()
+{
+	if (this->lastEditState == NULL) {
+		this->lastEditState = new BNS_EditorAction(this);
+	}
+}
+
+void BNS_AGameObject::restoreEditState()
+{
+	if (this->lastEditState != NULL) {
+		this->RecomputeMatrix(this->lastEditState->GetStoredMatrix().GetMatrix());
+		this->SetPosition(this->lastEditState->GetStoredPos());
+		this->SetScale(this->lastEditState->GetStoredScale());
+		this->SetRotation(this->lastEditState->GetRotation());
+
+		BNS_AComponent* physics_comp = this->FindComponentOfType(ComponentType::Physics);
+		if (physics_comp != nullptr)
+		{
+			BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
+			BodyType bodyType = physicsComp->GetRigidBody()->getType();
+			physicsComp->UpdateRigidBody();
+			physicsComp->GetRigidBody()->setType(bodyType);
+		}
+			
+
+		this->lastEditState = NULL;
+	}
+	else {
+		std::cout << "Edit state is null. Cannot restore. \n";
+	}
 }
 
 void BNS_AGameObject::AttachOwner(BNS_AGameObject* owner)

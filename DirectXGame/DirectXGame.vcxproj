@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BNS_ActionHistory.cpp" />
     <ClCompile Include="BNS_AComponent.cpp" />
     <ClCompile Include="BNS_ASystem.cpp" />
     <ClCompile Include="BNS_BaseComponentSystem.cpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="BNS_VertexShaderManager.cpp" />
     <ClCompile Include="BNS_Window.cpp" />
     <ClCompile Include="BNS_Console_UI.cpp" />
+    <ClCompile Include="BNS_EditorAction.cpp" />
     <ClCompile Include="IMGUI\imgui.cpp" />
     <ClCompile Include="IMGUI\imgui_demo.cpp" />
     <ClCompile Include="IMGUI\imgui_draw.cpp" />
@@ -226,6 +228,7 @@
     <ClCompile Include="SceneWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BNS_ActionHistory.h" />
     <ClInclude Include="BNS_AComponent.h" />
     <ClInclude Include="BNS_ASystem.h" />
     <ClInclude Include="BNS_BaseComponentSystem.h" />
@@ -262,6 +265,7 @@
     <ClInclude Include="BNS_SkyBox.h" />
     <ClInclude Include="BNS_TransformComponent.h" />
     <ClInclude Include="BNS_TransformSystem.h" />
+    <ClInclude Include="BNS_EditorAction.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
     <ClInclude Include="IMGUI\imgui.h" />
     <ClInclude Include="IMGUI\imgui_impl_dx11.h" />
