@@ -23,6 +23,7 @@ public:
 	void CreateStatue();
 	void CreateBunny();
 	void CreateArmadillo();
+	void CreateEarth();
 	void CreateSkyBox();
 	void CreateMeshFromFile(std::string full_filepath, std::string localName);
 

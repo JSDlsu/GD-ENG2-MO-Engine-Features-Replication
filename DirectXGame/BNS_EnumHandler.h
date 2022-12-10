@@ -25,7 +25,8 @@ enum class BNS_PixelShaderType
 	COLOR,
 	COLOR_LERP,
 	LIGHTING,
-	SKYBOX
+	SKYBOX,
+	EARTH
 };
 
 enum class BNS_InputLayoutType

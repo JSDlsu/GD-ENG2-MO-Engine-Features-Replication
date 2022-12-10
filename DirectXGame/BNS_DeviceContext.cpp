@@ -117,14 +117,19 @@ void BNS_DeviceContext::setPixelShader(const PixelShaderPtr& pixel_shader)
 }
 
 // binds the texture to the graphics pipeline in the BNS_VertexShader
-void BNS_DeviceContext::setTexture(const VertexShaderPtr& vertex_shader, const TexturePtr& texture)
+void BNS_DeviceContext::setTexture(const VertexShaderPtr& vertex_shader, const TexturePtr* texture, unsigned int num_textures)
 {
 	m_device_context->VSSetShaderResources(0, 1, &texture->m_shader_res_view);
 }
 
 // binds the texture to the graphics pipeline in the BNS_PixelShader
-void BNS_DeviceContext::setTexture(const PixelShaderPtr& pixel_shader, const TexturePtr& texture)
+void BNS_DeviceContext::setTexture(const PixelShaderPtr& pixel_shader, const TexturePtr* texture, unsigned int num_textures)
 {
+	ID3D11ShaderResourceView* list_res[32];
+	for (unsigned int i = 0; i < num_textures; i++)
+	{
+		list_res[i] = texture[i]->m_shader_res_view;
+	}
 	m_device_context->PSSetShaderResources(0, 1, &texture->m_shader_res_view);
 }
 

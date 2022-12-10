@@ -629,5 +629,8 @@
     <FxCompile Include="BNS_PixelSkyBox.hlsl">
       <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
     </FxCompile>
+    <FxCompile Include="BNS_PixelEarth.hlsl">
+      <Filter>GameEngine\GraphicsEngine\Shaders\PixelShaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

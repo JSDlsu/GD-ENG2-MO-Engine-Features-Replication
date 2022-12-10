@@ -194,12 +194,29 @@ void BNS_PrimitiveCreation::CreateArmadillo()
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 }
 
+void BNS_PrimitiveCreation::CreateEarth()
+{
+	const char* name = "earth";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetMesh(L"Assets\\Meshes\\sphere.obj");
+	cube->SetTexture(L"Assets\\Textures\\earth_color.png");
+	cube->SetVertexShader(BNS_VertexShaderType::LIGHTING);
+	cube->SetPixelShader(BNS_PixelShaderType::EARTH);
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+}
+
 void BNS_PrimitiveCreation::CreateSkyBox()
 {
 	const char* name = "skybox";
 	BNS_SkyBox* sky_box = new BNS_SkyBox(name, BNS_ObjectTypes::SKYBOX);
 	sky_box->SetMesh(L"Assets\\Meshes\\sphere.obj");
-	sky_box->SetTexture(L"Assets\\Textures\\sky.jpg");
+	sky_box->SetTexture(L"Assets\\Textures\\stars_map.jpg");
 	sky_box->SetVertexShader(BNS_VertexShaderType::LIGHTING);
 	sky_box->SetPixelShader(BNS_PixelShaderType::SKYBOX);
 	sky_box->SetPosition(Vector3D{ 0, 0, 0 });

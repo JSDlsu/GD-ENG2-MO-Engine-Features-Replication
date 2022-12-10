@@ -97,6 +97,8 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 			BNS_PrimitiveCreation::Instance()->CreateBunny();
 		if (ImGui::MenuItem("Create Armadillo", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateArmadillo();
+		if (ImGui::MenuItem("Create Earth", nullptr))
+			BNS_PrimitiveCreation::Instance()->CreateEarth();
 		ImGui::EndMenu();
 	}
 }
