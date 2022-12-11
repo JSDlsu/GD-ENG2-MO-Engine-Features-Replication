@@ -81,28 +81,7 @@ void SceneWriter::writeToFile()
 			BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
 			scenefile << "Physics: " << 1 << std::endl;
 			scenefile << "Mass: " << (float)physicsComp->GetRigidBody()->getMass() << std::endl;
-
-			switch (physicsComp->GetRigidBody()->getType())
-			{
-				case BodyType::STATIC:
-				{
-					BodyType = "STATIC";
-					break;
-				}
-				case BodyType::KINEMATIC:
-				{
-					BodyType = "KINEMATIC";
-					break;
-				}
-				case BodyType::DYNAMIC:
-				{
-					BodyType = "DYNAMIC";
-					break;
-				}
-			}
-
-
-			scenefile << "BodyType: " << BodyType << std::endl;
+			scenefile << "BodyType: " << (int)physicsComp->GetRigidBody()->getType() << std::endl;
 		}
 	}
 	scenefile.close();

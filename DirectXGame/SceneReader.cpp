@@ -33,9 +33,9 @@ void SceneReader::readFromFile()
 	Vector3D position;
 	Vector3D rotation;
 	Vector3D scale;
-	bool hasPhysics;
-	float mass;
-	BodyType BodyType;
+	bool hasPhysics = false;
+	float mass = 0;
+	int BodyType = 0;
 
 	while(std::getline(sceneFile,readLine))
 	{
@@ -104,13 +104,8 @@ void SceneReader::readFromFile()
 		else if (index == 7)
 		{
 			std::vector stringSplit = BNS_StringUtils::split(readLine, ' ');
-
-			if (stringSplit[1] == "STATIC")
-				BodyType = BodyType::STATIC;
-			else if (stringSplit[1] == "KINEMATIC")
-				BodyType = BodyType::KINEMATIC;
-			else if (stringSplit[1] == "DYNAMIC")
-				BodyType = BodyType::DYNAMIC;
+			
+			BodyType = std::stoi(stringSplit[1]);
 
 			index = 0;
 

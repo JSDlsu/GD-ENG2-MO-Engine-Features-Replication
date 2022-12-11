@@ -35,7 +35,7 @@ public:
 	void CreateScene();
 	void CreateMeshFromFile(std::string full_filepath, std::string localName);
 
-	void createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale, bool hasPhysics = false, float mass = 0, reactphysics3d::BodyType BodyType = reactphysics3d::BodyType::STATIC);
+	void createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale, bool hasPhysics = false, float mass = 0, int BodyType = -1);
 
 private:
 	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
