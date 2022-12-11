@@ -37,41 +37,73 @@ void SceneWriter::writeToFile()
 		Vector3D rotation = allObjects[i]->GetLocalRotation();
 		Vector3D scale = allObjects[i]->GetLocalScale();
 
-		std::string type = "NONE";
+		std::string ObjectType = "NONE";
+		std::string BodyType = "NONE";
 
 		switch(allObjects[i]->ObjectType)
 		{
 			case BNS_ObjectTypes::CUBE:
 			{
-				type = "CUBE";
+				ObjectType = "CUBE";
 				break;
 			}
 			case BNS_ObjectTypes::PLANE:
 			{
-				type = "PLANE";
+				ObjectType = "PLANE";
 				break;
 			}
 			case BNS_ObjectTypes::CAMERA:
 			{
-				type = "CAMERA";
+				ObjectType = "CAMERA";
 				break;
 			}
 			case BNS_ObjectTypes::MESH:
 			{
-				type = "MESH";
+				ObjectType = "MESH";
 				break;
 			}
 			case BNS_ObjectTypes::SKYBOX:
 			{
-				type = "SKYBOX";
+				ObjectType = "SKYBOX";
 				break;
 			}
 		}
 
-		scenefile << "Type: " << type << std::endl;
-			scenefile << "Position: " << position.m_x << " " << position.m_y << " " << position.m_z << std::endl;
-			scenefile << "Rotation: " << rotation.m_x << " " << rotation.m_y << " " << rotation.m_z << std::endl;
-			scenefile << "Scale: " <<  scale.m_x <<" "<< scale.m_y <<" " << scale.m_z << std::endl;
+		scenefile << "Type: " << ObjectType << std::endl;
+		scenefile << "Position: " << position.m_x << " " << position.m_y << " " << position.m_z << std::endl;
+		scenefile << "Rotation: " << rotation.m_x << " " << rotation.m_y << " " << rotation.m_z << std::endl;
+		scenefile << "Scale: " <<  scale.m_x <<" "<< scale.m_y <<" " << scale.m_z << std::endl;
+
+
+		BNS_AComponent* physics_comp = allObjects[i]->FindComponentOfType(ComponentType::Physics);
+		if (physics_comp != nullptr)
+		{
+			BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
+			scenefile << "Physics: " << 1 << std::endl;
+			scenefile << "Mass: " << (float)physicsComp->GetRigidBody()->getMass() << std::endl;
+
+			switch (physicsComp->GetRigidBody()->getType())
+			{
+				case BodyType::STATIC:
+				{
+					BodyType = "STATIC";
+					break;
+				}
+				case BodyType::KINEMATIC:
+				{
+					BodyType = "KINEMATIC";
+					break;
+				}
+				case BodyType::DYNAMIC:
+				{
+					BodyType = "DYNAMIC";
+					break;
+				}
+			}
+
+
+			scenefile << "BodyType: " << BodyType << std::endl;
+		}
 	}
 	scenefile.close();
 }

@@ -132,7 +132,7 @@ void BNS_Inspector_UI::DrawUI()
 
 				//ImGui::Text("Body Type");
 				static const char* items[] = { "Dynamic", "Kinematic" , "Static" };
-				static int selectedItem;
+				static int selectedItem = -1;
 
 				if (physicsComp->GetRigidBody()->getType() == BodyType::DYNAMIC)
 					selectedItem = 0;

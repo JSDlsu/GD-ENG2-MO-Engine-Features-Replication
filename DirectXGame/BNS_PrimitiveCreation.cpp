@@ -266,7 +266,7 @@ void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::s
 
 }
 
-void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale)
+void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale, bool hasPhysics, float mass, reactphysics3d::BodyType BodyType)
 {
 	BNS_AGameObject* obj;
 
@@ -297,6 +297,14 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", obj);
 	obj->AttachComponent(transformComp);
+
+	if (hasPhysics)
+	{
+		BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", obj);
+		physicsComp->GetRigidBody()->setType(BodyType);
+		physicsComp->GetRigidBody()->setMass(mass);
+		obj->AttachComponent(physicsComp);
+	}
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(obj);
 }

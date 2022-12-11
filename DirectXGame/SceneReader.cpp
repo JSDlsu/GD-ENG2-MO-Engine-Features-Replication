@@ -29,10 +29,13 @@ void SceneReader::readFromFile()
 	std::string readLine;
 
 	std::string objectName;
-	BNS_ObjectTypes type;
+	BNS_ObjectTypes ObjectType;
 	Vector3D position;
 	Vector3D rotation;
 	Vector3D scale;
+	bool hasPhysics;
+	float mass;
+	BodyType BodyType;
 
 	while(std::getline(sceneFile,readLine))
 	{
@@ -47,9 +50,9 @@ void SceneReader::readFromFile()
 			
 
 			if (stringSplit[1] == "CUBE")
-				type = BNS_ObjectTypes::CUBE;
+				ObjectType = BNS_ObjectTypes::CUBE;
 			if (stringSplit[1] == "PLANE")
-				type = BNS_ObjectTypes::PLANE;
+				ObjectType = BNS_ObjectTypes::PLANE;
 
 			
 			index++;
@@ -70,9 +73,48 @@ void SceneReader::readFromFile()
 		{
 			std::vector stringSplit = BNS_StringUtils::split(readLine,' ');
 			scale = Vector3D(std::stof(stringSplit[1]), std::stof(stringSplit[2]),  std::stof(stringSplit[3]));
+			index++;
+
+			
+			
+		}
+
+		else if (index == 5)
+		{
+			std::vector stringSplit = BNS_StringUtils::split(readLine, ' ');
+			if (std::stoi(stringSplit[1]) == 0)
+			{
+				index = 0;
+				BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, ObjectType, position, rotation, scale);
+			}
+			else if (std::stoi(stringSplit[1]) == 1)
+			{
+				hasPhysics = true;
+				index++;
+			}
+		}
+
+		else if (index == 6)
+		{
+			std::vector stringSplit = BNS_StringUtils::split(readLine, ' ');
+			mass = std::stof(stringSplit[1]);
+			index++;
+		}
+
+		else if (index == 7)
+		{
+			std::vector stringSplit = BNS_StringUtils::split(readLine, ' ');
+
+			if (stringSplit[1] == "STATIC")
+				BodyType = BodyType::STATIC;
+			else if (stringSplit[1] == "KINEMATIC")
+				BodyType = BodyType::KINEMATIC;
+			else if (stringSplit[1] == "DYNAMIC")
+				BodyType = BodyType::DYNAMIC;
+
 			index = 0;
 
-			BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, type, position, rotation, scale);
+			BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, ObjectType, position, rotation, scale, hasPhysics, mass, BodyType);
 		}
 	}
 }
