@@ -626,6 +626,9 @@
     <ClInclude Include="BNS_ActionHistory.h">
       <Filter>GameEngine\BackEndTools\EditorAction</Filter>
     </ClInclude>
+    <ClInclude Include="BNS_StringUtils.h">
+      <Filter>GameEngine\BackEndTools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">

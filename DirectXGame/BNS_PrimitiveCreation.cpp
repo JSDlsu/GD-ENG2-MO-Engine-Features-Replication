@@ -69,21 +69,6 @@ void BNS_PrimitiveCreation::CreateCube()
 	cube->AttachComponent(transformComp);
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
-
-	const char* name2 = "cube2";
-	BNS_Cube* cube2 = new BNS_Cube(name2, BNS_ObjectTypes::CUBE);
-	cube2->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
-	cube2->SetVertexShader(BNS_VertexShaderType::COLOR);
-	cube2->SetPixelShader(BNS_PixelShaderType::COLOR);
-	cube2->SetPosition(Vector3D{ 1, 1, 1 });
-
-	// adding transform component
-	BNS_TransformComponent* transformComp2 = new BNS_TransformComponent("PhysTransform", cube2);
-	cube2->AttachComponent(transformComp2);
-
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube2);
-
-	cube->AttachChild(cube2);
 }
 
 void BNS_PrimitiveCreation::CreateTexturedCube()
@@ -279,6 +264,38 @@ void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::s
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 	
 
+}
+
+void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale)
+{
+	BNS_AGameObject* obj;
+
+	if (type == BNS_ObjectTypes::CUBE)
+	{
+		obj = new BNS_Cube(name, type);
+		dynamic_cast<BNS_Cube*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
+		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
+		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
+	}
+
+	else if (type == BNS_ObjectTypes::PLANE)
+	{
+		obj = new BNS_Plane(name, type);
+		dynamic_cast<BNS_Plane*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
+		dynamic_cast<BNS_Plane*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
+		dynamic_cast<BNS_Plane*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
+	}
+
+	else
+	{
+		return;
+	}
+	
+	obj->SetPosition(pos);
+	obj->SetRotation(rot);
+	obj->SetScale(scale);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(obj);
 }
 
 void BNS_PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)

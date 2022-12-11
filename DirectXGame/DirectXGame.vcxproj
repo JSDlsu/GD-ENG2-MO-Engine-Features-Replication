@@ -263,6 +263,7 @@
     <ClInclude Include="BNS_SceneView_UI.h" />
     <ClInclude Include="BNS_Console_UI.h" />
     <ClInclude Include="BNS_SkyBox.h" />
+    <ClInclude Include="BNS_StringUtils.h" />
     <ClInclude Include="BNS_TransformComponent.h" />
     <ClInclude Include="BNS_TransformSystem.h" />
     <ClInclude Include="BNS_EditorAction.h" />

@@ -1,10 +1,11 @@
-/*#include "SceneWriter.h"
+#include "SceneWriter.h"
 #include <iostream>
 #include <fstream>
 
 #include "Vector3D.h"
+#include "BNS_GameObjectManager.h"
 
-
+typedef std::fstream FileWriter;
 SceneWriter::SceneWriter(std::string directory)
 {
 	this->directory = directory;
@@ -25,19 +26,52 @@ void SceneWriter::writeToFile()
 	FileWriter scenefile;
 	scenefile.open(fileDir, std::ios::out);
 
-	GameObjectManager::List allObjects = GameObjectManager::getInstance()->getAllObjects();
+	std::cout << "Selected filename " << fileDir << "\n";
+
+	std::vector<BNS_AGameObject*> allObjects = BNS_GameObjectManager::get()->GetObjectList();
 
 	for(int i = 0; i < allObjects.size(); i++)
 	{
-		scenefile << allObjects[i]->getName() << std::end;
-		Vector3D position = allObjects[i]->getLocalPosition();
-		Vector3D rotation = allObjects[i]->getLocalRotation();
-		Vector3D scale = allObjects[i]->getLocalScale();
+		scenefile << allObjects[i]->GetName() << std::endl;
+		Vector3D position = allObjects[i]->GetLocalPosition();
+		Vector3D rotation = allObjects[i]->GetLocalRotation();
+		Vector3D scale = allObjects[i]->GetLocalScale();
 
-		scenefile << "Type:" << allObjects[i]->getObjectType() << std::endl;
-			scenefile << "Position:" << position.getX() << " " << position.getY() << " " << position.getZ() << std::endl;
-			scenefile << "Rotation:" << rotation.getX() << " " << rotation.getY() << " " << rotation.getZ() << std::endl;
-			scenefile << "Scale:" <<  scale.getX() <<" "<< scale.getY()<<" " << scale.getZ() << std::endl;
+		std::string type = "NONE";
+
+		switch(allObjects[i]->ObjectType)
+		{
+			case BNS_ObjectTypes::CUBE:
+			{
+				type = "CUBE";
+				break;
+			}
+			case BNS_ObjectTypes::PLANE:
+			{
+				type = "PLANE";
+				break;
+			}
+			case BNS_ObjectTypes::CAMERA:
+			{
+				type = "CAMERA";
+				break;
+			}
+			case BNS_ObjectTypes::MESH:
+			{
+				type = "MESH";
+				break;
+			}
+			case BNS_ObjectTypes::SKYBOX:
+			{
+				type = "SKYBOX";
+				break;
+			}
+		}
+
+		scenefile << "Type:" << type << std::endl;
+			scenefile << "Position:" << position.m_x << " " << position.m_y << " " << position.m_z << std::endl;
+			scenefile << "Rotation:" << rotation.m_x << " " << rotation.m_y << " " << rotation.m_z << std::endl;
+			scenefile << "Scale:" <<  scale.m_x <<" "<< scale.m_y <<" " << scale.m_z << std::endl;
 	}
 	scenefile.close();
-}*/
+}

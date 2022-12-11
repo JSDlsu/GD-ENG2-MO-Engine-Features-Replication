@@ -2,6 +2,7 @@
 #include "BNS_AUIScreen.h"
 #include "BNS_CameraHandler.h"
 #include "BNS_Camera.h"
+#include <filesystem>
 
 class BNS_MenuToolbar_UI : public BNS_AUIScreen
 {
@@ -20,5 +21,7 @@ private:
 	void CreateTab_Tools();
 	void CreateTab_Window();
 	void CreateTab_Help();
+
+	static const std::filesystem::path s_ScenePath;
 };
 

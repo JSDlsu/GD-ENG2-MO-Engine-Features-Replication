@@ -4,6 +4,9 @@
 #include "BNS_PrimitiveCreation.h"
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
+#include "SceneWriter.h"
+
+std::filesystem::path const BNS_MenuToolbar_UI::s_ScenePath = "Scene";
 
 BNS_MenuToolbar_UI::BNS_MenuToolbar_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
 {
@@ -38,7 +41,11 @@ void BNS_MenuToolbar_UI::CreateTab_File()
 	{
 		ImGui::MenuItem("New Scene", NULL);
 		ImGui::MenuItem("Open Scene", NULL);
-		ImGui::MenuItem("Save", NULL);
+		if(ImGui::MenuItem("Save", NULL))
+		{
+			SceneWriter writer = SceneWriter(s_ScenePath.string() + "/Test");
+			writer.writeToFile();
+		};
 		ImGui::MenuItem("Exit", NULL);
 		ImGui::EndMenu();
 	}
