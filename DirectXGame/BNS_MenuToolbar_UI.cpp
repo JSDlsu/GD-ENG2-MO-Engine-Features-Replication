@@ -5,6 +5,7 @@
 #include "BNS_Texture.h"
 #include "BNS_UIManager.h"
 #include "SceneWriter.h"
+#include "SceneReader.h"
 
 std::filesystem::path const BNS_MenuToolbar_UI::s_ScenePath = "Scene";
 
@@ -40,7 +41,11 @@ void BNS_MenuToolbar_UI::CreateTab_File()
 	if (ImGui::BeginMenu("File"))
 	{
 		ImGui::MenuItem("New Scene", NULL);
-		ImGui::MenuItem("Open Scene", NULL);
+		if(ImGui::MenuItem("Open Scene", NULL))
+		{
+			SceneReader reader = SceneReader(s_ScenePath.string() + "/Test");
+			reader.readFromFile();
+		}
 		if(ImGui::MenuItem("Save", NULL))
 		{
 			SceneWriter writer = SceneWriter(s_ScenePath.string() + "/Test");

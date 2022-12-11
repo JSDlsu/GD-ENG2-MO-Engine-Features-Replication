@@ -68,10 +68,10 @@ void SceneWriter::writeToFile()
 			}
 		}
 
-		scenefile << "Type:" << type << std::endl;
-			scenefile << "Position:" << position.m_x << " " << position.m_y << " " << position.m_z << std::endl;
-			scenefile << "Rotation:" << rotation.m_x << " " << rotation.m_y << " " << rotation.m_z << std::endl;
-			scenefile << "Scale:" <<  scale.m_x <<" "<< scale.m_y <<" " << scale.m_z << std::endl;
+		scenefile << "Type: " << type << std::endl;
+			scenefile << "Position: " << position.m_x << " " << position.m_y << " " << position.m_z << std::endl;
+			scenefile << "Rotation: " << rotation.m_x << " " << rotation.m_y << " " << rotation.m_z << std::endl;
+			scenefile << "Scale: " <<  scale.m_x <<" "<< scale.m_y <<" " << scale.m_z << std::endl;
 	}
 	scenefile.close();
 }

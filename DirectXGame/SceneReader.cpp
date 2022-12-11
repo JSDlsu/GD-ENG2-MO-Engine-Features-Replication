@@ -44,14 +44,21 @@ void SceneReader::readFromFile()
 		else if (index == 1)
 		{
 			std::vector stringSplit = BNS_StringUtils::split(readLine,' ');
-			type = (BNS_ObjectTypes) std::stoi(stringSplit[1]);
+			
+
+			if (stringSplit[1] == "CUBE")
+				type = BNS_ObjectTypes::CUBE;
+			if (stringSplit[1] == "PLANE")
+				type = BNS_ObjectTypes::PLANE;
+
+			
 			index++;
 		}
 		else if (index == 2)
 		{
 			std::vector stringSplit = BNS_StringUtils::split(readLine,' ');
 			position = Vector3D(std::stof(stringSplit[1]), std::stof(stringSplit[2]),  std::stof(stringSplit[3]));
-			index;;
+			index++;
 		}
 		else if (index == 3)
 		{

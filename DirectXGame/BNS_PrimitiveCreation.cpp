@@ -295,6 +295,9 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 	obj->SetRotation(rot);
 	obj->SetScale(scale);
 
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", obj);
+	obj->AttachComponent(transformComp);
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(obj);
 }
 
