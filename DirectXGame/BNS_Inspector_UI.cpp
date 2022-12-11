@@ -36,7 +36,12 @@ void BNS_Inspector_UI::DrawUI()
 			return;
 		}
 
-		ImGui::Checkbox("IsEnabled", selectedGO->GetActive());
+		active = selectedGO->GetActive();
+		if(ImGui::Checkbox("IsEnabled", &active))
+		{
+			selectedGO->SetActive(active);
+		}
+		
 
 		bool show = selectedGO != nullptr;
 		if (show && ImGui::CollapsingHeader("Transform"))

@@ -20,5 +20,6 @@ public:
 
 private:
 	bool transformMenu = true;
+	bool active;
 };
 

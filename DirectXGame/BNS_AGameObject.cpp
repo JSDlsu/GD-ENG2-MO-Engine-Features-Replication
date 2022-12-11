@@ -15,7 +15,7 @@ BNS_AGameObject::BNS_AGameObject(std::string name, BNS_ObjectTypes type) : name(
 
 BNS_AGameObject::~BNS_AGameObject()
 {
-	if (!componentList.empty())
+	if (componentList.empty())
 		return;
 	ComponentList::iterator a;
 	for (a = componentList.begin(); a != componentList.end(); a++)
@@ -218,9 +218,9 @@ BNS_AGameObject::ComponentList BNS_AGameObject::GetComponentsOfTypeRecursive(Com
 	return foundList;
 }
 
-bool* BNS_AGameObject::GetActive()
+bool BNS_AGameObject::GetActive()
 {
-	return &this->active;
+	return this->active;
 }
 
 void BNS_AGameObject::SetActive(bool flag)

@@ -30,8 +30,11 @@ public:
 		
 		for (auto object : sortedObjects)
 		{
-			if (m_filterPolicy.ShouldRender(object))
-				object->Draw(m_blender);
+			if (m_filterPolicy.ShouldRender(object)) {
+				if(object->GetActive())
+					object->Draw(m_blender);
+			}
+				
 		}
 	}
 private:

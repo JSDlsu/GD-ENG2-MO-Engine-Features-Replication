@@ -66,7 +66,7 @@ public:
 	ComponentList GetComponentsOfTypeRecursive(ComponentType type);
 
 public:
-	bool* GetActive();
+	bool GetActive();
 	void SetActive(bool flag);
 
 public:
