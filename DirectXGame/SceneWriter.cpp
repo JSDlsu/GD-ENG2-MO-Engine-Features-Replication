@@ -165,8 +165,8 @@ void SceneWriter::WriteJSON()
 					}
 					valObject.AddMember("physicsComp", valPhys, d.GetAllocator());
 				}
-				const char* temp = std::to_string(i).c_str();
-				valTarget.AddMember(static_cast<GenericValue<UTF8<>>::StringRefType>(temp), valObject, d.GetAllocator());
+				Value tempName(std::to_string(i).c_str(), d.GetAllocator());
+				valTarget.AddMember(tempName, valObject, d.GetAllocator());
 				std::cout << "Size: " << i << std::endl;
 			}
 		}
