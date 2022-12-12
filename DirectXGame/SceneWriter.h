@@ -22,8 +22,6 @@ public:
 
 public:
 	std::string GetObjectType(BNS_ObjectTypes type);
-
-private:
-	static const std::filesystem::path s_ScenePath;
+	
 };
 

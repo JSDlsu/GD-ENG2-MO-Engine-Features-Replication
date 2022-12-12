@@ -21,7 +21,7 @@ private:
 	void CreateTab_Tools();
 	void CreateTab_Window();
 	void CreateTab_Help();
-
+public:
 	static const std::filesystem::path s_ScenePath;
 };
 

@@ -1,11 +1,12 @@
 #pragma once
+#include "BNS_EnumHandler.h"
 #include "Libs/RapidJson/include/rapidjson/document.h"
 #include "Libs/RapidJson/include/rapidjson/stringbuffer.h"
 #include "Libs/RapidJson/include/rapidjson/filereadstream.h"
-#include "Libs/RapidJson/include/rapidjson/filewritestream.h"
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include "rapidjson/istreamwrapper.h"
 #include <iostream>
 #include <vector>
 
@@ -25,6 +26,8 @@ public:
 	GenericArray<false, rapidjson::Value> getSheetArr(std::string mainKey,
 		std::string key);
 	std::vector<std::string> returnProperties();
+private:
+	BNS_ObjectTypes GetObjectType(std::string type);
 private:
 	Document doc;
 

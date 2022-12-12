@@ -1,8 +1,10 @@
 #include "SceneReader.h"
 #include "BNS_Cube.h"
 #include "BNS_GameObjectManager.h"
+#include "BNS_MenuToolbar_UI.h"
 #include "BNS_PrimitiveCreation.h"
 #include "BNS_StringUtils.h"
+
 
 typedef std::fstream FileReader;
 SceneReader::SceneReader(std::string directory)
@@ -16,17 +18,8 @@ SceneReader::~SceneReader()
 
 void SceneReader::readFromFile()
 {
-	std::string fileDir = this->directory + ".iet";
-	if(this->directory.find(".iet")!= std::string::npos)
-	{
-		fileDir = this->directory;
-	}
-
-	FileReader sceneFile;
-	sceneFile.open(fileDir, std::ios::in);
-
-	int index = 0;
-	std::string readLine;
+	std::string dir = BNS_MenuToolbar_UI::s_ScenePath.string() + "/output";
+	parseJson(dir);
 
 	std::string objectName;
 	BNS_ObjectTypes ObjectType;
@@ -37,82 +30,29 @@ void SceneReader::readFromFile()
 	float mass = 0;
 	int BodyType = 0;
 
-	while(std::getline(sceneFile,readLine))
+	int objects_size = getSheet("Objects_Size").GetInt();
+
+	for (int i = 0; i < objects_size; ++i)
 	{
-		if(index == 0)
-		{
-			objectName = readLine;
-			index++;
-		}
-		else if (index == 1)
-		{
-			std::vector stringSplit = BNS_StringUtils::split(readLine,' ');
-			
-
-			if (stringSplit[1] == "CUBE")
-				ObjectType = BNS_ObjectTypes::CUBE;
-			if (stringSplit[1] == "PLANE")
-				ObjectType = BNS_ObjectTypes::PLANE;
-
-			
-			index++;
-		}
-		else if (index == 2)
-		{
-			std::vector stringSplit = BNS_StringUtils::split(readLine,' ');
-			position = Vector3D(std::stof(stringSplit[1]), std::stof(stringSplit[2]),  std::stof(stringSplit[3]));
-			index++;
-		}
-		else if (index == 3)
-		{
-			std::vector stringSplit = BNS_StringUtils::split(readLine,' ');
-			rotation = Vector3D(std::stof(stringSplit[1]), std::stof(stringSplit[2]),  std::stof(stringSplit[3]));
-			index++;
-		}
-		else if (index == 4)
-		{
-			std::vector stringSplit = BNS_StringUtils::split(readLine,' ');
-			scale = Vector3D(std::stof(stringSplit[1]), std::stof(stringSplit[2]),  std::stof(stringSplit[3]));
-			index++;
-
-			
-			
-		}
-
-		else if (index == 5)
-		{
-			std::vector stringSplit = BNS_StringUtils::split(readLine, ' ');
-			if (std::stoi(stringSplit[1]) == 0)
-			{
-				index = 0;
-				BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, ObjectType, position, rotation, scale);
-			}
-			else if (std::stoi(stringSplit[1]) == 1)
-			{
-				hasPhysics = true;
-				index++;
-			}
-		}
-
-		else if (index == 6)
-		{
-			std::vector stringSplit = BNS_StringUtils::split(readLine, ' ');
-			mass = std::stof(stringSplit[1]);
-			index++;
-		}
-
-		else if (index == 7)
-		{
-			std::vector stringSplit = BNS_StringUtils::split(readLine, ' ');
-			
-			BodyType = std::stoi(stringSplit[1]);
-
-			index = 0;
-
-			BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, ObjectType, position, rotation, scale, hasPhysics, mass, BodyType);
-		}
+		objectName = getSheet("BNS_FILE")[std::to_string(i).c_str()]["objectName"].GetString();
+		ObjectType = GetObjectType(getSheet("BNS_FILE")[std::to_string(i).c_str()]["objectType"].GetString());
+		position = Vector3D(getSheet("BNS_FILE")[std::to_string(i).c_str()]["position"]["x"].GetFloat(),
+			getSheet("BNS_FILE")[std::to_string(i).c_str()]["position"]["y"].GetFloat(),
+			getSheet("BNS_FILE")[std::to_string(i).c_str()]["position"]["z"].GetFloat());
+		rotation = Vector3D(getSheet("BNS_FILE")[std::to_string(i).c_str()]["rotation"]["x"].GetFloat(),
+			getSheet("BNS_FILE")[std::to_string(i).c_str()]["rotation"]["y"].GetFloat(),
+			getSheet("BNS_FILE")[std::to_string(i).c_str()]["rotation"]["z"].GetFloat());
+		scale = Vector3D(getSheet("BNS_FILE")[std::to_string(i).c_str()]["scale"]["x"].GetFloat(),
+			getSheet("BNS_FILE")[std::to_string(i).c_str()]["scale"]["y"].GetFloat(),
+			getSheet("BNS_FILE")[std::to_string(i).c_str()]["scale"]["z"].GetFloat());
+		hasPhysics = getSheet("BNS_FILE")[std::to_string(i).c_str()]["physicsComp"]["hasPhysics"].GetBool();
+		mass = getSheet("BNS_FILE")[std::to_string(i).c_str()]["physicsComp"]["mass"].GetDouble();
+		BodyType = getSheet("BNS_FILE")[std::to_string(i).c_str()]["physicsComp"]["bodyType"].GetInt();
+		BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, ObjectType, position, rotation, scale, hasPhysics, mass, BodyType);
 	}
+
 }
+
 
 void SceneReader::parseJson(std::string JSONpath)
 {
@@ -122,7 +62,7 @@ void SceneReader::parseJson(std::string JSONpath)
 	assert(file != 0);
 	//2
 	char readBuffer[65536];
-	rapidjson::FileReadStream is(file, readBuffer, sizeof(readBuffer));
+	FileReadStream is(file, readBuffer, sizeof(readBuffer));
 	//3
 	this->doc.ParseStream(is);
 	fclose(file);
@@ -149,4 +89,28 @@ std::vector<std::string> SceneReader::returnProperties()
 		sample.push_back(itr->name.GetString());
 	}
 	return sample;
+}
+
+BNS_ObjectTypes SceneReader::GetObjectType(std::string type)
+{
+	if (type.compare("CUBE"))
+	{
+		return BNS_ObjectTypes::CUBE;
+	}
+	if (type.compare("PLANE"))
+	{
+		return BNS_ObjectTypes::PLANE;
+	}
+	if (type.compare("CAMERA"))
+	{
+		return BNS_ObjectTypes::CAMERA;
+	}
+	if (type.compare("MESH"))
+	{
+		return BNS_ObjectTypes::MESH;
+	}
+	if (type.compare("SKYBOX"))
+	{
+		return BNS_ObjectTypes::SKYBOX;;
+	}
 }
