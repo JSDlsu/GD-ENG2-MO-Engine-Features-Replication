@@ -140,4 +140,8 @@ std::string SceneWriter::GetObjectType(BNS_ObjectTypes type)
 	{
 		return "SKYBOX";
 	}
+	if (type == BNS_ObjectTypes::SPHERE)
+	{
+		return "SPHERE";
+	}
 }

@@ -3,6 +3,7 @@
 #include <cmath>
 #include "Vector3D.h"
 #include "Vector4D.h"
+#include "DirectXMath.h"
 
 class Matrix4x4
 {
@@ -237,6 +238,20 @@ public:
 	float* GetMatrix()
 	{
 		return *m_mat;
+	}
+
+	DirectX::XMMATRIX M4X4ToXMMATRIX(Matrix4x4 inMatrix)
+	{
+		DirectX::XMMATRIX outMatrix;
+		for(int i = 0; i < 4; i++)
+		{
+			for(int j = 0; j < 4; j++)
+			{
+				outMatrix.r[i].m128_f32[j] = inMatrix.m_mat[i][j];
+			}
+		}
+
+		return outMatrix;
 	}
 
 	~Matrix4x4()

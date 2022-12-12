@@ -6,7 +6,9 @@ enum class BNS_ObjectTypes
 	MESH,
 	PLANE,
 	CAMERA,
-	SKYBOX
+	SKYBOX,
+	SPHERE,
+	CAPSULE,
 };
 
 enum class BNS_VertexShaderType

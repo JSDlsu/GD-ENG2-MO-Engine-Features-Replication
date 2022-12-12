@@ -59,7 +59,7 @@ void BNS_AppWindow::onCreate()
 	BNS_UIManager::Initialize(this, m_hwnd, m_scene_view);
 	// Create base skybox
 	BNS_PrimitiveCreation::Instance()->CreateSkyBox();
-
+	
 }
 
 void BNS_AppWindow::render()

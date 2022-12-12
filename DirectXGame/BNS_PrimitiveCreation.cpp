@@ -9,6 +9,7 @@
 #include "BNS_PhysicsSystem.h"
 #include "BNS_Physics_Prerequisites.h"
 #include "BNS_Plane.h"
+#include "BNS_Sphere.h"
 #include "BNS_ShaderEngine.h"
 #include "BNS_SkyBox.h"
 #include "BNS_TransformComponent.h"
@@ -272,6 +273,7 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 
 	if (type == BNS_ObjectTypes::CUBE)
 	{
+		std::cout << "create cube" << std::endl;
 		obj = new BNS_Cube(name, type);
 		dynamic_cast<BNS_Cube*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
@@ -284,6 +286,15 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 		dynamic_cast<BNS_Plane*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Plane*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Plane*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
+	}
+
+	else if (type == BNS_ObjectTypes::SPHERE)
+	{
+		std::cout << "create sphere" << std::endl;
+		obj = new BNS_Cube(name, BNS_ObjectTypes::SPHERE);
+		dynamic_cast<BNS_Cube*>(obj)->SetMesh(L"Assets\\Meshes\\sphere.obj");
+		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
+		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
 	}
 
 	else
@@ -307,6 +318,22 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 	}
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(obj);
+}
+
+void BNS_PrimitiveCreation::CreateSphere()
+{
+	const char* name = "sphere";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::SPHERE);
+	cube->SetMesh(L"Assets\\Meshes\\sphere.obj");
+	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
+	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 }
 
 void BNS_PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)

@@ -180,9 +180,6 @@
     <ClCompile Include="BNS_main.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="BNS_AppWindow.cpp">
-      <Filter>App</Filter>
-    </ClCompile>
     <ClCompile Include="BNS_Window.cpp">
       <Filter>GameEngine\WindowingSystem</Filter>
     </ClCompile>
@@ -378,6 +375,7 @@
     <ClCompile Include="BNS_ActionHistory.cpp">
       <Filter>GameEngine\BackEndTools\EditorAction</Filter>
     </ClCompile>
+    <ClCompile Include="BNS_AppWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AppWindow.h">
@@ -673,5 +671,8 @@
     <FxCompile Include="BNS_VertexPointLight.hlsl">
       <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders\PointLight</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

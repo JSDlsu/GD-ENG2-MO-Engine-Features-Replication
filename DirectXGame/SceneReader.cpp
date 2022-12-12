@@ -93,24 +93,30 @@ std::vector<std::string> SceneReader::returnProperties()
 
 BNS_ObjectTypes SceneReader::GetObjectType(std::string type)
 {
-	if (type.compare("CUBE"))
+
+	std::cout << "type: " << type << std::endl;
+	if (type.compare("CUBE") == 0)
 	{
 		return BNS_ObjectTypes::CUBE;
 	}
-	if (type.compare("PLANE"))
+	if (type.compare("PLANE") == 0)
 	{
 		return BNS_ObjectTypes::PLANE;
 	}
-	if (type.compare("CAMERA"))
+	if (type.compare("CAMERA") == 0)
 	{
 		return BNS_ObjectTypes::CAMERA;
 	}
-	if (type.compare("MESH"))
+	if (type.compare("MESH") == 0)
 	{
 		return BNS_ObjectTypes::MESH;
 	}
-	if (type.compare("SKYBOX"))
+	if (type.compare("SKYBOX") == 0)
 	{
 		return BNS_ObjectTypes::SKYBOX;;
+	}
+	if (type.compare("SPHERE") == 0)
+	{
+		return BNS_ObjectTypes::SPHERE;
 	}
 }
