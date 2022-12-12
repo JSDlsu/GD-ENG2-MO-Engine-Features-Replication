@@ -128,22 +128,22 @@ void SceneReader::parseJson(std::string JSONpath)
 	fclose(file);
 }
 
-rapidjson::Value& SceneReader::getSheet(std::string mainKey)
+Value& SceneReader::getSheet(std::string mainKey)
 {
-	rapidjson::Value& player = this->doc[mainKey.c_str()];
+	Value& player = this->doc[mainKey.c_str()];
 	return player; //player["name"].GetString()/GetInt();
 }
 
-rapidjson::GenericArray<false, rapidjson::Value> SceneReader::getSheetArr(std::string mainKey, std::string key)
+GenericArray<false, Value> SceneReader::getSheetArr(std::string mainKey, std::string key)
 {
-	rapidjson::GenericArray<false, rapidjson::Value> items = getSheet(mainKey)[key.c_str()].GetArray();
+	GenericArray<false, Value> items = getSheet(mainKey)[key.c_str()].GetArray();
 	return items; //items[i].GetFloat();
 }
 
 std::vector<std::string> SceneReader::returnProperties()
 {
 	std::vector<std::string> sample;
-	for (rapidjson::Value::ConstMemberIterator itr = doc["frames"].MemberBegin();
+	for (Value::ConstMemberIterator itr = doc["frames"].MemberBegin();
 		itr != doc["frames"].MemberEnd(); ++itr)
 	{
 		sample.push_back(itr->name.GetString());

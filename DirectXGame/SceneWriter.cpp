@@ -1,6 +1,7 @@
 #include "SceneWriter.h"
 #include <iostream>
 #include <fstream>
+#include <rapidjson/filewritestream.h>
 
 #include "Vector3D.h"
 #include "BNS_GameObjectManager.h"
@@ -75,31 +76,105 @@ void SceneWriter::writeToFile()
 		scenefile << "Scale: " <<  scale.m_x <<" "<< scale.m_y <<" " << scale.m_z << std::endl;
 
 
-		BNS_AComponent* physics_comp = allObjects[i]->FindComponentOfType(ComponentType::Physics);
-		if (physics_comp != nullptr)
-		{
-			BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
-			scenefile << "Physics: " << 1 << std::endl;
-			scenefile << "Mass: " << (float)physicsComp->GetRigidBody()->getMass() << std::endl;
-			scenefile << "BodyType: " << (int)physicsComp->GetRigidBody()->getType() << std::endl;
-		}
 	}
 	scenefile.close();
 }
 
 void SceneWriter::WriteJSON()
 {
-	char cbuf[1024]; rapidjson::MemoryPoolAllocator<> allocator(cbuf, sizeof cbuf);
-	rapidjson::Document meta(&allocator, 256);
-	meta.SetObject();
-	meta.AddMember("foo", 123, allocator);
+	// 1. Parse a JSON string into DOM.
+	const char* json = "{\"BNS_FILE\":"
+	"{"
+	"\"objectName\":\"cube0\","
+	"\"objectType\":\"Cube\","
+	"\"position\":{\"x\":0, \"y\":0, \"z\":0},"
+	"\"rotation\":{\"x\":0, \"y\":0, \"z\":0},"
+	"\"scale\":{\"x\":1, \"y\":1, \"z\":1},"
+	"\"hasPhysics\":1,"
+	"\"mass\":1000,"
+	"\"bodyType\":2"
+	"}";
 
-	rapidjson::StringBuffer buffer;
-	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-	meta.Accept(writer);
-	std::string json(buffer.GetString(), buffer.GetSize());
+	Document d;
 
-	std::ofstream of("/tmp/example.json");
-	of << json;
-	if (!of.good()) throw std::runtime_error("Can't write the JSON string to the file!");
+	std::vector<BNS_AGameObject*> allObjects = BNS_GameObjectManager::get()->GetObjectList();
+
+	Value valChannel;
+	valChannel.SetObject();
+	{
+		Value valTarget;
+		for (int i = 0; i < allObjects.size(); i++)
+		{
+			valTarget.SetObject();
+			{
+				Value valObject;
+				valObject.SetObject();
+				{
+					// for name
+					Value tempName;
+					tempName.SetString(GenericValue<UTF8<>>::StringRefType(allObjects[i]->GetName().c_str()));
+					valObject.AddMember("objectName", tempName, d.GetAllocator());
+					// for type
+					Value tempType;
+					tempType.SetString(GenericValue<UTF8<>>::StringRefType(GetObjectType(allObjects[i]->ObjectType).c_str()));
+					valObject.AddMember("objectType", tempType, d.GetAllocator());
+					// for position
+					Value valPos;
+					valPos.SetObject();
+					{
+						valPos.AddMember("x", allObjects[i]->GetLocalPosition().m_x, d.GetAllocator());
+						valPos.AddMember("y", allObjects[i]->GetLocalPosition().m_y, d.GetAllocator());
+						valPos.AddMember("z", allObjects[i]->GetLocalPosition().m_z, d.GetAllocator());
+					}
+					valObject.AddMember("position", valPos, d.GetAllocator());
+				}
+				const char* temp = std::to_string(i).c_str();
+				valTarget.AddMember(static_cast<GenericValue<UTF8<>>::StringRefType>(temp), valObject, d.GetAllocator());
+				std::cout << "Size: " << i << std::endl;
+			}
+		}
+		valChannel.AddMember("BNS_FILE", valTarget, d.GetAllocator());
+	}
+
+	d.CopyFrom(valChannel, d.GetAllocator());
+
+	/*
+	// 2. Modify it by DOM.
+	Value& s = d["stars"];
+	s.SetInt(s.GetInt() + 1);
+	*/
+	FILE* fp = fopen("output.json", "wb"); // non-Windows use "w"
+
+	// 3. Stringify the DOM
+	char writeBuffer[65536];
+	FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+
+	Writer<FileWriteStream> writer(os);
+	d.Accept(writer);
+
+	fclose(fp);
+}
+
+std::string SceneWriter::GetObjectType(BNS_ObjectTypes type)
+{
+	if (type == BNS_ObjectTypes::CUBE)
+	{
+		return "CUBE";
+	}
+	if (type == BNS_ObjectTypes::PLANE)
+	{
+		return "PLANE";
+	}
+	if (type == BNS_ObjectTypes::CAMERA)
+	{
+		return "CAMERA";
+	}
+	if (type == BNS_ObjectTypes::MESH)
+	{
+		return "MESH";
+	}
+	if (type == BNS_ObjectTypes::SKYBOX)
+	{
+		return "SKYBOX";
+	}
 }
