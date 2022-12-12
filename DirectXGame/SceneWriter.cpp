@@ -111,12 +111,13 @@ void SceneWriter::WriteJSON()
 				valObject.SetObject();
 				{
 					// for name
-					Value tempName;
-					tempName.SetString(GenericValue<UTF8<>>::StringRefType(allObjects[i]->GetName().c_str()));
+					Value tempName(allObjects[i]->GetName().c_str(), d.GetAllocator());
+					//tempName.SetString(GenericValue<UTF8<>>::StringRefType(allObjects[i]->GetName().c_str()));
 					valObject.AddMember("objectName", tempName, d.GetAllocator());
+
 					// for type
-					Value tempType;
-					tempType.SetString(GenericValue<UTF8<>>::StringRefType(GetObjectType(allObjects[i]->ObjectType).c_str()));
+					Value tempType(GetObjectType(allObjects[i]->ObjectType).c_str(), d.GetAllocator());
+					//tempType.SetString(GenericValue<UTF8<>>::StringRefType(GetObjectType(allObjects[i]->ObjectType).c_str()));
 					valObject.AddMember("objectType", tempType, d.GetAllocator());
 					// for position
 					Value valPos;

@@ -1,8 +1,0 @@
-plane
-Type: PLANE
-Position: 0 -10 0
-Rotation: 0 0 0
-Scale: 100 1 100
-Physics: 1
-Mass: 1000
-BodyType: 1
