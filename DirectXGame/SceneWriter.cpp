@@ -30,6 +30,7 @@ void SceneWriter::writeToFile()
 	valChannel.SetObject();
 	{
 		Value valTarget;
+		Value myArray(kArrayType);
 		valTarget.SetObject();
 		for (valSize = 0; valSize < allObjects.size(); valSize++)
 		{
@@ -91,10 +92,9 @@ void SceneWriter::writeToFile()
 				}
 				valObject.AddMember("physicsComp", valPhys, d.GetAllocator());
 			}
-			Value tempName(std::to_string(valSize).c_str(), d.GetAllocator());
-			valTarget.AddMember(tempName, valObject, d.GetAllocator());
+			myArray.PushBack(valObject, d.GetAllocator());
 		}
-		valChannel.AddMember("Objects_Size", valSize, d.GetAllocator());
+		valTarget.AddMember("ObjectList", myArray, d.GetAllocator());
 		valChannel.AddMember("BNS_FILE", valTarget, d.GetAllocator());
 	}
 

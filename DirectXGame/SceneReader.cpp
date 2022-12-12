@@ -30,24 +30,25 @@ void SceneReader::readFromFile()
 	float mass = 0;
 	int BodyType = 0;
 
-	int objects_size = getSheet("Objects_Size").GetInt();
-
-	for (int i = 0; i < objects_size; ++i)
-	{
-		objectName = getSheet("BNS_FILE")[std::to_string(i).c_str()]["objectName"].GetString();
-		ObjectType = GetObjectType(getSheet("BNS_FILE")[std::to_string(i).c_str()]["objectType"].GetString());
-		position = Vector3D(getSheet("BNS_FILE")[std::to_string(i).c_str()]["position"]["x"].GetFloat(),
-			getSheet("BNS_FILE")[std::to_string(i).c_str()]["position"]["y"].GetFloat(),
-			getSheet("BNS_FILE")[std::to_string(i).c_str()]["position"]["z"].GetFloat());
-		rotation = Vector3D(getSheet("BNS_FILE")[std::to_string(i).c_str()]["rotation"]["x"].GetFloat(),
-			getSheet("BNS_FILE")[std::to_string(i).c_str()]["rotation"]["y"].GetFloat(),
-			getSheet("BNS_FILE")[std::to_string(i).c_str()]["rotation"]["z"].GetFloat());
-		scale = Vector3D(getSheet("BNS_FILE")[std::to_string(i).c_str()]["scale"]["x"].GetFloat(),
-			getSheet("BNS_FILE")[std::to_string(i).c_str()]["scale"]["y"].GetFloat(),
-			getSheet("BNS_FILE")[std::to_string(i).c_str()]["scale"]["z"].GetFloat());
-		hasPhysics = getSheet("BNS_FILE")[std::to_string(i).c_str()]["physicsComp"]["hasPhysics"].GetBool();
-		mass = getSheet("BNS_FILE")[std::to_string(i).c_str()]["physicsComp"]["mass"].GetDouble();
-		BodyType = getSheet("BNS_FILE")[std::to_string(i).c_str()]["physicsComp"]["bodyType"].GetInt();
+	Value& attributes = getSheet("BNS_FILE")["ObjectList"];
+	//assert(attributes.IsArray()); // attributes is an array
+	for (Value::ConstValueIterator itr = attributes.Begin(); itr != attributes.End(); ++itr) {
+		const Value& attribute = *itr;
+		assert(attribute.IsObject()); // each attribute is an object
+		objectName = attribute["objectName"].GetString();
+		ObjectType = GetObjectType(attribute["objectType"].GetString());
+		position = Vector3D(attribute["position"]["x"].GetFloat(),
+			attribute["position"]["y"].GetFloat(),
+			attribute["position"]["z"].GetFloat());
+		rotation = Vector3D(attribute["rotation"]["x"].GetFloat(),
+			attribute["rotation"]["y"].GetFloat(),
+			attribute["rotation"]["z"].GetFloat());
+		scale = Vector3D(attribute["scale"]["x"].GetFloat(),
+			attribute["scale"]["y"].GetFloat(),
+			attribute["scale"]["z"].GetFloat());
+		hasPhysics = attribute["physicsComp"]["hasPhysics"].GetBool();
+		mass = attribute["physicsComp"]["mass"].GetDouble();
+		BodyType = attribute["physicsComp"]["bodyType"].GetInt();
 		BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, ObjectType, position, rotation, scale, hasPhysics, mass, BodyType);
 	}
 
