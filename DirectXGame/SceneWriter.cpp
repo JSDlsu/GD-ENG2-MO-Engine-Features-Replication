@@ -112,9 +112,7 @@ void SceneWriter::WriteJSON()
 				{
 					// for name
 					Value tempName(allObjects[i]->GetName().c_str(), d.GetAllocator());
-					//tempName.SetString(GenericValue<UTF8<>>::StringRefType(allObjects[i]->GetName().c_str()));
 					valObject.AddMember("objectName", tempName, d.GetAllocator());
-
 					// for type
 					Value tempType(GetObjectType(allObjects[i]->ObjectType).c_str(), d.GetAllocator());
 					//tempType.SetString(GenericValue<UTF8<>>::StringRefType(GetObjectType(allObjects[i]->ObjectType).c_str()));
@@ -127,7 +125,45 @@ void SceneWriter::WriteJSON()
 						valPos.AddMember("y", allObjects[i]->GetLocalPosition().m_y, d.GetAllocator());
 						valPos.AddMember("z", allObjects[i]->GetLocalPosition().m_z, d.GetAllocator());
 					}
-					valObject.AddMember("position", valPos, d.GetAllocator());
+					valObject.AddMember("position", valPos, d.GetAllocator());// for rotation
+					Value valRot;
+					valRot.SetObject();
+					{
+						valRot.AddMember("x", allObjects[i]->GetLocalRotation().m_x, d.GetAllocator());
+						valRot.AddMember("y", allObjects[i]->GetLocalRotation().m_y, d.GetAllocator());
+						valRot.AddMember("z", allObjects[i]->GetLocalRotation().m_z, d.GetAllocator());
+					}
+					valObject.AddMember("rotation", valRot, d.GetAllocator());
+					// for scale
+					Value valScale;
+					valScale.SetObject();
+					{
+						valScale.AddMember("x", allObjects[i]->GetLocalScale().m_x, d.GetAllocator());
+						valScale.AddMember("y", allObjects[i]->GetLocalScale().m_y, d.GetAllocator());
+						valScale.AddMember("z", allObjects[i]->GetLocalScale().m_z, d.GetAllocator());
+					}
+					valObject.AddMember("scale", valScale, d.GetAllocator());
+
+					// for physics
+					Value valPhys;
+					BNS_AComponent* physics_comp = allObjects[i]->FindComponentOfType(ComponentType::Physics);
+					valPhys.SetObject();
+					{
+						BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
+						int hasPhys = (physicsComp != nullptr) ? 1 : 0;
+						valPhys.AddMember("hasPhysics", hasPhys, d.GetAllocator());
+						if (hasPhys == 1)
+						{
+							valPhys.AddMember("mass", (float)physicsComp->GetRigidBody()->getMass(), d.GetAllocator());
+							valPhys.AddMember("bodyType", (int)physicsComp->GetRigidBody()->getType(), d.GetAllocator());
+						}
+						else if (hasPhys == 0)
+						{
+							valPhys.AddMember("mass", 0, d.GetAllocator());
+							valPhys.AddMember("bodyType", -1, d.GetAllocator());
+						}
+					}
+					valObject.AddMember("physicsComp", valPhys, d.GetAllocator());
 				}
 				const char* temp = std::to_string(i).c_str();
 				valTarget.AddMember(static_cast<GenericValue<UTF8<>>::StringRefType>(temp), valObject, d.GetAllocator());
