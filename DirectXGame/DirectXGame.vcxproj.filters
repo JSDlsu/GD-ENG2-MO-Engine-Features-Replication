@@ -672,7 +672,4 @@
       <Filter>GameEngine\GraphicsEngine\Shaders\VertexShaders\PointLight</Filter>
     </FxCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>
