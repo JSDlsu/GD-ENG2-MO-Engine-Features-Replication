@@ -49,7 +49,8 @@ void BNS_MenuToolbar_UI::CreateTab_File()
 		if(ImGui::MenuItem("Save", NULL))
 		{
 			SceneWriter writer = SceneWriter(s_ScenePath.string() + "/Test");
-			writer.writeToFile();
+			//writer.writeToFile();
+			writer.WriteJSON();
 		};
 		ImGui::MenuItem("Exit", NULL);
 		ImGui::EndMenu();

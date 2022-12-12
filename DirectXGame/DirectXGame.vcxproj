@@ -80,7 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\DirectXGame\Libs\tinyobjloader\include;..\DirectXGame\Libs\DirectXTex\include;..\DirectXGame\Libs\ReactPhysics3D\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\DirectXGame\Libs\tinyobjloader\include;..\DirectXGame\Libs\DirectXTex\include;..\DirectXGame\Libs\ReactPhysics3D\include;..\DirectXGame\Libs\RapidJson\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\DirectXGame\Libs\DirectXTex\bin;..\DirectXGame\Libs\ReactPhysics3D\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -86,3 +86,20 @@ void SceneWriter::writeToFile()
 	}
 	scenefile.close();
 }
+
+void SceneWriter::WriteJSON()
+{
+	char cbuf[1024]; rapidjson::MemoryPoolAllocator<> allocator(cbuf, sizeof cbuf);
+	rapidjson::Document meta(&allocator, 256);
+	meta.SetObject();
+	meta.AddMember("foo", 123, allocator);
+
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	meta.Accept(writer);
+	std::string json(buffer.GetString(), buffer.GetSize());
+
+	std::ofstream of("/tmp/example.json");
+	of << json;
+	if (!of.good()) throw std::runtime_error("Can't write the JSON string to the file!");
+}
