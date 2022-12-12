@@ -9,7 +9,6 @@
 #include "BNS_Prerequisites.h"
 #include "Vector3D.h"
 
-#include "GeometricPrimitive.h"
 
 class BNS_AComponent;
 class Matrix4x4;

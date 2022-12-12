@@ -9,7 +9,6 @@
 #include "BNS_PhysicsSystem.h"
 #include "BNS_Physics_Prerequisites.h"
 #include "BNS_Plane.h"
-#include "BNS_Sphere.h"
 #include "BNS_ShaderEngine.h"
 #include "BNS_SkyBox.h"
 #include "BNS_TransformComponent.h"

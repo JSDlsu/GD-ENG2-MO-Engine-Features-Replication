@@ -1,6 +1,5 @@
 #pragma once
 #include <reactphysics3d/components/RigidBodyComponents.h>
-#include "GeometricPrimitive.h"
 
 #include "BNS_Prerequisites.h"
 #include "BNS_StructHandler.h"
