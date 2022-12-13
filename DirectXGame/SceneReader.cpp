@@ -30,7 +30,7 @@ void SceneReader::readFromFile()
 	float mass = 0;
 	int BodyType = 0;
 
-	Value& attributes = getSheet("BNS_FILE")["ObjectList"];
+	Value& attributes = getSheet("bns_file")["objectList"];
 	//assert(attributes.IsArray()); // attributes is an array
 	for (Value::ConstValueIterator itr = attributes.Begin(); itr != attributes.End(); ++itr) {
 		const Value& attribute = *itr;

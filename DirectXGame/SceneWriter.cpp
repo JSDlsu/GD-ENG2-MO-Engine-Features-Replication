@@ -94,8 +94,8 @@ void SceneWriter::writeToFile()
 			}
 			myArray.PushBack(valObject, d.GetAllocator());
 		}
-		valTarget.AddMember("ObjectList", myArray, d.GetAllocator());
-		valChannel.AddMember("BNS_FILE", valTarget, d.GetAllocator());
+		valTarget.AddMember("objectList", myArray, d.GetAllocator());
+		valChannel.AddMember("bns_file", valTarget, d.GetAllocator());
 	}
 
 	d.CopyFrom(valChannel, d.GetAllocator());
