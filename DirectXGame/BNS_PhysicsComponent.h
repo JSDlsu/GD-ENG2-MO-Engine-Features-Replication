@@ -7,6 +7,8 @@ class BNS_PhysicsComponent : public BNS_AComponent
 public:
 	BNS_PhysicsComponent(String name, BNS_AGameObject* owner);
 	~BNS_PhysicsComponent() override;
+
+	void DetachOwner() override;
 	// update rigidBody
 	void UpdateRigidBody();
 	// executes the physics system per frame

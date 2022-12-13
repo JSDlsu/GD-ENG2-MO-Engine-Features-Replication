@@ -9,7 +9,7 @@ BNS_AComponent::BNS_AComponent(String name, ComponentType type, BNS_AGameObject*
 
 BNS_AComponent::~BNS_AComponent()
 {
-
+    type = ComponentType::NotSet;
 }
 
 void BNS_AComponent::AttachOwner(BNS_AGameObject* owner)
@@ -20,6 +20,7 @@ void BNS_AComponent::AttachOwner(BNS_AGameObject* owner)
 void BNS_AComponent::DetachOwner()
 {
     this->owner = nullptr;
+    delete this;
 }
 
 BNS_AGameObject* BNS_AComponent::GetOwner()

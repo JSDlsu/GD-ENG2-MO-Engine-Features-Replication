@@ -16,6 +16,12 @@ BNS_PhysicsComponent::~BNS_PhysicsComponent()
 	BNS_AComponent::~BNS_AComponent();
 }
 
+void BNS_PhysicsComponent::DetachOwner()
+{
+	BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->UnRegisterComponent(this);
+	BNS_AComponent::DetachOwner();
+}
+
 void BNS_PhysicsComponent::UpdateRigidBody()
 {
 	PhysicsCommon* physicsCommon = BNS_BaseComponentSystem::GetInstance()->GetPhysicsSystem()->GetPhysicsCommon();

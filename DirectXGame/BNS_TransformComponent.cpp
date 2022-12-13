@@ -21,6 +21,12 @@ BNS_TransformComponent::~BNS_TransformComponent()
 	BNS_AComponent::~BNS_AComponent();
 }
 
+void BNS_TransformComponent::DetachOwner()
+{
+	BNS_BaseComponentSystem::GetInstance()->GetTransformSystem()->UnRegisterComponent(this);
+	BNS_AComponent::DetachOwner();
+}
+
 void BNS_TransformComponent::Perform(float deltaTime)
 {
 	BNS_AComponent::Perform(deltaTime);

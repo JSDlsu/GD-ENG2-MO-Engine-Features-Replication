@@ -17,11 +17,9 @@ BNS_AGameObject::~BNS_AGameObject()
 {
 	if (componentList.empty())
 		return;
-	ComponentList::iterator a;
-	for (a = componentList.begin(); a != componentList.end(); a++)
+	for (int i = 0; i < componentList.size(); ++i)
 	{
-		(*a)->DetachOwner();
-		delete (*a);
+		componentList[i]->DetachOwner();
 	}
 	componentList.clear();
 }

@@ -13,8 +13,8 @@ public:
 	BNS_AComponent(String name, ComponentType type, BNS_AGameObject* owner);
 	virtual ~BNS_AComponent();
 
-	void AttachOwner(BNS_AGameObject* owner);
-	void DetachOwner();
+	virtual void AttachOwner(BNS_AGameObject* owner);
+	virtual void DetachOwner();
 	BNS_AGameObject* GetOwner();
 	ComponentType GetType();
 	String GetName();

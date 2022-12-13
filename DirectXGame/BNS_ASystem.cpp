@@ -44,8 +44,10 @@ void BNS_ASystem<TList>::UnRegisterComponent(TList* component)
 
 		if (index != -1)
 		{
+			std::cout << "Component Erase" << "\n";
 			componentList.erase(componentList.begin() + index);
 		}
+		
 	}
 	else
 	{
