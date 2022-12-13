@@ -124,24 +124,28 @@ std::string SceneWriter::GetObjectType(BNS_ObjectTypes type)
 	{
 		return "CUBE";
 	}
-	if (type == BNS_ObjectTypes::PLANE)
+	else if (type == BNS_ObjectTypes::PLANE)
 	{
 		return "PLANE";
 	}
-	if (type == BNS_ObjectTypes::CAMERA)
+	else if (type == BNS_ObjectTypes::CAMERA)
 	{
 		return "CAMERA";
 	}
-	if (type == BNS_ObjectTypes::MESH)
+	else if (type == BNS_ObjectTypes::MESH)
 	{
 		return "MESH";
 	}
-	if (type == BNS_ObjectTypes::SKYBOX)
+	else if (type == BNS_ObjectTypes::SKYBOX)
 	{
 		return "SKYBOX";
 	}
-	if (type == BNS_ObjectTypes::SPHERE)
+	else if (type == BNS_ObjectTypes::SPHERE)
 	{
 		return "SPHERE";
+	}
+	else if (type == BNS_ObjectTypes::CAPSULE)
+	{
+		return "CAPSULE";
 	}
 }

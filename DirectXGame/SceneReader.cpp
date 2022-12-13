@@ -100,24 +100,28 @@ BNS_ObjectTypes SceneReader::GetObjectType(std::string type)
 	{
 		return BNS_ObjectTypes::CUBE;
 	}
-	if (type.compare("PLANE") == 0)
+	else if (type.compare("PLANE") == 0)
 	{
 		return BNS_ObjectTypes::PLANE;
 	}
-	if (type.compare("CAMERA") == 0)
+	else if (type.compare("CAMERA") == 0)
 	{
 		return BNS_ObjectTypes::CAMERA;
 	}
-	if (type.compare("MESH") == 0)
+	else if (type.compare("MESH") == 0)
 	{
 		return BNS_ObjectTypes::MESH;
 	}
-	if (type.compare("SKYBOX") == 0)
+	else if (type.compare("SKYBOX") == 0)
 	{
 		return BNS_ObjectTypes::SKYBOX;;
 	}
-	if (type.compare("SPHERE") == 0)
+	else if (type.compare("SPHERE") == 0)
 	{
 		return BNS_ObjectTypes::SPHERE;
+	}
+	else if (type.compare("CAPSULE") == 0)
+	{
+		return BNS_ObjectTypes::CAPSULE;
 	}
 }

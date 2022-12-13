@@ -39,7 +39,7 @@ protected:
 	float m_delta_time = 0.0f;
 protected:
 	friend class BNS_AppWindow;
-private:
+protected:
 	float m_light_rot_y = 0.0f;
 };
 

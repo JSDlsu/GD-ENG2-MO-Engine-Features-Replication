@@ -13,6 +13,8 @@ class BNS_Plane : public BNS_Cube
 public:
 	BNS_Plane(std::string name, BNS_ObjectTypes type);
 	~BNS_Plane();
+
+	void RecomputeMatrix(float matrix[16]) override;
 public:
 	void Update(float deltaTime, BNS_AppWindow* app_window = nullptr) override;
 	void Draw(const BlenderPtr& m_blender) override;

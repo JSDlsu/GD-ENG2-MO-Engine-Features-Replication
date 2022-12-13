@@ -55,7 +55,7 @@ public:
 	float GetAlpha();
 	float* GetPhysicsLocalMatrix();
 
-	void RecomputeMatrix(float matrix[16]);
+	virtual void RecomputeMatrix(float matrix[16]);
 	Matrix4x4 GetMatrix();
 public:
 	void AttachComponent(BNS_AComponent* component);

@@ -26,6 +26,8 @@ public:
 	void CreateCube();
 	void CreateTexturedCube();
 	void CreatePlane();
+	void CreateSphere();
+	void CreateCapsule();
 	void CreateTeapot();
 	void CreateStatue();
 	void CreateBunny();
@@ -36,12 +38,12 @@ public:
 	void CreateMeshFromFile(std::string full_filepath, std::string localName);
 
 	void createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale, bool hasPhysics = false, float mass = 0, int BodyType = -1);
-	void CreateSphere();
 
 private:
 	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);
 	void GetCube_Color(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
 	void GetCube_Color_Lerp(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
+	void CheckGameObjectName(std::string& name);
 
 public:
 	static void create();
