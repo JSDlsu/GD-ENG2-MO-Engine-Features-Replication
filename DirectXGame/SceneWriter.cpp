@@ -144,4 +144,8 @@ std::string SceneWriter::GetObjectType(BNS_ObjectTypes type)
 	{
 		return "SPHERE";
 	}
+	if (type == BNS_ObjectTypes::CAPSULE)
+	{
+		return "CAPSULE";
+	}
 }

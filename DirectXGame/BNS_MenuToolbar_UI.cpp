@@ -103,6 +103,8 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 			BNS_PrimitiveCreation::Instance()->CreatePlane();
 		if (ImGui::MenuItem("Create Sphere", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateSphere();
+		if (ImGui::MenuItem("Create Capsule", nullptr))
+			BNS_PrimitiveCreation::Instance()->CreateCapsule();
 		if (ImGui::MenuItem("Create Teapot", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateTeapot();
 		if (ImGui::MenuItem("Create Statue", nullptr))

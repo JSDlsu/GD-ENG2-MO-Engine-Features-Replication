@@ -37,6 +37,7 @@ public:
 
 	void createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale, bool hasPhysics = false, float mass = 0, int BodyType = -1);
 	void CreateSphere();
+	void CreateCapsule();
 
 private:
 	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);

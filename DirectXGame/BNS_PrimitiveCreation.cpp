@@ -296,6 +296,15 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
 	}
 
+	else if (type == BNS_ObjectTypes::CAPSULE)
+	{
+		std::cout << "create capsule" << std::endl;
+		obj = new BNS_Cube(name, BNS_ObjectTypes::CAPSULE);
+		dynamic_cast<BNS_Cube*>(obj)->SetMesh(L"Assets\\Meshes\\capsule.obj");
+		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
+		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
+	}
+
 	else
 	{
 		return;
@@ -324,6 +333,22 @@ void BNS_PrimitiveCreation::CreateSphere()
 	const char* name = "sphere";
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::SPHERE);
 	cube->SetMesh(L"Assets\\Meshes\\sphere.obj");
+	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
+	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+}
+
+void BNS_PrimitiveCreation::CreateCapsule()
+{
+	const char* name = "capsule";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CAPSULE);
+	cube->SetMesh(L"Assets\\Meshes\\capsule.obj");
 	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
 	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
