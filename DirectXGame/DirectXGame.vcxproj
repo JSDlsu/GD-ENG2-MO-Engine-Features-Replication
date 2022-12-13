@@ -257,6 +257,7 @@
     <ClInclude Include="BNS_InputSystem.h" />
     <ClInclude Include="BNS_Inspector_UI.h" />
     <ClInclude Include="BNS_Log.h" />
+    <ClInclude Include="BNS_MathUtils.h" />
     <ClInclude Include="BNS_Physics_Prerequisites.h" />
     <ClInclude Include="BNS_RenderToTexture.h" />
     <ClInclude Include="BNS_SceneStates_UI.h" />

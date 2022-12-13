@@ -11,6 +11,7 @@ BNS_AGameObject::BNS_AGameObject(std::string name, BNS_ObjectTypes type) : name(
 	m_scale = Vector3D::one();
 	m_rotation = Vector3D::zero();
 	this->active = true;
+	this->lastEditState = NULL;
 }
 
 BNS_AGameObject::~BNS_AGameObject()

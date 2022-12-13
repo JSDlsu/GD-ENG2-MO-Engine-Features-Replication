@@ -6,7 +6,7 @@
 
 BNS_Plane::BNS_Plane(std::string name, BNS_ObjectTypes type) : BNS_Cube(name, type)
 {
-	SetScale(100.0f, 1.0f, 100.0f);
+	SetScale(10.0f, 1.0f, 10.0f);
 }
 
 BNS_Plane::~BNS_Plane()

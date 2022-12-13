@@ -1,6 +1,7 @@
 #pragma once
 #include <reactphysics3d/components/RigidBodyComponents.h>
 
+#include "BNS_AGameObject.h"
 #include "BNS_Prerequisites.h"
 #include "BNS_StructHandler.h"
 #include "Vector3D.h"
@@ -38,6 +39,8 @@ public:
 	void createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale, bool hasPhysics = false, float mass = 0, int BodyType = -1);
 	void CreateSphere();
 	void CreateCapsule();
+
+	BNS_AGameObject* CreatePhysicsCube(float x, float y, float z);
 
 private:
 	void GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib);

@@ -12,6 +12,7 @@
 #include "BNS_ShaderEngine.h"
 #include "BNS_SkyBox.h"
 #include "BNS_TransformComponent.h"
+#include "BNS_MathUtils.h"
 
 BNS_PrimitiveCreation* BNS_PrimitiveCreation::sharedInstance = nullptr;
 
@@ -322,6 +323,11 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 		BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", obj);
 		physicsComp->GetRigidBody()->setType((reactphysics3d::BodyType)BodyType);
 		physicsComp->GetRigidBody()->setMass(mass);
+
+		reactphysics3d::BodyType bodyType = physicsComp->GetRigidBody()->getType();
+		physicsComp->UpdateRigidBody();
+		physicsComp->GetRigidBody()->setType(bodyType);
+
 		obj->AttachComponent(physicsComp);
 	}
 
@@ -358,6 +364,29 @@ void BNS_PrimitiveCreation::CreateCapsule()
 	cube->AttachComponent(transformComp);
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+}
+
+BNS_AGameObject* BNS_PrimitiveCreation::CreatePhysicsCube(float x, float y, float z)
+{
+	const char* name = "cube";
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
+	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
+	cube->SetTexture(L"Assets\\Textures\\brick.png");
+
+	cube->SetPosition(Vector3D(x, y, z));
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+	// adding physics component
+	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysCube", cube);
+	cube->AttachComponent(physicsComp);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+
+	return cube;
 }
 
 void BNS_PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)

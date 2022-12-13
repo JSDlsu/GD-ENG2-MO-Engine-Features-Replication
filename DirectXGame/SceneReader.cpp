@@ -19,7 +19,7 @@ SceneReader::~SceneReader()
 void SceneReader::readFromFile()
 {
 	//CHANGE THE CONCATENATED EXPORTED SCENE TO FILENAME TO IMPORT
-	std::string importedFileExt = "/exportedSceneUnreal";
+	std::string importedFileExt = "/output";
 	std::string dir = BNS_MenuToolbar_UI::s_ScenePath.string() + importedFileExt;
 	parseJson(dir);
 
@@ -31,9 +31,7 @@ void SceneReader::readFromFile()
 	bool hasPhysics = false;
 	float mass = 0;
 	int BodyType = 0;
-
-	if(importedFileExt == "/exportedSceneUnity")
-	{
+	
 		Value& attributes = getSheet("BNS_FILE")["ObjectList"];
 		//assert(attributes.IsArray()); // attributes is an array
 		for (Value::ConstValueIterator itr = attributes.Begin(); itr != attributes.End(); ++itr) {
@@ -55,31 +53,6 @@ void SceneReader::readFromFile()
 			BodyType = attribute["physicsComp"]["bodyType"].GetInt();
 			BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, ObjectType, position, rotation, scale, hasPhysics, mass, BodyType);
 		}
-	}
-	else if (importedFileExt == "/exportedSceneUnreal")
-	{
-		Value& attributes = getSheet("bNS_FILE")["objectList"];
-		//assert(attributes.IsArray()); // attributes is an array
-		for (Value::ConstValueIterator itr = attributes.Begin(); itr != attributes.End(); ++itr) {
-			const Value& attribute = *itr;
-			assert(attribute.IsObject()); // each attribute is an object
-			objectName = attribute["objectName"].GetString();
-			ObjectType = GetObjectType(attribute["objectType"].GetString());
-			position = Vector3D(attribute["position"]["x"].GetFloat(),
-				attribute["position"]["y"].GetFloat(),
-				attribute["position"]["z"].GetFloat());
-			rotation = Vector3D(attribute["rotation"]["roll"].GetFloat(),
-				attribute["rotation"]["pitch"].GetFloat(),
-				attribute["rotation"]["yaw"].GetFloat());
-			scale = Vector3D(attribute["scale"]["x"].GetFloat(),
-				attribute["scale"]["y"].GetFloat(),
-				attribute["scale"]["z"].GetFloat());
-			hasPhysics = attribute["physicsComp"]["hasPhysics"].GetBool();
-			mass = attribute["physicsComp"]["mass"].GetDouble();
-			BodyType = attribute["physicsComp"]["bodyType"].GetInt();
-			BNS_PrimitiveCreation::Instance()->createPrimitiveFromFile(objectName, ObjectType, position, rotation, scale, hasPhysics, mass, BodyType);
-		}
-	}
 
 }
 

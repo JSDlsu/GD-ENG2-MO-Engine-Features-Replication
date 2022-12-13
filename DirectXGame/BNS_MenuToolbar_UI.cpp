@@ -117,6 +117,21 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 			BNS_PrimitiveCreation::Instance()->CreateEarth();
 		if (ImGui::MenuItem("Create Scene", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateScene();
+		if (ImGui::MenuItem("Create Multiple", nullptr))
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					for (int k = 0; k < 4; k++)
+					{
+						std::cout << i << ", " << j << ", " << k << std::endl;
+						BNS_PrimitiveCreation::Instance()->CreatePhysicsCube((float)i * 0.5, (float)j * 0.5 + 1, (float)k * 0.5);
+					}
+				}
+				
+			}
+		}
 		ImGui::EndMenu();
 	}
 }

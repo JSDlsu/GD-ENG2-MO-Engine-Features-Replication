@@ -183,4 +183,13 @@ void BNS_Inspector_UI::updateTransformDisplays(BNS_AGameObject* gameObject, floa
 		gameObject->SetPosition(pos[0], pos[1], pos[2]);
 		gameObject->SetRotation(rot[0], rot[1], rot[2]);
 		gameObject->SetScale(scale[0], scale[1], scale[2]);
+
+		BNS_AComponent* physics_comp = gameObject->FindComponentOfType(ComponentType::Physics);
+		if (physics_comp != nullptr)
+		{
+			BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
+			BodyType bodyType = physicsComp->GetRigidBody()->getType();
+			physicsComp->UpdateRigidBody();
+			physicsComp->GetRigidBody()->setType(bodyType);
+		}
 }
