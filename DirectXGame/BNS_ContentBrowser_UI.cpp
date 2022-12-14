@@ -75,9 +75,14 @@ void BNS_ContentBrowser_UI::DrawUI()
 			else if (IsTexture(filenameString))
 			{
 				BNS_Hierarchy_UI* uiTemp = dynamic_cast<BNS_Hierarchy_UI*>(BNS_UIManager::GetInstance()->GetUIHashTable()[BNS_UINames::HIERARCHY_SCREEN].get());
-				std::wstring tempPath = std::wstring(path.string().begin(), path.string().end());
+				std::string tempPathString = path.string();
+				std::wstring tempPath = std::wstring(tempPathString.begin(), tempPathString.end());
 				LPCWSTR convertedFilepath = tempPath.c_str();
-				dynamic_cast<BNS_Cube*>(uiTemp->GetSelectedGO())->SetTexture(convertedFilepath);
+				dynamic_cast<BNS_Cube*>(uiTemp->GetSelectedGO())->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+				dynamic_cast<BNS_Cube*>(uiTemp->GetSelectedGO())->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+				dynamic_cast<BNS_Cube*>(uiTemp->GetSelectedGO())->SetPixelShader(BNS_PixelShaderType::TEXTURE);
+				dynamic_cast<BNS_Cube*>(uiTemp->GetSelectedGO())->SetTexture(convertedFilepath, false);
+				
 				std::cout << "Seleceted GO: " << dynamic_cast<BNS_Cube*>(uiTemp->GetSelectedGO())->GetName()
 				<< "\nSelected Texture: " << path.string() << std::endl;
 			}
