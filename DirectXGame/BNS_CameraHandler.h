@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "Matrix4x4.h"
 #include "BNS_Prerequisites.h"
 
@@ -14,7 +16,7 @@ private:
 
 	static BNS_CameraHandler* sharedInstance;
 private:
-	BNS_Camera* sceneCamera;
+	std::vector<BNS_Camera*> sceneCameras;
 public:
 	static void Initialize();
 	static BNS_CameraHandler* GetInstance();
@@ -26,5 +28,8 @@ public:
 	Matrix4x4 GetSceneCameraMatrix();
 	Vector3D GetSceneCameraPos();
 	BNS_Camera* GetSceneCamera();
+
+public:
+	int currentCamIndex = 0;
 };
 

@@ -18,7 +18,7 @@ public:
 
 public:
 	static BNS_UIManager* GetInstance();
-	static void Initialize(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr& render_tex);
+	static void Initialize(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr render_tex[]);
 	static void Release();
 	static void HelpMarker(const char* desc);
 
@@ -28,14 +28,14 @@ public:
 	static float WINDOW_HEIGHT;
 	static float SCENE_VIEW_WIDTH;
 	static float SCENE_VIEW_HEIGHT;
-	RenderToTexturePtr GetGameSceneView();
+	RenderToTexturePtr GetGameSceneView(int camID);
 public:
 	void DrawAllUIScreens();
 	uiScreenHashTable GetUIHashTable();
 private:
 	uiScreenList GetUIList();
 private:
-	BNS_UIManager(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr& render_tex);
+	BNS_UIManager(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr render_tex[]);
 	~BNS_UIManager();
 	BNS_UIManager(BNS_UIManager const&) {};
 	BNS_UIManager& operator=(BNS_UIManager const&) {};
@@ -44,7 +44,7 @@ private:
 private:
 	uiScreenList _uiScreenList;
 	uiScreenHashTable uiTable;
-	RenderToTexturePtr m_game_scene;
+	RenderToTexturePtr m_game_scene[4];
 	BNS_AppWindow* m_app_window;
 private:
 	bool opt_fullscreen = true;

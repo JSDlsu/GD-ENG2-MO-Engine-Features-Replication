@@ -175,6 +175,9 @@
     <Filter Include="GameEngine\BackEndTools\SceneManagement">
       <UniqueIdentifier>{9d707c2d-dc4f-4af8-9104-89447630880d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\UI\ViewMode">
+      <UniqueIdentifier>{72f01dc6-05ac-4702-b3ef-9a502f97db9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="BNS_AppWindow.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="BNS_ViewMode_UI.cpp">
+      <Filter>GameEngine\UI\ViewMode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AppWindow.h">
@@ -632,6 +638,9 @@
       <Filter>GameEngine\BackEndTools</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="BNS_ViewMode_UI.h">
+      <Filter>GameEngine\UI\ViewMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">

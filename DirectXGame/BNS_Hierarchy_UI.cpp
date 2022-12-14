@@ -16,6 +16,7 @@ void BNS_Hierarchy_UI::DrawUI()
 {
     std::string windowLabel = name + "##" + std::to_string(ID);
     ImGui::Begin(windowLabel.c_str());
+
     if (ImGui::TreeNode("SceneName"))
     {
         static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_SpanAvailWidth;

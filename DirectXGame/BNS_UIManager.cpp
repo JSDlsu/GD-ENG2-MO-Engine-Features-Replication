@@ -1,6 +1,7 @@
 #include "BNS_UIManager.h"
 
 #include "BNS_AppWindow.h"
+#include "BNS_CameraHandler.h"
 #include "BNS_FileExplorer.h"
 #include "BNS_GraphicsEngine.h"
 #include "BNS_RenderToTexture.h"
@@ -19,7 +20,7 @@ BNS_UIManager* BNS_UIManager::GetInstance()
 	return sharedInstance;
 }
 
-void BNS_UIManager::Initialize(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr& render_tex)
+void BNS_UIManager::Initialize(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr render_tex[])
 {
 	sharedInstance = new BNS_UIManager(appW, hwnd, render_tex);
 	// initialize file explorer
@@ -28,13 +29,20 @@ void BNS_UIManager::Initialize(BNS_AppWindow* appW, HWND hwnd, const RenderToTex
 	// initialize the UI screens
 	m_ui_creation->CreateMenuToolbarUI();
 	m_ui_creation->CreateHierarchyUI();
+
 	m_ui_creation->CreateSceneViewUI();
+	m_ui_creation->CreateSceneViewUI();
+	m_ui_creation->CreateSceneViewUI();
+	m_ui_creation->CreateSceneViewUI();
+	m_ui_creation->CreateViewModeUI();
+
 	m_ui_creation->CreateContentBrowserUI();
 	m_ui_creation->CreateConsoleUI();
 	m_ui_creation->CreateInspectorUI();
 	m_ui_creation->CreateSceneStatesUI();
 	//m_ui_creation->CreateInspectorUI();
 }
+
 
 void BNS_UIManager::Release()
 {
@@ -63,9 +71,9 @@ void BNS_UIManager::HelpMarker(const char* desc)
 	}
 }
 
-RenderToTexturePtr BNS_UIManager::GetGameSceneView()
+RenderToTexturePtr BNS_UIManager::GetGameSceneView(int camID)
 {
-	return m_game_scene;
+	return m_game_scene[camID];
 }
 
 void BNS_UIManager::DrawAllUIScreens()
@@ -144,12 +152,15 @@ BNS_UIManager::uiScreenHashTable BNS_UIManager::GetUIHashTable()
 	return uiTable;
 }
 
-BNS_UIManager::BNS_UIManager(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr& render_tex)
+BNS_UIManager::BNS_UIManager(BNS_AppWindow* appW, HWND hwnd, const RenderToTexturePtr render_tex[])
 {
 	// assign app window reference
 	m_app_window = appW;
 	// assign game scene render reference
-	m_game_scene = render_tex;
+	m_game_scene[0] = render_tex[0];
+	m_game_scene[1] = render_tex[1];
+	m_game_scene[2] = render_tex[2];
+	m_game_scene[3] = render_tex[3];
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();

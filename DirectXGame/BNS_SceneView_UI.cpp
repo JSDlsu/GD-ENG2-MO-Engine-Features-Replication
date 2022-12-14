@@ -5,9 +5,9 @@
 #include "BNS_RenderToTexture.h"
 #include "BNS_UIManager.h"
 
-BNS_SceneView_UI::BNS_SceneView_UI(std::string name, int ID) : BNS_AUIScreen(name, ID)
+BNS_SceneView_UI::BNS_SceneView_UI(std::string name, int ID, int cameraID) : BNS_AUIScreen(name, ID)
 {
-
+	this->cameraID = cameraID;
 }
 
 BNS_SceneView_UI::~BNS_SceneView_UI()
@@ -16,52 +16,20 @@ BNS_SceneView_UI::~BNS_SceneView_UI()
 
 void BNS_SceneView_UI::DrawUI()
 {
+
 	std::string windowLabel = name + "##" + std::to_string(ID);
 	ImGui::Begin(windowLabel.c_str());
 	ImVec2 game_scene_size = ImGui::GetWindowSize();
 	// updates the scene view width and height 
 	BNS_UIManager::SCENE_VIEW_WIDTH = game_scene_size.x;
 	BNS_UIManager::SCENE_VIEW_HEIGHT = game_scene_size.y;
-	ImGui::Image(BNS_UIManager::GetInstance()->GetGameSceneView().get()->GetShaderResourceView(),
+	ImGui::Image(BNS_UIManager::GetInstance()->GetGameSceneView(cameraID).get()->GetShaderResourceView(),
 		game_scene_size); // render texture 
+	if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootWindow))
+	{
+		BNS_CameraHandler::GetInstance()->currentCamIndex = cameraID;
+		std::cout << "Current Camera ID: " << BNS_CameraHandler::GetInstance()->currentCamIndex << "\n";
+	}
 	ImGui::End();
 
-
-	static const char* items[] = { "Perspective", "Orthographic" };
-	static int selectedItem = 0;
-
-	//DRAW HERE
-	ImGui::Begin("View Mode");
-	ImGui::Combo("Camera", &selectedItem, items, IM_ARRAYSIZE(items));
-	//std::cout << "selected:" << selectedItem << std::endl;
-	if (selectedItem == 0)
-	{
-		dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->SetPerspectiveMode(true);
-		ImGui::SliderFloat("FOV", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().fovInDegrees,
-			1, 179, "%.2f");
-		ImGui::SliderFloat("AspectRatio", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().aspectRatio,
-			0.8f, 2.44f, "%.2f");
-		ImGui::SliderFloat("NearPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().nearPlane,
-			0.01f, dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().farPlane - 0.01f, "%.2f");
-		ImGui::SliderFloat("FarPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().farPlane,
-			0.02f, 1000.0f, "%.2f");
-	}
-	else
-	{
-		dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->SetPerspectiveMode(false);
-		ImGui::SliderFloat("FOV", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().fovInDegrees,
-			1, 179, "%.2f");
-		ImGui::SliderFloat("AspectRatio", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().aspectRatio,
-			0.8f, 2.44f, "%.2f");
-		ImGui::SliderFloat("NearPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().nearPlane,
-			0.01f, dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().farPlane - 0.01f, "%.2f");
-		ImGui::SliderFloat("FarPlane", &dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().farPlane,
-			0.02f, 1000.0f, "%.2f");
-	}
-	//std::cout << "Value: " << f4 << std::endl;
-	
-	dynamic_cast<BNS_Camera*>(BNS_CameraHandler::GetInstance()->GetSceneCamera())->GetCamProperties().aspectRatio =
-		BNS_UIManager::SCENE_VIEW_WIDTH / BNS_UIManager::SCENE_VIEW_HEIGHT;
-
-	ImGui::End();
 }

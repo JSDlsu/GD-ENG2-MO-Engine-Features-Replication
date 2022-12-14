@@ -212,6 +212,7 @@
     <ClCompile Include="BNS_VertexBuffer.cpp" />
     <ClCompile Include="BNS_VertexShader.cpp" />
     <ClCompile Include="BNS_VertexShaderManager.cpp" />
+    <ClCompile Include="BNS_ViewMode_UI.cpp" />
     <ClCompile Include="BNS_Window.cpp" />
     <ClCompile Include="BNS_Console_UI.cpp" />
     <ClCompile Include="BNS_EditorAction.cpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="BNS_TransformComponent.h" />
     <ClInclude Include="BNS_TransformSystem.h" />
     <ClInclude Include="BNS_EditorAction.h" />
+    <ClInclude Include="BNS_ViewMode_UI.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
     <ClInclude Include="IMGUI\imgui.h" />
     <ClInclude Include="IMGUI\imgui_impl_dx11.h" />
