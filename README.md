@@ -61,3 +61,10 @@ FOR SCENES MADE IN THE EDITOR
 Saving a Scene in the Editor
 1. Once you are done creating your scene, go to File -> Save. The scene data will be saved to a JSON file.
 2. To make sure that it is saved, go to the "Scene" folder of the project directory, and look for "output.json". This file can now be used for loading engine scenes to Unity, Unreal, or on this Editor.
+
+Logging
+1. Whenever a user wants to use the logging system, call BNS_Log::GetInstance()->WriteLog();
+2. Make sure that "BNS_Log.h" is included in the header/cpp file on where you want to log.
+3. An example is BNS_Log::GetInstance()->WriteLog(BNS_Log::Warning, "");
+4. The first parameter on WriteLog is the verbosity of the log: BNS_Log::Display, BNS_Log::Warning, and BNS_Log::Error.
+5. The second parameter is your log message formatted as an std::string.
