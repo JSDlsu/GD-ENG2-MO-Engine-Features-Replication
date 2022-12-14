@@ -24,7 +24,7 @@ BNS_Cube::BNS_Cube(std::string name, BNS_ObjectTypes type) : BNS_AGameObject(nam
 	m_cb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc, sizeof(BNS_constant_transform));
 
 	// update for the first time
-	//UpdateTransform();
+	UpdateTransform();
 }
 
 BNS_Cube::~BNS_Cube()
