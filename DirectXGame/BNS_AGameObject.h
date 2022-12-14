@@ -52,7 +52,7 @@ public:
 
 	Vector3D GetLocalRotation();
 
-	std::string GetName();
+	std::string& GetName();
 	void SetAlpha(float alpha);
 	float GetAlpha();
 	float* GetPhysicsLocalMatrix();

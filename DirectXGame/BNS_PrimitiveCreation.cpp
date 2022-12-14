@@ -58,7 +58,8 @@ void BNS_PrimitiveCreation::ChangeVB_IB_Buffer(BNS_VertexShaderType vs_type, Ver
 
 void BNS_PrimitiveCreation::CreateCube()
 {
-	const char* name = "cube";
+	std::string name = "cube";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
@@ -74,7 +75,8 @@ void BNS_PrimitiveCreation::CreateCube()
 
 void BNS_PrimitiveCreation::CreateTexturedCube()
 {
-	const char* name = "cube";
+	std::string name = "physCube";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
@@ -94,7 +96,8 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 
 void BNS_PrimitiveCreation::CreatePlane()
 {
-	const char* name = "plane";
+	std::string name = "plane";
+	CheckGameObjectName(name);
 	BNS_Plane* plane = new BNS_Plane(name, BNS_ObjectTypes::PLANE);
 	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
@@ -114,7 +117,8 @@ void BNS_PrimitiveCreation::CreatePlane()
 
 void BNS_PrimitiveCreation::CreateTeapot()
 {
-	const char* name = "teapot";
+	std::string name = "teapot";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetMesh(L"Assets\\Meshes\\teapot.obj");
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
@@ -131,7 +135,8 @@ void BNS_PrimitiveCreation::CreateTeapot()
 
 void BNS_PrimitiveCreation::CreateStatue()
 {
-	const char* name = "statue";
+	std::string name = "statue";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetMesh(L"Assets\\Meshes\\statue.obj");
 	cube->SetVertexShader(BNS_VertexShaderType::LIGHTING);
@@ -147,7 +152,8 @@ void BNS_PrimitiveCreation::CreateStatue()
 
 void BNS_PrimitiveCreation::CreateBunny()
 {
-	const char* name = "bunny";
+	std::string name = "bunny";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetMesh(L"Assets\\Meshes\\bunny.obj");
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
@@ -164,7 +170,8 @@ void BNS_PrimitiveCreation::CreateBunny()
 
 void BNS_PrimitiveCreation::CreateArmadillo()
 {
-	const char* name = "armadillo";
+	std::string name = "armadillo";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetMesh(L"Assets\\Meshes\\armadillo.obj");
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
@@ -181,7 +188,8 @@ void BNS_PrimitiveCreation::CreateArmadillo()
 
 void BNS_PrimitiveCreation::CreateEarth()
 {
-	const char* name = "earth";
+	std::string name = "earth";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetMesh(L"Assets\\Meshes\\sphere.obj");
 	cube->SetTexture(L"Assets\\Textures\\earth_color.jpg");
@@ -201,7 +209,8 @@ void BNS_PrimitiveCreation::CreateEarth()
 
 void BNS_PrimitiveCreation::CreateSkyBox()
 {
-	const char* name = "skybox";
+	std::string name = "skybox";
+	CheckGameObjectName(name);
 	BNS_SkyBox* sky_box = new BNS_SkyBox(name, BNS_ObjectTypes::SKYBOX);
 	sky_box->SetMesh(L"Assets\\Meshes\\sphere.obj");
 	sky_box->SetTexture(L"Assets\\Textures\\stars_map.jpg");
@@ -214,7 +223,8 @@ void BNS_PrimitiveCreation::CreateSkyBox()
 
 void BNS_PrimitiveCreation::CreateScene()
 {
-	const char* name = "scene";
+	std::string name = "scene";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetMesh(L"Assets\\Meshes\\scene.obj");
 	cube->SetTexture(L"Assets\\Textures\\wall.jpg");
@@ -245,10 +255,8 @@ void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::s
 	{
 		tempname = localName;
 	}
-	const char* name = tempname.c_str();
-
-	
-
+	std::string name = tempname.c_str();
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
@@ -274,6 +282,7 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 	{
 		std::cout << "create cube" << std::endl;
 		obj = new BNS_Cube(name, type);
+		CheckGameObjectName(obj->GetName());
 		dynamic_cast<BNS_Cube*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
@@ -282,6 +291,7 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 	else if (type == BNS_ObjectTypes::PLANE)
 	{
 		obj = new BNS_Plane(name, type);
+		CheckGameObjectName(obj->GetName());
 		dynamic_cast<BNS_Plane*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Plane*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Plane*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
@@ -291,6 +301,7 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 	{
 		std::cout << "create sphere" << std::endl;
 		obj = new BNS_Cube(name, BNS_ObjectTypes::SPHERE);
+		CheckGameObjectName(obj->GetName());
 		dynamic_cast<BNS_Cube*>(obj)->SetMesh(L"Assets\\Meshes\\sphere.obj");
 		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
@@ -300,6 +311,7 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 	{
 		std::cout << "create capsule" << std::endl;
 		obj = new BNS_Cube(name, BNS_ObjectTypes::CAPSULE);
+		CheckGameObjectName(obj->GetName());
 		dynamic_cast<BNS_Cube*>(obj)->SetMesh(L"Assets\\Meshes\\capsule.obj");
 		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
@@ -335,7 +347,8 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 
 void BNS_PrimitiveCreation::CreateSphere()
 {
-	const char* name = "sphere";
+	std::string name = "sphere";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::SPHERE);
 	cube->SetMesh(L"Assets\\Meshes\\sphere.obj");
 	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
@@ -351,7 +364,8 @@ void BNS_PrimitiveCreation::CreateSphere()
 
 void BNS_PrimitiveCreation::CreateCapsule()
 {
-	const char* name = "capsule";
+	std::string name = "capsule";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CAPSULE);
 	cube->SetMesh(L"Assets\\Meshes\\capsule.obj");
 	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
@@ -386,6 +400,26 @@ BNS_AGameObject* BNS_PrimitiveCreation::CreatePhysicsCube(float x, float y, floa
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 
 	return cube;
+}
+
+void BNS_PrimitiveCreation::CheckGameObjectName(std::string& name)
+{
+	bool isValid = true;
+	int iterator = 1;
+	std::string origName = name;
+	do
+	{
+		for (auto obj : BNS_GameObjectManager::get()->GetObjectList())
+		{
+			if (name == obj->GetName())
+			{
+				isValid = false;
+				name = origName + "(" + std::to_string(iterator++) + ")";
+				continue;
+			}
+		}
+		isValid = true;
+	} while (!isValid);
 }
 
 void BNS_PrimitiveCreation::GetCube_Tex(VertexBufferPtr& m_vb, IndexBufferPtr& m_ib)

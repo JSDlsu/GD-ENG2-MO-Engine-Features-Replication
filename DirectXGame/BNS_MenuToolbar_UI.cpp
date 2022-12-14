@@ -91,7 +91,7 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 	{
 		if (ImGui::MenuItem("Create Cube", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateCube();
-		if (ImGui::MenuItem("Create Textured Cube", nullptr))
+		if (ImGui::MenuItem("Create Physics Cube", nullptr))
 		{
 			for (int i = 0; i < 20; ++i)
 			{
