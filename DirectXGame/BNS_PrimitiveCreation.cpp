@@ -439,7 +439,8 @@ void BNS_PrimitiveCreation::CreateCapsule()
 
 BNS_AGameObject* BNS_PrimitiveCreation::CreatePhysicsCube(float x, float y, float z)
 {
-	const char* name = "cube";
+	std::string name = "cube";
+	CheckGameObjectName(name);
 	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CUBE);
 	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);

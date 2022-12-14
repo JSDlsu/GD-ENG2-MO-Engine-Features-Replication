@@ -36,6 +36,10 @@ void BNS_Inspector_UI::DrawUI()
 			return;
 		}
 
+		std::string nameString = "Selected Object Name: " + selectedGO->GetName();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 1.0f, 1.0f), nameString.c_str());
+		ImGui::Text("\n");
+
 		active = selectedGO->GetActive();
 		if(ImGui::Checkbox("IsEnabled", &active))
 		{

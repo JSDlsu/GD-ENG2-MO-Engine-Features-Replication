@@ -93,10 +93,7 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 			BNS_PrimitiveCreation::Instance()->CreateCube();
 		if (ImGui::MenuItem("Create Physics Cube", nullptr))
 		{
-			for (int i = 0; i < 20; ++i)
-			{
-				BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
-			}
+			BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
 		}
 		//BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
 		if (ImGui::MenuItem("Create Plane", nullptr))
@@ -121,16 +118,16 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 			BNS_PrimitiveCreation::Instance()->CreateEarth();
 		if (ImGui::MenuItem("Create Scene", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateScene();
-		if (ImGui::MenuItem("Create Multiple", nullptr))
+		if (ImGui::MenuItem("Create 100 Physics Cubes", nullptr))
 		{
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 5; i++)
 			{
-				for (int j = 0; j < 4; j++)
+				for (int j = 0; j < 5; j++)
 				{
 					for (int k = 0; k < 4; k++)
 					{
 						std::cout << i << ", " << j << ", " << k << std::endl;
-						BNS_PrimitiveCreation::Instance()->CreatePhysicsCube((float)i * 0.5, (float)j * 0.5 + 1, (float)k * 0.5);
+						BNS_PrimitiveCreation::Instance()->CreatePhysicsCube((float)i * 0.5, (float)j * 0.5 + 1.9f, (float)k * 0.5);
 					}
 				}
 				
