@@ -233,7 +233,7 @@ Vector3D BNS_AGameObject::GetLocalRotation()
 	return m_rotation;
 }
 
-std::string BNS_AGameObject::GetName()
+std::string& BNS_AGameObject::GetName()
 {
 	return name;
 }
