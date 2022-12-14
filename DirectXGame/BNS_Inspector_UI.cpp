@@ -50,6 +50,10 @@ void BNS_Inspector_UI::DrawUI()
 			vec3 scale = { selectedGO->GetLocalScale().m_x, selectedGO->GetLocalScale().m_y, selectedGO->GetLocalScale().m_z };
 			vec3 rot = { selectedGO->GetLocalRotation().m_x, selectedGO->GetLocalRotation().m_y, selectedGO->GetLocalRotation().m_z };
 
+			vec3 posCopy = { pos[0], pos[1], pos[2] };
+			vec3 scaleCopy = { scale[0], scale[1], scale[2] };
+			vec3 rotCopy = { rot[0], rot[1], rot[2] };
+
 			//Position
 			if (ImGui::DragFloat3("Position", pos, BNS_EngineTime::getDeltaTime(), (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max()))
 			{
@@ -57,7 +61,11 @@ void BNS_Inspector_UI::DrawUI()
 					updateTransformDisplays(selectedGO, pos, scale, rot);
 			}
 			if (ImGui::IsItemDeactivatedAfterEdit())
-				BNS_ActionHistory::GetInstance()->recordAction(selectedGO);
+			{
+
+				BNS_ActionHistory::GetInstance()->recordAction(selectedGO->GetName());
+			}
+				
 
 			//Rotate
 			if (ImGui::DragFloat3("Rotation", rot, BNS_EngineTime::getDeltaTime(), (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max()))
@@ -66,7 +74,7 @@ void BNS_Inspector_UI::DrawUI()
 					updateTransformDisplays(selectedGO, pos, scale, rot);
 			}
 			if (ImGui::IsItemDeactivatedAfterEdit())
-				BNS_ActionHistory::GetInstance()->recordAction(selectedGO);
+				BNS_ActionHistory::GetInstance()->recordAction(selectedGO->GetName());
 
 			//Scale
 			if (ImGui::DragFloat3("Scale", scale, BNS_EngineTime::getDeltaTime(), (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max()))
@@ -75,7 +83,7 @@ void BNS_Inspector_UI::DrawUI()
 					updateTransformDisplays(selectedGO, pos, scale, rot);
 			}
 			if (ImGui::IsItemDeactivatedAfterEdit())
-				BNS_ActionHistory::GetInstance()->recordAction(selectedGO);
+				BNS_ActionHistory::GetInstance()->recordAction(selectedGO->GetName());
 
 			/*
 			//IMGUI SLIDER DEBUGGER

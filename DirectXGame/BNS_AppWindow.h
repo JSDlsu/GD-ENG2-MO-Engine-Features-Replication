@@ -30,7 +30,7 @@ public:
 private:
 	SwapChainPtr m_swap_chain;
 	BlenderPtr m_blender;
-	RenderToTexturePtr m_scene_view;
+	RenderToTexturePtr m_scene_views[4];
 
 private:
 	friend class BNS_Cube;

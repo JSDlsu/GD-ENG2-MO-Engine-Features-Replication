@@ -18,6 +18,7 @@ public:
 	void CreateConsoleUI();
 	void CreateInspectorUI();
 	void CreateSceneStatesUI();
+	void CreateViewModeUI();
 
 private:
 	int currentID = 0;

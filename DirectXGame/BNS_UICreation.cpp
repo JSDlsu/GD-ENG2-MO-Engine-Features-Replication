@@ -10,6 +10,7 @@
 #include "BNS_Console_UI.h"
 #include "BNS_Inspector_UI.h"
 #include "BNS_SceneStates_UI.h"
+#include "BNS_ViewMode_UI.h"
 
 BNS_UICreation::BNS_UICreation()
 {
@@ -47,7 +48,8 @@ void BNS_UICreation::CreateHierarchyUI()
 
 void BNS_UICreation::CreateSceneViewUI()
 {
-	BNS_AUIScreen* screen = new BNS_SceneView_UI("Scene View", currentID++);
+	static int cameraID = 0;
+	BNS_AUIScreen* screen = new BNS_SceneView_UI("Scene View", currentID++, cameraID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::SCENEVIEW_SCREEN] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
@@ -85,5 +87,13 @@ void BNS_UICreation::CreateSceneStatesUI()
 	BNS_SceneStates_UI* screen = new BNS_SceneStates_UI("Editor State", currentID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::STATE_SCREEN] = ptr_screen;
+	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
+}
+
+void BNS_UICreation::CreateViewModeUI()
+{
+	BNS_ViewMode_UI* screen = new BNS_ViewMode_UI("View Mode", currentID++);
+	AUIScreen_Ptr ptr_screen(screen);
+	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::VIEW_MODE] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
 }

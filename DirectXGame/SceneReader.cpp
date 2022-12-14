@@ -126,4 +126,8 @@ BNS_ObjectTypes SceneReader::GetObjectType(std::string type)
 	{
 		return BNS_ObjectTypes::CAPSULE;
 	}
+	if (type.compare("CYLINDER") == 0)
+	{
+		return BNS_ObjectTypes::CYLINDER;
+	}
 }

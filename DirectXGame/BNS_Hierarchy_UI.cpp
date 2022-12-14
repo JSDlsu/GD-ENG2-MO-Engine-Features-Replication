@@ -16,6 +16,7 @@ void BNS_Hierarchy_UI::DrawUI()
 {
     std::string windowLabel = name + "##" + std::to_string(ID);
     ImGui::Begin(windowLabel.c_str());
+
     if (ImGui::TreeNode("SceneName"))
     {
         static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_SpanAvailWidth;
@@ -98,6 +99,11 @@ void BNS_Hierarchy_UI::DrawUI()
 	    
     }
     ImGui::End();
+}
+
+BNS_AGameObject* BNS_Hierarchy_UI::GetSelectedGO()
+{
+    return selectedGameObject;
 }
 
 void BNS_Hierarchy_UI::OpenChildList(std::vector<BNS_AGameObject*> objects)

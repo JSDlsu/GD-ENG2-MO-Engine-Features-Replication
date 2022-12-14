@@ -212,6 +212,7 @@
     <ClCompile Include="BNS_VertexBuffer.cpp" />
     <ClCompile Include="BNS_VertexShader.cpp" />
     <ClCompile Include="BNS_VertexShaderManager.cpp" />
+    <ClCompile Include="BNS_ViewMode_UI.cpp" />
     <ClCompile Include="BNS_Window.cpp" />
     <ClCompile Include="BNS_Console_UI.cpp" />
     <ClCompile Include="BNS_EditorAction.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="BNS_PhysicsSystem.cpp" />
     <ClCompile Include="SceneReader.cpp" />
     <ClCompile Include="SceneWriter.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_ActionHistory.h" />
@@ -268,6 +270,7 @@
     <ClInclude Include="BNS_TransformComponent.h" />
     <ClInclude Include="BNS_TransformSystem.h" />
     <ClInclude Include="BNS_EditorAction.h" />
+    <ClInclude Include="BNS_ViewMode_UI.h" />
     <ClInclude Include="IMGUI\imconfig.h" />
     <ClInclude Include="IMGUI\imgui.h" />
     <ClInclude Include="IMGUI\imgui_impl_dx11.h" />
@@ -304,6 +307,7 @@
     <ClInclude Include="BNS_UI_Prerequisites.h" />
     <ClInclude Include="SceneReader.h" />
     <ClInclude Include="SceneWriter.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Vector4D.h" />

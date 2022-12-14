@@ -9,6 +9,9 @@ public:
 	~BNS_ContentBrowser_UI();
 	void DrawUI() override;
 private:
+	bool IsObject(std::string filenameString);
+	bool IsTexture(std::string filenameString);
+private:
 	static const std::filesystem::path s_AssetPath;
 	std::filesystem::path m_CurrentDirectory;
 };

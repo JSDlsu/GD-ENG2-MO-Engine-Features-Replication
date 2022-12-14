@@ -11,7 +11,7 @@ class Point;
 class BNS_Camera : public BNS_AGameObject, public BNS_InputListener
 {
 public:
-	BNS_Camera(std::string name, BNS_ObjectTypes type);
+	BNS_Camera(std::string name, BNS_ObjectTypes type, int cameraID);
 	~BNS_Camera();
 public:
 	void Update(float deltaTime, BNS_AppWindow* app_window) override;
@@ -45,6 +45,7 @@ private:
 public:
 	//NEW: FOR TRANSFERRING PROJECTION MATRIX TO CAM INSTEAD OF INDIVIDUAL PRIMS
 	Matrix4x4 m_proj_cam;
+	int cameraID = -1;
 public:
 	bool IsPerspectiveMode();
 	void SetPerspectiveMode(bool isPerspective = true);

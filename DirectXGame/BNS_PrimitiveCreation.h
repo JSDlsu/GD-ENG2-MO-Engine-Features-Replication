@@ -25,7 +25,9 @@ public:
 	void ChangeVB_IB_Buffer(BNS_VertexShaderType vs_type, VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
 public:
 	void CreateCube();
+	void CreateCylinder();
 	void CreateTexturedCube();
+	void CreatePhysicsPlane();
 	void CreatePlane();
 	void CreateSphere();
 	void CreateCapsule();

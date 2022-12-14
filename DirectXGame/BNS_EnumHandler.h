@@ -9,6 +9,7 @@ enum class BNS_ObjectTypes
 	SKYBOX,
 	SPHERE,
 	CAPSULE,
+	CYLINDER
 };
 
 enum class BNS_VertexShaderType
@@ -51,7 +52,8 @@ enum class BNS_UINames
 	CONTENT_BROWSER_SCREEN,
 	GAMEOBJECT_SCREEN,
 	CONSOLE_SCREEN,
-	STATE_SCREEN
+	STATE_SCREEN,
+	VIEW_MODE
 };
 
 enum class ComponentType

@@ -64,6 +64,9 @@ void BNS_SceneStates_UI::DrawUI()
 		else if (backend->getMode() == BNS_EngineBackend::PAUSED) {
 			if (ImGui::Button("Resume")) { BNS_EngineBackend::getInstance()->setMode(BNS_EngineBackend::PLAY); }
 		}
+
+		ImGui::SameLine();
+		if (backend->getMode() == BNS_EngineBackend::PAUSED && ImGui::Button("Frame Step")) { BNS_EngineBackend::getInstance()->startFrameStep(); }
 	}
 
 	ImGui::End();

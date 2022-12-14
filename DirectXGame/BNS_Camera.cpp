@@ -1,14 +1,35 @@
 #include "BNS_Camera.h"
 
 #include "BNS_AppWindow.h"
+#include "BNS_CameraHandler.h"
 #include "BNS_EngineTime.h"
 #include "BNS_InputSystem.h"
 #include "BNS_SwapChain.h"
 
-BNS_Camera::BNS_Camera(std::string name, BNS_ObjectTypes type) : BNS_AGameObject(name, type)
+BNS_Camera::BNS_Camera(std::string name, BNS_ObjectTypes type, int cameraID) : BNS_AGameObject(name, type)
 {
-	m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -2.0f });
-	SetPosition(Vector3D{ 0.0f, 0.0f, -2.0f });
+	this->cameraID = cameraID;
+
+	if (cameraID == 0)
+	{
+		m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, -2.0f });
+		SetPosition(Vector3D{ 0.0f, 0.0f, -2.0f });
+	}
+	else if (cameraID == 1)
+	{
+		m_matrix.setTranslation(Vector3D{ 0.0f, 0.0f, 2.0f });
+		SetPosition(Vector3D{ 0.0f, 0.0f, 2.0f });
+	}
+	else if (cameraID == 2)
+	{
+		m_matrix.setTranslation(Vector3D{ 0.0f, 2.0f, 0.0f });
+		SetPosition(Vector3D{ 0.0f, 2.0f, 0.0f });
+	}
+	else if (cameraID == 3)
+	{
+		m_matrix.setTranslation(Vector3D{ 0.0f, -2.0f, 0.0f });
+		SetPosition(Vector3D{ 0.0f, -2.0f, 0.0f });
+	}
 	this->UpdateViewMatrix();
 	// subscribe this class to the BNS_InputSystem
 	BNS_InputSystem::get()->addListener(this);
@@ -23,12 +44,17 @@ BNS_Camera::~BNS_Camera()
 
 void BNS_Camera::Update(float deltaTime, BNS_AppWindow* app_window)
 {
+	// if this camera is not used
+	if (BNS_CameraHandler::GetInstance()->currentCamIndex != cameraID)
+		return;
+
 	static bool isAppWindowAssign = false;
 	if (!isAppWindowAssign)
 	{
 		isAppWindowAssign = true;
 		m_app_window = app_window;
 	}
+
 	UpdateViewMatrix();
 }
 
@@ -64,7 +90,6 @@ Matrix4x4 BNS_Camera::GetCameraOrthoMatrix()
 
 Matrix4x4 BNS_Camera::GetCamPerspectiveMatrix()
 {
-
 	Matrix4x4 projectionMatrix;
 	projectionMatrix.setPerspectiveFovLH(cam_properties.fovInDegrees * (3.1415926f / 180.0f), cam_properties.aspectRatio, cam_properties.nearPlane, cam_properties.farPlane);
 
@@ -103,6 +128,10 @@ void BNS_Camera::UpdateViewMatrix()
 
 void BNS_Camera::onKeyDown(int key)
 {
+	// if this camera is not used
+	if (BNS_CameraHandler::GetInstance()->currentCamIndex != cameraID)
+		return;
+
 	Vector3D localPos = this->GetLocalPosition();
 	float x = localPos.m_x;
 	float y = localPos.m_y;
@@ -153,6 +182,10 @@ void BNS_Camera::onKeyDown(int key)
 
 void BNS_Camera::onKeyUp(int key)
 {
+	// if this camera is not used
+	if (BNS_CameraHandler::GetInstance()->currentCamIndex != cameraID)
+		return;
+
 	m_upward = 0.0f;
 	m_forward = 0.0f;
 	m_rightward = 0.0f;
@@ -173,6 +206,10 @@ void BNS_Camera::onKeyUp(int key)
 
 void BNS_Camera::onMouseMove(const Point& mouse_pos)
 {
+	// if this camera is not used
+	if (BNS_CameraHandler::GetInstance()->currentCamIndex != cameraID)
+		return;
+
 	if (!m_play_state) return;
 
 	if (this->mouseDown) {
@@ -203,6 +240,10 @@ void BNS_Camera::onLeftMouseUp(const Point& delta_mouse_pos)
 
 void BNS_Camera::onRightMouseDown(const Point& delta_mouse_pos)
 {
+	// if this camera is not used
+	if (BNS_CameraHandler::GetInstance()->currentCamIndex != cameraID)
+		return;
+
 	mouseDown = true;
 	// hides the cursor
 	BNS_InputSystem::get()->showCursor(false);
@@ -210,6 +251,10 @@ void BNS_Camera::onRightMouseDown(const Point& delta_mouse_pos)
 
 void BNS_Camera::onRightMouseUp(const Point& delta_mouse_pos)
 {
+	// if this camera is not used
+	if (BNS_CameraHandler::GetInstance()->currentCamIndex != cameraID)
+		return;
+
 	mouseDown = false;
 	// displays the cursor
 	BNS_InputSystem::get()->showCursor(true);

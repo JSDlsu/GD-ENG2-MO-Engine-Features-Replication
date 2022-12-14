@@ -69,10 +69,20 @@ void BNS_Cube::SetMesh(const wchar_t* tex_path)
 	m_vb = m_mesh.get()->getVertexBuffer();
 }
 
-void BNS_Cube::SetTexture(const wchar_t* tex_path)
+void BNS_Cube::SetTexture(const wchar_t* tex_path, bool isNewLayer)
 {
 	// assign the texture file to the BNS_Texture pointer by passing the its path in the file
-	m_tex[num_textures++] = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+	if (isNewLayer)
+		m_tex[num_textures++] = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+	else
+	{
+		if (num_textures <= 0) 
+			m_tex[num_textures++] = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+		else
+		{
+			m_tex[0] = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+		}
+	}
 }
 
 void BNS_Cube::SetVertex_Index_Buffer(BNS_VertexShaderType vs_type, BNS_PC_Cube_ColorData color_data)

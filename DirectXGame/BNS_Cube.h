@@ -16,7 +16,7 @@ public:
 	void Draw(const BlenderPtr& m_blender) override;
 public:
 	void SetMesh(const wchar_t* tex_path);
-	void SetTexture(const wchar_t* tex_path);
+	void SetTexture(const wchar_t* tex_path, bool isNewLayer = true);
 public:
 	void SetVertex_Index_Buffer(BNS_VertexShaderType vs_type, BNS_PC_Cube_ColorData color_data = BNS_PC_Cube_ColorData());
 	void SetVertexShader(BNS_VertexShaderType vs_type);
@@ -24,7 +24,7 @@ public:
 protected:
 	MeshPtr m_mesh;
 	TexturePtr m_tex[10];
-	unsigned int num_textures;
+	int num_textures = 0;
 	VertexBufferPtr m_vb;
 	IndexBufferPtr m_ib;
 protected:
