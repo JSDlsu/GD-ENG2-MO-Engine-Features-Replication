@@ -1,13 +1,13 @@
-# MO-RENDER SYSTEM
-Members:
+# MO-SCENE EDITOR
+Members (Brooklyn Nets):
 Emerson Paul Celestial
 Aldrey Gaurana
 Joseph Christopher Santos
 Eryn Tallador
 
 
-Go to Render_System branch.
-Main point is in the 'BNS_main.cpp'
+Go to master branch. The project can be cloned at the master branch.
+Main entry point is in the 'BNS_main.cpp'
 
 Navigating Around the Level:
 1. Go to the 'Scene Window'.
@@ -35,4 +35,28 @@ Modifying Gameobject's components:
 2. After selecting, the list of components wil show.
 3. Modify the component's values.
 
-Adding 
+Adding Textures to Meshes/Primitives:
+1. Once a mesh/primitive is created, select it using the Hierarchy Window.
+2. Navigate the Content Browser window on the bottom of the engine window and open the Textures folder.
+3. Make sure that the game object is selected
+4. If it is selected, double click on the .jpg or .png file that you want as they can be applied onto the selected object.
+
+Opening a Scene to the Editor
+FOR UNITY
+1. Make sure that the "exportedSceneUnity.json" file is in the Scene folder.
+2. Go to SceneReader.cpp. On line 22, change "/exportedSceneUnreal" to "/exportedSceneUnity". "/exportedSceneUnreal" is used to open Unreal scenes.
+3. Run the program and go to File -> Open Scene. The Unity scene will load automatically, just make sure to move the camera around.
+
+FOR UNREAL 
+1. Make sure that the "exportedSceneUnreal.json" file is in the Scene folder.
+2. Go to SceneReader.cpp. On line 22, change "/exportedSceneUnity" to "/exportedSceneUnreal". "/exportedSceneUnity" is used to open Unity scenes.
+3. Run the program and go to File -> Open Scene. The Unity scene will load automatically, just make sure to move the camera around.
+
+FOR SCENES MADE IN THE EDITOR
+1. Make sure that the "output.json" file is in the Scene folder.
+2. Go to SceneReader.cpp. On line 22, change "/exportedSceneUnity" or "/exportedSceneUnreal" to "/output".
+3. Run the program and go to File -> Open Scene. The editor scene will load automatically, just make sure to move the camera around.
+
+Saving a Scene in the Editor
+1. Once you are done creating your scene, go to File -> Save. The scene data will be saved to a JSON file.
+2. To make sure that it is saved, go to the "Scene" folder of the project directory, and look for "output.json". This file can now be used for loading engine scenes to Unity, Unreal, or on this Editor.
