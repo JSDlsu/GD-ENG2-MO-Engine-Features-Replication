@@ -57,7 +57,7 @@ void BNS_Inspector_UI::DrawUI()
 					updateTransformDisplays(selectedGO, pos, scale, rot);
 			}
 			if (ImGui::IsItemDeactivatedAfterEdit())
-				BNS_ActionHistory::GetInstance()->recordAction(selectedGO);
+				BNS_ActionHistory::GetInstance()->recordAction(selectedGO->GetName());
 
 			//Rotate
 			if (ImGui::DragFloat3("Rotation", rot, BNS_EngineTime::getDeltaTime(), (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max()))
@@ -66,7 +66,7 @@ void BNS_Inspector_UI::DrawUI()
 					updateTransformDisplays(selectedGO, pos, scale, rot);
 			}
 			if (ImGui::IsItemDeactivatedAfterEdit())
-				BNS_ActionHistory::GetInstance()->recordAction(selectedGO);
+				BNS_ActionHistory::GetInstance()->recordAction(selectedGO->GetName());
 
 			//Scale
 			if (ImGui::DragFloat3("Scale", scale, BNS_EngineTime::getDeltaTime(), (float)-std::numeric_limits<int>::max(), (float)std::numeric_limits<int>::max()))
@@ -75,7 +75,7 @@ void BNS_Inspector_UI::DrawUI()
 					updateTransformDisplays(selectedGO, pos, scale, rot);
 			}
 			if (ImGui::IsItemDeactivatedAfterEdit())
-				BNS_ActionHistory::GetInstance()->recordAction(selectedGO);
+				BNS_ActionHistory::GetInstance()->recordAction(selectedGO->GetName());
 
 			/*
 			//IMGUI SLIDER DEBUGGER

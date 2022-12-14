@@ -16,6 +16,7 @@ public:
 	static void Destroy();
 
 	void recordAction(BNS_AGameObject* gameObject);
+	void recordAction(std::string name);
 	bool hasRemainingUndoActions();
 	bool hasRemainingRedoActions();
 	BNS_EditorAction* undoAction();

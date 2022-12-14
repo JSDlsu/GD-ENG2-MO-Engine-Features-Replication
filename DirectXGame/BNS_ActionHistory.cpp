@@ -1,6 +1,7 @@
 #include "BNS_ActionHistory.h"
 #include "BNS_EditorAction.h"
 #include "BNS_EngineBackend.h"
+#include "BNS_GameObjectManager.h"
 
 BNS_ActionHistory* BNS_ActionHistory::sharedInstance = nullptr;
 
@@ -24,6 +25,15 @@ void BNS_ActionHistory::recordAction(BNS_AGameObject* gameObject)
 	if (BNS_EngineBackend::getInstance()->getMode() == BNS_EngineBackend::EDITOR)
 	{
 		BNS_EditorAction* editorAction = new BNS_EditorAction(gameObject);
+		this->actionsPerformed.push(editorAction);
+	}
+}
+
+void BNS_ActionHistory::recordAction(std::string name)
+{
+	if (BNS_EngineBackend::getInstance()->getMode() == BNS_EngineBackend::EDITOR)
+	{
+		BNS_EditorAction* editorAction = new BNS_EditorAction(BNS_GameObjectManager::get()->FindObjectByName(name));
 		this->actionsPerformed.push(editorAction);
 	}
 }

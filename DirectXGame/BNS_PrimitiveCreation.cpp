@@ -1,5 +1,7 @@
 #include "BNS_PrimitiveCreation.h"
 #include <iostream>
+
+#include "BNS_ActionHistory.h"
 #include "BNS_AppWindow.h"
 #include "BNS_Color.h"
 #include "BNS_Cube.h"
@@ -66,11 +68,14 @@ void BNS_PrimitiveCreation::CreateCube()
 	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
 	cube->SetPosition(Vector3D{ 0, 0, 0 });
 
+
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+
+	BNS_ActionHistory::GetInstance()->recordAction(cube->GetName());
 }
 
 void BNS_PrimitiveCreation::CreateTexturedCube()
