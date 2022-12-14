@@ -34,7 +34,6 @@ void BNS_Hierarchy_UI::DrawUI()
             {
 	            node_flags |= ImGuiTreeNodeFlags_Selected;
                 selectedGameObject = objects[i];
-                std::cout << "Selected Name: " << selectedGameObject->GetName() << std::endl;
             }
             else
             {
