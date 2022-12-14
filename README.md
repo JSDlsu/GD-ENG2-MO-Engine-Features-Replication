@@ -42,6 +42,7 @@ Adding Textures to Meshes/Primitives:
 4. If it is selected, double click on the .jpg or .png file that you want as they can be applied onto the selected object.
 
 Opening a Scene to the Editor
+
 FOR UNITY
 1. Make sure that the "exportedSceneUnity.json" file is in the Scene folder.
 2. Go to SceneReader.cpp. On line 22, change "/exportedSceneUnreal" to "/exportedSceneUnity". "/exportedSceneUnreal" is used to open Unreal scenes.
