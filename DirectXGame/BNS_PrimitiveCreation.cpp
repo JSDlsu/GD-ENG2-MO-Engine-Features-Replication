@@ -154,6 +154,7 @@ void BNS_PrimitiveCreation::CreateTeapot()
 	cube->AttachComponent(transformComp);
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	BNS_ActionHistory::GetInstance()->recordAction(cube->GetName());
 }
 
 void BNS_PrimitiveCreation::CreateStatue()
@@ -380,6 +381,7 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 	}
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(obj);
+	BNS_ActionHistory::GetInstance()->recordAction(obj->GetName());
 }
 
 void BNS_PrimitiveCreation::CreateSphere()
@@ -434,7 +436,17 @@ BNS_AGameObject* BNS_PrimitiveCreation::CreatePhysicsCube(float x, float y, floa
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysCube", cube);
 	cube->AttachComponent(physicsComp);
 
+	BNS_AComponent* physics_comp = cube->FindComponentOfType(ComponentType::Physics);
+	if (physics_comp != nullptr)
+	{
+		BNS_PhysicsComponent* physicsComp = dynamic_cast<BNS_PhysicsComponent*>(physics_comp);
+		BodyType bodyType = physicsComp->GetRigidBody()->getType();
+		physicsComp->UpdateRigidBody();
+		physicsComp->GetRigidBody()->setType(bodyType);
+	}
+
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	BNS_ActionHistory::GetInstance()->recordAction(cube->GetName());
 
 	return cube;
 }
