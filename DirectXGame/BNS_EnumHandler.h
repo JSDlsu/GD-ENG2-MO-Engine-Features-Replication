@@ -9,6 +9,7 @@ enum class BNS_ObjectTypes
 	SKYBOX,
 	SPHERE,
 	CAPSULE,
+	CYLINDER
 };
 
 enum class BNS_VertexShaderType

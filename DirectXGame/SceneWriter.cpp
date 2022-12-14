@@ -148,4 +148,8 @@ std::string SceneWriter::GetObjectType(BNS_ObjectTypes type)
 	{
 		return "CAPSULE";
 	}
+	if (type == BNS_ObjectTypes::CYLINDER)
+	{
+		return "CYLINDER";
+	}
 }

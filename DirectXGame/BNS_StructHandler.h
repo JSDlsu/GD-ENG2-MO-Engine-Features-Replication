@@ -44,7 +44,7 @@ struct BNS_PC_Cube_ColorData
 			BNS_Color::White,
 			BNS_Color::White,
 			BNS_Color::White,
-			BNS_Color::White
+			BNS_Color::White,
 		};
 		memcpy(color_list_1, color_temp, sizeof(color_temp));
 		memcpy(color_list_2, color_temp, sizeof(color_temp));

@@ -78,6 +78,24 @@ void BNS_PrimitiveCreation::CreateCube()
 	BNS_ActionHistory::GetInstance()->recordAction(cube->GetName());
 }
 
+void BNS_PrimitiveCreation::CreateCylinder()
+{
+	std::string name = "Cylinder";
+	CheckGameObjectName(name);
+	BNS_Cube* cube = new BNS_Cube(name, BNS_ObjectTypes::CYLINDER);
+	cube->SetMesh(L"Assets\\Meshes\\Cylinder.OBJ");
+	cube->SetTexture(L"Assets\\Textures\\GREY.png");
+	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
+	cube->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
+	cube->AttachComponent(transformComp);
+
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+}
+
 void BNS_PrimitiveCreation::CreateTexturedCube()
 {
 	std::string name = "physCube";
@@ -288,18 +306,21 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 		std::cout << "create cube" << std::endl;
 		obj = new BNS_Cube(name, type);
 		CheckGameObjectName(obj->GetName());
-		dynamic_cast<BNS_Cube*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
-		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
-		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
+		dynamic_cast<BNS_Cube*>(obj)->SetTexture(L"Assets\\Textures\\sand.jpg");
+		//dynamic_cast<BNS_Plane*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+		dynamic_cast<BNS_Plane*>(obj)->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+		dynamic_cast<BNS_Plane*>(obj)->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	}
 
 	else if (type == BNS_ObjectTypes::PLANE)
 	{
+		
 		obj = new BNS_Plane(name, type);
 		CheckGameObjectName(obj->GetName());
-		dynamic_cast<BNS_Plane*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
-		dynamic_cast<BNS_Plane*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
-		dynamic_cast<BNS_Plane*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
+		dynamic_cast<BNS_Cube*>(obj)->SetTexture(L"Assets\\Textures\\brick.png");
+		//dynamic_cast<BNS_Plane*>(obj)->SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+		dynamic_cast<BNS_Plane*>(obj)->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+		dynamic_cast<BNS_Plane*>(obj)->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	}
 
 	else if (type == BNS_ObjectTypes::SPHERE)
@@ -320,6 +341,17 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 		dynamic_cast<BNS_Cube*>(obj)->SetMesh(L"Assets\\Meshes\\capsule.obj");
 		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::COLOR);
 		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::COLOR);
+	}
+
+	else if (type == BNS_ObjectTypes::CYLINDER)
+	{
+		std::cout << "create cylinder" << std::endl;
+		obj = new BNS_Cube(name, BNS_ObjectTypes::CYLINDER);
+		CheckGameObjectName(obj->GetName());
+		dynamic_cast<BNS_Cube*>(obj)->SetMesh(L"Assets\\Meshes\\Cylinder.OBJ");
+		dynamic_cast<BNS_Cube*>(obj)->SetTexture(L"Assets\\Textures\\GREY.png");
+		dynamic_cast<BNS_Cube*>(obj)->SetVertexShader(BNS_VertexShaderType::TEXTURE);
+		dynamic_cast<BNS_Cube*>(obj)->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	}
 
 	else

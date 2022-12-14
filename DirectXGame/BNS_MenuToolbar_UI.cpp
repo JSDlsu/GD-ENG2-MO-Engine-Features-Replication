@@ -101,6 +101,8 @@ void BNS_MenuToolbar_UI::CreateTab_Gameobject()
 		//BNS_PrimitiveCreation::Instance()->CreateTexturedCube();
 		if (ImGui::MenuItem("Create Plane", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreatePlane();
+		if (ImGui::MenuItem("Create Cylinder", nullptr))
+			BNS_PrimitiveCreation::Instance()->CreateCylinder();
 		if (ImGui::MenuItem("Create Sphere", nullptr))
 			BNS_PrimitiveCreation::Instance()->CreateSphere();
 		if (ImGui::MenuItem("Create Capsule", nullptr))
