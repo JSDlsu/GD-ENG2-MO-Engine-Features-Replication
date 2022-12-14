@@ -20,22 +20,132 @@ void BNS_ActionHistory::Destroy()
 	delete sharedInstance;
 }
 
-void BNS_ActionHistory::recordAction(BNS_AGameObject* gameObject)
-{
-	if (BNS_EngineBackend::getInstance()->getMode() == BNS_EngineBackend::EDITOR)
-	{
-		BNS_EditorAction* editorAction = new BNS_EditorAction(gameObject);
-		this->actionsPerformed.push(editorAction);
-	}
-}
-
 void BNS_ActionHistory::recordAction(std::string name)
 {
 	if (BNS_EngineBackend::getInstance()->getMode() == BNS_EngineBackend::EDITOR)
 	{
 		BNS_EditorAction* editorAction = new BNS_EditorAction(BNS_GameObjectManager::get()->FindObjectByName(name));
-		this->actionsPerformed.push(editorAction);
+		if (undoCheck(name))
+		{
+			BNS_EditorAction* tempAct = replaceUndo(editorAction);
+			this->actionsPerformed.push(tempAct);
+		}
+		else
+		{
+			undoTemp.emplace_back(editorAction);
+		}
+
 	}
+}
+
+BNS_EditorAction* BNS_ActionHistory::recordUndo(BNS_EditorAction* action)
+{
+	if (BNS_EngineBackend::getInstance()->getMode() == BNS_EngineBackend::EDITOR)
+	{
+		if (redoCheck(action->GetOwnerName()))
+		{
+			action = replaceRedo(action);
+			this->actionsCancelled.push(action);
+		}
+		else
+		{
+			redoTemp.emplace_back(action);
+			this->actionsPerformed.pop();
+			this->actionsCancelled.push(action);
+		}
+
+		return action;
+
+	}
+
+	return NULL;
+}
+
+BNS_EditorAction* BNS_ActionHistory::recordRedo(BNS_EditorAction* action)
+{
+	if (BNS_EngineBackend::getInstance()->getMode() == BNS_EngineBackend::EDITOR)
+	{
+		if (undoCheck(action->GetOwnerName()))
+		{
+			action = replaceUndo(action);
+			this->actionsCancelled.push(action);
+		}
+		else
+		{
+			undoTemp.emplace_back(action);
+			this->actionsPerformed.pop();
+			this->actionsCancelled.push(action);
+		}
+
+		return action;
+
+	}
+
+	return NULL;
+}
+
+bool BNS_ActionHistory::undoCheck(std::string name)
+{
+	for (auto action : undoTemp)
+	{
+		if (action->GetOwnerName() == name)
+			return true;
+	}
+	
+	return false;
+}
+
+bool BNS_ActionHistory::redoCheck(std::string name)
+{
+	for (auto action : redoTemp)
+	{
+		if (action->GetOwnerName() == name)
+			return true;
+	}
+
+	return false;
+}
+
+BNS_EditorAction* BNS_ActionHistory::replaceUndo(BNS_EditorAction* action)
+{
+	for (auto act : undoTemp)
+	{
+		if (act->GetOwnerName() == action->GetOwnerName())
+		{
+			BNS_EditorAction* tempAction = act;
+			undoTemp.remove(act);
+			undoTemp.emplace_back(action);
+			return act;
+		}
+	}
+
+	return NULL;
+}
+
+BNS_EditorAction* BNS_ActionHistory::replaceRedo(BNS_EditorAction* action)
+{
+	for (auto act : redoTemp)
+	{
+		if (act->GetOwnerName() == action->GetOwnerName())
+		{
+			BNS_EditorAction* tempAction = act;
+			redoTemp.remove(act);
+			redoTemp.emplace_back(action);
+			return act;
+		}
+	}
+
+	return NULL;
+}
+
+BNS_EditorAction* BNS_ActionHistory::tempToRedo()
+{
+	return nullptr;
+}
+
+BNS_EditorAction* BNS_ActionHistory::tempToUndo()
+{
+	return nullptr;
 }
 
 bool BNS_ActionHistory::hasRemainingUndoActions()
@@ -56,8 +166,8 @@ BNS_EditorAction* BNS_ActionHistory::undoAction()
 	if (this->hasRemainingUndoActions())
 	{
 		BNS_EditorAction* action = this->actionsPerformed.top();
-		this->actionsPerformed.pop();
-		this->actionsCancelled.push(action);
+
+		action = recordUndo(action);
 		return action;
 	}
 
