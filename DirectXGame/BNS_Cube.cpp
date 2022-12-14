@@ -73,6 +73,10 @@ void BNS_Cube::SetTexture(const wchar_t* tex_path)
 {
 	// assign the texture file to the BNS_Texture pointer by passing the its path in the file
 	m_tex[num_textures++] = BNS_GraphicsEngine::get()->getTextureManager()->createTextureFromFile(tex_path);
+
+	SetVertex_Index_Buffer(BNS_VertexShaderType::TEXTURE);
+	SetVertexShader(BNS_VertexShaderType::TEXTURE);
+	SetPixelShader(BNS_PixelShaderType::TEXTURE);
 }
 
 void BNS_Cube::SetVertex_Index_Buffer(BNS_VertexShaderType vs_type, BNS_PC_Cube_ColorData color_data)

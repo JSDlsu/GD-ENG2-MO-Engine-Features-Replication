@@ -100,6 +100,11 @@ void BNS_Hierarchy_UI::DrawUI()
     ImGui::End();
 }
 
+BNS_AGameObject* BNS_Hierarchy_UI::GetSelectedGO()
+{
+    return selectedGameObject;
+}
+
 void BNS_Hierarchy_UI::OpenChildList(std::vector<BNS_AGameObject*> objects)
 {
 
