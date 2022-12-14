@@ -376,6 +376,7 @@
       <Filter>GameEngine\BackEndTools\EditorAction</Filter>
     </ClCompile>
     <ClCompile Include="BNS_AppWindow.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNS_AppWindow.h">
@@ -630,6 +631,7 @@
     <ClInclude Include="BNS_MathUtils.h">
       <Filter>GameEngine\BackEndTools</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BNS_PixelTex.hlsl">
