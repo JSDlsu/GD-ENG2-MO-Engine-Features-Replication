@@ -117,6 +117,29 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 }
 
+void BNS_PrimitiveCreation::CreatePhysicsPlane()
+{
+	std::string name = "phys_plane";
+	CheckGameObjectName(name);
+	BNS_Plane* plane = new BNS_Plane(name, BNS_ObjectTypes::PLANE);
+	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
+	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
+	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
+	plane->SetPosition(Vector3D{ 0, 0, 0 });
+
+	// adding transform component
+	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", plane);
+	plane->AttachComponent(transformComp);
+
+	
+	// adding physics component
+	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", plane);
+	physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
+	plane->AttachComponent(physicsComp);
+	
+	BNS_GameObjectManager::get()->GetObjectList().emplace_back(plane);
+}
+
 void BNS_PrimitiveCreation::CreatePlane()
 {
 	std::string name = "plane";
@@ -130,10 +153,6 @@ void BNS_PrimitiveCreation::CreatePlane()
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", plane);
 	plane->AttachComponent(transformComp);
-	// adding physics component
-	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", plane);
-	physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
-	plane->AttachComponent(physicsComp);
 
 	BNS_GameObjectManager::get()->GetObjectList().emplace_back(plane);
 }

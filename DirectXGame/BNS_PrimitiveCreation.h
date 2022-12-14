@@ -27,6 +27,7 @@ public:
 	void CreateCube();
 	void CreateCylinder();
 	void CreateTexturedCube();
+	void CreatePhysicsPlane();
 	void CreatePlane();
 	void CreateSphere();
 	void CreateCapsule();
