@@ -140,9 +140,9 @@ bool BNS_Window::broadcast()
 	if (!m_is_init)
 	{
 		SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)this);
+		BNS_EngineTime::initialize();
 		this->onCreate();
 		m_is_init = true;
-		BNS_EngineTime::initialize();
 	}
 
 	BNS_EngineTime::LogFrameStart();

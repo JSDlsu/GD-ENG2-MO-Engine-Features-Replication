@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "BNS_ContantBufferTypes.h"
 #include "BNS_EnumHandler.h"
 #include "BNS_PhysicsComponent.h"
 #include "BNS_Physics_Prerequisites.h"
@@ -31,6 +32,7 @@ public:
 	BNS_ObjectTypes ObjectType;
 public:
 	virtual void Update(float deltaTime, BNS_AppWindow* app_window = nullptr) = 0;
+	virtual void UpdateTransform();
 	virtual void Draw(const BlenderPtr& m_blender);
 public:
 	void SetTransform(Vector3D position, Vector3D scale, Vector3D rotation);
@@ -85,17 +87,23 @@ protected:
 	float alpha = 1.0f;
 	bool overrideMatrix = false;
 	bool active;
-
+	BNS_constant_transform cc;
+	float m_light_rot_y = 0.0f;
+	float ticks = 0.0f;
+	bool isChild = false;
 public:
-	void AttachOwner(BNS_AGameObject* owner);
-	void DetachOwner();
+	void UpdateChildListTransform();
+	void ChildTransform(Matrix4x4 parent_trans);
+	void AttachParent(BNS_AGameObject* parent);
+	void DetachParent();
 	void AttachChild(BNS_AGameObject* child);
 	void DetachChild(BNS_AGameObject* child);
+	BNS_AGameObject* GetParent();
 	ChildList GetChildList();
 protected:
 	ComponentList componentList;
 	ChildList childList;
-	BNS_AGameObject* owner = nullptr;
+	BNS_AGameObject* parent = nullptr;
 private:
 	friend class BNS_TransformComponent;
 

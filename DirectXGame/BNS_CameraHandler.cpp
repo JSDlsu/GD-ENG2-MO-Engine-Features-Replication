@@ -28,7 +28,7 @@ BNS_CameraHandler* BNS_CameraHandler::GetInstance()
 
 Matrix4x4 BNS_CameraHandler::GetSceneCameraViewMatrix()
 {
-    return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetCamViewMatrix();
+     return dynamic_cast<BNS_Camera*>(&*sceneCamera)->GetCamViewMatrix();
 }
 Matrix4x4 BNS_CameraHandler::GetSceneCameraProjMatrix()
 {

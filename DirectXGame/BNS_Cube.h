@@ -33,11 +33,9 @@ protected:
 	BNS_VertexShaderType vs_type;
 	BNS_PixelShaderType ps_type;
 protected:
-	float ticks = 0.0f;
 	float deltaPos = 0.0f;
 	float deltaScale = 0.0f;
 	float m_delta_time = 0.0f;
-	float m_light_rot_y = 0.0f;
 protected:
 	friend class BNS_AppWindow;
 };

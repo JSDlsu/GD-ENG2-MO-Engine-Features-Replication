@@ -19,10 +19,12 @@ BNS_Cube::BNS_Cube(std::string name, BNS_ObjectTypes type) : BNS_AGameObject(nam
 	ObjectType = type;
 	
 	// create CB
-	BNS_constant_transform cc;
 	cc.m_time = 0;
 	cc.alpha = 1.0f;
 	m_cb = BNS_GraphicsEngine::get()->getRenderSystem()->CreateConstantBuffer(&cc, sizeof(BNS_constant_transform));
+
+	// update for the first time
+	//UpdateTransform();
 }
 
 BNS_Cube::~BNS_Cube()
@@ -32,59 +34,7 @@ BNS_Cube::~BNS_Cube()
 
 void BNS_Cube::Update(float deltaTime, BNS_AppWindow* app_window)
 {
-	// transform update
-	BNS_constant_transform cc;
-	cc.alpha = alpha;
-	//cc.m_time = ::GetTickCount();
-
-	// objects matrix
-	Matrix4x4 temp;
-	// light matrix
-	Matrix4x4 m_light_rot_matrix;
-	m_light_rot_matrix.setRotationY(m_light_rot_y);
-
-	m_light_rot_y += 1.57f * BNS_EngineTime::getDeltaTime();
-	
-
-	cc.m_world.setIdentity();
-
-	if (overrideMatrix) {
-		cc.m_world = m_matrix;
-	}
-	else
-	{
-		temp.setScale(m_scale);
-		cc.m_world *= temp;
-		temp.setRotationX(m_rotation.m_x);
-		cc.m_world *= temp;
-		temp.setRotationY(m_rotation.m_y);
-		cc.m_world *= temp;
-		temp.setRotationZ(m_rotation.m_z);
-		cc.m_world *= temp;
-		temp.setTranslation(m_position);
-		cc.m_world *= temp;
-		// update m_matrix
-		m_matrix = cc.m_world;
-	}
-
-	// creating the camera matrix
-	cc.m_view = BNS_CameraHandler::GetInstance()->GetSceneCameraViewMatrix();
-	// setting the perspective projection
-	cc.m_proj = BNS_CameraHandler::GetInstance()->GetSceneCameraProjMatrix();
-	// update camera position
-	cc.m_camera_position = BNS_CameraHandler::GetInstance()->GetSceneCamera()->GetMatrix().getTranslation();
-	// update point light position
-	float dist_from_origin = 1.0f;
-	cc.m_light_position = Vector4D(cos(m_light_rot_y) * dist_from_origin, 3.1f, sin(m_light_rot_y) * dist_from_origin, 1.0f);
-	cc.m_light_radius = 100.0f;
-	cc.m_light_direction = m_light_rot_matrix.getZDirection();
-	
-
-	// update time
-	ticks += BNS_EngineTime::getDeltaTime();
-	cc.m_time = ticks;
-
-	m_cb->update(BNS_GraphicsEngine::get()->getRenderSystem()->GetImmediateDeviceContext(), &cc);
+	UpdateTransform();
 }
 
 void BNS_Cube::Draw(const BlenderPtr& m_blender)

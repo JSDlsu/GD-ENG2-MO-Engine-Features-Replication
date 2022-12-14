@@ -51,8 +51,7 @@ void BNS_Hierarchy_UI::DrawUI()
             }
             if (node_open)
             {
-                //ImGui::BulletText("Child");
-                OpenChildList(objects[i]->GetChildList());
+                ImGui::BulletText("Child");
                 ImGui::TreePop();
             }
         }
