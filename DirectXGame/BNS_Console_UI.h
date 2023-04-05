@@ -11,7 +11,7 @@ public:
 	void DrawUI() override;
 
 	void DrawLog(LogType logType, std::string logMessage);
-
+	
 };
 
 

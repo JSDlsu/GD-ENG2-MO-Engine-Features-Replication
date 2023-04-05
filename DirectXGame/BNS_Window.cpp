@@ -146,6 +146,7 @@ bool BNS_Window::broadcast()
 	}
 
 	BNS_EngineTime::LogFrameStart();
+	BNS_EngineTime::CalculateFPS();
 	// renders all the frames of the graphic 'C'
 	this->onUpdate();
 

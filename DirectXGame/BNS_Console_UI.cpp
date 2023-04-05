@@ -15,9 +15,6 @@ BNS_Console_UI::~BNS_Console_UI()
 
 void BNS_Console_UI::DrawUI()
 {
-	float fps = 0;
-	fps = CLOCKS_PER_SEC / BNS_EngineTime::getDeltaTime() * 0.001f;
-
 	//DRAW HERE
 	std::string windowLabel = name + "##" + std::to_string(ID);
 	ImGui::Begin(windowLabel.c_str());
@@ -55,7 +52,7 @@ void BNS_Console_UI::DrawUI()
 	
 
 	ImGui::Text(" ");
-	ImGui::Text("FPS : %f",fps);
+	ImGui::Text("FPS : %lf", BNS_EngineTime::getFPS());
 	ImGui::Text("\n");
 
 	/*
