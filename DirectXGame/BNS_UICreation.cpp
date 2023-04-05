@@ -9,6 +9,7 @@
 #include "BNS_UIManager.h"
 #include "BNS_Console_UI.h"
 #include "BNS_Inspector_UI.h"
+#include "BNS_MultipleScene_UI.h"
 #include "BNS_SceneStates_UI.h"
 #include "BNS_ViewMode_UI.h"
 
@@ -95,5 +96,13 @@ void BNS_UICreation::CreateViewModeUI()
 	BNS_ViewMode_UI* screen = new BNS_ViewMode_UI("View Mode", currentID++);
 	AUIScreen_Ptr ptr_screen(screen);
 	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::VIEW_MODE] = ptr_screen;
+	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
+}
+
+void BNS_UICreation::CreateMultipleSceneUI()
+{
+	BNS_MultipleScene_UI* screen = new BNS_MultipleScene_UI("Multiple Scene", currentID++);
+	AUIScreen_Ptr ptr_screen(screen);
+	BNS_UIManager::GetInstance()->uiTable[BNS_UINames::MULTIPLE_SCENE] = ptr_screen;
 	BNS_UIManager::GetInstance()->_uiScreenList.push_back(ptr_screen);
 }

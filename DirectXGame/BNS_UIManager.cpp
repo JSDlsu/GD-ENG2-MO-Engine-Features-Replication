@@ -35,6 +35,8 @@ void BNS_UIManager::Initialize(BNS_AppWindow* appW, HWND hwnd, const RenderToTex
 	m_ui_creation->CreateSceneViewUI();
 	m_ui_creation->CreateSceneViewUI();
 	m_ui_creation->CreateViewModeUI();
+	// multi-thread UI
+	m_ui_creation->CreateMultipleSceneUI();
 
 	m_ui_creation->CreateContentBrowserUI();
 	m_ui_creation->CreateConsoleUI();

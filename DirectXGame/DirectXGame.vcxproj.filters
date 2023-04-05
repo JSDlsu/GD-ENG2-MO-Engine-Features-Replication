@@ -178,6 +178,9 @@
     <Filter Include="GameEngine\UI\ViewMode">
       <UniqueIdentifier>{72f01dc6-05ac-4702-b3ef-9a502f97db9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\UI\MultipleSceneList">
+      <UniqueIdentifier>{3f63e33d-dbe3-4950-ba14-dd948c803742}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BNS_main.cpp">
@@ -382,6 +385,9 @@
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="BNS_ViewMode_UI.cpp">
       <Filter>GameEngine\UI\ViewMode</Filter>
+    </ClCompile>
+    <ClCompile Include="BNS_MultipleScene_UI.cpp">
+      <Filter>GameEngine\UI\MultipleSceneList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -640,6 +646,9 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="BNS_ViewMode_UI.h">
       <Filter>GameEngine\UI\ViewMode</Filter>
+    </ClInclude>
+    <ClInclude Include="BNS_MultipleScene_UI.h">
+      <Filter>GameEngine\UI\MultipleSceneList</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
