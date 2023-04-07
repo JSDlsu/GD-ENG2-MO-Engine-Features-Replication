@@ -58,7 +58,7 @@ void BNS_PrimitiveCreation::ChangeVB_IB_Buffer(BNS_VertexShaderType vs_type, Ver
 	}
 }
 
-void BNS_PrimitiveCreation::CreateCube()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateCube(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "cube";
 	CheckGameObjectName(name);
@@ -66,19 +66,23 @@ void BNS_PrimitiveCreation::CreateCube()
 	cube->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
 	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 
 	BNS_ActionHistory::GetInstance()->recordAction(cube->GetName());
+
+	return cube;
 }
 
-void BNS_PrimitiveCreation::CreateCylinder()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateCylinder(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "Cylinder";
 	CheckGameObjectName(name);
@@ -87,16 +91,19 @@ void BNS_PrimitiveCreation::CreateCylinder()
 	cube->SetTexture(L"Assets\\Textures\\GREY.png");
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
 	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
-void BNS_PrimitiveCreation::CreateTexturedCube()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateTexturedCube(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "physCube";
 	CheckGameObjectName(name);
@@ -105,7 +112,8 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
 	cube->SetPixelShader(BNS_PixelShaderType::TEXTURE);
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
@@ -114,10 +122,12 @@ void BNS_PrimitiveCreation::CreateTexturedCube()
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysCube", cube);
 	cube->AttachComponent(physicsComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
-void BNS_PrimitiveCreation::CreatePhysicsPlane()
+BNS_AGameObject* BNS_PrimitiveCreation::CreatePhysicsPlane(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "phys_plane";
 	CheckGameObjectName(name);
@@ -125,22 +135,25 @@ void BNS_PrimitiveCreation::CreatePhysicsPlane()
 	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
 	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
-	plane->SetPosition(Vector3D{ 0, 0, 0 });
+	plane->SetPosition(pos);
+	plane->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", plane);
 	plane->AttachComponent(transformComp);
 
-	
+
 	// adding physics component
 	BNS_PhysicsComponent* physicsComp = new BNS_PhysicsComponent("PhysPlane", plane);
 	physicsComp->GetRigidBody()->setType(BodyType::KINEMATIC);
 	plane->AttachComponent(physicsComp);
-	
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(plane);
+
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(plane);
+	return plane;
 }
 
-void BNS_PrimitiveCreation::CreatePlane()
+BNS_AGameObject* BNS_PrimitiveCreation::CreatePlane(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "plane";
 	CheckGameObjectName(name);
@@ -148,16 +161,19 @@ void BNS_PrimitiveCreation::CreatePlane()
 	plane->SetVertex_Index_Buffer(BNS_VertexShaderType::COLOR);
 	plane->SetVertexShader(BNS_VertexShaderType::COLOR);
 	plane->SetPixelShader(BNS_PixelShaderType::COLOR);
-	plane->SetPosition(Vector3D{ 0, 0, 0 });
+	plane->SetPosition(pos);
+	plane->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", plane);
 	plane->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(plane);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(plane);
+	return plane;
 }
 
-void BNS_PrimitiveCreation::CreateTeapot()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateTeapot(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "teapot";
 	CheckGameObjectName(name);
@@ -166,17 +182,20 @@ void BNS_PrimitiveCreation::CreateTeapot()
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
 	cube->SetPixelShader(BNS_PixelShaderType::MESH);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
 	BNS_ActionHistory::GetInstance()->recordAction(cube->GetName());
+	return cube;
 }
 
-void BNS_PrimitiveCreation::CreateStatue()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateStatue(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "statue";
 	CheckGameObjectName(name);
@@ -184,16 +203,19 @@ void BNS_PrimitiveCreation::CreateStatue()
 	cube->SetMesh(L"Assets\\Meshes\\statue.obj");
 	cube->SetVertexShader(BNS_VertexShaderType::LIGHTING);
 	cube->SetPixelShader(BNS_PixelShaderType::LIGHTING);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
-void BNS_PrimitiveCreation::CreateBunny()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateBunny(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "bunny";
 	CheckGameObjectName(name);
@@ -202,16 +224,19 @@ void BNS_PrimitiveCreation::CreateBunny()
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
 	cube->SetPixelShader(BNS_PixelShaderType::MESH);
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
-void BNS_PrimitiveCreation::CreateArmadillo()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateArmadillo(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "armadillo";
 	CheckGameObjectName(name);
@@ -220,16 +245,19 @@ void BNS_PrimitiveCreation::CreateArmadillo()
 	cube->SetTexture(L"Assets\\Textures\\brick.png");
 	cube->SetVertexShader(BNS_VertexShaderType::TEXTURE);
 	cube->SetPixelShader(BNS_PixelShaderType::MESH);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
-void BNS_PrimitiveCreation::CreateEarth()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateEarth(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "earth";
 	CheckGameObjectName(name);
@@ -241,13 +269,16 @@ void BNS_PrimitiveCreation::CreateEarth()
 	cube->SetTexture(L"Assets\\Textures\\earth_night.jpg");
 	cube->SetVertexShader(BNS_VertexShaderType::LIGHTING);
 	cube->SetPixelShader(BNS_PixelShaderType::EARTH);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
 void BNS_PrimitiveCreation::CreateSkyBox()
@@ -264,7 +295,7 @@ void BNS_PrimitiveCreation::CreateSkyBox()
 	BNS_GameObjectManager::get()->SetSkyBox(sky_box);
 }
 
-void BNS_PrimitiveCreation::CreateScene()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateScene(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "scene";
 	CheckGameObjectName(name);
@@ -273,13 +304,16 @@ void BNS_PrimitiveCreation::CreateScene()
 	cube->SetTexture(L"Assets\\Textures\\wall.jpg");
 	cube->SetVertexShader(BNS_VertexShaderType::POINT_LIGHT);
 	cube->SetPixelShader(BNS_PixelShaderType::POINT_LIGHT);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
 void BNS_PrimitiveCreation::CreateMeshFromFile(std::string full_filepath, std::string localName)
@@ -403,7 +437,7 @@ void BNS_PrimitiveCreation::createPrimitiveFromFile(std::string name, BNS_Object
 	BNS_ActionHistory::GetInstance()->recordAction(obj->GetName());
 }
 
-void BNS_PrimitiveCreation::CreateSphere()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateSphere(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "sphere";
 	CheckGameObjectName(name);
@@ -411,16 +445,19 @@ void BNS_PrimitiveCreation::CreateSphere()
 	cube->SetMesh(L"Assets\\Meshes\\sphere.obj");
 	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
 	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
-void BNS_PrimitiveCreation::CreateCapsule()
+BNS_AGameObject* BNS_PrimitiveCreation::CreateCapsule(Vector3D pos, Vector3D scale, bool isAddedToScene)
 {
 	std::string name = "capsule";
 	CheckGameObjectName(name);
@@ -428,13 +465,16 @@ void BNS_PrimitiveCreation::CreateCapsule()
 	cube->SetMesh(L"Assets\\Meshes\\capsule.obj");
 	cube->SetVertexShader(BNS_VertexShaderType::COLOR);
 	cube->SetPixelShader(BNS_PixelShaderType::COLOR);
-	cube->SetPosition(Vector3D{ 0, 0, 0 });
+	cube->SetPosition(pos);
+	cube->SetScale(scale);
 
 	// adding transform component
 	BNS_TransformComponent* transformComp = new BNS_TransformComponent("PhysTransform", cube);
 	cube->AttachComponent(transformComp);
 
-	BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	if (isAddedToScene)
+		BNS_GameObjectManager::get()->GetObjectList().emplace_back(cube);
+	return cube;
 }
 
 BNS_AGameObject* BNS_PrimitiveCreation::CreatePhysicsCube(float x, float y, float z)

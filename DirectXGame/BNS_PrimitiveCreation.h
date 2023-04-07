@@ -24,20 +24,20 @@ private:
 public:
 	void ChangeVB_IB_Buffer(BNS_VertexShaderType vs_type, VertexBufferPtr& m_vb, IndexBufferPtr& m_ib, BNS_PC_Cube_ColorData color_data);
 public:
-	void CreateCube();
-	void CreateCylinder();
-	void CreateTexturedCube();
-	void CreatePhysicsPlane();
-	void CreatePlane();
-	void CreateSphere();
-	void CreateCapsule();
-	void CreateTeapot();
-	void CreateStatue();
-	void CreateBunny();
-	void CreateArmadillo();
-	void CreateEarth();
+	BNS_AGameObject* CreateCube(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateCylinder(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateTexturedCube(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreatePhysicsPlane(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreatePlane(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateSphere(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateCapsule(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateTeapot(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateStatue(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateBunny(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateArmadillo(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
+	BNS_AGameObject* CreateEarth(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
 	void CreateSkyBox();
-	void CreateScene();
+	BNS_AGameObject* CreateScene(Vector3D pos = { 0,0,0 }, Vector3D scale = { 1,1,1 }, bool isAddedToScene = true);
 	void CreateMeshFromFile(std::string full_filepath, std::string localName);
 
 	void createPrimitiveFromFile(std::string name, BNS_ObjectTypes type, Vector3D pos, Vector3D rot, Vector3D scale, bool hasPhysics = false, float mass = 0, int BodyType = -1);
