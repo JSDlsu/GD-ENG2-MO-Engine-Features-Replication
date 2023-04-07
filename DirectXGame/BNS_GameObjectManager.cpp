@@ -47,14 +47,14 @@ void BNS_GameObjectManager::DeleteObject(BNS_AGameObject* gameObject)
 {
 	int indexObjList = -1;
 	int indexRenderList = -1;
-
+	BNS_AGameObject* objToBeDeleted = nullptr;
 	// DELETE AT OBJECT LIST
 	for (int i = 0; i < objectList.size(); i++)
 	{
 		if (objectList[i] == gameObject)
 		{
 			indexObjList = i;
-			delete objectList[i];
+			objToBeDeleted = objectList[i];
 			break;
 		}
 	}
@@ -70,13 +70,16 @@ void BNS_GameObjectManager::DeleteObject(BNS_AGameObject* gameObject)
 
 	if (indexObjList != -1)
 	{
+		std::cout << "Object to be deleted: " << objectList[indexObjList]->GetName() << std::endl;
 		objectList.erase(objectList.begin() + indexObjList);
 	}
 	if (indexRenderList != -1)
 	{
+		std::cout << "Render to be deleted: " << render_objectList[indexRenderList]->GetName() << std::endl;
 		render_objectList.erase(render_objectList.begin() + indexRenderList);
 	}
 
+	//delete objToBeDeleted;
 }
 
 void BNS_GameObjectManager::DeleteObjectByName(std::string name)

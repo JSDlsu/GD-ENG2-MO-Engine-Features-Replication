@@ -1,5 +1,8 @@
 #include "BNS_AComponent.h"
 
+#include <iostream>
+#include <ostream>
+
 BNS_AComponent::BNS_AComponent(String name, ComponentType type, BNS_AGameObject* owner)
 {
     this->name = name;
@@ -20,6 +23,7 @@ void BNS_AComponent::AttachOwner(BNS_AGameObject* owner)
 void BNS_AComponent::DetachOwner()
 {
     this->owner = nullptr;
+    std::cout << "Deleted Compponent: " << this->GetName() << std::endl;
     delete this;
 }
 
